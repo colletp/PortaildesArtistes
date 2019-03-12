@@ -1,0 +1,8 @@
+<serviceGroup>
+    <service name="">
+        <parameter name="" locked=""></parameter>
+        <operation name="*">
+            <messageReceiver class=""/>
+        </operation>
+    </service>
+</serviceGroup>
