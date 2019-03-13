@@ -2,33 +2,37 @@ package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
 import com.unamur.portaildesartistes.wsartiste.corelayer.AuthentificationBean;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
+@RestController
 public class AuthentificationController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthentificationController.class);
     private static int i;
 
-    @Autowired
-    AuthentificationService authentificationService;
+    AuthentificationServiceImpl f_authentificationServiceImpl;
 
-    @GetMapping("/gestionUtilisateur/list")
+    @GetMapping("wsartiste/gestionUtilisateur/list")
     public List<AuthentificationBean> list() {
-        return authentificationService.list();
+        return f_authentificationServiceImpl.list();
     }
 
-    @GetMapping("/gestionUtilisateur/insertOK")
+    @GetMapping("wsartiste/gestionUtilisateur/insertOK")
     public Integer insertOK() {
-        return authentificationService.insertOK();
+        return f_authentificationServiceImpl.insertOK();
     }
 
     @GetMapping("/gestionUtilisateur/insertNotOK")
     public String insertNotOK() {
-        authentificationService.insertAndFail();
+        f_authentificationServiceImpl.insertAndFail();
         return "ok";
     }
 }
