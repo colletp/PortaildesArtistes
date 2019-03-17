@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- TODO : Normalement SpringBoot gère lui-même les versions : problème a résoudre -->
+<!-- TODO : NE pas laisser Tomcat embarqué dans la solution -->
+
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -24,6 +29,12 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-logging</artifactId>
                     </exclusion>
+                    <!--
+                   <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-tomcat</artifactId>
+                    </exclusion>
+                    -->
                 </exclusions>
                 <version>2.1.3.RELEASE</version>
         </dependency>
@@ -120,11 +131,13 @@
     </build>
 
     <properties>
+        <!-->La spécification de la classe de démarrage n'est pas obligatoire<-->
+        <start-class>com.unamur.portaildesartistes.wsartiste.SpringBootWSRestPortailArtiste</start-class>
         <jdk.version>1.8</jdk.version>
         <org.springframework-version>2.1.3.RELEASE</org.springframework-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- Version Tomcat spécifique -->
+        <!-- Version Tomcat spécifique pour ne pas utiliser la version de springboot-->
         <tomcat.version>9.0.16</tomcat.version>
     </properties>
 

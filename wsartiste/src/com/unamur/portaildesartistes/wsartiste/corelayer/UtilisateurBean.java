@@ -1,6 +1,8 @@
 package com.unamur.portaildesartistes.wsartiste.corelayer;
 
-public class AuthentificationBean {
+import java.io.Serializable;
+
+public class UtilisateurBean implements Serializable {
 
     private Integer id;
     private String nomUtilisateur;

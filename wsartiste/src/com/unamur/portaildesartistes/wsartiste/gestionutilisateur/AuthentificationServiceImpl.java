@@ -1,7 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateur;
-import com.unamur.portaildesartistes.wsartiste.corelayer.AuthentificationBean;
+import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.springframework.stereotype.Service;
 
@@ -17,21 +17,21 @@ public class AuthentificationServiceImpl implements AuthentificationService {
    private DonneeUtilisateur donneeUtilisateur;
 
     @Transactional
-    public List<AuthentificationBean> list(){
+    public List<UtilisateurBean> list(){
         System.out.println(donneeUtilisateur.list());
         return donneeUtilisateur.list();
     }
 
     @Transactional
     public Integer insertOK(){
-        AuthentificationBean authUser = new AuthentificationBean();
+        UtilisateurBean authUser = new UtilisateurBean();
         authUser.setNomUtilisateur("nomUtilisateur"+new Date().getTime());
         return donneeUtilisateur.insert(authUser);
     }
 
     @Transactional
     public void insertAndFail(){
-        AuthentificationBean authUser = new AuthentificationBean();
+        UtilisateurBean authUser = new UtilisateurBean();
         authUser.setNomUtilisateur("username"+new Date().getTime());
         donneeUtilisateur.insert(authUser);
 

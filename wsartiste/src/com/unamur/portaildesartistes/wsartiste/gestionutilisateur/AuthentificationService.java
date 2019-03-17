@@ -1,14 +1,14 @@
 package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.AuthentificationBean;
+import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import java.util.List;
 
 public interface AuthentificationService {
-    public List<AuthentificationBean> list();
+    List<UtilisateurBean> list();
 
-    public Integer insertOK();
+    Integer insertOK();
 
-    public void insertAndFail();
+    void insertAndFail();
 
 }

@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.AuthentificationBean;
+import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class AuthentificationService2 {
     private com.unamur.portaildesartistes.wsartiste.gestionutilisateur.AuthentificationServiceImpl f_authentificationServiceImpl;
 
     @GetMapping("/gestionUtilisateur/list")
-    public List<AuthentificationBean> list() {
+    public List<UtilisateurBean> list() {
         return f_authentificationServiceImpl.list();
     }
 

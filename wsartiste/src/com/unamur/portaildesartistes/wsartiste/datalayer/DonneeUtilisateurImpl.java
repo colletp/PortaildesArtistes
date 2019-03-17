@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.AuthentificationBean;
+import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
@@ -31,7 +31,7 @@ public class DonneeUtilisateurImpl {
 //        @Autowired
         private DataSource dataSource;
 
-        public List<AuthentificationBean> list(){
+        public List<UtilisateurBean> list(){
             // DatasourceUtils contrôle si il y a déjà une connecection avec une transaction pour le threa courant
             Connection conn =  DataSourceUtils.getConnection(dataSource);
             Handle handle = DBI.open(conn);
@@ -39,7 +39,7 @@ public class DonneeUtilisateurImpl {
             return userQLs.list();
         }
 
-        public Integer insert(AuthentificationBean item){
+        public Integer insert(UtilisateurBean item){
             Connection conn =  DataSourceUtils.getConnection(dataSource);
             Handle handle = DBI.open(conn);
             UserSQLs userSQLs = handle.attach(UserSQLs.class);
@@ -49,20 +49,20 @@ public class DonneeUtilisateurImpl {
         @RegisterMapper(UtilisateurMapper.class)
         interface UserSQLs {
             @SqlQuery("select * from TP_UTILISATEUR")
-            List<AuthentificationBean> list();
+            List<UtilisateurBean> list();
 
             @SqlUpdate("insert into TP_UTILISATEUR (TPU_NAME)" +
                 " values(:username) ")
             @GetGeneratedKeys
-            Integer insert(@BindBean AuthentificationBean test);
+            Integer insert(@BindBean UtilisateurBean test);
         }
 
         public class UtilisateurMapper
-            implements ResultSetMapper<AuthentificationBean> {
+            implements ResultSetMapper<UtilisateurBean> {
 
             @Override
-            public AuthentificationBean map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-                AuthentificationBean bean = new AuthentificationBean();
+            public UtilisateurBean map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+                UtilisateurBean bean = new UtilisateurBean();
                 bean.setId((Integer) r.getObject("TPU_ID"));
                 bean.setNomUtilisateur(r.getString("TPU_NOM"));
                 return bean;
