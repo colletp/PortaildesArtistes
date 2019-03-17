@@ -4,6 +4,8 @@ import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateur;
 
 import java.io.Serializable;
 
+import org.springframework.context.annotation.Bean;
+
 public class UtilisateurBean implements Serializable {
 
     // ******************

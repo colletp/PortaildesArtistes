@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class AuthentificationService2 {
     private static final Logger logger = LoggerFactory.getLogger(AuthentificationService2.class);
     private static int i;
 
-    private com.unamur.portaildesartistes.wsartiste.gestionutilisateur.AuthentificationServiceImpl f_authentificationServiceImpl;
+    private com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl f_authentificationServiceImpl;
 
     @GetMapping("/gestionUtilisateur/list")
     public List<UtilisateurBean> list() {

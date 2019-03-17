@@ -1,5 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.corelayer;
 
+import org.springframework.context.annotation.Bean;
+
 import java.io.Serializable;
 
 public class RoleBean implements Serializable {

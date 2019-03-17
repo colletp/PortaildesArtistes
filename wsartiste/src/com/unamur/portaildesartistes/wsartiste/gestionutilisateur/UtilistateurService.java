@@ -4,7 +4,7 @@ import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import java.util.List;
 
-public interface AuthentificationService {
+public interface UtilistateurService {
     List<UtilisateurBean> list();
 
     Integer insertOK();
