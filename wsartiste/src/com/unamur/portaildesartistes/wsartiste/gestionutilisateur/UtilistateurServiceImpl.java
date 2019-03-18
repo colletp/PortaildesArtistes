@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
-import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateur;
+import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl ;
 import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +10,12 @@ import java.util.List;
 
 public class UtilistateurServiceImpl implements UtilistateurService {
 
-   private DonneeUtilisateur donneeUtilisateur;
+    private DonneeUtilisateurImpl donneeUtilisateur;
+
+    public UtilistateurServiceImpl()
+    {
+        donneeUtilisateur = new DonneeUtilisateurImpl();
+    }
 
     @Transactional
     public List<UtilisateurBean> list(){

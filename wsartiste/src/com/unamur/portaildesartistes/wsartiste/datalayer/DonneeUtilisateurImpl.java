@@ -11,15 +11,12 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,21 +24,18 @@ import java.util.List;
 @Repository
 public class DonneeUtilisateurImpl {
 
-        @Qualifier("dataSource")
-//        @Autowired
-        private DataSource dataSource;
+    @org.springframework.beans.factory.annotation.Autowired
+    DBI dbi;
 
-        public List<UtilisateurBean> list(){
+    public List<UtilisateurBean> list(){
             // DatasourceUtils contrôle si il y a déjà une connecection avec une transaction pour le threa courant
-            Connection conn =  DataSourceUtils.getConnection(dataSource);
-            Handle handle = DBI.open(conn);
+            Handle handle = dbi.open();
             UserSQLs userQLs = handle.attach(UserSQLs.class);
             return userQLs.list();
         }
 
         public Integer insert(UtilisateurBean item){
-            Connection conn =  DataSourceUtils.getConnection(dataSource);
-            Handle handle = DBI.open(conn);
+            Handle handle = dbi.open();
             UserSQLs userSQLs = handle.attach(UserSQLs.class);
             return userSQLs.insert(item);
         }

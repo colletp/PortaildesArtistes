@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
+import com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class AuthentificationService2 {
+public class UtilisateurServiceFront {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthentificationService2.class);
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
     private static int i;
 
-    private com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl f_authentificationServiceImpl;
+    private UtilistateurServiceImpl f_authentificationServiceImpl;
+
+    public UtilisateurServiceFront()
+    {
+        f_authentificationServiceImpl = new UtilistateurServiceImpl();
+    }
 
     @GetMapping("/gestionUtilisateur/list")
     public List<UtilisateurBean> list() {
