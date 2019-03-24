@@ -16,7 +16,6 @@ public class UtilisateurServiceFront {
 
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
     private static int i;
-
     private UtilistateurServiceImpl f_authentificationServiceImpl;
 
     public UtilisateurServiceFront()

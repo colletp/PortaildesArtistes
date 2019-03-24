@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -24,13 +26,13 @@ import java.util.TimeZone;
  * Configuration for JDBI and related persistence.
  */
 @Configuration
+@ComponentScan
 public class DBIPersistenceConfig {
 
     @Autowired
     private DataSource dataSource;
 
-    @Bean
-    public DBI dbiBean() {
+    public @Bean DBI dbiBean() {
         Connection conn =  DataSourceUtils.getConnection(dataSource);
         DBI dbi = new DBI(dataSource);
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());

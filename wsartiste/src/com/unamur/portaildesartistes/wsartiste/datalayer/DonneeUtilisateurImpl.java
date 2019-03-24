@@ -11,11 +11,8 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import java.sql.Connection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +21,7 @@ import java.util.List;
 @Repository
 public class DonneeUtilisateurImpl {
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     DBI dbi;
 
     public List<UtilisateurBean> list(){

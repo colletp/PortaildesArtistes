@@ -40,8 +40,15 @@ Configutation:
                     - ref: Console_Appender
 
             Logger:
-                - name: guru.springframework.blog.log4j2yaml
+                name: guru.springframework.blog.log4j2yaml
                   level: debug
                   AppenderRef:
-                      - ref: File_Appender
+                        ref: File_Appender
                         level: error
+
+            AsyncLogger:
+                name: guru.springframework.blog.log4j2async
+                level: debug
+                AppenderRef:
+                    ref: RollingFile
+                    level: error

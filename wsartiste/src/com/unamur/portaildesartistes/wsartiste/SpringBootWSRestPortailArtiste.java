@@ -25,6 +25,7 @@ public class SpringBootWSRestPortailArtiste {
     public void postConstruct() {
         // set the JVM timezone to UTC
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
     }
 
 }
