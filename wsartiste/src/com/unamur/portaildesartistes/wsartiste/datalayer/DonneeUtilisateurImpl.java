@@ -14,6 +14,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,17 +23,20 @@ import java.util.List;
 public class DonneeUtilisateurImpl {
 
     @Autowired
-    DBI dbi;
+    DBI dbiBean;
+
+    @Autowired
+    DataSource dataSource;
 
     public List<UtilisateurBean> list(){
             // DatasourceUtils contrôle si il y a déjà une connecection avec une transaction pour le threa courant
-            Handle handle = dbi.open();
+            Handle handle = dbiBean.open();
             UserSQLs userQLs = handle.attach(UserSQLs.class);
             return userQLs.list();
         }
 
         public Integer insert(UtilisateurBean item){
-            Handle handle = dbi.open();
+            Handle handle = dbiBean.open();
             UserSQLs userSQLs = handle.attach(UserSQLs.class);
             return userSQLs.insert(item);
         }

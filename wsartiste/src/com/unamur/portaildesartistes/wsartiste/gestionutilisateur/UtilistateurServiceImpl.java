@@ -4,15 +4,16 @@ import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl ;
 import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.skife.jdbi.v2.DBI;
 
 import java.util.Date;
 import java.util.List;
 
+@RestController
 public class UtilistateurServiceImpl implements UtilistateurService {
 
+    @Autowired
     private DonneeUtilisateurImpl donneeUtilisateur;
 
     public UtilistateurServiceImpl()

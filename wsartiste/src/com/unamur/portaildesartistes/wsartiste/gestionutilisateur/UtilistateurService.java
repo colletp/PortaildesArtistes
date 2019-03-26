@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface UtilistateurService {
     List<UtilisateurBean> list();
-
     Integer insertOK();
-
     void insertAndFail();
-
 }

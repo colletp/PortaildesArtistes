@@ -15,27 +15,26 @@ import java.util.List;
 public class UtilisateurServiceFront {
 
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
-    private static int i;
-    private UtilistateurServiceImpl f_authentificationServiceImpl;
+    private UtilistateurServiceImpl f_utilisateurServiceImpl;
 
     public UtilisateurServiceFront()
     {
-        f_authentificationServiceImpl = new UtilistateurServiceImpl();
+        f_utilisateurServiceImpl = new UtilistateurServiceImpl();
     }
 
     @GetMapping("/gestionUtilisateur/list")
     public List<UtilisateurBean> list() {
-        return f_authentificationServiceImpl.list();
+        return f_utilisateurServiceImpl.list();
     }
 
     @GetMapping("/gestionUtilisateur/insertOK")
     public Integer insertOK() {
-        return f_authentificationServiceImpl.insertOK();
+        return f_utilisateurServiceImpl.insertOK();
     }
 
     @GetMapping("/gestionUtilisateur/insertNotOK")
     public String insertNotOK() {
-        f_authentificationServiceImpl.insertAndFail();
+        f_utilisateurServiceImpl.insertAndFail();
         return "ok";
     }
 }
