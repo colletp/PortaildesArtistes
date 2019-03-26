@@ -25,9 +25,6 @@ public class DonneeUtilisateurImpl {
     @Autowired
     DBI dbiBean;
 
-    @Autowired
-    DataSource dataSource;
-
     public List<UtilisateurBean> list(){
             // DatasourceUtils contrôle si il y a déjà une connecection avec une transaction pour le threa courant
             Handle handle = dbiBean.open();

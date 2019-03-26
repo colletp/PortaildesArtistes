@@ -25,6 +25,7 @@ import java.util.TimeZone;
  * Configuration for JDBI and related persistence.
  */
 @Configuration
+@org.springframework.boot.autoconfigure.EnableAutoConfiguration
 public class DBIPersistenceConfig {
 
     @Autowired
