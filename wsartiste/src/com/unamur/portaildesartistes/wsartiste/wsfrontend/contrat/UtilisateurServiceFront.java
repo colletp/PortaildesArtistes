@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RestController
+@Component
 public class UtilisateurServiceFront {
+
+
 
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
     private UtilistateurServiceImpl f_utilisateurServiceImpl;

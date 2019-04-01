@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DonneeUtilisateur {
 
-    List<UtilisateurBean> list();
+    List<UtilisateurBean> list(org.skife.jdbi.v2.DBI dbiBean);
 
     Integer insert(UtilisateurBean item);
 }

@@ -25,15 +25,28 @@ import java.util.TimeZone;
  * Configuration for JDBI and related persistence.
  */
 @Configuration
-@org.springframework.boot.autoconfigure.EnableAutoConfiguration
+@ComponentScan(basePackages = "com.unamur.portaildesartistes.wsartiste")
 public class DBIPersistenceConfig {
 
     @Autowired
     private DataSource dataSource;
 
+    @Bean
+    public com.fasterxml.jackson.databind.Module jodaModule() {
+        return new com.fasterxml.jackson.datatype.joda.JodaModule();
+    }
+
+
     public @Bean DBI dbiBean() {
         Connection conn =  DataSourceUtils.getConnection(dataSource);
+        /* The first is to pass a JDBC DataSource instance to the constructor.
+           In this case connections will be obtained from the datasource.
+           This is generally the best option for cases where you want connection pooling.
+        */
         DBI dbi = new DBI(dataSource);
+        /*
+            Save time functionnalities
+         */
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());
         dbi.registerArgumentFactory(new LocalDateArgumentFactory());
         dbi.registerColumnMapper(new JodaDateTimeMapper());

@@ -82,6 +82,12 @@
             <version>2.10.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
         <!-- Test avec Springboot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
