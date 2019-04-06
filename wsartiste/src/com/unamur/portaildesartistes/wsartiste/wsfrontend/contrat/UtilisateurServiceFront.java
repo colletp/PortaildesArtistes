@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@RestController
 public class UtilisateurServiceFront {
-
-
 
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
     private UtilistateurServiceImpl f_utilisateurServiceImpl;

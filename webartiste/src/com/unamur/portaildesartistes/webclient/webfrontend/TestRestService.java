@@ -23,7 +23,7 @@ public class TestRestService {
     private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value="/")
-    ModelAndView ping(ModelAndView modelAndView) {
+    ModelAndView IsServerAvailable(ModelAndView modelAndView) {
 
         ResponseEntity<String> reponseServeur = restTemplate.getForEntity(configurationService.getUrl(), String.class);
         int codeReponseServeur= reponseServeur.getStatusCodeValue();

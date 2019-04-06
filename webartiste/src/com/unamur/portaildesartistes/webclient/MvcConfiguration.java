@@ -1,10 +1,11 @@
 package com.unamur.portaildesartistes.webclient;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -33,20 +34,19 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     @Bean
-    RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
+    public RestTemplate restTemplate() {
+        return new RestTemplate(getClientHttpRequestFactory());
+    }
 
-    private ClientHttpRequestFactory getClientHttpRequestFactory() {
-        int timeout = 5000;
-        RequestConfig config = RequestConfig.custom()
-            .setConnectTimeout(timeout)
-            .setConnectionRequestTimeout(timeout)
-            .setSocketTimeout(timeout)
-            .build();
-        CloseableHttpClient client = HttpClientBuilder
-            .create()
-            .setDefaultRequestConfig(config)
-            .build();
-        return new HttpComponentsClientHttpRequestFactory(client);
+    private HttpComponentsClientHttpRequestFactory getClientHttpRequestFactory() {
+        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+            = new HttpComponentsClientHttpRequestFactory();
+        //Connect timeout
+        clientHttpRequestFactory.setConnectTimeout(10_000);
+
+        //Read timeout
+        clientHttpRequestFactory.setReadTimeout(10_000);
+        return clientHttpRequestFactory;
     }
 
 }

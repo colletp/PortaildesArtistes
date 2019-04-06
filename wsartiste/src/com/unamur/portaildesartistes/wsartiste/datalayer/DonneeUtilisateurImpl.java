@@ -25,7 +25,7 @@ public class DonneeUtilisateurImpl {
     @Autowired
     DBI dbiBean;
 
-    public List<UtilisateurBean> list(org.skife.jdbi.v2.DBI dbiBean){
+    public List<UtilisateurBean> list(){
             // DatasourceUtils contrôle si il y a déjà une connecection avec une transaction pour le threa courant
             Handle handle = dbiBean.open();
             UserSQLs userQLs = handle.attach(UserSQLs.class);

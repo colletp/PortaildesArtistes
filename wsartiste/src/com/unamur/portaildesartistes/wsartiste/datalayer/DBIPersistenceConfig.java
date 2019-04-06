@@ -36,7 +36,6 @@ public class DBIPersistenceConfig {
         return new com.fasterxml.jackson.datatype.joda.JodaModule();
     }
 
-
     public @Bean DBI dbiBean() {
         Connection conn =  DataSourceUtils.getConnection(dataSource);
         /* The first is to pass a JDBC DataSource instance to the constructor.

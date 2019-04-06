@@ -4,22 +4,19 @@ import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl ;
 import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import org.skife.jdbi.v2.DBI;
 
 import java.util.Date;
 import java.util.List;
 
-@Repository
+@Component
 @ComponentScan(basePackages = "com.unamur.portaildesartistes.wsartiste")
 public class UtilistateurServiceImpl implements UtilistateurService {
 
-    @Autowired
-    DBI dbiBean;
 
     @Autowired
     private DonneeUtilisateurImpl donneeUtilisateur;
@@ -31,8 +28,8 @@ public class UtilistateurServiceImpl implements UtilistateurService {
 
     @Transactional
     public List<UtilisateurBean> list(){
-        System.out.println(donneeUtilisateur.list(dbiBean));
-        return donneeUtilisateur.list(dbiBean);
+        System.out.println(donneeUtilisateur.list());
+        return donneeUtilisateur.list();
     }
 
     @Transactional
