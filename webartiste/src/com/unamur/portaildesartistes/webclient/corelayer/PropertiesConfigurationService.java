@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.webclient;
+package com.unamur.portaildesartistes.webclient.corelayer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -21,7 +21,7 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setPrefix("/webfrontend/");
         resolver.setSuffix(".jsp");
         resolver.setOrder(1);
         resolver.setViewClass(JstlView.class);

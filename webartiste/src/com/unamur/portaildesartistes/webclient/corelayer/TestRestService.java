@@ -1,6 +1,4 @@
-package com.unamur.portaildesartistes.webclient.webfrontend;
-
-    import com.unamur.portaildesartistes.webclient.PropertiesConfigurationService;
+package com.unamur.portaildesartistes.webclient.corelayer;
 
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
@@ -20,25 +18,25 @@ public class TestRestService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private PropertiesConfigurationService configurationService ;
+    private com.unamur.portaildesartistes.webclient.corelayer.PropertiesConfigurationService configurationService ;
 
     @GetMapping(value="/")
     ModelAndView IsServerAvailable(ModelAndView modelAndView) {
 
         ResponseEntity<String> reponseServeur = restTemplate.getForEntity(configurationService.getUrl(), String.class);
         int codeReponseServeur= reponseServeur.getStatusCodeValue();
-        String reponsePing="";
+        String reponseServerAvailable="";
         if(codeReponseServeur!=200){
             logger.error("Réponse du serveur: "+codeReponseServeur+" ==> Serveur indisponible, votre application ne fonctionnera pas correctement");
-            reponsePing=configurationService.getPingServeurKo();
+            reponseServerAvailable=configurationService.getPingServeurKo();
         }else{
-            reponsePing=configurationService.getPingServeurOk();
-            logger.info(configurationService.getPingServeur(),reponsePing);
+            reponseServerAvailable=configurationService.getPingServeurOk();
+            logger.info(configurationService.getPingServeur(),reponseServerAvailable);
         }
         //construction de la vue
         modelAndView.setViewName("validationrestservice");
         modelAndView.addObject("urlServeur", configurationService.getUrl());
-        modelAndView.addObject("pingServeur", reponsePing);
+        modelAndView.addObject("pingServeur", reponseServerAvailable);
         modelAndView.addObject("profileActif", configurationService.getProfileActif());
         return modelAndView;
     }
