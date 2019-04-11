@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
+import com.unamur.portaildesartistes.dtoArtiste.corelayer.UtilisateurDTO;
 import com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class UtilisateurServiceFront {
     private UtilistateurServiceImpl utilisateurServiceImpl;
 
     @GetMapping("/gestionUtilisateur/list")
-    public List<UtilisateurBean> list() {
+    public List<UtilisateurDTO> list() {
         return utilisateurServiceImpl.list();
     }
 

@@ -3,7 +3,7 @@ package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeAdresseImpl;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeRoleImpl;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl;
-import com.unamur.portaildesartistes.wsartiste.corelayer.UtilisateurBean;
+import com.unamur.portaildesartistes.dtoArtiste.corelayer.UtilisateurDTO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +23,16 @@ public class UtilistateurServiceImpl implements UtilistateurService {
     @Autowired
     private DonneeRoleImpl roleImpl;
 
-    private UtilisateurBean authUser;
+    private UtilisateurDTO authUser;
 
     UtilistateurServiceImpl(){
-        authUser = new UtilisateurBean();
+        authUser = new UtilisateurDTO();
     }
 
     @Transactional
-    public List<UtilisateurBean> list(){
-        List<UtilisateurBean> du = donneeUtilisateur.list();
-        for( UtilisateurBean usr : du ){
+    public List<UtilisateurDTO> list(){
+        List<UtilisateurDTO> du = donneeUtilisateur.list();
+        for( UtilisateurDTO usr : du ){
             usr.setResideAdr( adrImpl.getById( usr.getReside() ) );
             usr.setRoles( roleImpl.getByUser( usr.getId() ) );
         }

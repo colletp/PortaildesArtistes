@@ -16,7 +16,7 @@
 <body>
     <div align="center">
         <h2>Une erreur est survenue !!!!.</h2>
-        <p><a href="./">retour à l'accueil</a></p>
+        <p><a href="">retour à l'accueil</a></p>
     </div>
   	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	

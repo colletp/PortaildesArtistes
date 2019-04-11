@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.AdresseBean;
+import com.unamur.portaildesartistes.dtoArtiste.corelayer.AdresseDTO;
 
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
@@ -11,12 +11,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -30,26 +25,20 @@ public class DonneeAdresseImpl implements DonneeAdresse{
     @Autowired
     private DBI dbiBean;
 
-    @Autowired
-    private DataSource dataSource;
-
-    public List<AdresseBean> list(){
-        Connection conn =  DataSourceUtils.getConnection(dataSource);
-        Handle handle = dbiBean.open(conn);
+    public List<AdresseDTO> list(){
+        Handle handle = dbiBean.open();
         AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
         return AdresseSQLs.list();
     }
 
-    public AdresseBean getById(UUID p_id){
-        Connection conn =  DataSourceUtils.getConnection(dataSource);
-        Handle handle = dbiBean.open(conn);
+    public AdresseDTO getById(UUID p_id){
+        Handle handle = dbiBean.open();
         AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
         return AdresseSQLs.getById( p_id );
     }
 
-    public UUID insert(AdresseBean item){
-        Connection conn =  DataSourceUtils.getConnection(dataSource);
-        Handle handle = dbiBean.open(conn);
+    public UUID insert(AdresseDTO item){
+        Handle handle = dbiBean.open();
         AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
         return AdresseSQLs.insert(item);
     }
@@ -57,22 +46,21 @@ public class DonneeAdresseImpl implements DonneeAdresse{
     @RegisterMapper(AdresseMapper.class)
     interface AdresseSQLs {
         @SqlQuery("select * from adresses")
-        List<AdresseBean> list();
+        List<AdresseDTO> list();
 
         @SqlQuery("select * from adresses where adresses_id = :adresses_id")
-        AdresseBean getById(@Bind("adresses_id") UUID p_id);
+        AdresseDTO getById(@Bind("adresses_id") UUID p_id);
 
         @SqlUpdate("insert into adresses (ville,rue,num,boite) values(:ville,:rue,:num,:boite) ")
         @GetGeneratedKeys
-        UUID insert(@BindBean AdresseBean test);
+        UUID insert(@BindBean AdresseDTO test);
     }
 
-    @Component
-    public static class AdresseMapper implements ResultSetMapper<AdresseBean> {
-        AdresseBean bean;
+    public static class AdresseMapper implements ResultSetMapper<AdresseDTO> {
+        AdresseDTO bean;
         @Override
-        public AdresseBean map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            bean = new AdresseBean();
+        public AdresseDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+            bean = new AdresseDTO();
             bean.setId((UUID) r.getObject("adresses_id"));
             bean.setRue(r.getString("rue"));
             bean.setNumero(r.getString("num"));

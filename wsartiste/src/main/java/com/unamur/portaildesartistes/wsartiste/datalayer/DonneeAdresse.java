@@ -1,11 +1,11 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
-import com.unamur.portaildesartistes.wsartiste.corelayer.AdresseBean;
+import com.unamur.portaildesartistes.dtoArtiste.corelayer.AdresseDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface DonneeAdresse {
-    List<AdresseBean> list();
-    UUID insert(AdresseBean item);
+    List<AdresseDTO> list();
+    UUID insert(AdresseDTO item);
 }

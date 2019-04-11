@@ -15,9 +15,6 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
-    private static final MediaType MEDIA_TYPE_YAML = MediaType.valueOf("text/yaml");
-    //private static final MediaType MEDIA_TYPE_YML = MediaType.valueOf("text/yml");
-
     @Autowired
     @Qualifier("yamlObjectMapper")
     private ObjectMapper myObjectMapper;

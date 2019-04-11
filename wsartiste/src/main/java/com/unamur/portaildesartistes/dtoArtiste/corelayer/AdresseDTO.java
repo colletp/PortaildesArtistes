@@ -1,10 +1,10 @@
-package com.unamur.portaildesartistes.wsartiste.corelayer;
+package com.unamur.portaildesartistes.dtoArtiste.corelayer;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 //@Component
-public class AdresseBean implements Serializable {
+public class AdresseDTO implements Serializable {
 
     // ******************
     // Champs/propriétés

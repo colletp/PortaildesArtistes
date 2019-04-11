@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.wsartiste.corelayer;
+package com.unamur.portaildesartistes.dtoArtiste.corelayer;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,23 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-//@Component
+public class UtilisateurDTO implements Serializable, UserDetails {
 
-//@Entity
-//@Table(name = "citoyen")
-public class UtilisateurBean implements Serializable, UserDetails {
-
-        //@Id
-        //@GeneratedValue(strategy = GenerationType.IDENTITY)
-/*        private Integer userId;
-        private String username;
-        private String password;
-        public Integer getUserId() {
-            return userId;
-        }
-        public void setUserId(Integer userId) {
-            this.userId = userId;
-        }*/
         public String getUsername() {
             return login;
         }
@@ -69,9 +54,8 @@ public class UtilisateurBean implements Serializable, UserDetails {
     private String password;
     private UUID reside;
 
-    private AdresseBean resideAdr;
-    private List<RoleBean> roles;
-    //private boolean actif;
+    private AdresseDTO resideAdr;
+    private List<RoleDTO> roles;
 
     // ******************
     // Constructeur
@@ -108,11 +92,11 @@ public class UtilisateurBean implements Serializable, UserDetails {
     public UUID getReside() { return reside; }
     public void setReside(UUID p_reside) { this.reside = p_reside; }
 
-    public AdresseBean getResideAdr() { return resideAdr; }
-    public void setResideAdr(AdresseBean p_reside) { this.resideAdr = p_reside; }
+    public AdresseDTO getResideAdr() { return resideAdr; }
+    public void setResideAdr(AdresseDTO p_reside) { this.resideAdr = p_reside; }
 
-    public List<RoleBean> getRoles() { return roles; }
-    public void setRoles(List<RoleBean> p_roles) { this.roles = p_roles; }
+    public List<RoleDTO> getRoles() { return roles; }
+    public void setRoles(List<RoleDTO> p_roles) { this.roles = p_roles; }
 
     // ******************
     // Fonctions

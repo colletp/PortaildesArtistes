@@ -11,15 +11,12 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 public class AuthentificationService{
-
     private static final Logger logger = LoggerFactory.getLogger(AuthentificationService.class);
 
     @GetMapping(value="/Authentification")
     public ResponseEntity<String>  getAuthentificationAccess(){
         logger.info("Service Démarré");
-        return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name(),
-            HttpStatus.OK);
-
+        return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name(), HttpStatus.OK);
     }
 
 }

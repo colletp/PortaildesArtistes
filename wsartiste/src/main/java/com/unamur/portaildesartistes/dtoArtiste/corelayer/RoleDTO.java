@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.wsartiste.corelayer;
+package com.unamur.portaildesartistes.dtoArtiste.corelayer;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Component
-public class RoleBean implements Serializable {
+public class RoleDTO implements Serializable {
     private UUID id;
     private String nomRole;
     private String lang;

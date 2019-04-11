@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -28,7 +28,6 @@ import java.util.TimeZone;
 //@Configuration
 
 @Service
-
 public class DBIPersistenceConfig {
 
     @Autowired
@@ -36,22 +35,16 @@ public class DBIPersistenceConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DBIPersistenceConfig.class);
 
-    /*@Bean
+    @Bean
     public com.fasterxml.jackson.databind.Module jodaModule() {
         return new com.fasterxml.jackson.datatype.joda.JodaModule();
-    }*/
+    }
 
     @Bean
     public DBI dbiBean(){
-        Connection conn =  DataSourceUtils.getConnection(dataSource);
-        /* The first is to pass a JDBC DataSource instance to the constructor.
-           In this case connections will be obtained from the datasource.
-           This is generally the best option for cases where you want connection pooling.
-        */
-        DBI dbi = new DBI(dataSource);
-        /*
-            Save time functionnalities
-         */
+        TransactionAwareDataSourceProxy dataSourceProxy = new TransactionAwareDataSourceProxy(dataSource);
+        DBI dbi = new DBI(dataSourceProxy);
+        //Save time functionnalities
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());
         dbi.registerArgumentFactory(new LocalDateArgumentFactory());
         dbi.registerColumnMapper(new JodaDateTimeMapper());
