@@ -1,44 +1,69 @@
 package com.unamur.portaildesartistes.wsartiste;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-/*
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-*/
-/*
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
-*/
-public class WebSecurityConfig
-{}
-/*
-//extends WebSecurityConfigurerAdapter {
-
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    @Qualifier("donneeUtilisateurImpl")
+    UserDetailsService userDetailsService;
 
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin").password(encoder().encode("adminPass")).roles("ADMIN")
+                .and()
+                .withUser("user").password(encoder().encode("userPass")).roles("USER");
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+/*    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/foos").authenticated()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .and()
+                .formLogin()
+                .successHandler(mySuccessHandler)
+                .failureHandler(myFailureHandler)
+                .and()
+                .logout();
+    }
+*/
+/*
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
         // Setting Service to find User in the database.
         // And Setting PassswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
     }
-
+*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -72,4 +97,3 @@ public class WebSecurityConfig
             .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
     }
 }
-*/

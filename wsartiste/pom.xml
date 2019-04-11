@@ -74,6 +74,19 @@
             <version>5.1.10</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        -->
         <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
         <!-- Interval, PeriodFormatter, or PeriodType are not available in Java-8 -->
         <dependency>
@@ -129,7 +142,11 @@
             <artifactId>disruptor</artifactId>
             <version>3.3.6</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.8.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -148,6 +165,14 @@
                     <!-- or whatever version you use -->
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>

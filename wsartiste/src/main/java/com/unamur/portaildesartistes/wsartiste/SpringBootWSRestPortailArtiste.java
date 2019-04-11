@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import javax.annotation.PostConstruct;
 
 
@@ -14,7 +16,8 @@ import java.util.TimeZone;
 // Point d'entrée d'une application SpringBoot
 // Doit être située à la racine du package principal !!!!!!
 // @EnableWebMVC pas nécessaire car SpringBoot ajoute automatiquement si il detecte qu'une librairie sprinng-webmvc est présente dans les dépendances.
-// TODO ??? @EnableGlobalMethodSecurity(securedEnabled = true)
+// TODO ???
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SpringBootWSRestPortailArtiste {
 
     public static void main(String[] args) {

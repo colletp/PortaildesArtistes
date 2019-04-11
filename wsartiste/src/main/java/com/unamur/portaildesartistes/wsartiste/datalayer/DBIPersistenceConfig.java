@@ -10,11 +10,12 @@ import org.skife.jdbi.v2.tweak.Argument;
 import org.skife.jdbi.v2.tweak.ArgumentFactory;
 import org.skife.jdbi.v2.tweak.ResultColumnMapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -24,19 +25,24 @@ import java.util.TimeZone;
 /**
  * Configuration for JDBI and related persistence.
  */
-@Configuration
-@ComponentScan(basePackages = "com.unamur.portaildesartistes.wsartiste")
+//@Configuration
+
+@Service
+
 public class DBIPersistenceConfig {
 
     @Autowired
     private DataSource dataSource;
 
-    @Bean
+    private static final Logger logger = LoggerFactory.getLogger(DBIPersistenceConfig.class);
+
+    /*@Bean
     public com.fasterxml.jackson.databind.Module jodaModule() {
         return new com.fasterxml.jackson.datatype.joda.JodaModule();
-    }
+    }*/
 
-    public @Bean DBI dbiBean() {
+    @Bean
+    public DBI dbiBean(){
         Connection conn =  DataSourceUtils.getConnection(dataSource);
         /* The first is to pass a JDBC DataSource instance to the constructor.
            In this case connections will be obtained from the datasource.

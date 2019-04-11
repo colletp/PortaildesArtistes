@@ -1,26 +1,34 @@
 package com.unamur.portaildesartistes.wsartiste.corelayer;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.UUID;
 
+@Component
 public class RoleBean implements Serializable {
-    private Integer id;
+    private UUID id;
     private String nomRole;
+    private String lang;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
     public String getNomRole() {
         return nomRole;
     }
-
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
     }
+    public String getLang() {
+        return lang;
+    }
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
 }
