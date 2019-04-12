@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public  interface DonneeRole {
-    List<RoleDTO> getByUser(UUID p_id);
+    List<RoleDTO> getByCitoyenId(UUID p_id);
 }

@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class UtilisateurServiceFront {
     private UtilistateurServiceImpl usrServiceImpl;
 
     @GetMapping("/gestionUtilisateur/list")
-    public List<UtilisateurDTO> list() {
+    public List<CitoyenDTO> list() {
         return usrServiceImpl.list();
     }
 

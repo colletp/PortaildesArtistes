@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class UtilisateurDTO implements Serializable, UserDetails {
+public class CitoyenDTO implements Serializable, UserDetails {
 
     // ******************
     // Champs/propriétés
@@ -44,19 +44,19 @@ public class UtilisateurDTO implements Serializable, UserDetails {
     public void setId( UUID p_id) { this.id = p_id; }
 
     public String getNom() { return nom; }
-    public void setNom(String p_nom) { this.login = p_nom; }
-    public String getPrenom() { return login; }
-    public void setPrenom(String p_prenom) { this.login = p_prenom; }
+    public void setNom(String p_nom) { this.nom = p_nom; }
+    public String getPrenom() { return prenom; }
+    public void setPrenom(String p_prenom) { this.prenom = p_prenom; }
     public Date getDateNaissance() { return date_naissance; }
     public void setDateNaissance(Date p_date_naissance) { this.date_naissance= p_date_naissance; }
     public String getTel() { return tel; }
-    public void setTel(String p_tel) { this.login = p_tel; }
+    public void setTel(String p_tel) { this.tel = p_tel; }
     public String getGsm() { return gsm; }
-    public void setGsm(String p_gsm) { this.login = p_gsm; }
+    public void setGsm(String p_gsm) { this.gsm = p_gsm; }
     public String getMail() { return mail; }
     public void setMail(String p_mail) { this.mail = p_mail; }
     public String getNrn() { return nrn; }
-    public void setNrn(String p_nrn) { this.login = p_nrn; }
+    public void setNrn(String p_nrn) { this.nrn = p_nrn; }
     public String getNation() { return nation; }
     public void setNation(String p_nation) { this.nation = p_nation; }
     public UUID getReside() { return reside; }

@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
@@ -24,18 +24,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsService{
-    private static final Logger logger = LoggerFactory.getLogger(DonneeUtilisateurImpl.class);
+public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
+    private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
     @Autowired
     private DBI dbiBean;
 
-    public List<UtilisateurDTO> list(){
+    public List<CitoyenDTO> list(){
         Handle handle = dbiBean.open();
         UserSQLs userSQLs = handle.attach(UserSQLs.class);
         return userSQLs.list();
     }
 
-    public UUID insert(UtilisateurDTO item){
+    public UUID insert(CitoyenDTO item){
         Handle handle = dbiBean.open();
         UserSQLs userSQLs = handle.attach(UserSQLs.class);
         UUID ret=null;
@@ -62,18 +62,18 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
     @RegisterMapper(UtilisateurMapper.class)
     interface UserSQLs {
         @SqlQuery("select * from citoyen")
-        List<UtilisateurDTO> list();
+        List<CitoyenDTO> list();
         @SqlQuery("select * from citoyen WHERE login=:login")
         UserDetails getUserByLogin(@BindBean String login);
         @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
         @GetGeneratedKeys
-        UUID insert(@BindBean UtilisateurDTO test);
+        UUID insert(@BindBean CitoyenDTO test);
     }
 
-    public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {
-        UtilisateurDTO usrDTO;
-        public UtilisateurDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            usrDTO = new UtilisateurDTO();
+    public static class UtilisateurMapper implements ResultSetMapper<CitoyenDTO> {
+        CitoyenDTO usrDTO;
+        public CitoyenDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+            usrDTO = new CitoyenDTO();
 
             usrDTO.setId((UUID) r.getObject("citoyen_id"));
             usrDTO.setNom( r.getString("nom") );

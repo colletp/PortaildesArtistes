@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class LoginControler {
 
     @GetMapping(value = "/login")//initialisation du login
     public String loginView(Map<String, Object> model) {
-        UtilisateurDTO userDto = new UtilisateurDTO();
+        CitoyenDTO userDto = new CitoyenDTO();
         model.put("userForm", userDto);
         return "loginForm";
     }

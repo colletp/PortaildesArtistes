@@ -2,8 +2,8 @@ package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeAdresseImpl;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeRoleImpl;
-import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl;
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeCitoyenImpl;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,24 +17,24 @@ import java.util.UUID;
 public class UtilistateurServiceImpl implements UtilistateurService {
 
     @Autowired
-    private DonneeUtilisateurImpl usrImpl;
+    private DonneeCitoyenImpl usrImpl;
     @Autowired
     private DonneeAdresseImpl adrImpl;
     @Autowired
     private DonneeRoleImpl roleImpl;
 
-    private UtilisateurDTO usrDTO;
+    private CitoyenDTO usrDTO;
 
     UtilistateurServiceImpl(){
-        usrDTO = new UtilisateurDTO();
+        usrDTO = new CitoyenDTO();
     }
 
     @Transactional
-    public List<UtilisateurDTO> list(){
-        List<UtilisateurDTO> usrDTOList = usrImpl.list();
-        for( UtilisateurDTO usr : usrDTOList ){
+    public List<CitoyenDTO> list(){
+        List<CitoyenDTO> usrDTOList = usrImpl.list();
+        for( CitoyenDTO usr : usrDTOList ){
             usr.setResideAdr( adrImpl.getById( usr.getReside() ) );
-            usr.setRoles( roleImpl.getByUser( usr.getId() ) );
+            usr.setRoles( roleImpl.getByCitoyenId( usr.getId() ) );
         }
         return usrDTOList;
     }

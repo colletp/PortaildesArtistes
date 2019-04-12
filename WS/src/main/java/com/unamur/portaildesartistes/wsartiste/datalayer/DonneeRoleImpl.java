@@ -19,21 +19,21 @@ import java.util.UUID;
 
 @Repository
 public class DonneeRoleImpl implements DonneeRole{
-    private static final Logger logger = LoggerFactory.getLogger(DonneeUtilisateurImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
 
     @Autowired
     private DBI dbiBean;
 
-    public List<RoleDTO> getByUser(UUID p_id){
+    public List<RoleDTO> getByCitoyenId(UUID p_id){
         Handle handle = dbiBean.open();
         RoleSQLs RoleSQLs = handle.attach(RoleSQLs.class);
-        return RoleSQLs.getByUser( p_id );
+        return RoleSQLs.getByCitoyenId( p_id );
     }
 
     @RegisterMapper(RoleMapper.class)
     interface RoleSQLs {
         @SqlQuery("select r.* from gestionnaire g join gestionnaire_roles gr on g.gest_id=gr.gest_id join roles r on gr.roles_id=r.roles_id where g.citoyen_id=:citoyen_id")
-        List<RoleDTO> getByUser(@Bind("citoyen_id")UUID p_id);
+        List<RoleDTO> getByCitoyenId(@Bind("citoyen_id")UUID p_id);
     }
 
     public static class RoleMapper implements ResultSetMapper<RoleDTO> {
