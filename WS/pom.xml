@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- TODO : Normalement SpringBoot gère lui-même les versions : problème a résoudre -->
+<!-- TODO : NE pas laisser Tomcat embarqué dans la solution -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>theArtist</artifactId>
+        <groupId>com.unamur.portaildesartistes</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>WS</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <description>Portail des artistes composant webservice</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.unamur.portaildesartistes</groupId>
+            <artifactId>DTO</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <!-- Utilisation de JDBI avec PostgreSQL -->
+        <!-- Doc JDBI : http://jdbi.org/ -->
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi</artifactId>
+            <version>2.78</version>
+        </dependency>
+
+        <!-- postgresql -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.5</version>
+        </dependency>
+
+        <!-- My sql librairie -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.10</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <!-- Interval, PeriodFormatter, or PeriodType are not available in Java-8 -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <!-->La spécification de la classe de démarrage n'est pas obligatoire<-->
+        <start-class>com.unamur.portaildesartistes.wsartiste.SpringBootWSRestPortailArtiste</start-class>
+    </properties>
+
+</project>

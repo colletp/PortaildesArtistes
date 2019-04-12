@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>theArtist</artifactId>
+        <groupId>com.unamur.portaildesartistes</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>WEB</artifactId>
+    <packaging>war</packaging>
+
+    <description>Portail des artistes composant web client</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.unamur.portaildesartistes</groupId>
+            <artifactId>DTO</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <!-->La spécification de la classe de démarrage n'est pas obligatoire<-->
+        <start-class>com.unamur.portaildesartistes.webclient.SpringBootClientPortailArtiste</start-class>
+        <tomcat.version>9.0.16</tomcat.version>
+    </properties>
+
+</project>
