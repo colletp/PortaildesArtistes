@@ -21,7 +21,7 @@ public class FormulaireDTO implements Serializable {
     private Boolean carte;
     private Boolean visa;
 
-    public List<ActiviteDTO> lActivites;
+    private List<ActiviteDTO> lActivites;
 
 
     // ******************
@@ -34,8 +34,8 @@ public class FormulaireDTO implements Serializable {
 
     public UUID getId() { return id; }
     public void setId( UUID p_id) { this.id = p_id; }
-    public UUID getCitoyenIdId() { return citoyenId; }
-    public void setCitoyenIdId( UUID p_id) { this.citoyenId = p_id; }
+    public UUID getCitoyenId() { return citoyenId; }
+    public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
     public Timestamp getDateDemande(){ return dateDemande;}
     public void setDateDemande(Timestamp d){ this.dateDemande=d;}
     public List<String> getCursusAc(){ return cursurAc;}

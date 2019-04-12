@@ -10,7 +10,7 @@ public class ActiviteDTO implements Serializable {
     // ******************
 
     private UUID id;
-    private UUID idSecteur;
+    private UUID secteurId;
     private String nomActivite;
 
     private SecteurDTO sectDTO;
@@ -24,8 +24,8 @@ public class ActiviteDTO implements Serializable {
 
     public UUID getId() { return id; }
     public void setId( UUID p_id) { this.id = p_id; }
-    public UUID getIdSecteur() { return idSecteur; }
-    public void setIdSecteur( UUID p_id) { this.idSecteur = p_id; }
+    public UUID getSecteurId() { return secteurId; }
+    public void setSecteurId( UUID p_id) { this.secteurId = p_id; }
     public String getNomActivite() { return nomActivite; }
     public void setNomActivite(String p_activite) { this.nomActivite = p_activite; }
 

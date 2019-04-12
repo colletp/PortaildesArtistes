@@ -4,10 +4,7 @@ import com.unamur.portaildesartistes.DTO.PrestationDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -39,12 +36,30 @@ public class DonneePrestationImpl implements DonneePrestation{
         return PrestationSQLs.insert(item);
     }
 
+    public List<PrestationDTO> getByDocId(UUID p_id){
+        Handle handle = dbiBean.open();
+        PrestationSQLs PrestationSQLs = handle.attach(PrestationSQLs.class);
+        return PrestationSQLs.getByDocId( p_id );
+    }
+
     @RegisterMapper(PrestationMapper.class)
     interface PrestationSQLs {
         @SqlQuery("select * from prestations ")
         List<PrestationDTO> list();
 
-        @SqlUpdate("INSERT INTO prestations (nom_Prestation) VALUES (:nomPrestation) ")
+        @SqlQuery("select * from prestations WHERE doc_artiste_id=:p_id ")
+        List<PrestationDTO> getByDocId(@Bind("p_id") UUID p_id);
+
+        @SqlQuery("select * from prestations WHERE commanditaire_id=:p_id ")
+        List<PrestationDTO> getByComId(@Bind("p_id") UUID p_id);
+
+        @SqlQuery("select * from prestations WHERE activite_id=:p_id ")
+        List<PrestationDTO> getByActId(@Bind("p_id") UUID p_id);
+
+        @SqlQuery("select * from prestations WHERE se_deroule_id=:p_id ")
+        List<PrestationDTO> getByPlaceId(@Bind("p_id") UUID p_id);
+
+        @SqlUpdate("INSERT INTO prestations (date_prest,duree,montant,etat,commanditaire_id,doc_artiste_id,activite_id,se_deroule_id) VALUES (:date_prest,:duree,:montant,:etat,:commanditaire_id,:doc_artiste_id,:activite_id,:se_deroule_id) ")
         @GetGeneratedKeys
         UUID insert(@BindBean PrestationDTO test);
     }

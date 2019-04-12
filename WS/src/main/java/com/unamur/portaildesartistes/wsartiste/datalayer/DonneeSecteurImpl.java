@@ -29,6 +29,11 @@ public class DonneeSecteurImpl implements DonneeSecteur{
         SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
         return SecteurSQLs.list();
     }
+    public SecteurDTO getById(UUID p_id){
+        Handle handle = dbiBean.open();
+        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
+        return SecteurSQLs.getById(p_id);
+    }
 
     public UUID insert(SecteurDTO item){
         Handle handle = dbiBean.open();
@@ -40,6 +45,9 @@ public class DonneeSecteurImpl implements DonneeSecteur{
     interface SecteurSQLs {
         @SqlQuery("select * from secteur ")
         List<SecteurDTO> list();
+
+        @SqlQuery("select * from secteur WHERE secteur_id = :p_id ")
+        SecteurDTO getById(@Bind("p_id") UUID p_id);
 
         @SqlUpdate("INSERT INTO secteur (nom_secteur) VALUES (:nomSecteur) ")
         @GetGeneratedKeys

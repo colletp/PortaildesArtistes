@@ -57,8 +57,8 @@ public class DonneeFormulaireImpl implements DonneeFormulaire{
         @SqlQuery("select * from formulaires where form_id = :form_id")
         FormulaireDTO getById(@Bind("form_id") UUID p_id);
 
-        @SqlQuery("select * from formulaires where citoyen_id = :citoyen_id")
-        List<FormulaireDTO> getByCitoyenId(@Bind("citoyen_id") UUID p_id);
+        @SqlQuery("select * from formulaires where citoyen_id = :citoyenId")
+        List<FormulaireDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
         @SqlUpdate("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) ")
         @GetGeneratedKeys
@@ -71,7 +71,7 @@ public class DonneeFormulaireImpl implements DonneeFormulaire{
         public FormulaireDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
             formulaireDTO = new FormulaireDTO();
             formulaireDTO.setId((UUID) r.getObject("form_id"));
-            formulaireDTO.setCitoyenIdId((UUID) r.getObject("citoyen_id"));
+            formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
             formulaireDTO.setCursurAc( (List<String>) r.getObject("cursus_ac"));
             formulaireDTO.setExpPro( (List<String>) r.getObject("ex_pro"));

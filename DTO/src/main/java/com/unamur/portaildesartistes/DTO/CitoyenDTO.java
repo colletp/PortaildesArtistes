@@ -30,6 +30,8 @@ public class CitoyenDTO implements Serializable, UserDetails {
 
     private AdresseDTO resideAdr;
     private List<RoleDTO> roles;
+    private List<DocArtisteDTO> docs;
+    private List<FormulaireDTO> forms;
 
     // ******************
     // Constructeur
@@ -70,6 +72,12 @@ public class CitoyenDTO implements Serializable, UserDetails {
 
     public List<RoleDTO> getRoles() { return roles; }
     public void setRoles(List<RoleDTO> p_roles) { this.roles = p_roles; }
+
+    public List<DocArtisteDTO> getDocArtistes() { return docs; }
+    public void setDocArtistes(List<DocArtisteDTO> p_docs) { this.docs = p_docs; }
+
+    public List<FormulaireDTO> getFormulaires() { return forms; }
+    public void setFormulaires(List<FormulaireDTO> p_forms) { this.forms = p_forms; }
 
     // ******************
     // Fonctions

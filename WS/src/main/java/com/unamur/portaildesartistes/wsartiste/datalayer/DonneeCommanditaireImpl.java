@@ -1,13 +1,11 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.CommanditaireDTO;
+import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -33,6 +31,12 @@ public class DonneeCommanditaireImpl implements DonneeCommanditaire{
         return CommanditaireSQLs.list();
     }
 
+    public CommanditaireDTO getById(UUID p_id){
+        Handle handle = dbiBean.open();
+        CommanditaireSQLs CommanditaireSQLs = handle.attach(CommanditaireSQLs.class);
+        return CommanditaireSQLs.getById( p_id );
+    }
+
     public UUID insert(CommanditaireDTO item){
         Handle handle = dbiBean.open();
         CommanditaireSQLs CommanditaireSQLs = handle.attach(CommanditaireSQLs.class);
@@ -43,6 +47,9 @@ public class DonneeCommanditaireImpl implements DonneeCommanditaire{
     interface CommanditaireSQLs {
         @SqlQuery("select * from commanditaire ")
         List<CommanditaireDTO> list();
+
+        @SqlQuery("select * from commanditaire where com_id = :com_id")
+        CommanditaireDTO getById(@Bind("com_id") UUID p_id);
 
         @SqlUpdate("INSERT INTO commanditaire (entreprise_id,citoyen_id) VALUES (:entreprise_id,:citoyen_id) ")
         @GetGeneratedKeys

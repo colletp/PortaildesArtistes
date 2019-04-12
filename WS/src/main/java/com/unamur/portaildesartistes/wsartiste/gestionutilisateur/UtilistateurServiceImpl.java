@@ -1,9 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
-import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeAdresseImpl;
-import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeRoleImpl;
-import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeCitoyenImpl;
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
+import com.unamur.portaildesartistes.DTO.*;
+import com.unamur.portaildesartistes.wsartiste.datalayer.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +20,20 @@ public class UtilistateurServiceImpl implements UtilistateurService {
     private DonneeAdresseImpl adrImpl;
     @Autowired
     private DonneeRoleImpl roleImpl;
+    @Autowired
+    private DonneeDocArtisteImpl docImpl;
+    @Autowired
+    private DonneePrestationImpl prestImpl;
+    @Autowired
+    private DonneeActiviteImpl actImpl;
+    @Autowired
+    private DonneeSecteurImpl sectImpl;
+    @Autowired
+    private DonneeFormulaireImpl formImpl;
+    @Autowired
+    private DonneeCommanditaireImpl comImpl;
+    @Autowired
+    private DonneeEntrepriseImpl entrImpl;
 
     private CitoyenDTO usrDTO;
 
@@ -35,6 +47,31 @@ public class UtilistateurServiceImpl implements UtilistateurService {
         for( CitoyenDTO usr : usrDTOList ){
             usr.setResideAdr( adrImpl.getById( usr.getReside() ) );
             usr.setRoles( roleImpl.getByCitoyenId( usr.getId() ) );
+            usr.setFormulaires( formImpl.getByCitoyenId( usr.getId() ) );
+            for( FormulaireDTO form : usr.getFormulaires() ){
+                form.setActivites( actImpl.getByFormId( form.getId() ) );
+                for( ActiviteDTO act : form.getActivites() ){
+                    act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
+                }
+            }
+            usr.setDocArtistes( docImpl.getByCitoyenId( usr.getId() ) );
+            for( DocArtisteDTO doc : usr.getDocArtistes() ){
+                doc.setActivites( actImpl.getByDocId( doc.getId() ) );
+                doc.setPrestations( prestImpl.getByDocId( doc.getId() ) );
+                for( PrestationDTO prest : doc.getPrestations() ){
+                    CommanditaireDTO com = comImpl.getById( prest.getCommanditaireId() );
+                        com.setCitoyen(  usrImpl.getById( com.getCitoyenId() ) );
+                        EntrepriseDTO entr = entrImpl.getById( com.getEntrepriseId() );
+                        if(entr!=null) {
+                            entr.setContact(usrImpl.getById(entr.getContactId()));
+                            com.setEntreprise(entr);
+                        }
+                        prest.setCommanditaire( com );
+                    prest.setSeDeroule( adrImpl.getById(prest.getSeDerouleId() ) );
+                    prest.setActivite( actImpl.getById(prest.getActiviteId() ) );
+                }
+            }
+
         }
         return usrDTOList;
     }

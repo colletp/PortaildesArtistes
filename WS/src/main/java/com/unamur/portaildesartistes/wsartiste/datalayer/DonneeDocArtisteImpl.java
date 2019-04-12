@@ -4,10 +4,7 @@ import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -38,11 +35,19 @@ public class DonneeDocArtisteImpl implements DonneeDocArtiste{
         SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
         return SecteurSQLs.insert(item);
     }
+    public List<DocArtisteDTO> getByCitoyenId(UUID p_id){
+        Handle handle = dbiBean.open();
+        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
+        return SecteurSQLs.getByCitoyenId(p_id);
+    }
 
     @RegisterMapper(DocArtisteMapper.class)
     interface SecteurSQLs {
         @SqlQuery("select * from doc_artiste ")
         List<DocArtisteDTO> list();
+
+        @SqlQuery("select * from doc_artiste WHERE citoyen_id=:citoyenId ")
+        List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
         @SqlUpdate("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) ")
         @GetGeneratedKeys
@@ -59,7 +64,7 @@ public class DonneeDocArtisteImpl implements DonneeDocArtiste{
             docArtisteDTO.setNoDoc(r.getString("no_doc"));
             docArtisteDTO.setNomArtiste(r.getString("nom_artiste"));
             docArtisteDTO.setDatePeremption(r.getDate("date_peremption"));
-            docArtisteDTO.setTypeDocArtiste(r.getString("type_nom_artiste"));
+            docArtisteDTO.setTypeDocArtiste(r.getString("type_doc_artiste"));
             return docArtisteDTO;
         }
     }

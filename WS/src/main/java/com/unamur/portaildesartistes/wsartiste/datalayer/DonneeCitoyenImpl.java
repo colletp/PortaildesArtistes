@@ -5,10 +5,7 @@ import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -31,16 +28,21 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
 
     public List<CitoyenDTO> list(){
         Handle handle = dbiBean.open();
-        UserSQLs userSQLs = handle.attach(UserSQLs.class);
-        return userSQLs.list();
+        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
+        return CitoyenSQLs.list();
+    }
+    public CitoyenDTO getById(UUID p_id){
+        Handle handle = dbiBean.open();
+        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
+        return CitoyenSQLs.getById(p_id);
     }
 
     public UUID insert(CitoyenDTO item){
         Handle handle = dbiBean.open();
-        UserSQLs userSQLs = handle.attach(UserSQLs.class);
+        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
         UUID ret=null;
         try {
-            ret = userSQLs.insert(item);
+            ret = CitoyenSQLs.insert(item);
         }catch(UnableToExecuteStatementException e){
             System.err.println( e );
             System.err.println( e.getCause() );
@@ -50,27 +52,33 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
         }
         return ret;
     }
+
     public UserDetails loadUserByUsername(String p_login) {
         return getUserByLogin( p_login );
     }
     public UserDetails getUserByLogin(String p_login){
         Handle handle = dbiBean.open();
-        UserSQLs userSQLs = handle.attach(UserSQLs.class);
-        return userSQLs.getUserByLogin(p_login);
+        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
+        return CitoyenSQLs.getByLogin(p_login);
     }
 
-    @RegisterMapper(UtilisateurMapper.class)
-    interface UserSQLs {
+    @RegisterMapper(CitoyenMapper.class)
+    interface CitoyenSQLs {
         @SqlQuery("select * from citoyen")
         List<CitoyenDTO> list();
+
+        @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
+        CitoyenDTO getById(@Bind("p_id")UUID p_id);
+
         @SqlQuery("select * from citoyen WHERE login=:login")
-        UserDetails getUserByLogin(@BindBean String login);
+        UserDetails getByLogin(@Bind("login") String login);
+
         @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
         @GetGeneratedKeys
         UUID insert(@BindBean CitoyenDTO test);
     }
 
-    public static class UtilisateurMapper implements ResultSetMapper<CitoyenDTO> {
+    public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {
         CitoyenDTO usrDTO;
         public CitoyenDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
             usrDTO = new CitoyenDTO();

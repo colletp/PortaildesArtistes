@@ -1,14 +1,12 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.EntrepriseDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -33,6 +31,11 @@ public class DonneeEntrepriseImpl implements DonneeEntreprise{
         EntrepriseSQLs EntrepriseSQLs = handle.attach(EntrepriseSQLs.class);
         return EntrepriseSQLs.list();
     }
+    public EntrepriseDTO getById(UUID p_id){
+        Handle handle = dbiBean.open();
+        EntrepriseSQLs EntrepriseSQLs = handle.attach(EntrepriseSQLs.class);
+        return EntrepriseSQLs.getById(p_id);
+    }
 
     public UUID insert(EntrepriseDTO item){
         Handle handle = dbiBean.open();
@@ -44,6 +47,9 @@ public class DonneeEntrepriseImpl implements DonneeEntreprise{
     interface EntrepriseSQLs {
         @SqlQuery("select * from entreprise ")
         List<EntrepriseDTO> list();
+
+        @SqlQuery("select * from entreprise WHERE entreprise_id = :p_id ")
+        EntrepriseDTO getById(@Bind("p_id")UUID p_id);
 
         @SqlUpdate("INSERT INTO entrerise (contact_id,siege_id,bce,denomination,statut_legal) VALUES (:contact_id,:siege_id,:bce,:denomination,:statut_legal) ")
         @GetGeneratedKeys
