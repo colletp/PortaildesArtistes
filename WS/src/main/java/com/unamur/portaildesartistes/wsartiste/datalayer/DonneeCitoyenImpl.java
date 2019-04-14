@@ -11,17 +11,18 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
-public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
+public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
     @Autowired
     private DBI dbiBean;
@@ -34,7 +35,11 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
     public CitoyenDTO getById(UUID p_id){
         Handle handle = dbiBean.open();
         CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
-        return CitoyenSQLs.getById(p_id);
+        try {
+            return CitoyenSQLs.getById(p_id);
+        }catch(SQLException e){
+            return null;
+        }
     }
 
     public UUID insert(CitoyenDTO item){
@@ -43,39 +48,71 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService{
         UUID ret=null;
         try {
             ret = CitoyenSQLs.insert(item);
-        }catch(UnableToExecuteStatementException e){
+        }
+        catch(UnableToExecuteStatementException e){
             System.err.println( e );
             System.err.println( e.getCause() );
             System.err.println( e.getMessage() );
             System.err.println( e.getClass() );
-            throw e;
+            //throw e;
+        }
+        catch(SQLException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
         }
         return ret;
     }
 
-    public UserDetails loadUserByUsername(String p_login) {
-        return getUserByLogin( p_login );
-    }
-    public UserDetails getUserByLogin(String p_login){
+//implemente la sécurité
+    @Autowired
+    private DonneeRoleImpl implRole;
+
+    @Override
+    public UserDetails loadUserByUsername(String userName)throws UsernameNotFoundException {
+        Objects.requireNonNull(userName);
         Handle handle = dbiBean.open();
         CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
-        return CitoyenSQLs.getByLogin(p_login);
+
+        CitoyenDTO user;
+        try {
+            user = CitoyenSQLs.getByLogin(userName);
+            if(user==null)throw new UsernameNotFoundException("User not found");
+        }catch( SQLException e ){
+            logger.error( e.getMessage()+"/sql : "+e.getSQLState() );
+            throw new UsernameNotFoundException("User not found");
+        };
+        user.setAuthorities( implRole.getByCitoyenId( user.getId() ) );
+        logger.debug("role of the user" + user.getAuthorities() );
+        return user;
     }
 
+/*
+    public Set<? extends GrantedAuthority> getAuthorities(){
+        return authorities;
+    }
+
+    private void setAuthorities(//Set<? extends GrantedAuthority> authorities
+                                ){
+        this.authorities=implRole.getByCitoyenId( getById() );
+    }
+*/
     @RegisterMapper(CitoyenMapper.class)
     interface CitoyenSQLs {
         @SqlQuery("select * from citoyen")
         List<CitoyenDTO> list();
 
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
-        CitoyenDTO getById(@Bind("p_id")UUID p_id);
+        CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
 
         @SqlQuery("select * from citoyen WHERE login=:login")
-        UserDetails getByLogin(@Bind("login") String login);
+        CitoyenDTO getByLogin(@Bind("login") String login) throws SQLException;
 
         @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
         @GetGeneratedKeys
-        UUID insert(@BindBean CitoyenDTO test);
+        UUID insert(@BindBean CitoyenDTO test) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {

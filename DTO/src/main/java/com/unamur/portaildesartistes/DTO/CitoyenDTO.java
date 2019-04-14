@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -98,7 +98,13 @@ public class CitoyenDTO implements Serializable, UserDetails {
     public boolean isEnabled() {
         return false;
     }
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+    private List<? extends GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+    public List<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+    public void setAuthorities(List<? extends GrantedAuthority> auth ) {
+        authorities = auth;
     }
 }

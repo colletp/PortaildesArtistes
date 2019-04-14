@@ -57,6 +57,9 @@ public class UtilistateurServiceImpl implements UtilistateurService {
             usr.setDocArtistes( docImpl.getByCitoyenId( usr.getId() ) );
             for( DocArtisteDTO doc : usr.getDocArtistes() ){
                 doc.setActivites( actImpl.getByDocId( doc.getId() ) );
+                for( ActiviteDTO act : doc.getActivites() ){
+                    act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
+                }
                 doc.setPrestations( prestImpl.getByDocId( doc.getId() ) );
                 for( PrestationDTO prest : doc.getPrestations() ){
                     CommanditaireDTO com = comImpl.getById( prest.getCommanditaireId() );

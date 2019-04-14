@@ -15,6 +15,7 @@ public class AuthentificationService{
 
     @GetMapping(value="/Authentification")
     public ResponseEntity<String>  getAuthentificationAccess(){
+
         logger.info("Service Démarré");
         return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name(), HttpStatus.OK);
     }

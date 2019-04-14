@@ -12,7 +12,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>WS</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <description>Portail des artistes composant webservice</description>
@@ -45,6 +44,7 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- My sql librairie -->
@@ -52,6 +52,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.10</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
