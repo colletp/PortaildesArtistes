@@ -64,7 +64,7 @@ public class CitoyenDTO implements Serializable, UserDetails {
     public UUID getReside() { return reside; }
     public void setReside(UUID p_reside) { this.reside = p_reside; }
 
-    public void setUserName(String p_login) { this.login = p_login; }
+    public void setUsername(String p_login) { this.login = p_login; }
     public void setPassword(String p_password) { this.password = p_password; }
 
     public AdresseDTO getResideAdr() { return resideAdr; }

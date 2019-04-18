@@ -3,14 +3,10 @@ package com.unamur.portaildesartistes.webclient.corelayer;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.http.MediaType;
     import org.springframework.http.ResponseEntity;
-    import org.springframework.security.access.prepost.PreAuthorize;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.client.RestTemplate;
     import org.springframework.web.servlet.ModelAndView;
 
@@ -44,6 +40,11 @@ public class TestRestService {
         model.addAttribute("profileActif", configurationService.getProfileActif() );
 
         return "validationrestservice.html";
+    }
+
+    @GetMapping(value="/mainCSS.css")
+    public String css(Model model) {
+        return "mainCSS.css";
     }
 
     @GetMapping(value = "/error")

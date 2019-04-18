@@ -11,7 +11,6 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -129,7 +128,7 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService {
             usrDTO.setMail( r.getString("mail") );
             usrDTO.setNrn( r.getString("nrn") );
             usrDTO.setNation( r.getString("nation") );
-            usrDTO.setUserName( r.getString("login") );
+            usrDTO.setUsername( r.getString("login") );
             usrDTO.setPassword( r.getString("password") );
             usrDTO.setReside( (UUID) r.getObject("reside"));
 

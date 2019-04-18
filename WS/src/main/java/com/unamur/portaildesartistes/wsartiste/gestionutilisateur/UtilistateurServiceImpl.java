@@ -37,7 +37,7 @@ public class UtilistateurServiceImpl implements UtilistateurService {
 
     private CitoyenDTO usrDTO;
 
-    UtilistateurServiceImpl(){
+    public UtilistateurServiceImpl(){
         usrDTO = new CitoyenDTO();
     }
 
@@ -81,7 +81,7 @@ public class UtilistateurServiceImpl implements UtilistateurService {
 
     @Transactional
     public UUID insertOK(){
-        usrDTO.setUserName("log"+new Date().getTime());
+        usrDTO.setUsername("log"+new Date().getTime());
         return usrImpl.insert(usrDTO);
     }
 

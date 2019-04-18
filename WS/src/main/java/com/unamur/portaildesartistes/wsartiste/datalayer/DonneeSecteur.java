@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface DonneeSecteur {
     List<SecteurDTO> list();
     UUID insert(SecteurDTO item);
+    SecteurDTO getById(UUID p_id);
 }

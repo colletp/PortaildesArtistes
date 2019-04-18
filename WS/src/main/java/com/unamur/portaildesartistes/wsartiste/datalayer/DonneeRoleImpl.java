@@ -32,7 +32,10 @@ public class DonneeRoleImpl implements DonneeRole{
 
     @RegisterMapper(RoleMapper.class)
     interface RoleSQLs {
-        @SqlQuery("select r.* from gestionnaire g join gestionnaire_roles gr on g.gest_id=gr.gest_id join roles r on gr.roles_id=r.roles_id where g.citoyen_id=:citoyen_id")
+        @SqlQuery("select r.* from gestionnaire g " +
+                "join gestionnaire_roles gr on g.gest_id=gr.gest_id " +
+                "join roles r on gr.roles_id=r.roles_id " +
+                "where g.citoyen_id=:citoyen_id")
         List<RoleDTO> getByCitoyenId(@Bind("citoyen_id")UUID p_id);
     }
 
