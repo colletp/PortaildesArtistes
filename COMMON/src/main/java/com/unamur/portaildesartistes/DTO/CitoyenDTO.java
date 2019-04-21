@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class CitoyenDTO implements Serializable, UserDetails {
+public class CitoyenDTO implements Serializable {
 
     // ******************
     // Champs/propriétés
@@ -24,8 +24,6 @@ public class CitoyenDTO implements Serializable, UserDetails {
     private String mail;
     private String nrn;
     private String nation;
-    private String login;
-    private String password;
     private UUID reside;
 
     private AdresseDTO resideAdr;
@@ -64,9 +62,6 @@ public class CitoyenDTO implements Serializable, UserDetails {
     public UUID getReside() { return reside; }
     public void setReside(UUID p_reside) { this.reside = p_reside; }
 
-    public void setUsername(String p_login) { this.login = p_login; }
-    public void setPassword(String p_password) { this.password = p_password; }
-
     public AdresseDTO getResideAdr() { return resideAdr; }
     public void setResideAdr(AdresseDTO p_reside) { this.resideAdr = p_reside; }
 
@@ -82,29 +77,4 @@ public class CitoyenDTO implements Serializable, UserDetails {
     // ******************
     // Fonctions
     // ******************
-    public String getPassword() { return password; }
-    public String getUsername() {
-        return login;
-    }
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-    public boolean isEnabled() {
-        return false;
-    }
-
-    private List<? extends GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-
-    public List<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-    public void setAuthorities(List<? extends GrantedAuthority> auth ) {
-        authorities = auth;
-    }
 }

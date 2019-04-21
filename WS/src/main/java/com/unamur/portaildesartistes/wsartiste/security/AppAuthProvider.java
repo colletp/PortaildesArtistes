@@ -19,22 +19,23 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String name = auth.getName();
-//logger.error("username="+name);
+logger.trace("username="+name);
+logger.trace("password="+auth.getCredentials().toString() );
         UserDetails user = super.getUserDetailsService().loadUserByUsername(name);
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
         }
-//logger.error("password="+auth.getCredentials().toString() );
         // Database Password already encrypted:
         boolean passwordsMatch = getPasswordEncoder().matches(auth.getCredentials().toString(), user.getPassword() );
         if(!passwordsMatch) {
             throw new BadCredentialsException("Invalid username/password");
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-for( GrantedAuthority g : authorities )logger.error( g.getAuthority().toString() );
+for( GrantedAuthority g : authorities )logger.trace( g.getAuthority().toString() );
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities);
         return usernamePasswordAuthenticationToken;
     }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return true;

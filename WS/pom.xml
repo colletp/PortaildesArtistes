@@ -20,8 +20,9 @@
 
         <dependency>
             <groupId>com.unamur.portaildesartistes</groupId>
-            <artifactId>DTO</artifactId>
+            <artifactId>COMMON</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -57,12 +58,13 @@
 
         <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
         <!-- Interval, PeriodFormatter, or PeriodType are not available in Java-8 -->
+        <!-- duplicated
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.10.1</version>
         </dependency>
-
+        -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>

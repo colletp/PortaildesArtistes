@@ -9,25 +9,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>WEB</artifactId>
+
     <packaging>war</packaging>
+
+
 
     <description>Portail des artistes composant web client</description>
 
     <dependencies>
         <dependency>
             <groupId>com.unamur.portaildesartistes</groupId>
-            <artifactId>DTO</artifactId>
+            <artifactId>COMMON</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-           <!-- <exclusions>
-                <exclusion>
-                    <groupId>org.thymeleaf</groupId>
-                    <artifactId>thymeleaf-spring5</artifactId>
-                </exclusion>
-            </exclusions>-->
             <version>${spring-boot.version}</version>
         </dependency>
 
@@ -77,7 +75,6 @@
     <properties>
         <!-->La spécification de la classe de démarrage n'est pas obligatoire<-->
         <start-class>com.unamur.portaildesartistes.webclient.SpringBootClientPortailArtiste</start-class>
-        <tomcat.version>9.0.16</tomcat.version>
     </properties>
 
 </project>

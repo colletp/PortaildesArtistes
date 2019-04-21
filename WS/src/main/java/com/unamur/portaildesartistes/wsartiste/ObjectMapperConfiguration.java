@@ -19,7 +19,6 @@ public class ObjectMapperConfiguration {
         JacksonXmlModule xmlModule = new JacksonXmlModule();
         xmlModule.setDefaultUseWrapper(false);
         return new XmlMapper(xmlModule);
-
      //return new ObjectMapper(new XmlFactory());
     }
 }

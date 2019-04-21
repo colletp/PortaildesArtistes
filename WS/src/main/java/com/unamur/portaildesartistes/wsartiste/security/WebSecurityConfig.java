@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,17 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     @Autowired
-    @Qualifier("donneeCitoyenImpl")
+    @Qualifier("donneeUtilisateurImpl")
     UserDetailsService uDS;
 
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.inMemoryAuthentication()
-                .withUser("admin").password(encoder().encode("adminPass")).roles("ADMIN")
-                .and()
-                .withUser("user").password(encoder().encode("userPass")).roles("USER");
-                */
         AppAuthProvider appAuthProvider = new AppAuthProvider();
         appAuthProvider.setPasswordEncoder( encoder() );
         appAuthProvider.setUserDetailsService( uDS );
@@ -61,9 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                     .authorizeRequests()
-                    //.antMatchers("/gestionUtilisateur").authenticated()
                     .antMatchers("/gestionUtilisateur/list")
-                .authenticated()
+                    .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()
                 .and()
@@ -74,6 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .successHandler(mySuccessHandler)
                         .failureHandler(myFailureHandler)
                 .and()
-                .logout();
+                    .sessionManagement()
+                    .sessionCreationPolicy( SessionCreationPolicy.IF_REQUIRED )
+                .and()
+                    .logout();
     }
 }

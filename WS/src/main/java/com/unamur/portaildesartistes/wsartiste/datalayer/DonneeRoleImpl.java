@@ -29,6 +29,12 @@ public class DonneeRoleImpl implements DonneeRole{
         RoleSQLs RoleSQLs = handle.attach(RoleSQLs.class);
         return RoleSQLs.getByCitoyenId( p_id );
     }
+    public List<RoleDTO> getByCitoyenUserName(String username){
+        Handle handle = dbiBean.open();
+        RoleSQLs RoleSQLs = handle.attach(RoleSQLs.class);
+        return RoleSQLs.getByCitoyenUserName( username );
+    }
+
 
     @RegisterMapper(RoleMapper.class)
     interface RoleSQLs {
@@ -37,6 +43,13 @@ public class DonneeRoleImpl implements DonneeRole{
                 "join roles r on gr.roles_id=r.roles_id " +
                 "where g.citoyen_id=:citoyen_id")
         List<RoleDTO> getByCitoyenId(@Bind("citoyen_id")UUID p_id);
+
+        @SqlQuery("select r.* from gestionnaire g " +
+                "join gestionnaire_roles gr on g.gest_id=gr.gest_id " +
+                "join roles r on gr.roles_id=r.roles_id " +
+                "join citoyen c on g.citoyen_id=c.citoyen_id " +
+                "where c.login=:username")
+        List<RoleDTO> getByCitoyenUserName(@Bind("username")String username);
     }
 
     public static class RoleMapper implements ResultSetMapper<RoleDTO> {

@@ -11,9 +11,6 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -21,7 +18,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService {
+public class DonneeCitoyenImpl implements DonneeCitoyen {
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
     @Autowired
     private DBI dbiBean;
@@ -65,39 +62,6 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService {
         return ret;
     }
 
-//implemente la sécurité
-    @Autowired
-    private DonneeRoleImpl implRole;
-
-    @Override
-    public UserDetails loadUserByUsername(String userName)throws UsernameNotFoundException {
-        Objects.requireNonNull(userName);
-        Handle handle = dbiBean.open();
-        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
-
-        CitoyenDTO user;
-        try {
-            user = CitoyenSQLs.getByLogin(userName);
-            if(user==null)throw new UsernameNotFoundException("User not found");
-        }catch( SQLException e ){
-            logger.error( e.getMessage()+"/sql : "+e.getSQLState() );
-            throw new UsernameNotFoundException("User not found");
-        };
-        user.setAuthorities( implRole.getByCitoyenId( user.getId() ) );
-        logger.debug("role of the user" + user.getAuthorities() );
-        return user;
-    }
-
-/*
-    public Set<? extends GrantedAuthority> getAuthorities(){
-        return authorities;
-    }
-
-    private void setAuthorities(//Set<? extends GrantedAuthority> authorities
-                                ){
-        this.authorities=implRole.getByCitoyenId( getById() );
-    }
-*/
     @RegisterMapper(CitoyenMapper.class)
     interface CitoyenSQLs {
         @SqlQuery("select * from citoyen")
@@ -106,33 +70,28 @@ public class DonneeCitoyenImpl implements DonneeCitoyen,UserDetailsService {
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
         CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
 
-        @SqlQuery("select * from citoyen WHERE login=:login")
-        CitoyenDTO getByLogin(@Bind("login") String login) throws SQLException;
-
         @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
         @GetGeneratedKeys
         UUID insert(@BindBean CitoyenDTO test) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {
-        CitoyenDTO usrDTO;
+        CitoyenDTO citoyenDTO;
         public CitoyenDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            usrDTO = new CitoyenDTO();
+            citoyenDTO = new CitoyenDTO();
 
-            usrDTO.setId((UUID) r.getObject("citoyen_id"));
-            usrDTO.setNom( r.getString("nom") );
-            usrDTO.setPrenom( r.getString("prenom") );
-            usrDTO.setDateNaissance( r.getDate("date_naissance") );
-            usrDTO.setTel( r.getString("tel") );
-            usrDTO.setGsm( r.getString("gsm") );
-            usrDTO.setMail( r.getString("mail") );
-            usrDTO.setNrn( r.getString("nrn") );
-            usrDTO.setNation( r.getString("nation") );
-            usrDTO.setUsername( r.getString("login") );
-            usrDTO.setPassword( r.getString("password") );
-            usrDTO.setReside( (UUID) r.getObject("reside"));
+            citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
+            citoyenDTO.setNom( r.getString("nom") );
+            citoyenDTO.setPrenom( r.getString("prenom") );
+            citoyenDTO.setDateNaissance( r.getDate("date_naissance") );
+            citoyenDTO.setTel( r.getString("tel") );
+            citoyenDTO.setGsm( r.getString("gsm") );
+            citoyenDTO.setMail( r.getString("mail") );
+            citoyenDTO.setNrn( r.getString("nrn") );
+            citoyenDTO.setNation( r.getString("nation") );
+            citoyenDTO.setReside( (UUID) r.getObject("reside"));
 
-            return usrDTO;
+            return citoyenDTO;
         }
     }
 }
