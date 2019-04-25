@@ -21,9 +21,7 @@ public class UtilisateurDTO implements Serializable, UserDetails {
     // ******************
     // Setter/Getter
     // ******************
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
     public void setId(UUID p_id) { this.id = p_id; }
     public String getUsername() {
         return login;
@@ -37,6 +35,10 @@ public class UtilisateurDTO implements Serializable, UserDetails {
     public void setAuthorities(List<? extends GrantedAuthority> auth ) {
         authorities = auth;
     }
+
+    private CitoyenDTO citoyenDTO;
+    public void setCitoyen(CitoyenDTO citoyenDTO) { this.citoyenDTO = citoyenDTO; }
+    public CitoyenDTO getCitoyen() { return citoyenDTO; }
 
     // ******************
     // Fonctions

@@ -15,8 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -45,16 +48,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    SimpleUrlAuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
-    SimpleUrlAuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
-    //SimpleUrlAuthenticationFailureHandler myFailureHandler = new MySavedRequestAwareAuthenticationFailureHandler();
+    AuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
+    AuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
+    LogoutSuccessHandler myLogoutHandler = new SimpleUrlLogoutSuccessHandler();
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                    .exceptionHandling()
+                .exceptionHandling()
                     .authenticationEntryPoint(restAuthenticationEntryPoint)
+                .and()
+                    .authorizeRequests()
+                    .antMatchers("/*")
+                    .hasIpAddress("127.0.0.1/32")
+                .and()
+                    .authorizeRequests()
+                    .antMatchers("/inscript")
+                    .permitAll()
                 .and()
                     .authorizeRequests()
                     .antMatchers("/gestionUtilisateur/list")
@@ -66,12 +77,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginPage("/Authentification")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .successHandler(mySuccessHandler)
-                        .failureHandler(myFailureHandler)
+                        .successHandler( mySuccessHandler )
+                        .failureHandler( myFailureHandler )
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy( SessionCreationPolicy.IF_REQUIRED )
                 .and()
-                    .logout();
+                    .logout()
+                    .clearAuthentication(true)
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler( myLogoutHandler )
+                ;
     }
 }

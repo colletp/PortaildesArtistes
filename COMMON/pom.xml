@@ -130,13 +130,13 @@
         </dependency>
 
         <!-- Attention, activer ce format transforme toutes les sorties REST en XML (bypass le choix dans les properties) -->
-
+<!--
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>2.9.8</version>
         </dependency>
-
+-->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>

@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
+import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
@@ -23,6 +24,9 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
     @Autowired
     private DBI dbiBean;
 
+    @Autowired
+    DonneeAdresseImpl adrImpl;
+
     public List<CitoyenDTO> list(){
         Handle handle = dbiBean.open();
         CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
@@ -38,12 +42,14 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
         }
     }
 
-    public UUID insert(CitoyenDTO item){
+    public UUID insert(UtilisateurDTO item){
         Handle handle = dbiBean.open();
-        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
+        UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
         UUID ret=null;
         try {
-            ret = CitoyenSQLs.insert(item);
+            UUID reside =  adrImpl.insert( item.getCitoyen().getResideAdr() );
+            item.getCitoyen().setReside( reside );
+            ret = UtilisateurSQLs.insert( item );
         }
         catch(UnableToExecuteStatementException e){
             System.err.println( e );
@@ -69,10 +75,12 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
 
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
         CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
-
+    }
+    @RegisterMapper(UtilisateurMapper.class)
+    interface UtilisateurSQLs {
         @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
         @GetGeneratedKeys
-        UUID insert(@BindBean CitoyenDTO test) throws SQLException;
+        UUID insert(@BindBean UtilisateurDTO test) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {
@@ -92,6 +100,27 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
             citoyenDTO.setReside( (UUID) r.getObject("reside"));
 
             return citoyenDTO;
+        }
+    }
+    public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {
+        UtilisateurDTO utilisateurDTO;
+        public UtilisateurDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+            utilisateurDTO = new UtilisateurDTO();
+            utilisateurDTO.setId((UUID) r.getObject("citoyen_id"));
+            utilisateurDTO.setUsername( r.getString("login") );
+            utilisateurDTO.setPassword( r.getString("password") );
+            CitoyenDTO citoyenDTO = utilisateurDTO.getCitoyen();
+            citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
+            citoyenDTO.setNom( r.getString("nom") );
+            citoyenDTO.setPrenom( r.getString("prenom") );
+            citoyenDTO.setDateNaissance( r.getDate("date_naissance") );
+            citoyenDTO.setTel( r.getString("tel") );
+            citoyenDTO.setGsm( r.getString("gsm") );
+            citoyenDTO.setMail( r.getString("mail") );
+            citoyenDTO.setNrn( r.getString("nrn") );
+            citoyenDTO.setNation( r.getString("nation") );
+            citoyenDTO.setReside( (UUID) r.getObject("reside"));
+            return utilisateurDTO;
         }
     }
 }

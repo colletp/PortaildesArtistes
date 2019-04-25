@@ -8,13 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyRoutingDataSource extends AbstractRoutingDataSource {
-    //@Autowired
-    private Environment env;
-
     @Override
     protected Object determineCurrentLookupKey() {
         return "Test";
     }
+
     public void initDataSources(DataSource ds1) {
         Map<Object, Object> dsMap = new HashMap<>();
         dsMap.put("Test", ds1);

@@ -31,11 +31,20 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
     @Autowired
     private DBI dbiBean;
 
+    @Autowired
+    private DonneeCitoyenImpl citoyenImpl;
+
     public List<UtilisateurDTO> list(){
         Handle handle = dbiBean.open();
         UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
         return UtilisateurSQLs.list();
     }
+
+    public UUID insert(UtilisateurDTO usr){
+        return citoyenImpl.insert( usr );
+    }
+
+
 
     //implemente la sécurité
     @Autowired

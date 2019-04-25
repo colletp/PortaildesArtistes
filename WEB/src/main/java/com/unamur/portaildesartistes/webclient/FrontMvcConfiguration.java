@@ -1,32 +1,28 @@
 package com.unamur.portaildesartistes.webclient;
 
+import com.unamur.portaildesartistes.config.WebMvcConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import java.util.Collections;
+import java.util.List;
+
 
 @Configuration
-@EnableWebMvc
-@ComponentScan("com.unamur.portaildesartistes.webclient")
-public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAware {
-    private static final Logger logger = LoggerFactory.getLogger(MvcConfiguration.class);
-
-    private ApplicationContext applicationContext;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        logger.debug("setApplicationContext");
-        this.applicationContext = applicationContext;
-    }
+public class FrontMvcConfiguration extends WebMvcConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(FrontMvcConfiguration.class);
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -44,7 +40,14 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     @Bean
     public RestTemplate restTemplate() {
         logger.debug("restTemplate");
-        return new RestTemplate(getClientHttpRequestFactory());
+        RestTemplate rest = new RestTemplate(getClientHttpRequestFactory());
+
+        logger.error( m.getSupportedMediaTypes().toString() );
+        /*
+        List< HttpMessageConverter<?> > lstConv = Collections.singletonList( m );
+        rest.setMessageConverters( lstConv );
+        */
+        return rest;
     }
 
     private HttpComponentsClientHttpRequestFactory getClientHttpRequestFactory() {
@@ -56,18 +59,15 @@ public class MvcConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         return clientHttpRequestFactory;
     }
     @Bean
-    @Description("Thymeleaf template resolver serving HTML 5")
+    @Description("Thymeleaf template resolver serving HTML")
     public ClassLoaderTemplateResolver templateResolver() {
         logger.debug("templateResolver");
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        //templateResolver.setPrefix("/");
         templateResolver.setPrefix("/templates/");
-        //templateResolver.setPrefix("/resources/templates/");
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML");
         templateResolver.setCharacterEncoding("UTF-8");
-        //templateResolver.setOrder(1);
         return templateResolver;
     }
 

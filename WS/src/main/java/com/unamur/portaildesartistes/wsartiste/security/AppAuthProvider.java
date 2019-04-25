@@ -19,8 +19,8 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String name = auth.getName();
-logger.trace("username="+name);
-logger.trace("password="+auth.getCredentials().toString() );
+logger.info("username="+name);
+logger.info("password="+auth.getCredentials().toString() );
         UserDetails user = super.getUserDetailsService().loadUserByUsername(name);
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
@@ -31,8 +31,8 @@ logger.trace("password="+auth.getCredentials().toString() );
             throw new BadCredentialsException("Invalid username/password");
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-for( GrantedAuthority g : authorities )logger.trace( g.getAuthority().toString() );
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities);
+for( GrantedAuthority g : authorities )logger.info( g.getAuthority().toString() );
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken( user, user.getPassword(), authorities);
         return usernamePasswordAuthenticationToken;
     }
 

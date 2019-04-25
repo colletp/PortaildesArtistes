@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste;
 
+import com.unamur.portaildesartistes.config.WebMvcConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,11 @@ public class SpringBootWSRestPortailArtiste {
         dataSource.initDataSources(dataSourceTest);
         return dataSource;
     }
+
     // Load to Environment
     @Autowired
     private Environment env;
+
     @Bean(name = "dataSourceTest")
     public DataSource getDataSourceTest() throws SQLException {
         String instance = env.getProperty("spring.datasource.default");
@@ -71,6 +74,7 @@ public class SpringBootWSRestPortailArtiste {
     @Autowired
     @Bean(name = "transactionManager")
     public DataSourceTransactionManager getTransactionManager(DataSource dataSource) {
+        logger.info("transactionManager");
         DataSourceTransactionManager txManager = new DataSourceTransactionManager();
         txManager.setDataSource(dataSource);
         return txManager;

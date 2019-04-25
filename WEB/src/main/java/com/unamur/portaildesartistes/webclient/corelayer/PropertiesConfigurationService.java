@@ -10,12 +10,11 @@ public class PropertiesConfigurationService{
     @Autowired
     Environment env;
 
-    public String getUrl() {
-        return env.getProperty("app.serveur.url")+env.getProperty("app.serveur.url.path");
-    }
+    public String getUrl() { return env.getProperty("back-end.server.url")+getBackEndPath(); }
     public String getBackEndPath() {
-        return env.getProperty("app.serveur.url.path");
+        return env.getProperty("back-end.server.servlet.contextPath");
     }
+
     public String getFrontEndPath() {
         return env.getProperty("server.servlet.contextPath");
     }

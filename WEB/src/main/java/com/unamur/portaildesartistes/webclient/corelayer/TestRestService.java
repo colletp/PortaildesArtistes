@@ -42,16 +42,6 @@ public class TestRestService {
         return "validationrestservice.html";
     }
 
-    @GetMapping(value="/mainCSS.css")
-    public String css(Model model) {
-        return "mainCSS.css";
-    }
-
-    @GetMapping(value = "/error")
-    public String error() {
-        return "error";
-    }
-
     @GetMapping("/suivant")
     ModelAndView next(ModelAndView modelAndView) {
         modelAndView.setViewName("suivant");
