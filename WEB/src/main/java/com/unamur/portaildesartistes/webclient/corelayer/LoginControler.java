@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class LoginControler {
     }
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplateHelper restTemplateHelper;
 
     @Autowired
     private PropertiesConfigurationService configurationService ;
@@ -71,12 +70,10 @@ public class LoginControler {
         MultiValueMap<String, String> paramRest= new LinkedMultiValueMap<>();
         paramRest.add("username",usrDTO.getUsername() );
         paramRest.add("password",usrDTO.getPassword() );
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>( paramRest, headersRest );
         ResponseEntity<String> reponseRest;
-
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
         try{
-            reponseRest = restTemplate.postForEntity(configurationService.getUrl() + "/Authentification", request, String.class);
+            reponseRest = restTemplateHelper.postForAuth( String.class , configurationService.getUrl() + "/Authentification", paramRest , headersRest );
 
             logger.debug( "Session : "+ reponseRest.getHeaders().get( "Set-Cookie" ).toString() );
             //transfert au front-end
@@ -154,20 +151,11 @@ public class LoginControler {
         //param.add("username",usrDTO.getUsername() );
         //param.add("password",usrDTO.getPassword() );
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
-        //HttpEntity<String> request = new HttpEntity<>( "" , headers);
-
-        //ResponseEntity<String> reponseServeur = restTemplate.getForEntity( configurationService.getUrl()+"/gestionUtilisateur/list", String.class ,headers );
-        //HttpEntity<CitoyenDTO> request = new HttpEntity<>(new CitoyenDTO());//?
-
-        //ResponseEntity<String> buffer = restTemplate.getForEntity( configurationService.getUrl()+"/gestionUtilisateur/list" , String.class , headers );
-        //logger.error( buffer.getBody() );
-
-        List<CitoyenDTO> reponseServeur = restTemplate.getForObject( configurationService.getUrl()+"/gestionUtilisateur/list" , List.class , headers );
+        List<CitoyenDTO> reponseServeur = restTemplateHelper.getForList( CitoyenDTO.class , configurationService.getUrl()+"/gestionUtilisateur/list" , headers );
         ResponseEntity ret = new ResponseEntity<>( reponseServeur , HttpStatus.OK );
         return ret;
     }
     @GetMapping( value = "/logout2" )
-//    public ResponseEntity<String> logout( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ) {
     public String logout( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ) {
         logger.debug("Logout : Authentication received! Cookie : " + cookieValue);
 
@@ -184,10 +172,7 @@ public class LoginControler {
         //param.add("username",usrDTO.getUsername() );
         //param.add("password",usrDTO.getPassword() );
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
-        ResponseEntity<String> reponseServeur = restTemplate.getForEntity( configurationService.getUrl()+"/logout", String.class ,headers );
-        //reponseServeur.getBody();
-
-        //ResponseEntity ret = new ResponseEntity<>( reponseServeur , HttpStatus.OK );
+        String reponseServeur = restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
         return "login.html";
     }
 }

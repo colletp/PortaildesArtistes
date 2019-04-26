@@ -1,12 +1,14 @@
 package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
+import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UtilistateurService {
-    List<CitoyenDTO> list();
+    List<CitoyenDTO> listCitoyen();
+    List<UtilisateurDTO> listUtilisateur();
     UUID insertOK();
     void insertAndFail();
 }

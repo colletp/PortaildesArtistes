@@ -3,7 +3,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import com.unamur.portaildesartistes.DTO.CustomWrapper;
+import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class InscriptionControler {
@@ -42,21 +38,21 @@ public class InscriptionControler {
     MediaType yaml;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplateHelper restTemplateHelper;
 
     @Autowired
     private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value = "/inscript")
     public String loginView( Model model ){
-        UtilisateurDTO usrForm = new UtilisateurDTO();
-        usrForm.setUsername("test");
-        usrForm.setCitoyen( new CitoyenDTO() );
-        usrForm.getCitoyen().setNom("MonNom");
-        usrForm.getCitoyen().setResideAdr( new AdresseDTO() );
-        usrForm.getCitoyen().getResideAdr().setRue("Ch");
+        UtilisateurDTO usr = new UtilisateurDTO();
+        usr.setUsername("test");
+        usr.setCitoyen( new CitoyenDTO() );
+        usr.getCitoyen().setNom("MonNom");
+        usr.getCitoyen().setResideAdr( new AdresseDTO() );
+        usr.getCitoyen().getResideAdr().setRue("Ch");
 
-        model.addAttribute("usrForm",usrForm);
+        model.addAttribute("usrForm",usr);
 
         return "inscript.html";
     }
@@ -76,42 +72,32 @@ public class InscriptionControler {
         //headersRest.setContentType( yaml );
 logger.error( "username:"+usrDTO.getUsername() );
         ModelMap paramRest = new ModelMap();
-
-        CustomWrapper<UtilisateurDTO> wrp = new CustomWrapper<>();
-        wrp.setObject(usrDTO);
-
-        paramRest.addAttribute("wrp", wrp );
+        paramRest.addAttribute("usrForm", usrDTO );
 
         HttpEntity<ModelMap> request = new HttpEntity<>( paramRest, headersRest );
-        ResponseEntity<String> resp=null;
-        //CustomWrapper<UtilisateurDTO> reponseRest;
+        String resp=null;
 
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
         try{
-            resp = restTemplate.postForEntity(configurationService.getUrl() + "/inscript", wrp, String.class);
-            //reponseRest = restTemplate.postForObject(configurationService.getUrl() + "/inscript", request, CustomWrapper.class , paramRest );
-            //resp = new ResponseEntity<>( reponseRest.getObject().getId().toString() , HttpStatus.OK );
-            if( resp.getStatusCodeValue() !=200){
-                logger.error("Réponse du serveur: "+resp.getStatusCodeValue() );
-            }else{
-                logger.debug("Inscription OK : "+ resp.getBody() );
-            }
+            resp = restTemplateHelper.postForEntity( String.class , configurationService.getUrl() + "/inscript", usrDTO , headersRest );
+            logger.debug("Inscription OK : "+ resp );
         }
         catch( HttpClientErrorException e){
-            switch( e.getMessage() ){
-                case "401":
+            logger.error("Réponse du serveur: "+e.getStatusCode().toString() );
+            switch( e.getStatusCode().value() ){
+                case 401:
                     logger.error( "Connexion refusée par authentification back-end : "+ e.toString() );
                     break;
-                case "403":
+                case 403:
                     logger.error( "Connexion refusée par back-end car interdit : "+ e.toString() );
                     break;
-                case "404":
+                case 404:
                     logger.error( "Connexion refusée par back-end car rest introuvable : "+ e.toString() );
                     break;
-                case "406":
+                case 406:
                     logger.error( "Connexion refusée par back-end car réponse pas acceptable : "+ e.toString() );
                     break;
-                case "415":
+                case 415:
                     logger.error( "Connexion refusée par back-end car média pas supporté : "+ e.toString() );
                     break;
                 default:
@@ -119,15 +105,15 @@ logger.error( "username:"+usrDTO.getUsername() );
                     logger.error( e.toString() );
                     logger.error( e.getCause()==null?"":e.getCause().getMessage() );
             }
-            resp = new ResponseEntity<>( "Connexion refusée par back-end : "+e.getMessage() +"(voir logs)" , HttpStatus.OK );
+            resp = "Connexion refusée par back-end : "+e.getMessage() +"(voir logs)";
         }
         catch( ResourceAccessException e){
             logger.error( "Serveur back-end indisponible : "+e.getMessage() );
-            resp = new ResponseEntity<>( "Serveur back-end indisponible (voir logs)" , HttpStatus.OK );
+            resp = "Serveur back-end indisponible (voir logs)";
         }
         catch(RestClientException e) {
             logger.error( "RestClientException : "+e.getMessage()+e.getLocalizedMessage() );
-            resp = new ResponseEntity<>( "Serveur back-end en erreur REST (voir logs)" , HttpStatus.OK );
+            resp = "Serveur back-end en erreur REST (voir logs)";
         }
         catch( Exception e){
             logger.error( e.toString() );
@@ -135,10 +121,10 @@ logger.error( "username:"+usrDTO.getUsername() );
             logger.error( e.getMessage() );
             logger.error( e.getCause()==null?"":e.getCause().getMessage() );
             //reponseRest
-            resp = new ResponseEntity<>( "Autre erreur non gérée (voir logs)" , HttpStatus.OK );
+            resp = "Autre erreur non gérée (voir logs)";
         }
 
-        ResponseEntity<String> reponseAuClient = new ResponseEntity<>( resp.getBody() , paramClient , HttpStatus.OK );
+        ResponseEntity<String> reponseAuClient = new ResponseEntity<>( resp , paramClient , HttpStatus.OK );
         return reponseAuClient;
     }
 }

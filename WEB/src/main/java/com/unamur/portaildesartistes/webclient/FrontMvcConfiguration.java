@@ -4,10 +4,8 @@ import com.unamur.portaildesartistes.config.WebMvcConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -15,10 +13,6 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-
-import java.util.Collections;
-import java.util.List;
-
 
 @Configuration
 public class FrontMvcConfiguration extends WebMvcConfiguration {

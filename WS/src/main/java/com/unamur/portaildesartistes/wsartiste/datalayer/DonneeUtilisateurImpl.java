@@ -1,18 +1,15 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,10 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsService {

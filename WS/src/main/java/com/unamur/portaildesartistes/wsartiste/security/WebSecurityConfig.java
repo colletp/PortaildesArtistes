@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/gestionUtilisateur/list")
+                    .antMatchers("/gestionUtilisateur/list","/gestionUtilisateur2/list")
                     .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()

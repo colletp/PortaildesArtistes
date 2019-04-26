@@ -1,6 +1,5 @@
 package com.unamur.portaildesartistes.DTO;
 
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +13,7 @@ public class UtilisateurDTO implements Serializable, UserDetails {
     private String login;
     private String password;
 
-    private List<? extends GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    private List<? extends GrantedAuthority> authorities = new ArrayList<>();
 
     private String sess;
 
