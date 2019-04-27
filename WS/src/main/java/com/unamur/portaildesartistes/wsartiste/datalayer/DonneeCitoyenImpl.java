@@ -92,7 +92,7 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
             citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
             citoyenDTO.setNom( r.getString("nom") );
             citoyenDTO.setPrenom( r.getString("prenom") );
-            citoyenDTO.setDateNaissance( r.getDate("date_naissance") );
+            citoyenDTO.setDateNaissance( r.getString("date_naissance") );
             citoyenDTO.setTel( r.getString("tel") );
             citoyenDTO.setGsm( r.getString("gsm") );
             citoyenDTO.setMail( r.getString("mail") );
@@ -114,7 +114,7 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
             citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
             citoyenDTO.setNom( r.getString("nom") );
             citoyenDTO.setPrenom( r.getString("prenom") );
-            citoyenDTO.setDateNaissance( r.getDate("date_naissance") );
+            citoyenDTO.setDateNaissance( r.getString("date_naissance") );
             citoyenDTO.setTel( r.getString("tel") );
             citoyenDTO.setGsm( r.getString("gsm") );
             citoyenDTO.setMail( r.getString("mail") );

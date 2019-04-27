@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +45,14 @@ public class CitoyenDTO implements Serializable {
     public String getPrenom() { return prenom; }
     public void setPrenom(String p_prenom) { this.prenom = p_prenom; }
     public Date getDateNaissance() { return date_naissance; }
-    public void setDateNaissance(Date p_date_naissance) { this.date_naissance= p_date_naissance; }
+    public void setDateNaissance(String p_date_naissance) {
+        SimpleDateFormat convert = new SimpleDateFormat("dd-MM-yyyy");
+        try{
+            this.date_naissance= convert.parse(p_date_naissance); }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public String getTel() { return tel; }
     public void setTel(String p_tel) { this.tel = p_tel; }
     public String getGsm() { return gsm; }
