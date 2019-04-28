@@ -65,6 +65,11 @@ public class RestTemplateHelper {
         return null;
     }
 
+    public <R> void postForEntity( String url, R body, HttpHeaders headers , Object... uriVariables) {
+        HttpEntity<R> request = new HttpEntity<>(body);
+        restTemplate.postForEntity(url, request, String.class, headers , uriVariables);
+    }
+
     public <T, R> T postForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables) {
         HttpEntity<R> request = new HttpEntity<>(body);
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class, headers , uriVariables);

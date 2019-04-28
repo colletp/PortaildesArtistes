@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 public interface Controller {
 
-    @PostMapping(value = "/inscript")
+    @PutMapping(value = "/inscript")
     public @ResponseBody ResponseEntity wsInscript(@RequestBody UtilisateurDTO test);
 
 }
