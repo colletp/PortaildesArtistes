@@ -29,13 +29,10 @@ public class RootRestService implements Controller {
     }
 
     @Override
-    @PostMapping(value = "/inscript")
-    public @ResponseBody ResponseEntity wsInscript(
-                @RequestBody final UtilisateurDTO usrDTO
-                ){
+    @PutMapping(value = "/inscript")
+    public @ResponseBody ResponseEntity wsInscript( @RequestBody final UtilisateurDTO usrDTO){
         logger.error( usrDTO==null?"null":usrDTO.getUsername() );
         UUID id = usrImpl.insert( usrDTO );
         return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name() + " / " + id.toString() , HttpStatus.OK);
     }
-
 }

@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.wsartiste.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,7 +17,7 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     private static final Logger logger = LoggerFactory.getLogger(AppAuthProvider.class);
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate( Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String name = auth.getName();
 logger.info("username="+name);
@@ -25,13 +26,16 @@ logger.info("password="+auth.getCredentials().toString() );
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
         }
+
+        logger.error( "pass:"+auth.getCredentials()+" -> pass db:"+ user.getPassword() );
+        logger.error( "pass to update:"+ getPasswordEncoder().encode( auth.getCredentials().toString() ) );
         // Database Password already encrypted:
-        boolean passwordsMatch = getPasswordEncoder().matches(auth.getCredentials().toString(), user.getPassword() );
+        boolean passwordsMatch = getPasswordEncoder().matches( auth.getCredentials().toString() , user.getPassword() );
         if(!passwordsMatch) {
             throw new BadCredentialsException("Invalid username/password");
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-for( GrantedAuthority g : authorities )logger.info( g.getAuthority().toString() );
+for( GrantedAuthority g : authorities )logger.info( g.getAuthority() );
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken( user, user.getPassword(), authorities);
         return usernamePasswordAuthenticationToken;
     }

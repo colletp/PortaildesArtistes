@@ -3,10 +3,15 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
+import com.unamur.portaildesartistes.webclient.security.UserDetailsServiceWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -21,6 +26,7 @@ import org.springframework.web.client.RestClientException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class LoginControler {
@@ -44,7 +50,8 @@ public class LoginControler {
     }
 
     @GetMapping(value = "/login")//initialisation du login
-    public String loginView( Model model ){
+    public String loginView( @ModelAttribute("lang") String lang,Model model ){
+        logger.error("lang:"+lang);
         return "login.html";
     }
 
@@ -52,7 +59,13 @@ public class LoginControler {
     @Qualifier("getMediaTypeYaml")
     MediaType yaml;
 
-    @PostMapping(value = "/login2" //,consumes = "text/yaml",produces = "text/yaml"
+    //@Autowired
+    //PasswordEncoder encoder;
+
+    @Autowired
+    UserDetailsServiceWeb uDS;
+
+    @PostMapping(value = "/login" //,consumes = "text/yaml",produces = "text/yaml"
             )
     //initialisation du login
     public ResponseEntity<String> authenticate(
@@ -60,6 +73,9 @@ public class LoginControler {
             final BindingResult br ,
             final Model m)
     {
+        /*logger.error( "password front:"+usrDTO.getPassword()+" -> "+encoder.encode( usrDTO.getPassword() ));
+        usrDTO.setPassword( encoder.encode( usrDTO.getPassword() ) );*/
+        logger.error( "new password front:"+usrDTO.getPassword() );
         if(br.hasErrors())
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
@@ -73,8 +89,11 @@ public class LoginControler {
         ResponseEntity<String> reponseRest;
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
         try{
+            /* ici test match? encodage supplémentaire */
+            //UserDetails uD = uDS.loadUserByUsername( usrDTO.getUsername() );
+            //uD.
+            /**/
             reponseRest = restTemplateHelper.postForAuth( String.class , configurationService.getUrl() + "/Authentification", paramRest , headersRest );
-
             logger.debug( "Session : "+ reponseRest.getHeaders().get( "Set-Cookie" ).toString() );
             //transfert au front-end
             paramClient.add("Set-Cookie",
@@ -175,4 +194,5 @@ public class LoginControler {
         String reponseServeur = restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
         return "login.html";
     }
+
 }

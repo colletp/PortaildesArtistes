@@ -9,7 +9,26 @@
     <link href="../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/login2}" th:name="userForm" th:method="post">
+
+<h1 th:text="#{greeting}"></h1>
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.eng}"></option>
+    <option value="fr" th:text="#{lang.fr}"></option>
+</select>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('login?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
+
+    <form th:action="@{/login}" th:name="userForm" th:method="post">
         Login:<input th:type="text" th:name="username" /><br/>
         Password:<input th:type="password" th:name="password" /><br/>
         <input th:type="submit" />

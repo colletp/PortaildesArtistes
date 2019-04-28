@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
@@ -34,11 +35,76 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
         return UtilisateurSQLs.list();
     }
 
+    public UtilisateurDTO getById(UUID uuid){
+        try{
+            Handle handle = dbiBean.open();
+            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
+            return UtilisateurSQLs.getById(uuid);
+        }
+        catch(UnableToExecuteStatementException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+        catch(SQLException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+        return null;
+    }
+
     public UUID insert(UtilisateurDTO usr){
         return citoyenImpl.insert( usr );
     }
 
+    public void update(UtilisateurDTO usr){
+        try{
+            Handle handle = dbiBean.open();
+            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
+            UtilisateurSQLs.update(usr);
+        }
+            catch(UnableToExecuteStatementException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+            catch(SQLException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+    }
 
+    public void delete(UUID uuid){
+        try{
+            Handle handle = dbiBean.open();
+            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
+            UtilisateurSQLs.delete(uuid);
+        }
+        catch(UnableToExecuteStatementException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+        catch(SQLException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+    }
 
     //implemente la sécurité
     @Autowired
@@ -70,6 +136,19 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
 
         @SqlQuery("select citoyen_id,login,password from citoyen WHERE login=:login")
         UtilisateurDTO getByUsername(@Bind("login") String login) throws SQLException;
+
+        @SqlQuery("select citoyen_id,login,password from citoyen WHERE citoyen_id=:citoyen_id")
+        UtilisateurDTO getById(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
+
+        @SqlUpdate("UPDATE citoyen SET login=:username,password=:password WHERE citoyen_id=:id")
+        void update(@BindBean UtilisateurDTO test) throws SQLException;
+
+        @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:username,:password,:reside) ")
+        @GetGeneratedKeys
+        UUID insert(@BindBean UtilisateurDTO test) throws SQLException;
+
+        @SqlUpdate("DELETE FROM citoyen WHERE citoyen_id = :citoyen_id) ")
+        void delete(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
     }
 
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {

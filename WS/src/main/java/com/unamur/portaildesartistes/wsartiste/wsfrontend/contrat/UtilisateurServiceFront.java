@@ -1,13 +1,11 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,20 +17,31 @@ public class UtilisateurServiceFront {
     @Autowired
     private UtilistateurServiceImpl usrServiceImpl;
 
-    @GetMapping("/gestionUtilisateur/list")
+/*    @GetMapping("/gestionCitoyen")
     public List<CitoyenDTO> listCitoyen() { return usrServiceImpl.listCitoyen(); }
-    @GetMapping("/gestionUtilisateur2/list")
-    public List<UtilisateurDTO> listUtilisateur(){ return usrServiceImpl.listUtilisateur(); }
-    //public CustomWrapper listUtilisateur() { return new CustomWrapper( usrServiceImpl.listUtilisateur() ); }
+    @GetMapping("/gestionCitoyen/{id}")
+    public CitoyenDTO citoyenDetail( @PathVariable("id") String id ){ return usrServiceImpl.getCitoyenById(id); }
 
-    @GetMapping("/gestionUtilisateur/insertOK")
-    public UUID insertOK() {
-        return usrServiceImpl.insertOK();
-    }
+    @PutMapping("/gestionCitoyen")
+    public void citoyenModif( @PathVariable("usr") CitoyenDTO cit ){ usrServiceImpl.insert(cit); }
+    */
+    //@GetMapping("/testAuth")
+    //public UtilisateurDTO loadUser(String username){ return usrServiceImpl.getByName(username); }
 
-    @GetMapping("/gestionUtilisateur/insertNotOK")
-    public String insertNotOK() {
-        usrServiceImpl.insertAndFail();
-        return "ok";
-    }
+
+    @GetMapping("/gestionUtilisateur")
+    public List<UtilisateurDTO> listUtilisateur(){ return usrServiceImpl.list(); }
+
+    @GetMapping("/gestionUtilisateur/{id}")
+    public UtilisateurDTO utilisateurDetail( @PathVariable("id") UUID id ){ return usrServiceImpl.getById(id); }
+
+    @DeleteMapping("/gestionUtilisateur/{id}")
+    public void utilisateurSuppr( @PathVariable("id") UUID id ){ usrServiceImpl.delete(id); }
+
+    @PutMapping("/gestionUtilisateur")
+    public UUID utilisateurCreer( @RequestBody UtilisateurDTO usr ){ return usrServiceImpl.insert(usr); }
+
+    @PostMapping("/gestionUtilisateur")
+    public void utilisateurModif( @RequestBody UtilisateurDTO usr ){ usrServiceImpl.update(usr); }
+
 }

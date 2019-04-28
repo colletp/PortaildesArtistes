@@ -7,9 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -88,6 +91,26 @@ public class FrontMvcConfiguration extends WebMvcConfiguration {
     public void addViewControllers(ViewControllerRegistry registry) {
         logger.debug("addViewControllers");
         registry.addViewController("/").setViewName("index");
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        logger.error("localeResolver");
+        CookieLocaleResolver clr = new CookieLocaleResolver();
+        //clr.setDefaultLocale(Locale.FRENCH);
+        return clr;
+    }
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        logger.error("localeChangeInterceptor");
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        logger.error("addInterceptors");
+        registry.addInterceptor(localeChangeInterceptor());
     }
 
 }

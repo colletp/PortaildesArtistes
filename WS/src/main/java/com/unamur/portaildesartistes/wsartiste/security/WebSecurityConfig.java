@@ -1,19 +1,17 @@
 package com.unamur.portaildesartistes.wsartiste.security;
 
+import com.unamur.portaildesartistes.config.WebSecurityConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,8 +20,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 @Configuration
+//@ComponentScan("com.unamur.portaildesartistes.config")
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
@@ -31,18 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("donneeUtilisateurImpl")
     UserDetailsService uDS;
 
+    AppAuthProvider appAuthProvider;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        AppAuthProvider appAuthProvider = new AppAuthProvider();
+//        auth.authenticationProvider( Security.appAuthProvider( uDS , encoder ) );
+        appAuthProvider = new AppAuthProvider();
+        appAuthProvider.setUserDetailsService(uDS);
         appAuthProvider.setPasswordEncoder( encoder() );
-        appAuthProvider.setUserDetailsService( uDS );
-        auth.authenticationProvider(appAuthProvider);
-    }
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+        auth.authenticationProvider( appAuthProvider );
     }
 
     @Autowired
@@ -58,17 +54,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling()
                     .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                    .authorizeRequests()
+/*                .and()
                     .antMatchers("/*")
-                    .hasIpAddress("127.0.0.1/32")
+                    .hasIpAddress("127.0.0.1/32")*/
                 .and()
                     .authorizeRequests()
                     .antMatchers("/inscript")
                     .permitAll()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/gestionUtilisateur/list","/gestionUtilisateur2/list")
+                    .antMatchers( "/gestionUtilisateur","/gestionUtilisateur/*")
                     .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()
@@ -85,6 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .clearAuthentication(true)
+                    .invalidateHttpSession(true)
                     .logoutUrl("/logout")
                     .logoutSuccessHandler( myLogoutHandler )
                 ;
