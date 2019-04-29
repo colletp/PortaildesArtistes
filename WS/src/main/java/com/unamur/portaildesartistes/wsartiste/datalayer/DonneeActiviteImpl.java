@@ -18,38 +18,31 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeActiviteImpl implements DonneeActivite{
+public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<ActiviteDTO> list(){
-        Handle handle = dbiBean.open();
-        ActiviteSQLs ActiviteSQLs = handle.attach(ActiviteSQLs.class);
-        return ActiviteSQLs.list();
+        return super.Exec(ActiviteSQLs.class).list();
+    }
+    public UUID insert(ActiviteDTO item){
+        return UUID.fromString(super.Exec(ActiviteSQLs.class).insert(item));
+    }
+    public void update(ActiviteDTO item) {
+        super.Exec(ActiviteSQLs.class).update(item);
+    }
+    public void delete(UUID id) {
+        super.Exec(ActiviteSQLs.class).delete(id);
     }
 
-    public UUID insert(ActiviteDTO item){
-        Handle handle = dbiBean.open();
-        ActiviteSQLs ActiviteSQLs = handle.attach(ActiviteSQLs.class);
-        return ActiviteSQLs.insert(item);
-    }
     public ActiviteDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        ActiviteSQLs ActiviteSQLs = handle.attach(ActiviteSQLs.class);
-        return ActiviteSQLs.getById(p_id);
+        return super.Exec(ActiviteSQLs.class).getById(p_id);
     }
     public List<ActiviteDTO> getByDocId(UUID p_id){
-        Handle handle = dbiBean.open();
-        ActiviteSQLs ActiviteSQLs = handle.attach(ActiviteSQLs.class);
-        return ActiviteSQLs.getByDocId(p_id);
+        return super.Exec(ActiviteSQLs.class).getByDocId(p_id);
     }
 
     public List<ActiviteDTO> getByFormId(UUID p_id){
-        Handle handle = dbiBean.open();
-        ActiviteSQLs ActiviteSQLs = handle.attach(ActiviteSQLs.class);
-        return ActiviteSQLs.getByFormId(p_id);
+        return super.Exec(ActiviteSQLs.class).getByFormId(p_id);
     }
 
     @RegisterMapper(SecteurMapper.class)
@@ -66,9 +59,11 @@ public class DonneeActiviteImpl implements DonneeActivite{
         @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId ")
         List<ActiviteDTO> getByFormId(@Bind("formId")UUID formId);
 
-        @SqlUpdate("INSERT INTO activite (nom_activite,secteur_id) VALUES (:nomActivite,:idSecteur) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean ActiviteDTO test);
+        @SqlQuery("INSERT INTO activite (nom_activite,secteur_id) VALUES (:nomActivite,:idSecteur) RETURNING activite_id ")
+        String insert(@BindBean ActiviteDTO test);
+
+        void update(ActiviteDTO act);
+        void delete(UUID id);
     }
 
     public static class SecteurMapper implements ResultSetMapper<ActiviteDTO> {

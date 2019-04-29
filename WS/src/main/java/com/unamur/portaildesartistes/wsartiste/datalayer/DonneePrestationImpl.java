@@ -18,28 +18,34 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneePrestationImpl implements DonneePrestation{
+public class DonneePrestationImpl extends Donnee<PrestationDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneePrestationImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<PrestationDTO> list(){
-        Handle handle = dbiBean.open();
-        PrestationSQLs PrestationSQLs = handle.attach(PrestationSQLs.class);
-        return PrestationSQLs.list();
+        return super.Exec(PrestationSQLs.class).list();
+    }
+
+    @Override
+    PrestationDTO getById(UUID id) {
+        return super.Exec(PrestationSQLs.class).getById(id);
     }
 
     public UUID insert(PrestationDTO item){
-        Handle handle = dbiBean.open();
-        PrestationSQLs PrestationSQLs = handle.attach(PrestationSQLs.class);
-        return PrestationSQLs.insert(item);
+        return UUID.fromString(super.Exec(PrestationSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(PrestationDTO item) {
+        super.Exec(PrestationSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(PrestationSQLs.class).delete(id);
     }
 
     public List<PrestationDTO> getByDocId(UUID p_id){
-        Handle handle = dbiBean.open();
-        PrestationSQLs PrestationSQLs = handle.attach(PrestationSQLs.class);
-        return PrestationSQLs.getByDocId( p_id );
+        return super.Exec(PrestationSQLs.class).getByDocId( p_id );
     }
 
     @RegisterMapper(PrestationMapper.class)
@@ -59,9 +65,12 @@ public class DonneePrestationImpl implements DonneePrestation{
         @SqlQuery("select * from prestations WHERE se_deroule_id=:p_id ")
         List<PrestationDTO> getByPlaceId(@Bind("p_id") UUID p_id);
 
-        @SqlUpdate("INSERT INTO prestations (date_prest,duree,montant,etat,commanditaire_id,doc_artiste_id,activite_id,se_deroule_id) VALUES (:date_prest,:duree,:montant,:etat,:commanditaire_id,:doc_artiste_id,:activite_id,:se_deroule_id) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean PrestationDTO test);
+        @SqlQuery("INSERT INTO prestations (date_prest,duree,montant,etat,commanditaire_id,doc_artiste_id,activite_id,se_deroule_id) VALUES (:date_prest,:duree,:montant,:etat,:commanditaire_id,:doc_artiste_id,:activite_id,:se_deroule_id) RETURNING prest_id ")
+        String insert(@BindBean PrestationDTO test);
+
+        PrestationDTO getById(UUID id);
+        void update(PrestationDTO prest);
+        void delete(UUID id);
     }
 
     public static class PrestationMapper implements ResultSetMapper<PrestationDTO> {

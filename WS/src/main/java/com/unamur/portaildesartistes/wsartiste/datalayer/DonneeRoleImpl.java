@@ -18,26 +18,47 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeRoleImpl implements DonneeRole{
+public class DonneeRoleImpl extends Donnee<RoleDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<RoleDTO> getByCitoyenId(UUID p_id){
-        Handle handle = dbiBean.open();
-        RoleSQLs RoleSQLs = handle.attach(RoleSQLs.class);
-        return RoleSQLs.getByCitoyenId( p_id );
+        return super.Exec(RoleSQLs.class).getByCitoyenId( p_id );
     }
     public List<RoleDTO> getByCitoyenUserName(String username){
-        Handle handle = dbiBean.open();
-        RoleSQLs RoleSQLs = handle.attach(RoleSQLs.class);
-        return RoleSQLs.getByCitoyenUserName( username );
+        return super.Exec(RoleSQLs.class).getByCitoyenUserName( username );
+    }
+
+    @Override
+    List<RoleDTO> list() {
+        return super.Exec(RoleSQLs.class).list();
+    }
+
+    @Override
+    RoleDTO getById(UUID id) {
+        return super.Exec(RoleSQLs.class).getById(id);
+    }
+
+    @Override
+    UUID insert(RoleDTO item) {
+        return UUID.fromString(super.Exec(RoleSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(RoleDTO item) {
+        super.Exec(RoleSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(RoleSQLs.class).delete(id);
     }
 
 
     @RegisterMapper(RoleMapper.class)
     interface RoleSQLs {
+        @SqlQuery("select r.* from roles r")
+        List<RoleDTO> list();
+
         @SqlQuery("select r.* from gestionnaire g " +
                 "join gestionnaire_roles gr on g.gest_id=gr.gest_id " +
                 "join roles r on gr.roles_id=r.roles_id " +
@@ -50,6 +71,11 @@ public class DonneeRoleImpl implements DonneeRole{
                 "join citoyen c on g.citoyen_id=c.citoyen_id " +
                 "where c.login=:username")
         List<RoleDTO> getByCitoyenUserName(@Bind("username")String username);
+
+        RoleDTO getById(UUID id);
+        void update(RoleDTO rol);
+        void delete(UUID id);
+        String insert(RoleDTO rol);
     }
 
     public static class RoleMapper implements ResultSetMapper<RoleDTO> {

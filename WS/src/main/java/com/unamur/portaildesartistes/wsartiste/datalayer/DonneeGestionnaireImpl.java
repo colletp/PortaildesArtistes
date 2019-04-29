@@ -22,22 +22,30 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeGestionnaireImpl implements DonneeGestionnaire{
+public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeGestionnaireImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<GestionnaireDTO> list(){
-        Handle handle = dbiBean.open();
-        GestionnaireSQLs GestionnaireSQLs = handle.attach(GestionnaireSQLs.class);
-        return GestionnaireSQLs.list();
+        return super.Exec(GestionnaireSQLs.class).list();
+    }
+
+    @Override
+    GestionnaireDTO getById(UUID id) {
+        return super.Exec(GestionnaireSQLs.class).getById(id);
     }
 
     public UUID insert(GestionnaireDTO item){
-        Handle handle = dbiBean.open();
-        GestionnaireSQLs GestionnaireSQLs = handle.attach(GestionnaireSQLs.class);
-        return GestionnaireSQLs.insert(item);
+        return UUID.fromString(super.Exec(GestionnaireSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(GestionnaireDTO item) {
+        super.Exec(GestionnaireSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(GestionnaireSQLs.class).delete(id);
     }
 
     @RegisterMapper(GestionnaireMapper.class)
@@ -45,9 +53,12 @@ public class DonneeGestionnaireImpl implements DonneeGestionnaire{
         @SqlQuery("select * from gestionnaire ")
         List<GestionnaireDTO> list();
 
-        @SqlUpdate("INSERT INTO gestionnaire (nom_secteur) VALUES (:nomSecteur) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean GestionnaireDTO test);
+        @SqlQuery("INSERT INTO gestionnaire (citoyen_id,matricule,bureau,travaille) VALUES (:citoyen_id,:matricule,:bureau,:travaille) RETURNING gest_id")
+        String insert(@BindBean GestionnaireDTO test);
+
+        GestionnaireDTO getById(UUID id);
+        void update(GestionnaireDTO item);
+        void delete(UUID id);
     }
 
     public static class GestionnaireMapper implements ResultSetMapper<GestionnaireDTO> {

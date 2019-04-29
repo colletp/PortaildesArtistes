@@ -21,6 +21,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import javax.validation.Valid;
+import java.util.Date;
+import java.util.UUID;
 
 @Controller
 public class InscriptionControler {
@@ -60,6 +62,7 @@ public class InscriptionControler {
     @PostMapping(value = "/inscript")
     public ResponseEntity<String> inscript(
             @Valid @ModelAttribute("userForm") final UtilisateurDTO usrDTO ,
+            @ModelAttribute("_method") final String method,
             final BindingResult br ,
             final Model m)
     {
@@ -68,6 +71,11 @@ public class InscriptionControler {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
 
+        if( usrDTO.getCitoyen().getNom().length() < 2 ){
+            throw new IllegalArgumentException("Nom vide ou trop court");
+        }
+
+
         HttpHeaders headersRest = new HttpHeaders();
         //headersRest.setContentType( yaml );
 logger.error( "username:"+usrDTO.getUsername() );
@@ -75,12 +83,25 @@ logger.error( "username:"+usrDTO.getUsername() );
         paramRest.addAttribute("usrForm", usrDTO );
 
         HttpEntity<ModelMap> request = new HttpEntity<>( paramRest, headersRest );
-        String resp=null;
 
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
+        String resp="";
         try{
-            resp = restTemplateHelper.postForEntity( String.class , configurationService.getUrl() + "/inscript", usrDTO , headersRest );
-            logger.debug("Inscription OK : "+ resp );
+            switch(method.toUpperCase()){
+                case "PUT":
+                    logger.error( "Appel REST PUT" );
+
+                    UUID uuid = restTemplateHelper.putForEntity( UUID.class , configurationService.getUrl() + "/inscript", usrDTO , headersRest );
+                    usrDTO.setId(uuid);
+                    resp = "Inscription OK : "+ uuid;
+                    break;
+                default :
+                    logger.error( "Appel REST : "+method );
+                    resp="Appel REST : "+method;
+            }
+
+
+
         }
         catch( HttpClientErrorException e){
             logger.error("Réponse du serveur: "+e.getStatusCode().toString() );
