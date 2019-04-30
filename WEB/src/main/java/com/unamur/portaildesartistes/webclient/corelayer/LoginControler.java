@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
@@ -67,6 +68,10 @@ public class LoginControler {
 
     @PostMapping(value = "/login" //,consumes = "text/yaml",produces = "text/yaml"
             )
+
+    public Boolean ValideConnect(UtilisateurDTO usrDTO){
+        return true;
+    }
     //initialisation du login
     public ResponseEntity<String> authenticate(
             @Valid @ModelAttribute("userForm") final UtilisateurDTO usrDTO ,
@@ -80,6 +85,8 @@ public class LoginControler {
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
+
+        ValideConnect(usrDTO);
 
         HttpHeaders headersRest = new HttpHeaders();
         //headersRest.setContentType( yaml );
