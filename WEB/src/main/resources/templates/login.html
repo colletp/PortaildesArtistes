@@ -7,6 +7,7 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <link href="../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
 </head>
 <body>
 
@@ -28,10 +29,24 @@
     });
 </script>
 
-    <form th:action="@{/login}" th:name="userForm" th:method="post">
-        Login:<input th:type="text" th:name="username" /><br/>
-        Password:<input th:type="password" th:name="password" /><br/>
-        <input th:type="submit" />
+    <nav>
+        <div id="navsection">
+            <div class="element"><a class="whitea" href="home.html">Accueil</a></div>
+        </div>
+    </nav>
+
+    <form class="identsection"  th:action="@{/login}" th:name="userForm" th:method="post">
+        <fieldset>
+            <legend>Connectez-vous au portail</legend>
+            <label for="ident">Identifiant<br/></label>
+            <input th:type="text" th:name="username" />
+            <br/><br />
+            <label for="pass">Mot de passe</label>
+            <input th:type="password" th:name="password" />
+            <p class="mdpoubli"> <a class="bluea" href="Changepassword.html">Identifiant ou mot de passe oublié</a></p>
+            <br/>
+            <input th:type="submit" />
+        </fieldset>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

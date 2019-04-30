@@ -1,3 +1,64 @@
-h1,h2,h3,h4{
-    color:red;
+body{
+    background-image: url("../img/magritte.jpg");
+    background-size:100%;
+    background-color: rgb(235,241,222);
+}
+
+h1{
+    font-family:  Arial,"Arial Black", Impact,sans-serif;
+    font-size: 30px;
+    color: black;
+    margin-left: 50px;
+}
+
+h2{
+    font-family: Arial,"Arial Black", Impact,sans-serif;
+    color: black;
+    margin-left: 40px;
+    font-size: 25px;
+}
+
+.whitea{
+    color: white;
+}
+    .whitea:hover{
+        text-decoration: underline;
+        color: white;
+    }
+
+.bluea{
+    color: navy;
+}
+    .bluea:hover{
+        text-decoration: underline;
+        color: navy;
+    }
+
+
+#topsection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+}
+
+
+#navsection{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 8px;
+    height:35px;
+    font-size: 16px;
+    font-family: Arial,"Arial Black", Impact,sans-serif;
+    color: white;
+    background-color: teal;
+}
+
+.element{
+    margin-right: 30px;
+}
+
+.element:nth-child(1){
+    flex: 1;
+    margin-left: 50px;
 }
