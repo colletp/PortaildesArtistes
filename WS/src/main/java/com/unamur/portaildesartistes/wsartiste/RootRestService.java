@@ -1,20 +1,14 @@
 package com.unamur.portaildesartistes.wsartiste;
 
     import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-    import com.unamur.portaildesartistes.DTO.CustomWrapper;
     import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
 
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
-    import org.springframework.web.servlet.ModelAndView;
-
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
     import java.util.UUID;
 
 @RestController
@@ -35,13 +29,10 @@ public class RootRestService implements Controller {
     }
 
     @Override
-    @PostMapping(value = "/inscript")
-    public @ResponseBody ResponseEntity wsInscript(
-                @RequestBody final CustomWrapper<UtilisateurDTO> usrDTO
-                ){
-        logger.error( usrDTO==null?"null":usrDTO.getObject().getUsername() );
-        UUID id = usrImpl.insert( usrDTO.getObject() );
+    @PutMapping(value = "/inscript")
+    public @ResponseBody ResponseEntity wsInscript( @RequestBody final UtilisateurDTO usrDTO){
+        logger.error( usrDTO==null?"null":usrDTO.getUsername() );
+        UUID id = usrImpl.insert( usrDTO );
         return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name() + " / " + id.toString() , HttpStatus.OK);
     }
-
 }

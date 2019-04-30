@@ -19,28 +19,29 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeCommanditaireImpl implements DonneeCommanditaire{
+public class DonneeCommanditaireImpl extends Donnee<CommanditaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeCommanditaireImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<CommanditaireDTO> list(){
-        Handle handle = dbiBean.open();
-        CommanditaireSQLs CommanditaireSQLs = handle.attach(CommanditaireSQLs.class);
-        return CommanditaireSQLs.list();
+        return super.Exec(CommanditaireSQLs.class).list();
     }
 
     public CommanditaireDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        CommanditaireSQLs CommanditaireSQLs = handle.attach(CommanditaireSQLs.class);
-        return CommanditaireSQLs.getById( p_id );
+        return super.Exec(CommanditaireSQLs.class).getById( p_id );
     }
 
     public UUID insert(CommanditaireDTO item){
-        Handle handle = dbiBean.open();
-        CommanditaireSQLs CommanditaireSQLs = handle.attach(CommanditaireSQLs.class);
-        return CommanditaireSQLs.insert(item);
+        return UUID.fromString(super.Exec(CommanditaireSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(CommanditaireDTO item) {
+        super.Exec(CommanditaireSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(CommanditaireSQLs.class).delete(id);
     }
 
     @RegisterMapper(CommanditaireMapper.class)
@@ -51,9 +52,10 @@ public class DonneeCommanditaireImpl implements DonneeCommanditaire{
         @SqlQuery("select * from commanditaire where com_id = :com_id")
         CommanditaireDTO getById(@Bind("com_id") UUID p_id);
 
-        @SqlUpdate("INSERT INTO commanditaire (entreprise_id,citoyen_id) VALUES (:entreprise_id,:citoyen_id) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean CommanditaireDTO test);
+        @SqlQuery("INSERT INTO commanditaire (entreprise_id,citoyen_id) VALUES (:entreprise_id,:citoyen_id) RETURNING com_id ")
+        String insert(@BindBean CommanditaireDTO test);
+        void update(CommanditaireDTO com);
+        void delete(UUID id);
     }
 
     public static class CommanditaireMapper implements ResultSetMapper<CommanditaireDTO> {

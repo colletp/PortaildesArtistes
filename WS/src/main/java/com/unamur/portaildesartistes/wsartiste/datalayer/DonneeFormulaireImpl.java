@@ -19,38 +19,37 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeFormulaireImpl implements DonneeFormulaire{
+public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeFormulaireImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<FormulaireDTO> list(){
-        Handle handle = dbiBean.open();
-        AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
-        return AdresseSQLs.list();
+        return super.Exec(FormulaireSQLs.class).list();
     }
 
     public FormulaireDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
-        return AdresseSQLs.getById( p_id );
+        return super.Exec(FormulaireSQLs.class).getById( p_id );
     }
 
     public List<FormulaireDTO> getByCitoyenId(UUID p_id){
-        Handle handle = dbiBean.open();
-        AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
-        return AdresseSQLs.getByCitoyenId( p_id );
+        return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id );
     }
 
     public UUID insert(FormulaireDTO item){
-        Handle handle = dbiBean.open();
-        AdresseSQLs AdresseSQLs = handle.attach(AdresseSQLs.class);
-        return AdresseSQLs.insert(item);
+        return UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
     }
 
-    @RegisterMapper(AdresseMapper.class)
-    interface AdresseSQLs {
+    @Override
+    void update(FormulaireDTO item) {
+        super.Exec(FormulaireSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(FormulaireSQLs.class).delete(id);
+    }
+
+    @RegisterMapper(FormulaireMapper.class)
+    interface FormulaireSQLs {
         @SqlQuery("select * from formulaires")
         List<FormulaireDTO> list();
 
@@ -60,12 +59,14 @@ public class DonneeFormulaireImpl implements DonneeFormulaire{
         @SqlQuery("select * from formulaires where citoyen_id = :citoyenId")
         List<FormulaireDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlUpdate("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean FormulaireDTO test);
+        @SqlQuery("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) RETURNING form_id ")
+        String insert(@BindBean FormulaireDTO test);
+
+        void update(FormulaireDTO form);
+        void delete(UUID id);
     }
 
-    public static class AdresseMapper implements ResultSetMapper<FormulaireDTO> {
+    public static class FormulaireMapper implements ResultSetMapper<FormulaireDTO> {
         FormulaireDTO formulaireDTO;
         @Override
         public FormulaireDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {

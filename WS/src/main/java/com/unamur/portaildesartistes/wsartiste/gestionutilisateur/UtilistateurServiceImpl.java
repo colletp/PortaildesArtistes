@@ -3,19 +3,26 @@ package com.unamur.portaildesartistes.wsartiste.gestionutilisateur;
 import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.wsartiste.datalayer.*;
 
+import com.unamur.portaildesartistes.wsartiste.security.WebSecurityConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UtilistateurServiceImpl implements UtilistateurService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UtilistateurServiceImpl.class);
+
     @Autowired
-    private DonneeCitoyenImpl usrImpl;
+    private DonneeCitoyenImpl citImpl;
+    @Autowired
+    private DonneeUtilisateurImpl usrImpl;
     @Autowired
     private DonneeAdresseImpl adrImpl;
     @Autowired
@@ -35,16 +42,10 @@ public class UtilistateurServiceImpl implements UtilistateurService {
     @Autowired
     private DonneeEntrepriseImpl entrImpl;
 
-    private UtilisateurDTO utilisateurDTO;
-
-    public UtilistateurServiceImpl(){
-        utilisateurDTO = new UtilisateurDTO();
-    }
-
     @Transactional
-    public List<CitoyenDTO> list(){
-        List<CitoyenDTO> usrDTOList = usrImpl.list();
-        for( CitoyenDTO usr : usrDTOList ){
+    public List<CitoyenDTO> listCitoyen(){
+        List<CitoyenDTO> citDTOList = citImpl.list();
+        for( CitoyenDTO usr : citDTOList ){
             usr.setResideAdr( adrImpl.getById( usr.getReside() ) );
             usr.setRoles( roleImpl.getByCitoyenId( usr.getId() ) );
             usr.setFormulaires( formImpl.getByCitoyenId( usr.getId() ) );
@@ -63,10 +64,10 @@ public class UtilistateurServiceImpl implements UtilistateurService {
                 doc.setPrestations( prestImpl.getByDocId( doc.getId() ) );
                 for( PrestationDTO prest : doc.getPrestations() ){
                     CommanditaireDTO com = comImpl.getById( prest.getCommanditaireId() );
-                        com.setCitoyen(  usrImpl.getById( com.getCitoyenId() ) );
+                        com.setCitoyen(  citImpl.getById( com.getCitoyenId() ) );
                         EntrepriseDTO entr = entrImpl.getById( com.getEntrepriseId() );
                         if(entr!=null) {
-                            entr.setContact(usrImpl.getById(entr.getContactId()));
+                            entr.setContact(citImpl.getById(entr.getContactId()));
                             com.setEntreprise(entr);
                         }
                         prest.setCommanditaire( com );
@@ -76,20 +77,45 @@ public class UtilistateurServiceImpl implements UtilistateurService {
             }
 
         }
+        return citDTOList;
+    }
+
+    @Transactional
+    public List<UtilisateurDTO> list(){
+        List<UtilisateurDTO> usrDTOList = usrImpl.list();
+        /*for( UtilisateurDTO usr : usrDTOList ){
+            logger.error( usr.getUsername() );
+            logger.error( usr.getId().toString() );
+            usr.setCitoyen( citImpl.getById( usr.getId() ) );
+            usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
+        }*/
         return usrDTOList;
     }
 
     @Transactional
-    public UUID insertOK(){
-        utilisateurDTO.setUsername("log"+new Date().getTime());
-        return usrImpl.insert(utilisateurDTO);
+    public UtilisateurDTO getById( UUID uuid ){
+        UtilisateurDTO usr= usrImpl.getById(uuid);
+        usr.setCitoyen( citImpl.getById( usr.getId() ) );
+        usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
+        return usr;
     }
 
     @Transactional
-    public void insertAndFail(){
-        //authUser.setNomUtilisateur("login"+new Date().getTime());
-        //donneeUtilisateur.insert(authUser);
-        throw new RuntimeException("Hello this is an error message");
+    public void update( UtilisateurDTO usr ){
+        if(usr.getPassword()!="")
+            usr.setPassword( WebSecurityConfig.encoder().encode(usr.getPassword()) );
+        usrImpl.update(usr);
+    }
+
+    @Transactional
+    public UUID insert( UtilisateurDTO usr ){
+        usr.setPassword( WebSecurityConfig.encoder().encode(usr.getPassword()) );
+        return usrImpl.insert(usr);
+    }
+
+    @Transactional
+    public void delete( UUID uuid ){
+        usrImpl.delete(uuid);
     }
 
 }

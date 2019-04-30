@@ -18,40 +18,50 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeDocArtisteImpl implements DonneeDocArtiste{
+public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeDocArtisteImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<DocArtisteDTO> list(){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.list();
+        return super.Exec(DocArtisteSQLs.class).list();
+    }
+
+    @Override
+    DocArtisteDTO getById(UUID id) {
+        return super.Exec(DocArtisteSQLs.class).getById(id);
     }
 
     public UUID insert(DocArtisteDTO item){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.insert(item);
+        return UUID.fromString(super.Exec(DocArtisteSQLs.class).insert(item));
     }
+
+    @Override
+    void update(DocArtisteDTO item) {
+        super.Exec(DocArtisteSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(DocArtisteSQLs.class).delete(id);
+    }
+
     public List<DocArtisteDTO> getByCitoyenId(UUID p_id){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.getByCitoyenId(p_id);
+        return super.Exec(DocArtisteSQLs.class).getByCitoyenId(p_id);
     }
 
     @RegisterMapper(DocArtisteMapper.class)
-    interface SecteurSQLs {
+    interface DocArtisteSQLs {
         @SqlQuery("select * from doc_artiste ")
         List<DocArtisteDTO> list();
 
         @SqlQuery("select * from doc_artiste WHERE citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlUpdate("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean DocArtisteDTO test);
+        @SqlUpdate("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) RETURNING doc_artiste_id ")
+        String insert(@BindBean DocArtisteDTO test);
+
+        DocArtisteDTO getById(UUID id);
+        void update(DocArtisteDTO doc);
+        void delete(UUID id);
     }
 
     public static class DocArtisteMapper implements ResultSetMapper<DocArtisteDTO> {
