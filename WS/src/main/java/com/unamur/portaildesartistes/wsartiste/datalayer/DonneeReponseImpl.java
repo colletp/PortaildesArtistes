@@ -21,22 +21,30 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeReponseImpl implements DonneeReponse{
+public class DonneeReponseImpl extends Donnee<ReponseDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeReponseImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<ReponseDTO> list(){
-        Handle handle = dbiBean.open();
-        ReponseSQLs ReponseSQLs = handle.attach(ReponseSQLs.class);
-        return ReponseSQLs.list();
+        return super.Exec(ReponseSQLs.class).list();
+    }
+
+    @Override
+    ReponseDTO getById(UUID id) {
+        return super.Exec(ReponseSQLs.class).getById(id);
     }
 
     public UUID insert(ReponseDTO item){
-        Handle handle = dbiBean.open();
-        ReponseSQLs ReponseSQLs = handle.attach(ReponseSQLs.class);
-        return ReponseSQLs.insert(item);
+        return UUID.fromString(super.Exec(ReponseSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(ReponseDTO item) {
+        super.Exec(ReponseSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(ReponseSQLs.class).delete(id);
     }
 
     @RegisterMapper(ReponseMapper.class)
@@ -44,9 +52,12 @@ public class DonneeReponseImpl implements DonneeReponse{
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 
-        @SqlUpdate("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean ReponseDTO test);
+        @SqlUpdate("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
+        String insert(@BindBean ReponseDTO test);
+
+        ReponseDTO getById(UUID id);
+        void update(ReponseDTO rep);
+        void delete(UUID id);
     }
 
     public static class ReponseMapper implements ResultSetMapper<ReponseDTO> {

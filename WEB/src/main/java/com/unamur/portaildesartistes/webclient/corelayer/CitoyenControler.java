@@ -62,7 +62,7 @@ public class CitoyenControler {
         UtilisateurDTO usr = new UtilisateurDTO();
         try{
             logger.error( "Appel REST" );
-            reponseServeur = restTemplateHelper.getForEntity(UtilisateurDTO.class, configurationService.getUrl()+"/gestionUtilisateur/"+itemId , headers );
+            reponseServeur = restTemplateHelper.getForEntity( UtilisateurDTO.class, configurationService.getUrl()+"/gestionUtilisateur/"+itemId , headers );
             logger.error( reponseServeur.toString() );
             usr = (reponseServeur==null?new UtilisateurDTO(): reponseServeur );
         }

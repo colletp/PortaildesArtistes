@@ -2,8 +2,6 @@ package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.skife.jdbi.v2.sqlobject.*;
@@ -20,37 +18,44 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeCitoyenImpl implements DonneeCitoyen {
+public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
-    @Autowired
-    private DBI dbiBean;
 
     @Autowired
     DonneeAdresseImpl adrImpl;
 
     public List<CitoyenDTO> list(){
-        Handle handle = dbiBean.open();
-        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
-        return CitoyenSQLs.list();
+        return super.Exec(CitoyenSQLs.class).list();
     }
     public CitoyenDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        CitoyenSQLs CitoyenSQLs = handle.attach(CitoyenSQLs.class);
         try {
-            return CitoyenSQLs.getById(p_id);
+            return super.Exec(CitoyenSQLs.class).getById(p_id);
         }catch(SQLException e){
             return null;
         }
     }
 
+    @Override
+    UUID insert(CitoyenDTO item) {
+        throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
+    }
+
+    @Override
+    void update(CitoyenDTO item) {
+        super.Exec(CitoyenSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(CitoyenSQLs.class).delete(id);
+    }
+
     public UUID insert(UtilisateurDTO item){
-        Handle handle = dbiBean.open();
-        UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-        UUID ret=null;
+        UUID uuid=null;
         try {
             UUID reside =  adrImpl.insert( item.getCitoyen().getResideAdr() );
             item.getCitoyen().setReside( reside );
-            ret = UtilisateurSQLs.insert( item );
+            return UUID.fromString( super.Exec(UtilisateurSQLs.class).insert( item ) );
         }
         catch(UnableToExecuteStatementException e){
             System.err.println( e );
@@ -66,7 +71,7 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
             System.err.println( e.getClass() );
             //throw e;
         }
-        return ret;
+        return uuid;
     }
 
     @RegisterMapper(CitoyenMapper.class)
@@ -76,12 +81,14 @@ public class DonneeCitoyenImpl implements DonneeCitoyen {
 
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
         CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
+
+        void update(CitoyenDTO cit);
+        void delete(UUID id);
     }
     @RegisterMapper(UtilisateurMapper.class)
     interface UtilisateurSQLs {
-        @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean UtilisateurDTO test) throws SQLException;
+        @SqlQuery("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) RETURNING citoyen_id ")
+        String insert(@BindBean UtilisateurDTO test) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {

@@ -18,27 +18,28 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeSecteurImpl implements DonneeSecteur{
+public class DonneeSecteurImpl extends Donnee<SecteurDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<SecteurDTO> list(){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.list();
+        return super.Exec(SecteurSQLs.class).list();
     }
     public SecteurDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.getById(p_id);
+        return super.Exec(SecteurSQLs.class).getById(p_id);
     }
 
     public UUID insert(SecteurDTO item){
-        Handle handle = dbiBean.open();
-        SecteurSQLs SecteurSQLs = handle.attach(SecteurSQLs.class);
-        return SecteurSQLs.insert(item);
+        return UUID.fromString(super.Exec(SecteurSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(SecteurDTO item) {
+        super.Exec(SecteurSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(SecteurSQLs.class).delete(id);
     }
 
     @RegisterMapper(SecteurMapper.class)
@@ -49,9 +50,11 @@ public class DonneeSecteurImpl implements DonneeSecteur{
         @SqlQuery("select * from secteur WHERE secteur_id = :p_id ")
         SecteurDTO getById(@Bind("p_id") UUID p_id);
 
-        @SqlUpdate("INSERT INTO secteur (nom_secteur) VALUES (:nomSecteur) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean SecteurDTO test);
+        @SqlQuery("INSERT INTO secteur (nom_secteur) VALUES (:nomSecteur) ")
+        String insert(@BindBean SecteurDTO test);
+
+        void update(SecteurDTO sec);
+        void delete(UUID id);
     }
 
     public static class SecteurMapper implements ResultSetMapper<SecteurDTO> {

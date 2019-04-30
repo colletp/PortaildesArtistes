@@ -20,27 +20,28 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeEntrepriseImpl implements DonneeEntreprise{
+public class DonneeEntrepriseImpl extends Donnee<EntrepriseDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeCitoyenImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<EntrepriseDTO> list(){
-        Handle handle = dbiBean.open();
-        EntrepriseSQLs EntrepriseSQLs = handle.attach(EntrepriseSQLs.class);
-        return EntrepriseSQLs.list();
+        return super.Exec(EntrepriseSQLs.class).list();
     }
     public EntrepriseDTO getById(UUID p_id){
-        Handle handle = dbiBean.open();
-        EntrepriseSQLs EntrepriseSQLs = handle.attach(EntrepriseSQLs.class);
-        return EntrepriseSQLs.getById(p_id);
+        return super.Exec(EntrepriseSQLs.class).getById(p_id);
     }
 
     public UUID insert(EntrepriseDTO item){
-        Handle handle = dbiBean.open();
-        EntrepriseSQLs EntrepriseSQLs = handle.attach(EntrepriseSQLs.class);
-        return EntrepriseSQLs.insert(item);
+        return UUID.fromString(super.Exec(EntrepriseSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(EntrepriseDTO item) {
+        super.Exec(EntrepriseSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(EntrepriseSQLs.class).delete(id);
     }
 
     @RegisterMapper(EnrepriseMapper.class)
@@ -51,9 +52,11 @@ public class DonneeEntrepriseImpl implements DonneeEntreprise{
         @SqlQuery("select * from entreprise WHERE entreprise_id = :p_id ")
         EntrepriseDTO getById(@Bind("p_id")UUID p_id);
 
-        @SqlUpdate("INSERT INTO entrerise (contact_id,siege_id,bce,denomination,statut_legal) VALUES (:contact_id,:siege_id,:bce,:denomination,:statut_legal) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean EntrepriseDTO test);
+        @SqlUpdate("INSERT INTO entrerise (contact_id,siege_id,bce,denomination,statut_legal) VALUES (:contact_id,:siege_id,:bce,:denomination,:statut_legal) RETURNING entreprise_id ")
+        String insert(@BindBean EntrepriseDTO test);
+
+        void update(EntrepriseDTO ent);
+        void delete(UUID id);
     }
 
     public static class EnrepriseMapper implements ResultSetMapper<EntrepriseDTO> {

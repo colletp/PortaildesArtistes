@@ -21,25 +21,19 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsService {
+public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(DonneeUtilisateurImpl.class);
-    @Autowired
-    private DBI dbiBean;
 
     @Autowired
     private DonneeCitoyenImpl citoyenImpl;
 
     public List<UtilisateurDTO> list(){
-        Handle handle = dbiBean.open();
-        UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-        return UtilisateurSQLs.list();
+        return super.Exec(UtilisateurSQLs.class).list();
     }
 
     public UtilisateurDTO getById(UUID uuid){
         try{
-            Handle handle = dbiBean.open();
-            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-            return UtilisateurSQLs.getById(uuid);
+            return super.Exec(UtilisateurSQLs.class).getById(uuid);
         }
         catch(UnableToExecuteStatementException e){
             System.err.println( e );
@@ -64,9 +58,7 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
 
     public void update(UtilisateurDTO usr){
         try{
-            Handle handle = dbiBean.open();
-            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-            UtilisateurSQLs.update(usr);
+            super.Exec(UtilisateurSQLs.class).update(usr);
         }
             catch(UnableToExecuteStatementException e){
             System.err.println( e );
@@ -85,10 +77,8 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
     }
 
     public void delete(UUID uuid){
-        try{
-            Handle handle = dbiBean.open();
-            UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-            UtilisateurSQLs.delete(uuid);
+        /*try{
+            super.Exec(UtilisateurSQLs.class).delete(uuid);
         }
         catch(UnableToExecuteStatementException e){
             System.err.println( e );
@@ -104,6 +94,7 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
             System.err.println( e.getClass() );
             //throw e;
         }
+        */
     }
 
     //implemente la sécurité
@@ -113,12 +104,9 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
     @Override
     public UserDetails loadUserByUsername(String userName)throws UsernameNotFoundException {
         Objects.requireNonNull(userName);
-        Handle handle = dbiBean.open();
-        UtilisateurSQLs UtilisateurSQLs = handle.attach(UtilisateurSQLs.class);
-
         UtilisateurDTO user;
         try {
-            user = UtilisateurSQLs.getByUsername(userName);
+            user = super.Exec(UtilisateurSQLs.class).getByUsername(userName);
             if(user==null)throw new UsernameNotFoundException("User not found");
         }catch( SQLException e ){
             logger.error( e.getMessage()+"/sql : "+e.getSQLState() );
@@ -142,13 +130,10 @@ public class DonneeUtilisateurImpl implements DonneeUtilisateur,UserDetailsServi
 
         @SqlUpdate("UPDATE citoyen SET login=:username,password=:password WHERE citoyen_id=:id")
         void update(@BindBean UtilisateurDTO test) throws SQLException;
-
-        @SqlUpdate("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:username,:password,:reside) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean UtilisateurDTO test) throws SQLException;
-
+/*
         @SqlUpdate("DELETE FROM citoyen WHERE citoyen_id = :citoyen_id) ")
         void delete(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
+*/
     }
 
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {

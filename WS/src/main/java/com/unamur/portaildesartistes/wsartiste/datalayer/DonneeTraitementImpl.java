@@ -22,22 +22,30 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class DonneeTraitementImpl implements DonneeTraitement{
+public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeTraitementImpl.class);
 
-    @Autowired
-    private DBI dbiBean;
-
     public List<TraitementDTO> list(){
-        Handle handle = dbiBean.open();
-        TraitementSQLs TraitementSQLs = handle.attach(TraitementSQLs.class);
-        return TraitementSQLs.list();
+        return super.Exec(TraitementSQLs.class).list();
+    }
+
+    @Override
+    TraitementDTO getById(UUID id) {
+        return super.Exec(TraitementSQLs.class).getById(id);
     }
 
     public UUID insert(TraitementDTO item){
-        Handle handle = dbiBean.open();
-        TraitementSQLs TraitementSQLs = handle.attach(TraitementSQLs.class);
-        return TraitementSQLs.insert(item);
+        return UUID.fromString(super.Exec(TraitementSQLs.class).insert(item));
+    }
+
+    @Override
+    void update(TraitementDTO item) {
+        super.Exec(TraitementSQLs.class).update(item);
+    }
+
+    @Override
+    void delete(UUID id) {
+        super.Exec(TraitementSQLs.class).delete(id);
     }
 
     @RegisterMapper(TraitementMapper.class)
@@ -45,9 +53,12 @@ public class DonneeTraitementImpl implements DonneeTraitement{
         @SqlQuery("select * from traitements ")
         List<TraitementDTO> list();
 
-        @SqlUpdate("INSERT INTO traitements (date_trt,appreciation,roles_id,gest_id,form_id,citoyen_prest_id,type_role) VALUES (:date_trt,:appreciation,:roles_id,:gest_id,:form_id,:citoyen_prest_id,:type_role) ")
-        @GetGeneratedKeys
-        UUID insert(@BindBean TraitementDTO test);
+        @SqlUpdate("INSERT INTO traitements (date_trt,appreciation,roles_id,gest_id,form_id,citoyen_prest_id,type_role) VALUES (:date_trt,:appreciation,:roles_id,:gest_id,:form_id,:citoyen_prest_id,:type_role) RETURNING trt_id ")
+        String insert(@BindBean TraitementDTO test);
+
+        TraitementDTO getById(UUID id);
+        void update(TraitementDTO trt);
+        void delete(UUID id);
     }
 
     public static class TraitementMapper implements ResultSetMapper<TraitementDTO> {
