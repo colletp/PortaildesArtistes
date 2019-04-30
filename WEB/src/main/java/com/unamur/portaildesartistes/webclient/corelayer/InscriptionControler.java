@@ -1,21 +1,11 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
-import com.unamur.portaildesartistes.DTO.AdresseDTO;
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
@@ -28,37 +18,14 @@ import java.util.Date;
 import java.util.UUID;
 
 @Controller
-public class InscriptionControler {
+public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO > >{
 
     private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
-
-    @ResponseBody
-    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-    public String handleHttpMediaTypeNotAcceptableException() {
-        return "acceptable MIME type:" + MediaType.APPLICATION_JSON_VALUE;
-    }
-
-    @Autowired
-    @Qualifier("getMediaTypeYaml")
-    MediaType yaml;
-
-    @Autowired
-    private RestTemplateHelper restTemplateHelper;
-
-    @Autowired
-    private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value = "/inscript")
     public String loginView( Model model ){
         UtilisateurDTO usr = new UtilisateurDTO();
-        usr.setUsername("test");
-        usr.setCitoyen( new CitoyenDTO() );
-        usr.getCitoyen().setNom("MonNom");
-        usr.getCitoyen().setResideAdr( new AdresseDTO() );
-        usr.getCitoyen().getResideAdr().setRue("Ch");
-
-        model.addAttribute("usrForm",usr);
-
+        model.addAttribute("form",usr);
         return "inscript.html";
     }
 
@@ -185,45 +152,21 @@ public class InscriptionControler {
     }
 
     @PostMapping(value = "/inscript")
-    public ResponseEntity<String> inscript(
-            @Valid @ModelAttribute("userForm") final UtilisateurDTO usrDTO ,
+    public String inscript(
+            @Valid @ModelAttribute("form") final UtilisateurDTO usrDTO ,
             @ModelAttribute("_method") final String method,
             final BindingResult br ,
-            final Model m)
+            final Model model)
     {
         if(br.hasErrors())
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
-
         ValideInscript(usrDTO);
-
-        HttpHeaders headersRest = new HttpHeaders();
-        //headersRest.setContentType( yaml );
-logger.error( "username:"+usrDTO.getUsername() );
-        ModelMap paramRest = new ModelMap();
-        paramRest.addAttribute("usrForm", usrDTO );
-
-        HttpEntity<ModelMap> request = new HttpEntity<>( paramRest, headersRest );
-
-        MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
         String resp="";
         try{
-            switch(method.toUpperCase()){
-                case "PUT":
-                    logger.error( "Appel REST PUT" );
-
-                    UUID uuid = restTemplateHelper.putForEntity( UUID.class , configurationService.getUrl() + "/inscript", usrDTO , headersRest );
-                    usrDTO.setId(uuid);
-                    resp = "Inscription OK : "+ uuid;
-                    break;
-                default :
-                    logger.error( "Appel REST : "+method );
-                    resp="Appel REST : "+method;
-            }
-
-
-
+            resp=super.postForm("","POST",usrDTO,UtilisateurDTO.class,model,"inscript" );
+            return "inscriptOK.html";
         }
         catch( HttpClientErrorException e){
             logger.error("Réponse du serveur: "+e.getStatusCode().toString() );
@@ -266,8 +209,7 @@ logger.error( "username:"+usrDTO.getUsername() );
             //reponseRest
             resp = "Autre erreur non gérée (voir logs)";
         }
-
-        ResponseEntity<String> reponseAuClient = new ResponseEntity<>( resp , paramClient , HttpStatus.OK );
-        return reponseAuClient;
+        logger.error(resp);
+        return "inscriptKO.html";
     }
 }

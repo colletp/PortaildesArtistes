@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
-public class FormulaireDTO implements Serializable {
+public class FormulaireDTO implements DTO {
 
     // ******************
     // Champs/propriétés

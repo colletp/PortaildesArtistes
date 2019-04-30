@@ -57,13 +57,6 @@ public class LoginControler {
     }
 
     @Autowired
-    @Qualifier("getMediaTypeYaml")
-    MediaType yaml;
-
-    //@Autowired
-    //PasswordEncoder encoder;
-
-    @Autowired
     UserDetailsServiceWeb uDS;
 
     @PostMapping(value = "/login" //,consumes = "text/yaml",produces = "text/yaml"
@@ -74,7 +67,7 @@ public class LoginControler {
     }
     //initialisation du login
     public ResponseEntity<String> authenticate(
-            @Valid @ModelAttribute("userForm") final UtilisateurDTO usrDTO ,
+            @Valid @ModelAttribute("form") final UtilisateurDTO usrDTO ,
             final BindingResult br ,
             final Model m)
     {

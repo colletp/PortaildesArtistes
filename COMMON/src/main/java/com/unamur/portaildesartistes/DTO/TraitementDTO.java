@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class TraitementDTO implements Serializable {
+public class TraitementDTO implements DTO {
 
     // ******************
     // Champs/propriétés

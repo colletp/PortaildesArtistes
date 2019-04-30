@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Component
-public class RoleDTO implements Serializable, GrantedAuthority {
+public class RoleDTO implements DTO, GrantedAuthority {
     private UUID id;
     private String nomRole;
     private String lang;

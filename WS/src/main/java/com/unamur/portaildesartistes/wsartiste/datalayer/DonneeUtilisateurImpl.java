@@ -1,8 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.skife.jdbi.v2.sqlobject.*;
@@ -130,10 +128,6 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
 
         @SqlUpdate("UPDATE citoyen SET login=:username,password=:password WHERE citoyen_id=:id")
         void update(@BindBean UtilisateurDTO test) throws SQLException;
-/*
-        @SqlUpdate("DELETE FROM citoyen WHERE citoyen_id = :citoyen_id) ")
-        void delete(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
-*/
     }
 
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {

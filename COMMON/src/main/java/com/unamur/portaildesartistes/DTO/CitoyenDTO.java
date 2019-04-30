@@ -1,11 +1,10 @@
 package com.unamur.portaildesartistes.DTO;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class CitoyenDTO implements Serializable {
+public class CitoyenDTO implements DTO {
 
     // ******************
     // Champs/propriétés

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UtilisateurDTO implements Serializable, UserDetails {
+public class UtilisateurDTO implements DTO, UserDetails {
     private UUID id;
     private String login;
     private String password;

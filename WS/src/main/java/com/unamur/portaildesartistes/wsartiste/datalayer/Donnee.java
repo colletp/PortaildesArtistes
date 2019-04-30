@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
+import com.unamur.portaildesartistes.DTO.DTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Donnee<T> {
+public abstract class Donnee<T extends DTO> {
     @Autowired
     private DBI dbiBean;
 
-    protected <T> T Exec( java.lang.Class<T> clazz){
+    protected <SQLs> SQLs Exec( java.lang.Class<SQLs> clazz){
         Handle handle = dbiBean.open();
-        T ret = handle.attach( clazz );
+        SQLs ret = handle.attach( clazz );
         return ret;
     }
 

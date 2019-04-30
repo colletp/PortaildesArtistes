@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class DocArtisteDTO implements Serializable {
+public class DocArtisteDTO implements DTO {
 
     // ******************
     // Champs/propriétés

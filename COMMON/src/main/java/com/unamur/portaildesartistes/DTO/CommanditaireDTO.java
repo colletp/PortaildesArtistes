@@ -3,7 +3,7 @@ package com.unamur.portaildesartistes.DTO;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class CommanditaireDTO implements Serializable {
+public class CommanditaireDTO implements DTO {
 
     // ******************
     // Champs/propriétés
