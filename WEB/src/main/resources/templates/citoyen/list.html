@@ -13,7 +13,7 @@
 <table>
     <tr><th th:text="#{username}">Nom d'utilisateur</th><th>Action</th></tr>
 
-    <tr th:each="usr : ${usrForm}">
+    <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
         <td><a th:href="@{/citoyen/{id}(id=${usr.id})}">Détail</a><a th:href="@{/citoyen/modif/{id}(id=${usr.id})}">Modifier</a><a th:href="@{/citoyen/suppr/{id}(id=${usr.id})}">Supprimer</a></td>
     </tr>

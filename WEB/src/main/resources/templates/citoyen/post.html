@@ -9,7 +9,7 @@
     <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/citoyen}" th:name="usrForm" th:object="${usrForm}" th:method="post">
+    <form th:action="@{/citoyen}" th:name="form" th:object="${form}" th:method="post">
 
         <input type="hidden" th:field="*{id}" />
 

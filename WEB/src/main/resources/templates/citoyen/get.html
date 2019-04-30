@@ -10,24 +10,24 @@
 </head>
 <body>
 
-<span th:text="#{username}" >Nom d'utilisateur</span>:[[${usrForm.username}]]<br/>
-        Password:[[${usrForm.password}]]<br/>
+<span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
+        Password:[[${form.password}]]<br/>
 <fieldset>
 <legend>Citoyen</legend>
-    <span th:text="#{citoyen.nom}" >Nom</span>:[[${usrForm.citoyen.nom}]]<br/>
-    Prénom:[[${usrForm.citoyen.prenom}]]<br/>
-    Date de naissance:[[${usrForm.citoyen.dateNaissance}]]<br/>
-    Tel:[[${usrForm.citoyen.tel}]]<br/>
-    Gsm:[[${usrForm.citoyen.gsm}]]<br/>
-    Email:[[${usrForm.citoyen.mail}]]<br/>
-    No Reg Nat:[[${usrForm.citoyen.nrn}]]<br/>
-    Nationnalité:[[${usrForm.citoyen.nation}]]<br/>
+    <span th:text="#{citoyen.nom}" >Nom</span>:[[${form.citoyen.nom}]]<br/>
+    Prénom:[[${form.citoyen.prenom}]]<br/>
+    Date de naissance:[[${form.citoyen.dateNaissance}]]<br/>
+    Tel:[[${form.citoyen.tel}]]<br/>
+    Gsm:[[${form.citoyen.gsm}]]<br/>
+    Email:[[${form.citoyen.mail}]]<br/>
+    No Reg Nat:[[${form.citoyen.nrn}]]<br/>
+    Nationnalité:[[${form.citoyen.nation}]]<br/>
     <fieldset>
         <legend>Résidence</legend>
-        Rue:[[${usrForm.citoyen.resideAdr.rue}]]<br/>
-        Num:[[${usrForm.citoyen.resideAdr.numero}]]<br/>
-        Boite:[[${usrForm.citoyen.resideAdr.boite}]]<br/>
-        Ville:[[${usrForm.citoyen.resideAdr.ville}]]<br/>
+        Rue:[[${form.citoyen.resideAdr.rue}]]<br/>
+        Num:[[${form.citoyen.resideAdr.numero}]]<br/>
+        Boite:[[${form.citoyen.resideAdr.boite}]]<br/>
+        Ville:[[${form.citoyen.resideAdr.ville}]]<br/>
     </fieldset>
 </fieldset>
 

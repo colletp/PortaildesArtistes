@@ -71,7 +71,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
         return obj.getClass().getSimpleName()+"/"+formAction+".html";
     }
 
-    public String postForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String postForm( String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("usrForm") final T obj
             ,U clazz
