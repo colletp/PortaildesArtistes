@@ -28,13 +28,13 @@
 
     <form class="identsection" th:action="@{/login}" th:name="form" th:method="post">
         <fieldset>
-            <legend>Connectez-vous au portail</legend>
-            <label for="ident">Identifiant<br/></label>
+            <legend th:text="#{askConnection}"></legend>
+            <label for="ident" th:text="#{inputIdent}"><br/></label>
             <input th:type="text" th:name="username" />
             <br/><br />
-            <label for="pass">Mot de passe</label>
+            <label for="pass" th:text="#{inputpwd}"></label>
             <input th:type="password" th:name="password" />
-            <p class="mdpoubli"> <a class="bluea" href="Changepassword.html">Identifiant ou mot de passe oublié</a></p>
+            <p class="mdpoubli"> <a class="bluea" href="Changepassword.html" th:text="#{oubli}"></a></p>
             <br/>
             <input th:type="submit" />
         </fieldset>
