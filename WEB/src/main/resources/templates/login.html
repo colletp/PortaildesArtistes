@@ -7,18 +7,10 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <link href="../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
-    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
 </head>
 <body>
 
-
-    <header>
-        <div id="topsection">
-            <div class="tps"><img src="img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-            <div class="tps"><img src="img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
-        </div>
-
-    </header>
+    <div th:insert="~{/fragments/header :: head}"></div>
 
     <nav>
         <div id="navsection">
@@ -27,7 +19,7 @@
         </div>
     </nav>
 
-    <form class="identsection" th:action="@{/login}" th:name="form" th:method="post">
+    <form class="formbox400" th:action="@{/login}" th:name="form" th:method="post">
         <fieldset>
             <legend th:text="#{askConnection}"></legend>
             <label for="ident" th:text="#{inputIdent}"><br/></label>
@@ -41,15 +33,7 @@
         </fieldset>
     </form>
 
-    <form class="identsection" method="post" action="profile.html">
-
-        <fieldset>
-            <br/>
-            <input type="submit" value="Créer un nouveau compte" />
-            <br />
-        </fieldset>
-
-    </form>
+    <div class="formbox400"><a class="aBouton" href="inscript.html">Créer un nouveau compte</a></div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -12,28 +12,21 @@
 
 <body>
 
-
-    <header>
-        <div id="topsection">
-            <div class="tps"><img src="img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-            <div class="tps"><img src="img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
-        </div>
-
-    </header>
+    <div th:insert="~{/fragments/header :: head}"></div>
 
     <nav>
         <div id="navsection">
-            <div class="element"><a class="whitea" href="home.html">Accueil</a></div>
+            <div class="element"><a class="whitea" href="accueil.html">Accueil</a></div>
         </div>
     </nav>
 
-    <form class="formbox600" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
+    <form class="formbox400" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
 
             Login:<input type="text" th:field="*{username}" /><br/>
             Password:<input th:type="password" th:field="*{password}" /><br/>
         <fieldset>
             <legend>Citoyen</legend>
-            Nom2:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
+            Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
             Prénom:<input th:type="text" th:field="*{citoyen.prenom}" /><br/>
             Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" /><br/>
             Tel:<input th:type="text" th:field="*{citoyen.tel}" /><br/>

@@ -10,13 +10,7 @@
 </head>
 
     <body>
-		<header>
-			<div id="topsection">
-				<div class="tps"><img src="img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-				<div class="tps"><img src="img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
-			</div>
-
-		</header>
+		<div th:insert="~{/fragments/header :: head}"></div>
 
 		<nav>
 			<div id="navsection">
@@ -31,7 +25,7 @@
 			Bienvenue sur le portail des artistes du SPF Blabla</h1>
 			<br/>
 			<div id="introbox">
-				<div class="introtxt">Vous êtes artiste et vous voulez encoder et contôler vos prestations. Rien de plus simple via notre plateforme, gérer facilement l'encodage et le suivi de l'ensemble de vos prestations.</div>
+				<div class="introtxt">Vous êtes artiste et vous voulez encoder et contôler vos prestations. Rien de plus simple via notre plateforme, gérez facilement l'encodage et le suivi de l'ensemble de vos prestations.</div>
 				<div class="introtxt">Vous êtes commanditaire, et vous devez valider les prestations d'un ou plusieurs artistes. Utilisez cette plateforme pour confirmer rapidement et en toute simplicité les prestations de vos artistes.</div>
 				<div class="introtxt">En tant qu'agent administratif pour la gestion des artistes au SPF Blabla, cette plateforme va vous permettre de prendre en charge efficacement l'ensemble de vos dossiers.</div>
 			</div>

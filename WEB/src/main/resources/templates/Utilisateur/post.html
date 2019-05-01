@@ -9,7 +9,20 @@
     <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="post">
+    <header>
+        <div id="topsection">
+            <div class="tps"><img src="/img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
+            <div class="tps"><img src="/img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
+        </div>
+    </header>
+    <nav>
+        <div id="navsection">
+            <div class="element"><a class="whitea" href="/webArtiste/accueil">Accueil</a></div>
+            <div class="element"><a class="whitea" href="/webArtiste/home">EN</a></div>
+        </div>
+    </nav>
+
+<form class="formbox400" th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="post">
 
         <input type="hidden" th:field="*{id}" />
 
