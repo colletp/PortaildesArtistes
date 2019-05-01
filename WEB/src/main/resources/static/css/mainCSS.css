@@ -62,3 +62,88 @@ h2{
     flex: 1;
     margin-left: 50px;
 }
+
+
+.formbox90pc
+{
+    margin-top: 50px;
+    color: Black;
+    margin-left: 50px;
+    width: 90%;
+    background-color: rgb(238,255,247);
+    padding: 10px;
+}
+
+.formbox400{
+    margin-top: 50px;
+    color: Black;
+    margin-left: 50px;
+    width: 400px;
+    background-color: rgb(238,255,247);
+    padding: 10px;
+}
+
+.formbox600{
+    margin-top: 50px;
+    color: Black;
+    margin-left: 50px;
+    width: 600px;
+    background-color: rgb(238,255,247);
+    padding: 10px;
+}
+
+.formbox800{
+    margin-top: 50px;
+    color: Black;
+    margin-left: 50px;
+    width: 800px;
+    background-color: rgb(238,255,247);
+    padding: 10px;
+}
+
+#introbox
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 50px;
+
+    font-family: "Arial Black",Arial,  Impact,sans-serif;
+    font-size: 18px;
+    text-align: justify;
+
+}
+
+.introtxt
+{
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 22px;
+    width: 300px;
+//    height:200px;
+    -moz-border-radius:20px 20px;
+    -webkit-border-radius:20px 20px;
+    border-radius:20px 20px;
+    box-shadow: 0px 0px 15px #555;
+
+}
+
+.introtxt:nth-child(1)
+{
+    color: white;
+    border:3px solid rgb(95,48,60);
+    background-color: rgb(141,71,88);
+}
+
+.introtxt:nth-child(2)
+{
+    color: rgb(61,63,36);
+    border:3px solid rgb(19,79,132);
+    background-color: rgb(36,134,223);
+}
+
+.introtxt:nth-child(3)
+{
+    color: rgb(0,0,160);
+    border:3px solid rgb(13,102,27);
+    background-color: rgb(24,197,50);
+}

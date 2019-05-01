@@ -38,10 +38,21 @@ public class LoginControler {
     @Autowired
     private PropertiesConfigurationService configurationService ;
 
+    @GetMapping(value="/accueil")
+    public String acceuilhtml(Model model) {
+        return "accueil.html";
+    }
+
+    @GetMapping(value="/home")
+    public String homehtml(Model model) {
+        return "home.html";
+    }
+
     @GetMapping(value="/mainCSS.css")
     public String maincss(Model model) {
         return "mainCSS.css";
     }
+
     @GetMapping(value="/login.css")
     public String logincss(Model model) {
         return "login.css";
