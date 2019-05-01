@@ -16,6 +16,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Date;
 import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO > >{
@@ -136,10 +138,17 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         //Contrôle de la validité de la valeur reprise dans le NRN
         int nrn=Integer.parseInt(usrDTO.getCitoyen().getNrn());
         int val=nrn/100;
-        //Date date=new Date(01-01-2000);
-        //if(usrDTO.getCitoyen().getDateNaissance().after(date)){
+        Date dateControle=new Date();
+        String dateNaiss = "31/12/1999";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+            dateControle = simpleDateFormat.parse(dateNaiss);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(usrDTO.getCitoyen().getDateNaissance().after(dateControle)){
             val=val+2000000000;
-        //}
+        }
         int valControle = 97 - (val) % 97;
         if (valControle==0){
             valControle=97;
@@ -147,6 +156,19 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         if(valControle!=(nrn%100)){
             throw new IllegalArgumentException("Numéro de registre national incorrect");
         }
+
+        if(usrDTO.getCitoyen().getDateNaissance().equals(null)){
+            throw new IllegalArgumentException("Date de naissance absente");
+        }
+        //Controle si le citoyen à plus de 18 ans
+        Date date=new Date();
+        long resultat;
+        resultat = (date.getTime()-(usrDTO.getCitoyen().getDateNaissance()).getTime());
+        if(resultat<18){
+            throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
+        }
+
+
 
         return true;
     }
