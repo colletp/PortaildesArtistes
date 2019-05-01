@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,11 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Date;
-import java.util.UUID;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @Controller
-public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO > >{
+public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO > , Utilisateur>{
 
     private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
@@ -32,143 +31,6 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
     }
 
     public Boolean ValideInscript(UtilisateurDTO usrDTO){
-
-
-        if(usrDTO.getUsername().length()<4){
-            throw new IllegalArgumentException("Username vide ou trop court");
-        }
-
-        if(usrDTO.getPassword().length()<4){
-            throw new IllegalArgumentException("Mots de passe vide ou trop court");
-        }
-
-        //Verifie que le mots de passe n'est pas composé de chiffre ou de lettre qui se suivent ou qui sont identiques
-        String value=usrDTO.getPassword();
-        int intArray[]=new int[value.length()];
-        for (int i=0;i<value.length();i++){
-            intArray[i]=Character.getNumericValue(value.charAt(i));
-        }
-        int score=1;
-        for(int i=0;i<intArray.length-1;i++){
-            if(intArray[i]==intArray[i+1]){
-                score++;
-            }else if (intArray[i]==intArray[i+1]+1||intArray[i]==intArray[i+1]-1){
-                score++;
-            }
-        }
-        if(score==intArray.length){
-            throw new IllegalArgumentException("Mots de passe trop faible");
-        }
-
-        if(usrDTO.getPassword().length()>12){
-            throw new IllegalArgumentException("Mots de passe trop long");
-        }
-
-        if(usrDTO.getCitoyen().getNom().length()<2){
-            throw new IllegalArgumentException("Nom vide ou trop court");
-        }
-
-        if(usrDTO.getCitoyen().getPrenom().isEmpty()){
-            throw new IllegalArgumentException("Prénom vide");
-        }
-
-        if(usrDTO.getCitoyen().getResideAdr().getRue().isEmpty()){
-            throw new IllegalArgumentException("Rue vide");
-        }
-
-        if(usrDTO.getCitoyen().getResideAdr().getNumero().isEmpty()){
-            throw new IllegalArgumentException("Numéro de rue vide");
-        }
-
-        //Vérification du format du numéro de rue
-        String numRue=usrDTO.getCitoyen().getResideAdr().getNumero();
-        for(int i=0;i<numRue.length();i++){
-            int a=Character.getNumericValue(numRue.charAt(i));
-            if(a>9||a<0){
-                throw new IllegalArgumentException("Numéro de rue format incorrect");
-            }
-        }
-
-        //Vérification du format de la localité
-        String localite=usrDTO.getCitoyen().getResideAdr().getVille();
-        for(int i=0;i<localite.length();i++){
-            int a=Character.getNumericValue(localite.charAt(i));
-            if(a<=9&&a>=0){
-                throw new IllegalArgumentException("Localité format incorrect");
-            }
-        }
-
-        //Vérification du format du numéro de téléphone
-        String telephone=usrDTO.getCitoyen().getTel();
-        for(int i=0;i<telephone.length();i++){
-            int a=Character.getNumericValue(telephone.charAt(i));
-            if(a>9||a<0){
-                throw new IllegalArgumentException("Numéro de téléphone format incorrect");
-            }
-        }
-
-        //Vérification du format du numéro de Gsm
-        String gsm=usrDTO.getCitoyen().getGsm();
-        for(int i=0;i<gsm.length();i++){
-            int a=Character.getNumericValue(gsm.charAt(i));
-            if(a>9||a<0){
-                throw new IllegalArgumentException("Numéro de Gsm format incorrect");
-            }
-        }
-
-        //Vérification du format du mail
-        Pattern patternMail=Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
-        Matcher testMail= patternMail.matcher(usrDTO.getCitoyen().getMail());
-        if(!testMail.matches()){
-            throw new IllegalArgumentException("Adresse mail format incorrect");
-        }
-
-        if(usrDTO.getCitoyen().getResideAdr().getVille().isEmpty()){
-            throw new IllegalArgumentException("Ville vide");
-        }
-
-        if(usrDTO.getCitoyen().getNation().length()<3){
-            throw new IllegalArgumentException("Nationnalité vide ou trop court");
-        }
-
-        if(usrDTO.getCitoyen().getNrn().length()!=11){
-            throw new IllegalArgumentException("Numéro de registre national incorrect");
-        }
-
-        //Contrôle de la validité de la valeur reprise dans le NRN
-        int nrn=Integer.parseInt(usrDTO.getCitoyen().getNrn());
-        int val=nrn/100;
-        Date dateControle=new Date();
-        String dateNaiss = "31/12/1999";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            dateControle = simpleDateFormat.parse(dateNaiss);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if(usrDTO.getCitoyen().getDateNaissance().after(dateControle)){
-            val=val+2000000000;
-        }
-        int valControle = 97 - (val) % 97;
-        if (valControle==0){
-            valControle=97;
-        }
-        if(valControle!=(nrn%100)){
-            throw new IllegalArgumentException("Numéro de registre national incorrect");
-        }
-
-        if(usrDTO.getCitoyen().getDateNaissance().equals(null)){
-            throw new IllegalArgumentException("Date de naissance absente");
-        }
-        //Controle si le citoyen à plus de 18 ans
-        Date date=new Date();
-        long resultat;
-        resultat = (date.getTime()-(usrDTO.getCitoyen().getDateNaissance()).getTime());
-        if(resultat<18){
-            throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
-        }
-
-
 
         return true;
     }
@@ -187,7 +49,7 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         ValideInscript(usrDTO);
         String resp="";
         try{
-            resp=super.postForm("","POST",usrDTO,UtilisateurDTO.class,model,"inscript" );
+            resp=super.postForm("","POST",usrDTO,model,"inscript" );
             return "inscriptOK.html";
         }
         catch( HttpClientErrorException e){

@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.DTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
+import com.unamur.portaildesartistes.webclient.dataForm.DataForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
+public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V extends DataForm > {
     private static final Logger logger = LoggerFactory.getLogger(Controler.class);
 
     @ResponseBody
@@ -70,10 +71,10 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
         return className+"/"+formAction+".html";
     }
 
-    protected String postForm( String cookieValue,String method,T obj,U clazz,Model model) {
-        return postForm( cookieValue,method,obj,clazz,model,"");
+    protected String postForm( String cookieValue,String method,T obj,Model model) {
+        return postForm( cookieValue,method,obj,model,"");
     }
-    protected String postForm( String cookieValue,String method,T obj,U clazz,Model model,String newUri){
+    protected String postForm( String cookieValue,String method,T obj,Model model,String newUri){
         logger.error("citoyen(post) "+method+" : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
@@ -99,7 +100,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
         return className+"/get.html";
     }
 
-    protected String list( String cookieValue,T obj,U clazz,Model model){
+    protected String list( String cookieValue,T obj, U clazz ,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
 

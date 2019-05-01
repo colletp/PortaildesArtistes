@@ -37,7 +37,7 @@ public class DocArtisteDTO implements DTO {
     public void setId( UUID p_id) { this.id = p_id; }
     public UUID getCitoyenId() { return citoyenId; }
     public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
-    public UUID getReponseId() { return id; }
+    public UUID getReponseId() { return reponseId; }
     public void setReponseId( UUID p_id) { this.reponseId = p_id; }
     public String getNoDoc() { return noDoc; }
     public void setNoDoc(String p_noDoc) { this.noDoc = p_noDoc; }
