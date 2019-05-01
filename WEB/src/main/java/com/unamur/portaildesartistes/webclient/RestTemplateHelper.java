@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.management.ServiceNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,8 +25,7 @@ import java.util.List;
 
 @Component
 public class RestTemplateHelper {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestTemplateHelper.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestTemplateHelper.class);
 
     private RestTemplate restTemplate;
 
@@ -42,25 +44,38 @@ public class RestTemplateHelper {
             return readValue(response, javaType);
         } catch (HttpClientErrorException exception) {
             if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
-                LOGGER.info("No data found {}", url);
+                logger.info("No data found {}", url);
             } else {
-                LOGGER.info("rest client exception", exception.getMessage());
+                logger.info("rest client exception", exception.getMessage());
             }
         }
         return null;
     }
 
-    public <T> List<T> getForList(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables) {
+    public <T> List<T> getForList(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables)throws ServiceNotFoundException {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, headers ,uriVariables);
             CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
             return readValue(response, collectionType);
         } catch (HttpClientErrorException exception) {
-            if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
-                LOGGER.info("No data found {}", url);
-            } else {
-                LOGGER.info("rest client exception", exception.getMessage());
+            switch( exception.getStatusCode().value() ){
+                case 404 :
+                    logger.info("No data found {}", url);
+                    throw new ServiceNotFoundException( "Session pas trouvée" );
+                case 401:
+                case 403:
+                    logger.info("no auth", url);
+                    throw new AuthenticationServiceException( "Session pas trouvée" );
+                default:
+                    logger.info("rest client exception", exception.getMessage());
             }
+        }catch(HttpServerErrorException e){
+            logger.error(e.getMessage() );
+
+        }catch(RestClientException e){
+
+        }catch(NullPointerException e){
+
         }
         return null;
     }
@@ -76,10 +91,8 @@ public class RestTemplateHelper {
         JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
         return readValue(response, javaType);
     }
-    public <T, R>  ResponseEntity<String> postForAuth(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables) {
-        HttpEntity<R> request = new HttpEntity<>(body , headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class, /*headers ,*/ uriVariables);
-        return response;
+    public <T, R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables) {
+        return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
     }
 
 
@@ -94,7 +107,7 @@ public class RestTemplateHelper {
         try {
             restTemplate.delete(url, headers , uriVariables);
         } catch (RestClientException exception) {
-            LOGGER.info(exception.getMessage());
+            logger.info(exception.getMessage());
         }
     }
 
@@ -105,10 +118,10 @@ public class RestTemplateHelper {
             try {
                 result = objectMapper.readValue(response.getBody(), javaType);
             } catch (IOException e) {
-                LOGGER.info(e.getMessage());
+                logger.info(e.getMessage());
             }
         } else {
-            LOGGER.info("No data found {}", response.getStatusCode());
+            logger.info("No data found {}", response.getStatusCode());
         }
         return result;
     }

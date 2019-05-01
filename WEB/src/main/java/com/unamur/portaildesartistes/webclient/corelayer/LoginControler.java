@@ -1,18 +1,11 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import com.unamur.portaildesartistes.webclient.security.UserDetailsServiceWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -24,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class LoginControler {
@@ -46,8 +39,28 @@ public class LoginControler {
     private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value="/mainCSS.css")
-    public String css(Model model) {
+    public String maincss(Model model) {
         return "mainCSS.css";
+    }
+    @GetMapping(value="/login.css")
+    public String logincss(Model model) {
+        return "login.css";
+    }
+    @GetMapping(value="/logo.png")
+    public String logoPng(Model model) {
+        return "logo.png";
+    }
+    @GetMapping(value="/LogoPortail.png")
+    public String LogoPortailPng(Model model) {
+        return "LogoPortail.png";
+    }
+    @GetMapping(value="/magritte.png")
+    public String magrittePng(Model model) {
+        return "magritte.png";
+    }
+    @GetMapping(value="/spfblabla.png")
+    public String spfblablaPng(Model model) {
+        return "spfblabla.png";
     }
 
     @GetMapping(value = "/login")//initialisation du login
@@ -59,13 +72,12 @@ public class LoginControler {
     @Autowired
     UserDetailsServiceWeb uDS;
 
-    @PostMapping(value = "/login" //,consumes = "text/yaml",produces = "text/yaml"
-            )
-
     public Boolean ValideConnect(UtilisateurDTO usrDTO){
         return true;
     }
-    //initialisation du login
+
+    //Envoi des identifiants de connexion pour authentification
+    @PostMapping(value = "/login")
     public ResponseEntity<String> authenticate(
             @Valid @ModelAttribute("form") final UtilisateurDTO usrDTO ,
             final BindingResult br ,
@@ -79,103 +91,95 @@ public class LoginControler {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
 
-        ValideConnect(usrDTO);
-
-        HttpHeaders headersRest = new HttpHeaders();
-        //headersRest.setContentType( yaml );
-        MultiValueMap<String, String> paramRest= new LinkedMultiValueMap<>();
-        paramRest.add("username",usrDTO.getUsername() );
-        paramRest.add("password",usrDTO.getPassword() );
         ResponseEntity<String> reponseRest;
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();
-        try{
-            /* ici test match? encodage supplémentaire */
-            //UserDetails uD = uDS.loadUserByUsername( usrDTO.getUsername() );
-            //uD.
-            /**/
-            reponseRest = restTemplateHelper.postForAuth( String.class , configurationService.getUrl() + "/Authentification", paramRest , headersRest );
-            logger.debug( "Session : "+ reponseRest.getHeaders().get( "Set-Cookie" ).toString() );
-            //transfert au front-end
-            paramClient.add("Set-Cookie",
-                    //prends le header coté back-end générant un cookie(avec le n° de session)
-                    reponseRest.getHeaders().get( "Set-Cookie").get(0)
-                            //transforme le contexte (répertoire du front-end à la place du back-end)
-                            .replace( " Path="+configurationService.getBackEndPath()+";",
-                                    " Path="+configurationService.getFrontEndPath()+";" )
-            );
-            if( reponseRest.getStatusCodeValue() !=200){
-                logger.error("Réponse du serveur: "+reponseRest.getStatusCodeValue() );
-            }else{
-                logger.debug("Authentification OK : "+ reponseRest.getBody() );
-            }
-        }
-        catch( HttpClientErrorException e){
-            switch( e.getMessage() ){
-                case "401":
-                    logger.error( "Connexion refusée par authentification back-end : "+ e.toString() );
-                    break;
-                case "403":
-                    logger.error( "Connexion refusée par back-end car interdit : "+ e.toString() );
-                    break;
-                case "404":
-                    logger.error( "Connexion refusée par back-end car rest introuvable : "+ e.toString() );
-                    break;
-                case "406":
-                    logger.error( "Connexion refusée par back-end car réponse pas acceptable : "+ e.toString() );
-                    break;
-                case "415":
-                    logger.error( "Connexion refusée par back-end car média pas supporté : "+ e.toString() );
-                    break;
-                default:
-                    logger.error( e.getMessage() );
-                    logger.error( e.toString() );
-                    logger.error( e.getCause()==null?"":e.getCause().getMessage() );
-            }
-            reponseRest = new ResponseEntity<>( "Connexion refusée par back-end : "+e.getMessage() +"(voir logs)" , HttpStatus.OK );
-        }
-        catch( ResourceAccessException e){
-            logger.error( "Serveur back-end indisponible : "+e.getMessage() );
-            reponseRest = new ResponseEntity<>( "Serveur back-end indisponible (voir logs)" , HttpStatus.OK );
-        }
-        catch(RestClientException e) {
-            logger.error( e.getMessage() );
-            reponseRest = new ResponseEntity<>( "Serveur front-end converter non dispo (voir logs)" , HttpStatus.OK );
-        }
-        catch( Exception e){
-            logger.error( e.toString() );
-            logger.error( e.getClass().toString() );
-            logger.error( e.getMessage() );
-            logger.error( e.getCause()==null?"":e.getCause().getMessage() );
-            reponseRest = new ResponseEntity<>( "Autre erreur non gérée (voir logs)" , HttpStatus.OK );
-        }
+        String msgAuClient;
+        ResponseEntity<String> reponseAuClient;
 
-        ResponseEntity<String> reponseAuClient = new ResponseEntity<>( reponseRest.getBody() , paramClient , HttpStatus.OK );
+        if( ! ValideConnect(usrDTO)){
+            logger.error("ValideConnect : false" );
+            reponseRest=new ResponseEntity<>( HttpStatus.OK );
+            paramClient.add("Location","login");
+            msgAuClient=reponseRest.getBody();
+        }
+        else {
+            HttpHeaders headersRest = new HttpHeaders();
+            //headersRest.setContentType( yaml );
+            MultiValueMap<String, String> paramRest = new LinkedMultiValueMap<>();
+            paramRest.add("username", usrDTO.getUsername());
+            paramRest.add("password", usrDTO.getPassword());
+            try {
+                /* ici test match? encodage supplémentaire */
+                //UserDetails uD = uDS.loadUserByUsername( usrDTO.getUsername() );
+                //uD.
+                /**/
+                reponseRest = restTemplateHelper.postForAuth(configurationService.getUrl() + "/Authentification", paramRest, headersRest);
+                logger.debug( reponseRest.getBody() );
+                if (reponseRest.getStatusCodeValue() != 200) {
+                    logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
+                    paramClient.add("Location", "login");
+
+                } else {
+                    logger.debug("Authentification OK");
+                    logger.debug("Session : " + reponseRest.getHeaders().get("Set-Cookie").toString());
+                    //transfert au front-end
+                    paramClient.add("Set-Cookie",
+                            //prends le header coté back-end générant un cookie(avec le n° de session)
+                            reponseRest.getHeaders().get("Set-Cookie").get(0)
+                                    //transforme le contexte (répertoire du front-end à la place du back-end)
+                                    .replace(" Path=" + configurationService.getBackEndPath() + ";",
+                                            " Path=" + configurationService.getFrontEndPath() + ";")
+                    );
+                    paramClient.add("Location", "Utilisateur");
+                }
+                msgAuClient=reponseRest.getBody();
+            } catch (HttpClientErrorException.Unauthorized e) {
+                        logger.error("Connexion refusée par authentification back-end : " + e.toString());
+                        paramClient.add("Location", "login?userNotFound");
+                msgAuClient="Erreur : "+e.getMessage();
+            } catch (HttpClientErrorException.Forbidden e) {
+                        logger.error("Connexion refusée par back-end car interdit : " + e.toString());
+                        paramClient.add("Location", "login");
+                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+            } catch (HttpClientErrorException.NotFound e) {
+                        logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
+                        paramClient.add("Location", "/");
+                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+            } catch (HttpClientErrorException.NotAcceptable e) {
+                        logger.error("Connexion refusée par back-end car réponse pas acceptable : " + e.toString());
+                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+            } catch (HttpClientErrorException.UnsupportedMediaType e) {
+                        logger.error("Connexion refusée par back-end car média pas supporté : " + e.toString());
+                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+            } catch (HttpClientErrorException e) {
+                        logger.error(e.getMessage());
+                        logger.error(e.toString());
+                        logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
+                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+            } catch (ResourceAccessException e) {
+                logger.error("Serveur back-end indisponible : " + e.getMessage());
+                msgAuClient="Serveur back-end indisponible (voir logs)";
+            } catch (RestClientException e) {
+                logger.error(e.getMessage());
+                msgAuClient="Serveur front-end converter non dispo (voir logs)";
+            } catch (Exception e) {
+                logger.error(e.toString());
+                logger.error(e.getClass().toString());
+                logger.error(e.getMessage());
+                logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
+                msgAuClient="Autre erreur non gérée (voir logs)";
+            }
+        }
+        reponseAuClient = new ResponseEntity<>(msgAuClient, paramClient, HttpStatus.SEE_OTHER);
         return reponseAuClient;
     }
 
-    @GetMapping(value = "/gestionUtilisateur/list")//initialisation du login
-    public ResponseEntity<String> userList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ){
-        logger.debug("userList : Authentication received! Cookie : "+cookieValue );
-
-        HttpHeaders headers = new HttpHeaders( );
-        headers.add("Cookie",cookieValue);
-        List<MediaType> accept = new ArrayList<>();
-        //accept.add( yaml );
-        //accept.add(MediaType.TEXT_XML);
-        accept.add(MediaType.APPLICATION_JSON );
-        headers.setAccept( accept );
-
-        //headers.setContentType( yaml );
-        MultiValueMap<String, String> param= new LinkedMultiValueMap<>();
-        //param.add("username",usrDTO.getUsername() );
-        //param.add("password",usrDTO.getPassword() );
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
-        List<CitoyenDTO> reponseServeur = restTemplateHelper.getForList( CitoyenDTO.class , configurationService.getUrl()+"/gestionUtilisateur/list" , headers );
-        ResponseEntity ret = new ResponseEntity<>( reponseServeur , HttpStatus.OK );
-        return ret;
+    @GetMapping( value = "/logout" )
+    public String logout( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ) {
+        return logout2(cookieValue);
     }
     @GetMapping( value = "/logout2" )
-    public String logout( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ) {
+    public String logout2( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ) {
         logger.debug("Logout : Authentication received! Cookie : " + cookieValue);
 
         HttpHeaders headers = new HttpHeaders( );
@@ -186,12 +190,7 @@ public class LoginControler {
         accept.add(MediaType.APPLICATION_JSON );
         headers.setAccept( accept );
 
-        //headers.setContentType( yaml );
-        MultiValueMap<String, String> param= new LinkedMultiValueMap<>();
-        //param.add("username",usrDTO.getUsername() );
-        //param.add("password",usrDTO.getPassword() );
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
-        String reponseServeur = restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
+        restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
         return "login.html";
     }
 

@@ -82,7 +82,8 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .logoutUrl("/logout")
-                    .logoutSuccessHandler( myLogoutHandler )
+                    //.logoutSuccessUrl("/login")
+                    //.logoutSuccessHandler( myLogoutHandler )
                 ;
     }
 }

@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
+import javax.management.ServiceNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,21 +48,16 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
         return headers;
     }
 
-    public String getForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-                                ,@PathVariable("id") UUID itemId
-                                ,T obj
-                                ,U clazz
-                                //,String formName
-                                ,String formAction
-                                ,Model model){
+    protected String getForm( String cookieValue,UUID itemId,T obj,U clazz,String formAction,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
-        String className = obj.getClass().getSimpleName();
+        String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
         switch( formAction.toUpperCase() ){
             case "PUT":
                 break;
             case "POST":
             case "GET":
                 try{
+                    //charge les données qui préremplissent la page
                     obj = restTemplateHelper.getForEntity( clazz , configurationService.getUrl()+"/gestion"+className+"/"+itemId , headers );
                 }
                 catch(ClassCastException e){
@@ -68,26 +67,16 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
             default:
         }
         model.addAttribute("form", obj );
-        return obj.getClass().getSimpleName()+"/"+formAction+".html";
+        return className+"/"+formAction+".html";
     }
 
-    public String postForm( String cookieValue
-            ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("usrForm") final T obj
-            ,U clazz
-            ,Model model) {
+    protected String postForm( String cookieValue,String method,T obj,U clazz,Model model) {
         return postForm( cookieValue,method,obj,clazz,model,"");
     }
-    public String postForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("usrForm") final T obj
-                            ,U clazz
-            ,Model model,String newUri){
+    protected String postForm( String cookieValue,String method,T obj,U clazz,Model model,String newUri){
         logger.error("citoyen(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-
         HttpHeaders headers = initHeadersRest(cookieValue);
-        String className = obj.getClass().getSimpleName();
-
+        String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
         try{
             switch(method.toUpperCase()){
                 case "PUT":
@@ -107,35 +96,48 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> > {
             logger.error( e.getMessage() );
         }
         model.addAttribute("form", obj );
-        return "get.html";
+        return className+"/get.html";
     }
 
-    public String list( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,T obj
-            ,U clazz
-            ,Model model){
+    protected String list( String cookieValue,T obj,U clazz,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
-        String className = obj.getClass().getSimpleName();
+        String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
 
-        List<T> lObj=null;
-        try{
-            logger.error( "Appel REST" );
-            lObj = restTemplateHelper.getForList( clazz, configurationService.getUrl()+"/gestion"+className+"/" , headers );
-        }
-        catch(ClassCastException e){
+        try {
+            logger.error("Appel REST");
+            model.addAttribute("form", restTemplateHelper.getForList(clazz, configurationService.getUrl() + "/gestion" + className + "/", headers) );
+
+        } catch (AuthenticationServiceException e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return "/login";
+        } catch (HttpClientErrorException.Unauthorized e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return "/login";
+        } catch (HttpClientErrorException.Forbidden e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return "/login";
+        } catch (HttpServerErrorException.InternalServerError e) {
+            logger.error("Connexion perdue au back-end : " + e.toString());
+            return "/login";
+        } catch (HttpServerErrorException e) {
+            logger.error("Autre erreur du back-end : " + e.toString());
+            return "/login";
+        }catch(ServiceNotFoundException e){
+            logger.error( "ServiceNotFoundException" + e.getMessage() );
+            return "/login";
+            //HttpServletResponse.SC_UNAUTHORIZED
+        }catch(ClassCastException e){
             logger.error( e.getMessage() );
         }
-        model.addAttribute("form", lObj );
-
-        return "list.html";
+        return className+"/list.html";
     }
 
-    public String delete( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-                                ,@PathVariable("id") UUID itemId
+    protected String delete( String cookieValue
+                                ,UUID itemId
                                 ,U obj
                                 ,Model model) {
         HttpHeaders headers = initHeadersRest(cookieValue);
-        String className = obj.getClass().getSimpleName();
+        String className = obj.getClass().getSimpleName().substring(0,obj.getClass().getSimpleName().length()-3);
 
         restTemplateHelper.delete(configurationService.getUrl()+"/gestion"+className+"/"+itemId , headers );
         return "list.html";

@@ -28,7 +28,11 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
             throws ServletException, IOException {
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-response.encodeRedirectURL("/");
+//response.encodeRedirectURL("/");
+//authentication.setAuthenticated(true);
+        //logger.error(authentication.getPrincipal().toString() );
+        //logger.error(authentication.getCredentials().toString() );
+        //authentication.setAuthenticated(true); //set Granted...
         if (savedRequest == null) {
             clearAuthenticationAttributes(request);
             return;
@@ -42,6 +46,7 @@ response.encodeRedirectURL("/");
             return;
         }
         clearAuthenticationAttributes(request);
+
     }
 
     public void setRequestCache(RequestCache requestCache) {
