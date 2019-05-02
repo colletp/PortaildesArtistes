@@ -15,7 +15,11 @@
 
     <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
-        <td><a th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a><a th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a><a th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a></td>
+        <td id="boutonsFlex">
+            <a class="aBouton" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a>
+            <a class="aBouton" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
+            <a class="aBouton" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
+        </td>
     </tr>
 
 </table>

@@ -11,15 +11,10 @@
 </head>
 
    <body>
-	   <header>
-		   <div id="topsection">
-			   <div class="tps"><img src="img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-			   <div class="tps"><img src="img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
-		   </div>
 
-	   </header>
+   <div th:insert="~{/fragments/header :: head}"></div>
 
-	   <nav>
+   <nav>
 		   <div id="navsection">
 			   <div class="element"><a class="whitea" href="home.html">Home</a></div>
 			   <div class="element"><a class="whitea" href="">Log in</a></div>
@@ -35,6 +30,6 @@
 			being manufactured
 			<br/>
 			 </h1>
-			<a class="formbox400" href="javascript:history.go(-1)">Backwards</a>		</section>		
+			<a class="aBouton" href="javascript:history.go(-1)">Return</a>		</section>
 </div></body>
 </html>
