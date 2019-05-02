@@ -39,12 +39,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     }
 
     @Override
-    void update(FormulaireDTO item) {
+    public void update(FormulaireDTO item) {
         super.Exec(FormulaireSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(FormulaireSQLs.class).delete(id);
     }
 

@@ -1,15 +1,12 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import com.unamur.portaildesartistes.wsartiste.gestionutilisateur.UtilistateurServiceImpl;
-import org.apache.http.HttpHeaders;
+import com.unamur.portaildesartistes.wsartiste.Service.UtilistateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import java.util.List;
 import java.util.UUID;
 

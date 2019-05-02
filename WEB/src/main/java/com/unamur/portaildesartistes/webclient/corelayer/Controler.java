@@ -57,6 +57,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 	*
 	**************************************/
 
+	//Complete les données d'un formulaire qui sera affiché
     protected String getForm( String cookieValue,T objDTO,UUID itemId,U clazz,String formAction,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);

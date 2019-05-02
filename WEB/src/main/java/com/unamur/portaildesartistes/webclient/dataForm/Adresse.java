@@ -3,7 +3,6 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 
 import java.text.ParseException;
-import java.util.UUID;
 
 public class Adresse extends DataForm<AdresseDTO> {
 

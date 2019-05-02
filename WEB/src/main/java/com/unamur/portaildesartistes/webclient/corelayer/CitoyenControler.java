@@ -28,7 +28,7 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
         return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"POST",model);
     }
 
-    @PostMapping(value = "/Utilisateur")//initialisation du login
+    @PostMapping(value = "/Utilisateur")
     public String citoyenPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Utilisateur usrForm
