@@ -29,7 +29,7 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
     }
 
     @Override
-    ReponseDTO getById(UUID id) {
+    public ReponseDTO getById(UUID id) {
         return super.Exec(ReponseSQLs.class).getById(id);
     }
 
@@ -38,12 +38,12 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
     }
 
     @Override
-    void update(ReponseDTO item) {
+    public void update(ReponseDTO item) {
         super.Exec(ReponseSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(ReponseSQLs.class).delete(id);
     }
 
