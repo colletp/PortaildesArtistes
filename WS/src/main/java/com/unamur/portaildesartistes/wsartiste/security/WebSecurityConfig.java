@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     //@Autowired
     //PasswordEncoder encoder;
 
-    AppAuthProvider appAuthProvider;
+    private AppAuthProvider appAuthProvider;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -47,8 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    AuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
-    AuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
+    private AuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
+    private AuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
     LogoutSuccessHandler myLogoutHandler = new SimpleUrlLogoutSuccessHandler();
 
     @Override
@@ -66,7 +66,12 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                     .permitAll()
                 .and()
                     .authorizeRequests()
-                    .antMatchers( "/gestionUtilisateur","/gestionUtilisateur/*")
+                    .antMatchers( "/gestionUtilisateur","/gestionUtilisateur/*"
+                            ,"/gestionActivite","/gestionActivite/*"
+                            ,"/gestionFormulaire","/gestionFormulaire/*"
+                            ,"/gestionReponse","/gestionReponse/*"
+                            ,"/gestionTraitement","/gestionTraitement/*"
+                            ,"/gestionDocArtiste","/gestionDocArtiste/*")
                     .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()

@@ -19,8 +19,8 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     public Authentication authenticate( Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String name = auth.getName();
-logger.info("username="+name);
-logger.info("password="+auth.getCredentials().toString() );
+        logger.info("username="+name);
+        logger.info("password="+auth.getCredentials().toString() );
         UserDetails user = super.getUserDetailsService().loadUserByUsername(name);
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
