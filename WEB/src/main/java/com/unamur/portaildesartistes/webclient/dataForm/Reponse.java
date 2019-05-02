@@ -8,13 +8,12 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
 
-public class Reponse extends DataForm {
+public class Reponse extends DataForm<ReponseDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String trtId;
     private String citoyenId;
     private String dateReponse;
@@ -27,13 +26,11 @@ public class Reponse extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
-    public UUID getTrtId(){ return (UUID)convert(trtId,UUID.class); }
+    public UUID getTrtId(){ return convertUUID(trtId); }
     public void setTrtId( String p_id){ this.trtId = p_id; }
-    public UUID getCitoyenId(){ return (UUID)convert(citoyenId,UUID.class); }
+    public UUID getCitoyenId(){ return convertUUID(citoyenId); }
     public void setCitoyenId( String p_id){ this.citoyenId = p_id; }
-    public Date getDateReponse() { return (Date)convert(dateReponse,Date.class); }
+    public Date getDateReponse() { return convertDate(dateReponse); }
     public void setDateReponse(String p_date) { this.dateReponse = p_date; }
 
     // ******************

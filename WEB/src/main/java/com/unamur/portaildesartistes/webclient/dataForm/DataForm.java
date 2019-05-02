@@ -14,14 +14,29 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class DataForm implements Serializable {
+public abstract class DataForm<T extends DTO> implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
-    public abstract <T extends DTO> T getDTO()throws ParseException;
+    private String id;
+    // ******************
+    // Setter/Getter
+    // ******************
+
+    public UUID getId(){return convertUUID(id);}
+    public void setId( String p_id){this.id = p_id;}
+    // ******************
+    // A implémenter
+    // ******************
+
+    public abstract T getDTO()throws ParseException;
     /*protected <T> String toString( T obj, java.lang.Class<T> clazz )throws NotFoundException {
         return "";
     }*/
+
+    // ******************
+    // Tests de validité interne aux descendants
+    // ******************
     protected Boolean isNotEmpty(String s)throws IllegalArgumentException{
         if(s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");
@@ -62,8 +77,10 @@ public abstract class DataForm implements Serializable {
         return true;
     }
 
-
-    protected <T> Object convert( String toValidate, java.lang.Class<T> clazz ){
+    // ******************
+    // Conversion String vers objet ( a caster selon U )
+    // ******************
+    protected <U> Object convert( String toValidate, java.lang.Class<U> clazz ){
         switch( clazz.getSimpleName() ){
             case "Date":
                 Date date;
@@ -81,6 +98,8 @@ public abstract class DataForm implements Serializable {
                 return UUID.fromString(toValidate);
             case "Integer":
                 return Integer.valueOf(toValidate);
+            case "Double":
+                return Double.valueOf(toValidate);
             default:
                 throw new IllegalFormatConversionException( 'A'//(clazz.getSimpleName()+" : format non géré")
                         , clazz.getClass() );
@@ -100,4 +119,27 @@ public abstract class DataForm implements Serializable {
         }        
         return true;*/
     }
+    protected Date convertDate( String toValidate ){
+		Date date;
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(toValidate);
+		}catch(ParseException e){
+			try {
+				date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toValidate);
+			}catch(ParseException e2) {
+				throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy) : " + e2.getMessage());
+			}
+		}
+		return date;
+    }
+    protected UUID convertUUID( String toValidate ){
+		return UUID.fromString(toValidate);
+    }
+    protected Integer convertInt( String toValidate ){
+		return Integer.valueOf(toValidate);
+    }
+    protected Double convertDouble( String toValidate ){
+		return Double.valueOf(toValidate);
+	}
+	
 }

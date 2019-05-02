@@ -4,13 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class CitoyenDTO implements DTO {
+public class CitoyenDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private String nom;
     private String prenom;
     private Date date_naissance;
@@ -34,9 +33,6 @@ public class CitoyenDTO implements DTO {
     // ******************
     // Setter/Getter
     // ******************
-
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
 
     public String getNom() { return nom; }
     public void setNom(String p_nom) { this.nom = p_nom; }

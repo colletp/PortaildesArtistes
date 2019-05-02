@@ -8,13 +8,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Formulaire extends DataForm {
+public class Formulaire extends DataForm<FormulaireDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String citoyenId;
     private String dateDemande;
     private List<String> cursurAc;
@@ -35,11 +34,9 @@ public class Formulaire extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
-    public UUID getCitoyenId() { isNotEmpty(citoyenId);return (UUID)convert(citoyenId,UUID.class); }
+    public UUID getCitoyenId() { isNotEmpty(citoyenId);return convertUUID(citoyenId); }
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
-    public Date getDateDemande(){ isNotEmpty(dateDemande);return (Date)convert(dateDemande,Date.class);}
+    public Date getDateDemande(){ isNotEmpty(dateDemande);return convertDate(dateDemande);}
     public void setDateDemande(String d){ this.dateDemande=d;}
     public List<String> getCursusAc(){ return cursurAc;}
     public void setCursurAc(List<String> ls){ this.cursurAc=ls;}

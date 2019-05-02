@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class ReponseDTO implements DTO {
+public class ReponseDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private UUID trtId;
     private UUID citoyenId;
     private Timestamp dateReponse;
@@ -26,8 +25,6 @@ public class ReponseDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public UUID getTrtId(){ return trtId; }
     public void setTrtId( UUID p_id){ this.trtId = p_id; }
     public UUID getCitoyenId(){ return citoyenId; }

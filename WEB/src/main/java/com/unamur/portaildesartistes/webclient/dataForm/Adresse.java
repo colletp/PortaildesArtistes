@@ -5,13 +5,12 @@ import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import java.text.ParseException;
 import java.util.UUID;
 
-public class Adresse extends DataForm {
+public class Adresse extends DataForm<AdresseDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String rue;
     private String numero;
     private String boite;
@@ -25,8 +24,6 @@ public class Adresse extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
     public String getRue() { isNotEmpty(rue);return rue; }
     public void setRue(String p_rue) { this.rue = p_rue; }
     public String getNumero() { isNotEmpty(numero);return numero; }

@@ -5,16 +5,13 @@ import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import java.text.ParseException;
 import java.util.UUID;
 
-public class Utilisateur extends DataForm {
-    private String id;
+public class Utilisateur extends DataForm<UtilisateurDTO> {
     private String login;
     private String password;
 
     // ******************
     // Setter/Getter
     // ******************
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId(String p_id) { this.id = p_id; }
     public String getUsername() {
         hasLengthMin( login,4 );
         return login;
@@ -54,7 +51,7 @@ public class Utilisateur extends DataForm {
         UtilisateurDTO usr = new UtilisateurDTO();
         usr.setId( getId() );
         usr.setUsername( getUsername() );
-        usr.setPassword(getPassword());
+        usr.setPassword( getPassword() );
         return usr;
     }
 

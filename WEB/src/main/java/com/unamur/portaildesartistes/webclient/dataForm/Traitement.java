@@ -7,13 +7,12 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
 
-public class Traitement extends DataForm {
+public class Traitement extends DataForm<TraitementDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String dateTrt;
     private String appreciation;
     private String roleId;
@@ -30,19 +29,17 @@ public class Traitement extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
-    public Date getDateTrt() { isNotEmpty(dateTrt); return (Date)convert(dateTrt,Date.class); }
+    public Date getDateTrt() { isNotEmpty(dateTrt); return convertDate(dateTrt); }
     public void setDateTrt(String p_date) { this.dateTrt = p_date; }
     public String getAppreciation() { return appreciation; }
     public void setAppreciation( String p_ap) { this.appreciation = p_ap; }
-    public UUID getRoleId() { isNotEmpty(roleId); return (UUID)convert(roleId,UUID.class); }
+    public UUID getRoleId() { isNotEmpty(roleId); return convertUUID(roleId); }
     public void setRoleId( String p_id) { this.roleId = p_id; }
-    public UUID getGestId() { isNotEmpty(gestId); return (UUID)convert(gestId,UUID.class); }
+    public UUID getGestId() { isNotEmpty(gestId); return convertUUID(gestId); }
     public void setGestId( String p_id) { this.gestId = p_id; }
-    public UUID getFormId() { isNotEmpty(formId); return (UUID)convert(formId,UUID.class); }
+    public UUID getFormId() { isNotEmpty(formId); return convertUUID(formId); }
     public void setFormId( String p_id) { this.formId = p_id; }
-    public UUID getCitoyenPrestId() { isNotEmpty(citoyenPrestId); return (UUID)convert(citoyenPrestId,UUID.class); }
+    public UUID getCitoyenPrestId() { isNotEmpty(citoyenPrestId); return convertUUID(citoyenPrestId); }
     public void setCitoyenPrestId( String p_id) { this.citoyenPrestId = p_id; }
     public String getTypeRole() { return typeRole; }
     public void setTypeRole( String p_tr) { this.typeRole = p_tr; }

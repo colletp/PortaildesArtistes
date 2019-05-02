@@ -5,13 +5,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
-public class FormulaireDTO implements DTO {
+public class FormulaireDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private UUID citoyenId;
     private Timestamp dateDemande;
     private List<String> cursurAc;
@@ -32,8 +31,6 @@ public class FormulaireDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public UUID getCitoyenId() { return citoyenId; }
     public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
     public Timestamp getDateDemande(){ return dateDemande;}

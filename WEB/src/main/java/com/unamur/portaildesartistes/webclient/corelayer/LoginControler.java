@@ -53,10 +53,6 @@ public class LoginControler {
         return "mainCSS.css";
     }
 
-    @GetMapping(value="/login.css")
-    public String logincss(Model model) {
-        return "login.css";
-    }
     @GetMapping(value="/logo.png")
     public String logoPng(Model model) {
         return "logo.png";

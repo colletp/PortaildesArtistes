@@ -25,7 +25,7 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         logger.error("Utilisateur/modif : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class,"POST",model);
+        return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"POST",model);
     }
 
     @PostMapping(value = "/Utilisateur")//initialisation du login
@@ -35,14 +35,7 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
             ,Model model){
         logger.error("citoyen(post) "+method+" : Authentication received! Cookie : "+cookieValue );
         //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-        UtilisateurDTO usr;
-        try{
-            usr = usrForm.getDTO();
-        }catch(Exception e){
-            logger.error( e.getMessage() );
-            return "?";
-        }
-        return super.postForm(cookieValue,method,usr,model);
+        return super.postForm(cookieValue,usrForm,method,model);
     }
 
     @GetMapping(value = "/Utilisateur")//initialisation du login
@@ -58,13 +51,13 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("citoyen : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class,"GET",model);
+        return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
     }
 
     @GetMapping(value = "Utilisateur/suppr/{id}")
     public String citoyenSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        return super.delete(cookieValue,itemId,UtilisateurDTO.class,model);
+        return super.delete(cookieValue,new UtilisateurDTO(),itemId,model);
     }
 }

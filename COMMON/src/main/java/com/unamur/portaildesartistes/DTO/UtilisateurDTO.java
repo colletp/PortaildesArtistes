@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UtilisateurDTO implements DTO, UserDetails {
-    private UUID id;
+public class UtilisateurDTO extends DTO implements UserDetails {
     private String login;
     private String password;
 
@@ -20,8 +19,6 @@ public class UtilisateurDTO implements DTO, UserDetails {
     // ******************
     // Setter/Getter
     // ******************
-    public UUID getId() { return id; }
-    public void setId(UUID p_id) { this.id = p_id; }
     public String getUsername() {
         return login;
     }

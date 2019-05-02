@@ -3,13 +3,12 @@ package com.unamur.portaildesartistes.DTO;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class GestionnaireDTO implements DTO {
+public class GestionnaireDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private UUID citoyenId;
     private UUID travailleId;
     private String matricule;
@@ -26,8 +25,6 @@ public class GestionnaireDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public UUID getCitoyenId() { return citoyenId; }
     public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
     public UUID getTravailleId() { return travailleId; }

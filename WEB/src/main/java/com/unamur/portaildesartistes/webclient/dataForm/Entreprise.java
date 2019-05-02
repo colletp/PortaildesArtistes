@@ -5,13 +5,12 @@ import com.unamur.portaildesartistes.DTO.EntrepriseDTO;
 import java.text.ParseException;
 import java.util.UUID;
 
-public class Entreprise extends DataForm {
+public class Entreprise extends DataForm<EntrepriseDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String contactId;
     private String siegeId;
     private String bce;
@@ -26,12 +25,9 @@ public class Entreprise extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
-
-    public UUID getContactId() { isNotEmpty(contactId);return (UUID)convert(contactId,UUID.class); }
+    public UUID getContactId() { isNotEmpty(contactId);return convertUUID(contactId); }
     public void setContactId( String p_id) { this.contactId = p_id; }
-    public UUID getSiegeId() { isNotEmpty(siegeId);return (UUID)convert(siegeId,UUID.class); }
+    public UUID getSiegeId() { isNotEmpty(siegeId);return convertUUID(siegeId); }
     public void setSiegeId( String p_id) { this.siegeId = p_id; }
 
     public String getBce() { isNotEmpty(bce);isValidBce(bce);return bce; }

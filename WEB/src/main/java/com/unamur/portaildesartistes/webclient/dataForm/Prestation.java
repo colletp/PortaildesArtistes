@@ -7,13 +7,12 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
 
-public class Prestation extends DataForm {
+public class Prestation extends DataForm<PrestationDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String datePrest;
     private String duree;
     private String montant;
@@ -31,24 +30,22 @@ public class Prestation extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
-    public Date getDatePrest() { return (Date)convert(datePrest,Date.class); }
+    public Date getDatePrest() { return convertDate(datePrest); }
     public void setDatePrest(String p_date) { this.datePrest = p_date; }
-    public Integer getDuree() { return (Integer)convert(duree,Integer.class); }
+    public Integer getDuree() { return convertInt(duree); }
     public void setDuree( String p_duree) { this.duree = p_duree; }
-    public Double getMontant() { return (Double)convert(montant,Double.class); }
+    public Double getMontant() { return convertDouble(montant); }
     public void setMontant( String p_montant) { this.montant = p_montant; }
     public String getEtat() { return etat; }
     public void setEtat( String p_etat) { this.etat = p_etat; }
 
-    public UUID getSeDerouleId() { return (UUID)convert(seDerouleId,UUID.class); }
+    public UUID getSeDerouleId() { return convertUUID(seDerouleId); }
     public void setSeDerouleId( String p_id) { this.seDerouleId = p_id; }
-    public UUID getDocArtisteId() { return (UUID)convert(docArtisteId,UUID.class); }
+    public UUID getDocArtisteId() { return convertUUID(docArtisteId); }
     public void setDocArtisteId( String p_id) { this.docArtisteId = p_id; }
-    public UUID getActiviteId() { return (UUID)convert(activiteId,UUID.class); }
+    public UUID getActiviteId() { return convertUUID(activiteId); }
     public void setActiviteId( String p_id) { this.activiteId= p_id; }
-    public UUID getCommanditaireId() { return (UUID)convert(commanditaireId,UUID.class); }
+    public UUID getCommanditaireId() { return convertUUID(commanditaireId); }
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
     // ******************

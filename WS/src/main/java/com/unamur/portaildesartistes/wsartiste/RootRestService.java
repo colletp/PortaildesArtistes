@@ -14,7 +14,7 @@ package com.unamur.portaildesartistes.wsartiste;
 @RestController
 // Classe Controleur pour Spring
 // Mémorise les requêtes gérée par la classe
-public class RootRestService implements Controller {
+public class RootRestService {
 
     private static final Logger logger = LoggerFactory.getLogger(RootRestService.class);
 
@@ -28,7 +28,6 @@ public class RootRestService implements Controller {
         return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name() , HttpStatus.OK);
     }
 
-    @Override
     @PutMapping(value = "/inscript")
     public @ResponseBody ResponseEntity wsInscript( @RequestBody final UtilisateurDTO usrDTO){
         logger.error( usrDTO==null?"null":usrDTO.getUsername() );

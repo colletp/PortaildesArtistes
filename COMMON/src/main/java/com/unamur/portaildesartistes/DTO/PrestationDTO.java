@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class PrestationDTO implements DTO {
+public class PrestationDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private Timestamp datePrest;
     private Integer duree;
     private Double montant;
@@ -33,8 +32,6 @@ public class PrestationDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public Timestamp getDatePrest() { return datePrest; }
     public void setDatePrest(Timestamp p_date) { this.datePrest = p_date; }
     public Integer getDuree() { return duree; }

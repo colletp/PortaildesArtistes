@@ -51,27 +51,17 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
 
     public UUID insert(UtilisateurDTO item){
-        UUID uuid=null;
         try {
             UUID reside =  adrImpl.insert( item.getCitoyen().getResideAdr() );
             item.getCitoyen().setReside( reside );
             return UUID.fromString( super.Exec(UtilisateurSQLs.class).insert( item ) );
         }
-        catch(UnableToExecuteStatementException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
-            //throw e;
-        }
         catch(SQLException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
+            System.err.println( e.getCause().getMessage() );
             System.err.println( e.getMessage() );
             System.err.println( e.getClass() );
-            //throw e;
+            return null;
         }
-        return uuid;
     }
 
     @RegisterMapper(CitoyenMapper.class)
@@ -87,14 +77,14 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
     @RegisterMapper(UtilisateurMapper.class)
     interface UtilisateurSQLs {
-        @SqlQuery("insert into citoyen (nom,prenom,date_naissance,tel,gsm,mail,nrn,nation,login,password,reside) values(:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) RETURNING citoyen_id ")
-        String insert(@BindBean UtilisateurDTO test) throws SQLException;
+        @SqlQuery("INSERT INTO citoyen ( nom, prenom,date_naissance, tel, gsm, mail, nrn, nation, login, password, reside) " +
+                               "VALUES (:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) RETURNING citoyen_id ")
+        String insert(@BindBean UtilisateurDTO usr) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {
-        CitoyenDTO citoyenDTO;
         public CitoyenDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            citoyenDTO = new CitoyenDTO();
+            CitoyenDTO citoyenDTO = new CitoyenDTO();
 
             citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
             citoyenDTO.setNom( r.getString("nom") );
@@ -111,13 +101,13 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
         }
     }
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {
-        UtilisateurDTO utilisateurDTO;
         public UtilisateurDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            utilisateurDTO = new UtilisateurDTO();
+            UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
             utilisateurDTO.setId((UUID) r.getObject("citoyen_id"));
             utilisateurDTO.setUsername( r.getString("login") );
             utilisateurDTO.setPassword( r.getString("password") );
-            CitoyenDTO citoyenDTO = utilisateurDTO.getCitoyen();
+
+            CitoyenDTO citoyenDTO = new CitoyenDTO();
             citoyenDTO.setId((UUID) r.getObject("citoyen_id"));
             citoyenDTO.setNom( r.getString("nom") );
             citoyenDTO.setPrenom( r.getString("prenom") );
@@ -128,6 +118,7 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
             citoyenDTO.setNrn( r.getString("nrn") );
             citoyenDTO.setNation( r.getString("nation") );
             citoyenDTO.setReside( (UUID) r.getObject("reside"));
+            utilisateurDTO.setCitoyen(citoyenDTO);
             return utilisateurDTO;
         }
     }

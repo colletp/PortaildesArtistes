@@ -5,13 +5,12 @@ import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import java.text.ParseException;
 import java.util.UUID;
 
-public class Secteur extends DataForm {
+public class Secteur extends DataForm<SecteurDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String nomSecteur;
 
     // ******************
@@ -22,8 +21,6 @@ public class Secteur extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return (UUID)convert(id,UUID.class); }
-    public void setId( String p_id) { this.id = p_id; }
     public String getNomSecteur() { return nomSecteur; }
     public void setNomSecteur(String p_secteur) { this.nomSecteur = p_secteur; }
 

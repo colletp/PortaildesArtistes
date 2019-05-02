@@ -3,13 +3,12 @@ package com.unamur.portaildesartistes.DTO;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class AdresseDTO implements DTO {
+public class AdresseDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private String rue;
     private String numero;
     private String boite;
@@ -23,8 +22,6 @@ public class AdresseDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public String getRue() { return rue; }
     public void setRue(String p_rue) { this.rue = p_rue; }
     public String getNumero() { return numero; }

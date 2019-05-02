@@ -49,7 +49,7 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         ValideInscript(usrDTO);
         String resp="";
         try{
-            resp=super.postForm("","POST",usrDTO,model,"inscript" );
+            resp=postForm( "",usrDTO,"PUT",model,"inscript" );
             return "inscriptOK.html";
         }
         catch( HttpClientErrorException e){

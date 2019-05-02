@@ -18,6 +18,8 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     @Override
     public void configure(final WebSecurity web) throws Exception {
         logger.debug("configure WebSecurity");
+		//TODO: voir pourquoi il faut ajouter ce qu'il y a dans ce répertoire aux mapper pour que ça fonctionne
+		//idéalement, il faudrait que tout ceci soit automatique
         web.ignoring().antMatchers("/static/**");
     }
 

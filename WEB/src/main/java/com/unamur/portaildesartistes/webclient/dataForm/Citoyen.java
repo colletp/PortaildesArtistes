@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import javassist.NotFoundException;
 
 import java.text.ParseException;
@@ -10,13 +9,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
-public class Citoyen extends DataForm {
+public class Citoyen extends DataForm<CitoyenDTO> {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private String id;
     private String nom;
     private String prenom;
     private String date_naissance;
@@ -37,22 +35,19 @@ public class Citoyen extends DataForm {
     // Setter/Getter
     // ******************
 
-    public UUID getId() {
-        return (UUID) convert(id,UUID.class);
-    }
-    public void setId( String p_id) { this.id = p_id; }
-
     public String getNom() {
         hasLengthMin(nom,2);
+		containsOnlyLetters(nom);
         return nom; }
     public void setNom(String p_nom) { this.nom = p_nom; }
     public String getPrenom() {
-        hasLengthMin(nom,2);
+        hasLengthMin(prenom,2);
+		containsOnlyLetters(prenom);
         return prenom;
     }
     public void setPrenom(String p_prenom) { this.prenom = p_prenom; }
     public Date getDateNaissance() {
-        Date date = (Date) super.convert(date_naissance,Date.class);
+        Date date = convertDate(date_naissance);
         isMajor( date );
         return date;
     }
@@ -79,12 +74,11 @@ public class Citoyen extends DataForm {
     public void setNrn(String p_nrn) { this.nrn = p_nrn; }
     public String getNation() {
         hasLengthMin(nation,3);
-        return nation;
+        containsOnlyLetters(nation);
+		return nation;
     }
     public void setNation(String p_nation) { this.nation = p_nation; }
-    public UUID getReside(){
-        return (UUID) convert( reside , UUID.class );
-    }
+    public UUID getReside(){return convertUUID( reside  );}
     public void setReside(String p_reside) { this.reside = p_reside; }
 
     // ******************

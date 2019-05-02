@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class TraitementDTO implements DTO {
+public class TraitementDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private Timestamp dateTrt;
     private String appreciation;
     private UUID roleId;
@@ -32,8 +31,6 @@ public class TraitementDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public Timestamp getDateTrt() { return dateTrt; }
     public void setDateTrt(Timestamp p_date) { this.dateTrt = p_date; }
     public String getAppreciation() { return appreciation; }

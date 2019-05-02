@@ -5,13 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class DocArtisteDTO implements DTO {
+public class DocArtisteDTO extends DTO {
 
     // ******************
     // Champs/propriétés
     // ******************
 
-    private UUID id;
     private UUID citoyenId;
     private UUID reponseId;
     private String noDoc;
@@ -33,8 +32,6 @@ public class DocArtisteDTO implements DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getId() { return id; }
-    public void setId( UUID p_id) { this.id = p_id; }
     public UUID getCitoyenId() { return citoyenId; }
     public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
     public UUID getReponseId() { return reponseId; }

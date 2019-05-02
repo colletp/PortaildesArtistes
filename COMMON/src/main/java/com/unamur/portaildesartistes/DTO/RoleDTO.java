@@ -7,17 +7,10 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Component
-public class RoleDTO implements DTO, GrantedAuthority {
-    private UUID id;
+public class RoleDTO extends DTO implements GrantedAuthority {
+
     private String nomRole;
     private String lang;
-
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getNomRole() {
         return nomRole;
