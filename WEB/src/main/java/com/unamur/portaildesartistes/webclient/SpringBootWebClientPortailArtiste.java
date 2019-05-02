@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.boot.actuate.health.Health;
 import javax.annotation.PostConstruct;
 
@@ -15,6 +16,7 @@ import java.util.TimeZone;
 // Doit être située à la racine du package principal !!!!!!
 // @EnableWebMVC pas nécessaire car SpringBoot ajoute automatiquement si il detecte qu'une librairie sprinng-webmvc est présente dans les dépendances.
 // TODO ??? @EnableGlobalMethodSecurity(securedEnabled = true)
+
 public class SpringBootWebClientPortailArtiste  {
 
     public static void main(String[] args) {

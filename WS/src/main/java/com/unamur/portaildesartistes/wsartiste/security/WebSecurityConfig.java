@@ -30,14 +30,17 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     @Qualifier("donneeUtilisateurImpl")
     UserDetailsService uDS;
 
+    //@Autowired
+    //PasswordEncoder encoder;
+
     AppAuthProvider appAuthProvider;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider( Security.appAuthProvider( uDS , encoder ) );
+        //auth.authenticationProvider( appAuthProvider( uDS , encoder ) );
         appAuthProvider = new AppAuthProvider();
         appAuthProvider.setUserDetailsService(uDS);
-        appAuthProvider.setPasswordEncoder( encoder() );
+        appAuthProvider.setPasswordEncoder( WebSecurityConfig.encoder() );
         auth.authenticationProvider( appAuthProvider );
     }
 
