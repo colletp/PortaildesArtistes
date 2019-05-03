@@ -16,8 +16,8 @@
 
     <form class="formbox400" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
 
-            Login:<input type="text" th:field="*{username}" /><br/>
-            Password:<input th:type="password" th:field="*{password}" /><br/>
+            Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
+            Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         <fieldset>
             <legend>Citoyen</legend>
             Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
@@ -30,10 +30,10 @@
             Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
             <fieldset>
                 <legend>Résidence</legend>
-                Rue:<input th:type="text" th:field="*{citoyen.resideAdr.rue}" /><br/>
-                Num:<input th:type="text" th:field="*{citoyen.resideAdr.numero}" /><br/>
-                Boite:<input th:type="text" th:field="*{citoyen.resideAdr.boite}" /><br/>
-                Ville:<input th:type="text" th:field="*{citoyen.resideAdr.ville}" /><br/>
+                Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
+                Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
+                Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
+                Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
             </fieldset>
         </fieldset>
             <input th:type="submit" />

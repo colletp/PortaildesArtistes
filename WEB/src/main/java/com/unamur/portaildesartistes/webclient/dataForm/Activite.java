@@ -22,9 +22,9 @@ public class Activite extends DataForm<ActiviteDTO> {
     // Setter/Getter
     // ******************
 
-    public UUID getSecteurId() { isNotEmpty(secteurId);return convertUUID(secteurId); }
+    public String getSecteurId() { return secteurId; }
     public void setSecteurId( String p_id) { this.secteurId = p_id; }
-    public String getNomActivite() { isNotEmpty(nomActivite);return nomActivite; }
+    public String getNomActivite() { return nomActivite; }
     public void setNomActivite(String p_activite) { this.nomActivite = p_activite; }
 
     // ******************
@@ -32,8 +32,13 @@ public class Activite extends DataForm<ActiviteDTO> {
     // ******************
     public ActiviteDTO getDTO()throws ParseException {
         ActiviteDTO dto = new ActiviteDTO();
-        dto.setId( getId() );
-        dto.setSecteurId(getSecteurId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getSecteurId());
+        dto.setSecteurId( convertUUID(getSecteurId()));
+
+        isNotEmpty(getNomActivite());
         dto.setNomActivite(getNomActivite());
         return dto;
     }

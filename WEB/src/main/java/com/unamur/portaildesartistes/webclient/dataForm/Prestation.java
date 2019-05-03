@@ -30,22 +30,22 @@ public class Prestation extends DataForm<PrestationDTO> {
     // Setter/Getter
     // ******************
 
-    public Date getDatePrest() { return convertDate(datePrest); }
+    public String getDatePrest() { return datePrest; }
     public void setDatePrest(String p_date) { this.datePrest = p_date; }
-    public Integer getDuree() { return convertInt(duree); }
+    public String getDuree() { return duree; }
     public void setDuree( String p_duree) { this.duree = p_duree; }
-    public Double getMontant() { return convertDouble(montant); }
+    public String getMontant() { return montant; }
     public void setMontant( String p_montant) { this.montant = p_montant; }
     public String getEtat() { return etat; }
     public void setEtat( String p_etat) { this.etat = p_etat; }
 
-    public UUID getSeDerouleId() { return convertUUID(seDerouleId); }
+    public String getSeDerouleId() { return seDerouleId; }
     public void setSeDerouleId( String p_id) { this.seDerouleId = p_id; }
-    public UUID getDocArtisteId() { return convertUUID(docArtisteId); }
+    public String getDocArtisteId() { return docArtisteId; }
     public void setDocArtisteId( String p_id) { this.docArtisteId = p_id; }
-    public UUID getActiviteId() { return convertUUID(activiteId); }
+    public String getActiviteId() { return activiteId; }
     public void setActiviteId( String p_id) { this.activiteId= p_id; }
-    public UUID getCommanditaireId() { return convertUUID(commanditaireId); }
+    public String getCommanditaireId() { return commanditaireId; }
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
     // ******************
@@ -53,15 +53,31 @@ public class Prestation extends DataForm<PrestationDTO> {
     // ******************
     public PrestationDTO getDTO()throws ParseException {
         PrestationDTO dto = new PrestationDTO();
-        dto.setId( getId() );
-        dto.setSeDerouleId(getSeDerouleId());
-        dto.setDocArtisteId(getDocArtisteId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getSeDerouleId());
+        dto.setSeDerouleId(convertUUID(getSeDerouleId()));
+
+        isNotEmpty(getDocArtisteId());
+        dto.setDocArtisteId(convertUUID(getDocArtisteId()));
+
         dto.setEtat(getEtat());
-        dto.setMontant(getMontant());
-        dto.setDuree(getDuree());
-        dto.setActiviteId(getActiviteId());
-        dto.setDatePrest(Timestamp.from(getDatePrest().toInstant()) );
-        dto.setCommanditaireId(getCommanditaireId());
+
+        isNotEmpty(getMontant());
+        dto.setMontant( convertDouble(getMontant()) );
+
+        isNotEmpty(getDuree());
+        dto.setDuree( convertInt(getDuree()));
+
+        isNotEmpty(getActiviteId());
+        dto.setActiviteId(convertUUID(getActiviteId()));
+
+        isNotEmpty(getDatePrest());
+        dto.setDatePrest(Timestamp.from(convertDate(getDatePrest()).toInstant()) );
+
+        isNotEmpty(getCommanditaireId());
+        dto.setCommanditaireId( convertUUID(getCommanditaireId()));
         return dto;
     }
 

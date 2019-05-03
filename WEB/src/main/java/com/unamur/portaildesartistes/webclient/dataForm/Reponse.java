@@ -26,11 +26,11 @@ public class Reponse extends DataForm<ReponseDTO> {
     // Setter/Getter
     // ******************
 
-    public UUID getTrtId(){ return convertUUID(trtId); }
+    public String getTrtId(){ return trtId; }
     public void setTrtId( String p_id){ this.trtId = p_id; }
-    public UUID getCitoyenId(){ return convertUUID(citoyenId); }
+    public String getCitoyenId(){ return citoyenId; }
     public void setCitoyenId( String p_id){ this.citoyenId = p_id; }
-    public Date getDateReponse() { return convertDate(dateReponse); }
+    public String getDateReponse() { return dateReponse; }
     public void setDateReponse(String p_date) { this.dateReponse = p_date; }
 
     // ******************
@@ -38,10 +38,17 @@ public class Reponse extends DataForm<ReponseDTO> {
     // ******************
     public ReponseDTO getDTO()throws ParseException {
         ReponseDTO dto = new ReponseDTO();
-        dto.setId( getId() );
-        dto.setDateReponse(Timestamp.from(getDateReponse().toInstant()) );
-        dto.setCitoyenId(getCitoyenId());
-        dto.setTrtId(getTrtId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getDateReponse());
+        dto.setDateReponse(Timestamp.from(convertDate(getDateReponse()).toInstant()) );
+
+        isNotEmpty(getCitoyenId());
+        dto.setCitoyenId(convertUUID(getCitoyenId()));
+
+        isNotEmpty(getTrtId());
+        dto.setTrtId(convertUUID(getTrtId()));
         return dto;
     }
 

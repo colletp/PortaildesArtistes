@@ -3,7 +3,6 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 
 import java.text.ParseException;
-import java.util.UUID;
 
 public class Utilisateur extends DataForm<UtilisateurDTO> {
     private String login;
@@ -13,13 +12,10 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     // Setter/Getter
     // ******************
     public String getUsername() {
-        hasLengthMin( login,4 );
         return login;
     }
     public void setUsername(String p_login) { this.login = p_login; }
     public String getPassword() {
-        hasLengthMin( login,4 );
-        isComplexPassword(password);
         return password;
     }
     public void setPassword(String p_password) { this.password = p_password; }
@@ -49,8 +45,14 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     }
     public UtilisateurDTO getDTO()throws ParseException {
         UtilisateurDTO usr = new UtilisateurDTO();
-        usr.setId( getId() );
+        if( getId()!=null && !getId().isEmpty() )
+            usr.setId( convertUUID(getId()) );
+
+        hasLengthMin( getUsername(),4 );
         usr.setUsername( getUsername() );
+
+        hasLengthMin( getPassword(),4 );
+        isComplexPassword(getPassword());
         usr.setPassword( getPassword() );
         return usr;
     }
