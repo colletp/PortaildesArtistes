@@ -16,8 +16,10 @@ public class UtilisateurInscript {
     // ******************
     public Utilisateur getUtilisateur(){return usr; }
     public void setUtilisateur(Utilisateur usr) { this.usr = usr; }
+
     public Citoyen getCitoyen(){return cit; }
     public void setCitoyen(Citoyen cit) { this.cit = cit; }
+
     public Adresse getAdresse(){return adr; }
     public void setAdresse(Adresse adr) { this.adr = adr; }
 

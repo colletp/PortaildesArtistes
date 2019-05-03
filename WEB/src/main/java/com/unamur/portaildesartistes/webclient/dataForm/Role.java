@@ -16,7 +16,8 @@ public class Role extends DataForm<RoleDTO> {
 
     public RoleDTO getDTO()throws ParseException {
         RoleDTO dto = new RoleDTO();
-        dto.setId( getId() );
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
         dto.setLang(getLang() );
         dto.setNomRole(getNomRole());
         return dto;

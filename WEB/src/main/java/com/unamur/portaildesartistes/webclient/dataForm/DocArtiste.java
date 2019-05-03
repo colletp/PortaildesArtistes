@@ -27,17 +27,17 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     // Setter/Getter
     // ******************
 
-    public UUID getCitoyenId() { isNotEmpty(citoyenId);return convertUUID(citoyenId); }
+    public String getCitoyenId() { return citoyenId; }
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
-    public UUID getReponseId() { isNotEmpty(reponseId);return convertUUID(reponseId); }
+    public String getReponseId() { return reponseId; }
     public void setReponseId( String p_id) { this.reponseId = p_id; }
     public String getNoDoc() { isNotEmpty(noDoc);return noDoc; }
     public void setNoDoc(String p_noDoc) { this.noDoc = p_noDoc; }
-    public String getNomArtiste() { hasLengthMin(nomArtiste,2);return nomArtiste; }
+    public String getNomArtiste() { return nomArtiste; }
     public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
-    public Date getDatePeremption() { isNotEmpty(datePeremption);return convertDate(datePeremption); }
+    public String getDatePeremption() { return datePeremption; }
     public void setDatePeremption(String p_date) { this.datePeremption = p_date; }
-    public String getTypeDocArtiste() { isNotEmpty(typeDocArtiste);return typeDocArtiste; }
+    public String getTypeDocArtiste() { return typeDocArtiste; }
     public void setTypeDocArtiste(String p_type) { this.typeDocArtiste = p_type; }
 
     // ******************
@@ -45,13 +45,26 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     // ******************
     public DocArtisteDTO getDTO()throws ParseException {
         DocArtisteDTO dto = new DocArtisteDTO();
-        dto.setId( getId() );
-        dto.setDatePeremption(getDatePeremption());
-        dto.setCitoyenId(getCitoyenId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getDatePeremption());
+        dto.setDatePeremption(convertDate(getDatePeremption()));
+
+        isNotEmpty(getCitoyenId());
+        dto.setCitoyenId( convertUUID(getCitoyenId()));
+
+        isNotEmpty(getTypeDocArtiste());
         dto.setTypeDocArtiste(getTypeDocArtiste());
+
+        hasLengthMin(getNomArtiste(),2);
         dto.setNomArtiste(getNomArtiste());
+
+        hasLengthMin(getNomArtiste(),2);
         dto.setNoDoc(getNoDoc());
-        dto.setReponseId(getReponseId());
+
+        isNotEmpty(getReponseId());
+        dto.setReponseId( convertUUID(getReponseId()));
         return dto;
     }
 
