@@ -10,22 +10,16 @@
 </head>
 <body>
 
-    <div th:insert="~{/fragments/header :: head}"></div>
-
-    <nav>
-        <div id="navsection">
-            <div class="element"><a class="whitea" href="accueil.html">Accueil</a></div>
-            <div class="element"><a class="whitea" href="home.html">EN</a></div>
-        </div>
-    </nav>
+    <div th:replace="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: nav2}"></div>
 
     <form class="formbox400" th:action="@{/login}" th:name="form" th:method="post">
         <fieldset>
             <legend th:text="#{askConnection}"></legend>
-            <label for="ident" th:text="#{inputIdent}"><br/></label>
+            <label th:text="#{inputIdent}"><br/></label>
             <input th:type="text" th:name="username" />
             <br/><br />
-            <label for="pass" th:text="#{inputpwd}"></label>
+            <label th:text="#{inputpwd}"></label>
             <input th:type="password" th:name="password" />
             <p class="mdpoubli"> <a class="bluea" href="Changepassword.html" th:text="#{oubli}"></a></p>
             <br/>

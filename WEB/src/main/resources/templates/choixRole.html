@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
 	<title>Springboot Rest Client</title>
@@ -11,10 +10,15 @@
 </head>
 
 <body>
-   <div th:insert="~{/fragments/header :: head}"></div>
-   <div th:replace="~{/fragments/header :: nav3}"></div>
+	<div th:replace="~{/fragments/header :: head}"></div>
+	<div th:replace="~{/fragments/header :: nav4}"></div>
 
-	<h1>Welcome to the SPF Blabla Artists Portal<br/><br/>	being manufactured<br/></h1>
-	<a class="aBouton" href="javascript:history.go(-1)">Return</a>
+
+	<h1>Bienvenue sur le portail des artistes du SPF Blabla</h1><br/>
+	<div id="choixbox">
+		<div class="choixtxt"><a href="artiste.html">Je suis un artiste.</a></div>
+		<div class="choixtxt"><a href="commanditaire.html">Je suis un commanditaire.</a></div>
+		<div class="choixtxt"><a href="gestionnaire.html">Je suis un gestionnaire.</a></div>
+	</div>
 </body>
 </html>

@@ -10,9 +10,9 @@
 </head>
 <body>
 <div th:replace="~{/fragments/header :: head}"></div>
-<div th:replace="~{/fragments/header :: nav5}"></div>
+<div th:replace="~{/fragments/header :: nav4}"></div>
 
-<form class="formbox400" th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="post">
+<form th:action="@{/formulaire}" th:name="form" th:object="${form}" th:method="post">
 
         <input type="hidden" th:field="*{id}" />
 
@@ -33,12 +33,14 @@
             Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
         </fieldset>
         <br/><br/>
-        <fieldset>
-            <legend>Résidence</legend>
-            Rue:<input th:type="text" th:field="*{citoyen.resideAdr.rue}" /><br/>
-            Num:<input th:type="text" th:field="*{citoyen.resideAdr.numero}" /><br/>
-            Boite:<input th:type="text" th:field="*{citoyen.resideAdr.boite}" /><br/>
-            Ville:<input th:type="text" th:field="*{citoyen.resideAdr.ville}" /><br/>
+        <fieldset><legend>Formulaire de renseignement</legend>
+            Date de la demande:<input th:type="text" th:field="*{formulaire.dateDemande}" /><br/>
+ <!--           private List<String> cursurAc;
+            private List<String> expPro;
+            private List<String> ressources; -->
+            Langue:<input th:type="text" th:field="*{formulaire.langue}" /><br/>
+<!--            private Boolean carte;
+            private Boolean visa; -->
         </fieldset>
         <br/><br/>
         <input th:type="submit" />

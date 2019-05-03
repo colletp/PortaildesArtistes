@@ -11,14 +11,8 @@
 
 
 <body>
-
-    <div th:insert="~{/fragments/header :: head}"></div>
-
-    <nav>
-        <div id="navsection">
-            <div class="element"><a class="whitea" href="accueil.html">Accueil</a></div>
-        </div>
-    </nav>
+    <div th:replace="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: nav2}"></div>
 
     <form class="formbox400" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
 
