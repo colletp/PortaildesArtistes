@@ -42,9 +42,14 @@ public class LoginControler {
 
     @GetMapping(value="/accueil")
     public String acceuilhtml(Model model) {return "accueil.html";}
+
     @GetMapping(value="/home")
     public String homehtml(Model model) {
         return "home.html";
+    }
+    @GetMapping(value="/ChangePassword")
+    public String changePasswordhtml(Model model) {
+        return "Changepassword.html";
     }
     @GetMapping(value="/choixRole")
     public String choixRolehtml(Model model) {
@@ -156,8 +161,8 @@ public class LoginControler {
                 logger.debug( reponseRest.getBody() );
                 if (reponseRest.getStatusCodeValue() != 200) {
                     logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
-                    paramClient.add("Location", "login");
-
+                    paramClient.add("Location", "/login");
+                    m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 } else {
                     logger.debug("Authentification OK");
                     logger.debug("Session : " + reponseRest.getHeaders().get("Set-Cookie").toString());
@@ -169,16 +174,18 @@ public class LoginControler {
                                     .replace(" Path=" + configurationService.getBackEndPath() + ";",
                                             " Path=" + configurationService.getFrontEndPath() + ";")
                     );
-                    paramClient.add("Location", "Utilisateur");
+                    paramClient.add("Location", "/choixRole");
                 }
                 msgAuClient=reponseRest.getBody();
             } catch (HttpClientErrorException.Unauthorized e) {
                         logger.error("Connexion refusée par authentification back-end : " + e.toString());
-                        paramClient.add("Location", "login?userNotFound");
+                        paramClient.add("Location", "/login?userNotFound");
+                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 msgAuClient="Erreur : "+e.getMessage();
             } catch (HttpClientErrorException.Forbidden e) {
                         logger.error("Connexion refusée par back-end car interdit : " + e.toString());
-                        paramClient.add("Location", "login");
+                        paramClient.add("Location", "/login?userNotFound");
+                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
             } catch (HttpClientErrorException.NotFound e) {
                         logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
