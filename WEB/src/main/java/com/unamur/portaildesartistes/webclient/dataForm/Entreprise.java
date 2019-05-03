@@ -25,12 +25,12 @@ public class Entreprise extends DataForm<EntrepriseDTO> {
     // Setter/Getter
     // ******************
 
-    public UUID getContactId() { isNotEmpty(contactId);return convertUUID(contactId); }
+    public String getContactId() { return contactId; }
     public void setContactId( String p_id) { this.contactId = p_id; }
-    public UUID getSiegeId() { isNotEmpty(siegeId);return convertUUID(siegeId); }
+    public String getSiegeId() { return siegeId; }
     public void setSiegeId( String p_id) { this.siegeId = p_id; }
 
-    public String getBce() { isNotEmpty(bce);isValidBce(bce);return bce; }
+    public String getBce() { return bce; }
     public void setBce(String p_bce) { this.bce = p_bce; }
     public String getDenomination() { isNotEmpty(denomination);return denomination; }
     public void setDenomination(String p_denom) { this.denomination = p_denom; }
@@ -47,12 +47,22 @@ public class Entreprise extends DataForm<EntrepriseDTO> {
     }
     public EntrepriseDTO getDTO()throws ParseException {
         EntrepriseDTO dto = new EntrepriseDTO();
-        dto.setId( getId() );
-        dto.setContactId(getContactId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getContactId());
+        dto.setContactId(convertUUID(getContactId()));
+
+        isNotEmpty(getStatutLegal());
         dto.setStatutLegal(getStatutLegal());
+
+        hasLengthMin(getDenomination(),2);
         dto.setDenomination(getDenomination());
+
+        isNotEmpty(getBce());isValidBce(getBce());
         dto.setBce(getBce());
-        dto.setSiegeId(getSiegeId());
+
+        dto.setSiegeId(convertUUID(getSiegeId()));
         return dto;
     }
 

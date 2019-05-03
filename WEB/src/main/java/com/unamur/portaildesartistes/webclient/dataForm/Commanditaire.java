@@ -22,9 +22,9 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
     // Setter/Getter
     // ******************
 
-    public UUID getEntrepriseId() { return convertUUID(entrepriseId); }
+    public String getEntrepriseId() { return entrepriseId; }
     public void setEntrepriseId( String p_id) { this.entrepriseId = p_id; }
-    public UUID getCitoyenId() { return convertUUID(citoyenId); }
+    public String getCitoyenId() { return citoyenId; }
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
 
     // ******************
@@ -32,9 +32,10 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
     // ******************
     public CommanditaireDTO getDTO()throws ParseException {
         CommanditaireDTO dto = new CommanditaireDTO();
-        dto.setId( getId() );
-        dto.setEntrepriseId(getEntrepriseId());
-        dto.setCitoyenId(getCitoyenId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+        dto.setEntrepriseId( convertUUID(getEntrepriseId()));
+        dto.setCitoyenId( convertUUID(getCitoyenId()));
         return dto;
     }
 
