@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
+import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.security.UserDetailsServiceWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +42,14 @@ public class LoginControler {
 
     @GetMapping(value="/accueil")
     public String acceuilhtml(Model model) {return "accueil.html";}
+
     @GetMapping(value="/home")
     public String homehtml(Model model) {
         return "home.html";
+    }
+    @GetMapping(value="/ChangePassword")
+    public String changePasswordhtml(Model model) {
+        return "Changepassword.html";
     }
     @GetMapping(value="/choixRole")
     public String choixRolehtml(Model model) {
@@ -79,7 +86,7 @@ public class LoginControler {
         return "spfblabla.png";
     }
 
-    @GetMapping(value = "/login")//initialisation du login
+    @GetMapping(value = "/login")
     public String loginView( @ModelAttribute("lang") String lang,Model model ){
         logger.error("lang:"+lang);
         return "login.html";
@@ -88,20 +95,31 @@ public class LoginControler {
     @Autowired
     UserDetailsServiceWeb uDS;
 
-    public Boolean ValideConnect(UtilisateurDTO usrDTO){
-        return true;
+    public Boolean ValideConnect(Utilisateur usr){
+
+        UtilisateurDTO usrDTO=null;
+        try{
+            usrDTO = usr.getDTO();
+            return true;
+        }
+        catch(IllegalArgumentException e){
+            return false;
+        }
+        catch(ParseException e){
+            return false;
+        }
     }
 
     //Envoi des identifiants de connexion pour authentification
     @PostMapping(value = "/login")
     public ResponseEntity<String> authenticate(
-            @Valid @ModelAttribute("form") final UtilisateurDTO usrDTO ,
+            @Valid @ModelAttribute("form") final Utilisateur usr ,
             final BindingResult br ,
             final Model m)
     {
         /*logger.error( "password front:"+usrDTO.getPassword()+" -> "+encoder.encode( usrDTO.getPassword() ));
         usrDTO.setPassword( encoder.encode( usrDTO.getPassword() ) );*/
-        logger.error( "new password front:"+usrDTO.getPassword() );
+        logger.error( "new password front:"+usr.getPassword() );
         if(br.hasErrors())
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
@@ -112,13 +130,23 @@ public class LoginControler {
         String msgAuClient;
         ResponseEntity<String> reponseAuClient;
 
-        if( ! ValideConnect(usrDTO)){
+        if( ! ValideConnect(usr)){
             logger.error("ValideConnect : false" );
             reponseRest=new ResponseEntity<>( HttpStatus.OK );
             paramClient.add("Location","login");
             msgAuClient=reponseRest.getBody();
         }
         else {
+            UtilisateurDTO usrDTO=null;
+            try{
+                usrDTO = usr.getDTO();
+            }
+            catch(IllegalArgumentException e){
+
+            }
+            catch(ParseException e){
+
+            }
             HttpHeaders headersRest = new HttpHeaders();
             //headersRest.setContentType( yaml );
             MultiValueMap<String, String> paramRest = new LinkedMultiValueMap<>();
@@ -133,8 +161,8 @@ public class LoginControler {
                 logger.debug( reponseRest.getBody() );
                 if (reponseRest.getStatusCodeValue() != 200) {
                     logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
-                    paramClient.add("Location", "login");
-
+                    paramClient.add("Location", "/login");
+                    m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 } else {
                     logger.debug("Authentification OK");
                     logger.debug("Session : " + reponseRest.getHeaders().get("Set-Cookie").toString());
@@ -146,16 +174,18 @@ public class LoginControler {
                                     .replace(" Path=" + configurationService.getBackEndPath() + ";",
                                             " Path=" + configurationService.getFrontEndPath() + ";")
                     );
-                    paramClient.add("Location", "Utilisateur");
+                    paramClient.add("Location", "/choixRole");
                 }
                 msgAuClient=reponseRest.getBody();
             } catch (HttpClientErrorException.Unauthorized e) {
                         logger.error("Connexion refusée par authentification back-end : " + e.toString());
-                        paramClient.add("Location", "login?userNotFound");
+                        paramClient.add("Location", "/login?userNotFound");
+                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 msgAuClient="Erreur : "+e.getMessage();
             } catch (HttpClientErrorException.Forbidden e) {
                         logger.error("Connexion refusée par back-end car interdit : " + e.toString());
-                        paramClient.add("Location", "login");
+                        paramClient.add("Location", "/login?userNotFound");
+                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
                 msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
             } catch (HttpClientErrorException.NotFound e) {
                         logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());

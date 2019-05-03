@@ -6,28 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <link href="../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
+    <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
 
+<table>
     <div th:replace="~{/fragments/header :: head}"></div>
     <div th:replace="~{/fragments/header :: nav2}"></div>
 
-    <form class="formbox400" th:action="@{/login}" th:name="form" th:method="post">
-        <fieldset>
-            <legend th:text="#{askConnection}"></legend>
-            <label th:text="#{inputIdent}"><br/></label>
-            <input th:type="text" th:name="username" />
-            <br/><br />
-            <label th:text="#{inputpwd}"></label>
-            <input th:type="password" th:name="password" />
-            <p class="mdpoubli"> <a class="bluea" th:href="@{/ChangePassword}" th:text="#{oubli}"></a></p>
-            <br/>
-            <input th:type="submit" />
-        </fieldset>
-    </form>
+    <tr><th th:text="#{username}">Nom d'utilisateur</th><th>Action</th></tr>
 
-    <div class="formbox400"><a class="aBouton" th:href="@{/inscript}">Créer un nouveau compte</a></div>
+    <tr th:each="usr : ${form}">
+        <td>[[${usr.username}]]</td>
+        <td id="boutonsFlex">
+            <a class="aBouton" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a>
+            <a class="aBouton" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
+            <a class="aBouton" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
+        </td>
+    </tr>
+
+</table>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

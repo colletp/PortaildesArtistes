@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
+import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 @Controller
 public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO > , Utilisateur>{
@@ -30,14 +27,19 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         return "inscript.html";
     }
 
-    public Boolean ValideInscript(UtilisateurDTO usrDTO){
-
-        return true;
+    public Boolean ValideInscript(UtilisateurInscript usrInscrForm){
+        try {
+            UtilisateurDTO usr = usrInscrForm.getDTO();
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
     @PostMapping(value = "/inscript")
     public String inscript(
-            @Valid @ModelAttribute("form") final UtilisateurDTO usrDTO ,
+            @Valid @ModelAttribute("form") final UtilisateurInscript usrInscrForm ,
             @ModelAttribute("_method") final String method,
             final BindingResult br ,
             final Model model)
@@ -46,11 +48,17 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
-        ValideInscript(usrDTO);
+        ValideInscript(usrInscrForm);
         String resp="";
         try{
-            resp=postForm( "",usrDTO,"PUT",model,"inscript" );
+            resp=postForm( "", usrInscrForm.getDTO() ,"PUT",model,"inscript" );
             return "inscriptOK.html";
+        }
+        catch( IllegalArgumentException e) {
+            logger.error("Erreur lors de la validation du formualaire (Illegal argument): "+e.getMessage() );
+        }
+        catch( ParseException e){
+            logger.error("Erreur lors de la validation du formualaire (Parse) : "+e.getMessage() );
         }
         catch( HttpClientErrorException e){
             logger.error("Réponse du serveur: "+e.getStatusCode().toString() );

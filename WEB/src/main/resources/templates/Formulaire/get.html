@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Springboot Rest Client</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
+</head>
+<body>
+
+<span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
+        Password:[[${form.password}]]<br/>
+<fieldset>
+<legend>Citoyen</legend>
+    <span th:text="#{citoyen.nom}" >
+    Nom</span>:[[${form.citoyen.nom}]]<br/>
+    Prénom:[[${form.citoyen.prenom}]]<br/>
+    Date de naissance:[[${form.citoyen.dateNaissance}]]<br/>
+    Tel:[[${form.citoyen.tel}]]<br/>
+    Gsm:[[${form.citoyen.gsm}]]<br/>
+    Email:[[${form.citoyen.mail}]]<br/>
+    No Reg Nat:[[${form.citoyen.nrn}]]<br/>
+    Nationnalité:[[${form.citoyen.nation}]]<br/>
+    <fieldset>
+        <legend>Résidence</legend>
+        Rue:[[${form.citoyen.resideAdr.rue}]]<br/>
+        Num:[[${form.citoyen.resideAdr.numero}]]<br/>
+        Boite:[[${form.citoyen.resideAdr.boite}]]<br/>
+        Ville:[[${form.citoyen.resideAdr.ville}]]<br/>
+    </fieldset>
+</fieldset>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
