@@ -41,13 +41,22 @@ public class LoginControler {
     private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value="/accueil")
-    public String acceuilhtml(Model model) {
-        return "accueil.html";
-    }
-
+    public String acceuilhtml(Model model) {return "accueil.html";}
     @GetMapping(value="/home")
     public String homehtml(Model model) {
         return "home.html";
+    }
+    @GetMapping(value="/choixRole")
+    public String choixRolehtml(Model model) {
+        return "choixRole.html";
+    }
+    @GetMapping(value="/artiste")
+    public String artistehtml(Model model) {
+        return "artiste.html";
+    }
+    @GetMapping(value="/formulaire")
+    public String formulairehtml(Model model) {
+        return "formulaire.html";
     }
 
     @GetMapping(value="/mainCSS.css")

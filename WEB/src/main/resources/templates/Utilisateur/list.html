@@ -11,6 +11,9 @@
 <body>
 
 <table>
+    <div th:replace="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: nav2}"></div>
+
     <tr><th th:text="#{username}">Nom d'utilisateur</th><th>Action</th></tr>
 
     <tr th:each="usr : ${form}">
