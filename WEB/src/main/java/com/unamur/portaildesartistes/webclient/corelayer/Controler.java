@@ -17,6 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import javax.management.ServiceNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -167,4 +168,18 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 	*
 	**************************************/
 
+    public Boolean isValide(V form){
+
+        T objDTO=null;
+        try{
+            objDTO = form.getDTO();
+            return true;
+        }
+        catch(IllegalArgumentException e){
+            return false;
+        }
+        catch(ParseException e){
+            return false;
+        }
+    }
 }

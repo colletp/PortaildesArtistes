@@ -31,7 +31,6 @@ public class UtilisateurServiceFront {
 
     @GetMapping("/gestionUtilisateur")
     public List<UtilisateurDTO> listUtilisateur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue){
-
         logger.error( cookieValue );
         return usrServiceImpl.list();
     }
@@ -43,7 +42,9 @@ public class UtilisateurServiceFront {
     public void utilisateurSuppr( @PathVariable("id") UUID id ){ usrServiceImpl.delete(id); }
 
     @PutMapping("/gestionUtilisateur")
-    public UUID utilisateurCreer( @RequestBody UtilisateurDTO usr ){ return usrServiceImpl.insert(usr); }
+    public UUID utilisateurCreer( @RequestBody UtilisateurDTO usr ){
+        return usrServiceImpl.insert(usr);
+    }
 
     @PostMapping("/gestionUtilisateur")
     public void utilisateurModif( @RequestBody UtilisateurDTO usr ){ usrServiceImpl.update(usr); }
