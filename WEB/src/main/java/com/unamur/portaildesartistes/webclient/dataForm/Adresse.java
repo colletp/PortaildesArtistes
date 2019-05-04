@@ -3,6 +3,8 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 
 import java.text.ParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Adresse extends DataForm<AdresseDTO> {
 
@@ -37,6 +39,15 @@ public class Adresse extends DataForm<AdresseDTO> {
     // ******************
     // Fonctions
     // ******************
+
+    Boolean isNumRue(String toValidate){
+        Pattern patternNumRue = Pattern.compile("[0-9]+[A-Z]?$");
+        Matcher testNumRue = patternNumRue.matcher(toValidate);
+        if (!testNumRue.matches())
+            throw new IllegalArgumentException("Numéro de rue non valide");
+        return true;
+    }
+
     public AdresseDTO getDTO()throws ParseException {
         AdresseDTO dto = new AdresseDTO();
         if( getId()!=null && !getId().isEmpty())
@@ -45,12 +56,13 @@ public class Adresse extends DataForm<AdresseDTO> {
         isNotEmpty(getRue());
         dto.setRue(getRue());
 
-        isNotEmpty(getNumero());
+        isNumRue(getNumero());
         dto.setNumero(getNumero());
 
         dto.setBoite(getBoite());
 
         isNotEmpty(getVille());
+        containsOnlyLetters(getVille());
         dto.setVille(getVille());
 
         return dto;

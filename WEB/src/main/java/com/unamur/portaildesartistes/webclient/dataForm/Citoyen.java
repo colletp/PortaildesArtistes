@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Citoyen extends DataForm<CitoyenDTO> {
     private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.dataForm.Citoyen.class);
@@ -66,14 +68,11 @@ public class Citoyen extends DataForm<CitoyenDTO> {
 
         if(toValidate.length()!=11)
             throw new IllegalArgumentException("Numéro de registre national incorrect");
-        System.out.println(toValidate);
         long nrn=Long.parseLong( toValidate );
-        System.out.println(nrn);
         long val=nrn/100;
         Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
         if( convertDate(getDateNaissance()).after(dateControle) )
             val+=2000000000;
-        System.out.println(val);
         long valControle = 97 - (val % 97);
        //TODO: attention, val%97 varie de 0 à 96 => valControle n'est jamais == 0 . Vérifier la formule
         if (valControle==0)
@@ -92,8 +91,12 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     }
 
     Boolean isTel(String toValidate){
-        if( false )
-            throw new IllegalArgumentException("N° de tel non valide");
+        if(!toValidate.isEmpty()) {
+            Pattern patternTel = Pattern.compile("[0-9]+/?[0-9]+$");
+            Matcher testTel = patternTel.matcher(toValidate);
+            if (!testTel.matches())
+                throw new IllegalArgumentException("N° de tel ou de GSM non valide");
+        }
         return true;
     }
 
