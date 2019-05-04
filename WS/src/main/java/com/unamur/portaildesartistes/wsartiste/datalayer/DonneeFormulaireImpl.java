@@ -106,7 +106,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setId((UUID) r.getObject("form_id"));
             formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
-            formulaireDTO.setCursurAc( (List<String>) r.getObject("cursus_ac"));
+            formulaireDTO.setCursusAc( (List<String>) r.getObject("cursus_ac"));
             formulaireDTO.setExpPro( (List<String>) r.getObject("ex_pro"));
             formulaireDTO.setRessources( (List<String>) r.getObject("ressources"));
             formulaireDTO.setLangue( r.getString("langue"));
