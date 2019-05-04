@@ -23,7 +23,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String carte;
     private String visa;
 
-    private List<Activite> lActivites;
+    private List<String> lActivites;
 
 
     // ******************
@@ -50,6 +50,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setCarte(String b){ this.carte=b;}
     public String getVisa(){ return visa;}
     public void setVisa(String b){ this.visa=b;}
+
+    public List<String> getActivitesId(){ return lActivites; }
+    public void setActivitesId(List<String> l ){ lActivites=l; }
 
     // ******************
     // Fonctions

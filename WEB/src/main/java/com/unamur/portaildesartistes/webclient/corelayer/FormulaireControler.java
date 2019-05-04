@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,11 +43,23 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     @PostMapping(value = "/Formulaire")
     public String FormPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final Formulaire usrForm
+            ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         logger.error("Form(post) "+method+" : Authentication received! Cookie : "+cookieValue );
         //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-        return super.postForm(cookieValue,usrForm,method,model);
+        try {
+            FormulaireDTO formDTO = formForm.getDTO();
+            List<ActiviteDTO> listAct=new ArrayList<>();
+            for(String actId : formForm.getActivitesId() ){
+                listAct.add(actCtrl.getObj(cookieValue,UUID.fromString(actId),new ActiviteDTO(),ActiviteDTO.class ));
+            }
+            formDTO.setActivites(listAct);
+        }catch(IllegalArgumentException e){
+            return "err";
+        }catch(ParseException e){
+            return "err";
+        }
+        return super.postForm(cookieValue,formForm,method,model);
     }
 
     @GetMapping(value = "/Formulaire")//initialisation du login

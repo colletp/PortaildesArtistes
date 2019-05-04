@@ -158,6 +158,33 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         }
     }
 
+    protected T getObj( String cookieValue,UUID uuid,T objDTO, U clazz ){
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
+        try {
+            logger.error("Appel REST");
+            return restTemplateHelper.getForEntity(clazz, configurationService.getUrl() + "/gestion" + className + "/"+uuid, headers);
+        } catch (AuthenticationServiceException e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return null;
+        } catch (HttpClientErrorException.Unauthorized e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return null;
+        } catch (HttpClientErrorException.Forbidden e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return null;
+        } catch (HttpServerErrorException.InternalServerError e) {
+            logger.error("Connexion perdue au back-end : " + e.toString());
+            return null;
+        } catch (HttpServerErrorException e) {
+            logger.error("Autre erreur du back-end : " + e.toString());
+            return null;
+        }catch(ClassCastException e){
+            logger.error( e.getMessage() );
+            return null;
+        }
+    }
+
     protected String list( String cookieValue,T objDTO, U clazz ,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
