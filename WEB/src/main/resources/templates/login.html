@@ -10,30 +10,26 @@
 </head>
 <body>
 
-    <div th:insert="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: nav2}"></div>
 
-    <nav>
-        <div id="navsection">
-            <div class="element"><a class="whitea" href="accueil.html">Accueil</a></div>
-            <div class="element"><a class="whitea" href="home.html">EN</a></div>
-        </div>
-    </nav>
-
+    <div class="Msg">[[${Msg}]]</div>
+    <div class="Err">[[${Err}]]</div>
     <form class="formbox400" th:action="@{/login}" th:name="form" th:method="post">
         <fieldset>
             <legend th:text="#{askConnection}"></legend>
-            <label for="ident" th:text="#{inputIdent}"><br/></label>
+            <label th:text="#{inputIdent}"><br/></label>
             <input th:type="text" th:name="username" />
             <br/><br />
-            <label for="pass" th:text="#{inputpwd}"></label>
+            <label th:text="#{inputpwd}"></label>
             <input th:type="password" th:name="password" />
-            <p class="mdpoubli"> <a class="bluea" href="Changepassword.html" th:text="#{oubli}"></a></p>
+            <p class="mdpoubli"> <a class="bluea" th:href="@{/ChangePassword}" th:text="#{oubli}"></a></p>
             <br/>
             <input th:type="submit" />
         </fieldset>
     </form>
 
-    <div class="formbox400"><a class="aBouton" href="inscript.html">Créer un nouveau compte</a></div>
+    <div class="formbox400"><a class="aBouton" th:href="@{/inscript}">Créer un nouveau compte</a></div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

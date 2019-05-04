@@ -9,16 +9,7 @@
     <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-<div th:insert="~{/fragments/header :: head}"></div>
 
-<nav>
-    <div id="navsection">
-        <div class="element"><a class="whitea" href="/webArtiste/accueil">Accueil</a></div>
-        <div class="element"><a class="whitea" href="/webArtiste/home">EN</a></div>
-    </div>
-</nav>
-
-<div class="formbox400">
 <span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
         Password:[[${form.password}]]<br/>
 <fieldset>
@@ -40,7 +31,6 @@
         Ville:[[${form.citoyen.resideAdr.ville}]]<br/>
     </fieldset>
 </fieldset>
-</div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

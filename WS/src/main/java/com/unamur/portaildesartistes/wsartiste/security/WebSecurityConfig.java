@@ -30,22 +30,25 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     @Qualifier("donneeUtilisateurImpl")
     UserDetailsService uDS;
 
-    AppAuthProvider appAuthProvider;
+    //@Autowired
+    //PasswordEncoder encoder;
+
+    private AppAuthProvider appAuthProvider;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider( Security.appAuthProvider( uDS , encoder ) );
+        //auth.authenticationProvider( appAuthProvider( uDS , encoder ) );
         appAuthProvider = new AppAuthProvider();
         appAuthProvider.setUserDetailsService(uDS);
-        appAuthProvider.setPasswordEncoder( encoder() );
+        appAuthProvider.setPasswordEncoder( WebSecurityConfig.encoder() );
         auth.authenticationProvider( appAuthProvider );
     }
 
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    AuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
-    AuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
+    private AuthenticationSuccessHandler mySuccessHandler = new MySavedRequestAwareAuthenticationSuccessHandler();
+    private AuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
     LogoutSuccessHandler myLogoutHandler = new SimpleUrlLogoutSuccessHandler();
 
     @Override
@@ -63,7 +66,12 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                     .permitAll()
                 .and()
                     .authorizeRequests()
-                    .antMatchers( "/gestionUtilisateur","/gestionUtilisateur/*")
+                    .antMatchers( "/gestionUtilisateur","/gestionUtilisateur/*"
+                            ,"/gestionActivite","/gestionActivite/*"
+                            ,"/gestionFormulaire","/gestionFormulaire/*"
+                            ,"/gestionReponse","/gestionReponse/*"
+                            ,"/gestionTraitement","/gestionTraitement/*"
+                            ,"/gestionDocArtiste","/gestionDocArtiste/*")
                     .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()

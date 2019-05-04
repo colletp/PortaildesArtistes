@@ -2,7 +2,6 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.DTO;
-import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,14 +16,14 @@ import java.util.regex.Pattern;
 
 public abstract class DataForm<T extends DTO> implements Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
+    public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
     private String id;
     // ******************
     // Setter/Getter
     // ******************
 
-    public UUID getId(){return convertUUID(id);}
+    public String getId(){return id;}
     public void setId( String p_id){this.id = p_id;}
     // ******************
     // A implémenter
@@ -50,7 +49,6 @@ public abstract class DataForm<T extends DTO> implements Serializable {
             if(a<=9&&a>=0)
                 throw new IllegalArgumentException("Contient autre chose que des lettres");
         }
-
         return true;
     }
 
@@ -85,8 +83,8 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         return true;
     }
     protected Boolean hasLengthMin(String s , int size)throws IllegalArgumentException{
-        if(s.length()<size)
-            throw new IllegalArgumentException("Taille minimum de "+size+ "pas respectée ("+s.length()+")" );
+        if( s==null || s.isEmpty() || s.length()<size)
+            throw new IllegalArgumentException("Taille minimum de "+size+" pas respectée" );
         return true;
     }
 

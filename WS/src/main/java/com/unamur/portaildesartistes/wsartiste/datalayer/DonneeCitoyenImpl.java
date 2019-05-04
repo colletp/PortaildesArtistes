@@ -54,7 +54,7 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
         try {
             UUID reside =  adrImpl.insert( item.getCitoyen().getResideAdr() );
             item.getCitoyen().setReside( reside );
-            return UUID.fromString( super.Exec(UtilisateurSQLs.class).insert( item ) );
+            return UUID.fromString( super.Exec(UtilisateurSQLs.class).insert( item , item.getCitoyen() ) );
         }
         catch(SQLException e){
             System.err.println( e.getCause().getMessage() );
@@ -77,9 +77,9 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
     @RegisterMapper(UtilisateurMapper.class)
     interface UtilisateurSQLs {
-        @SqlQuery("INSERT INTO citoyen ( nom, prenom,date_naissance, tel, gsm, mail, nrn, nation, login, password, reside) " +
-                               "VALUES (:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:login,:password,:reside) RETURNING citoyen_id ")
-        String insert(@BindBean UtilisateurDTO usr) throws SQLException;
+        @SqlQuery("INSERT INTO citoyen ( nom, prenom,date_naissance, tel, gsm, mail, nrn, nation, login   , password, reside) " +
+                               "VALUES (:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:username,:password,:reside) RETURNING citoyen_id ")
+        String insert(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit) throws SQLException;
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {

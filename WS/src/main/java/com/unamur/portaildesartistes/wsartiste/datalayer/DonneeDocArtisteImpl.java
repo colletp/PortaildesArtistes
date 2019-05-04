@@ -26,7 +26,7 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
     }
 
     @Override
-    DocArtisteDTO getById(UUID id) {
+    public DocArtisteDTO getById(UUID id) {
         return super.Exec(DocArtisteSQLs.class).getById(id);
     }
 
@@ -35,12 +35,12 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
     }
 
     @Override
-    void update(DocArtisteDTO item) {
+    public void update(DocArtisteDTO item) {
         super.Exec(DocArtisteSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(DocArtisteSQLs.class).delete(id);
     }
 

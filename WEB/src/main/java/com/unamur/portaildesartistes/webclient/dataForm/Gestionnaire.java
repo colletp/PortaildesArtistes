@@ -25,9 +25,9 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     // ******************
 
 
-    public UUID getCitoyenId(){ return convertUUID(citoyenId); }
+    public String getCitoyenId(){ return citoyenId; }
     public void setCitoyenId(String p_id) { this.citoyenId = p_id; }
-    public UUID getTravailleId() { return convertUUID(travailleId); }
+    public String getTravailleId() { return travailleId; }
     public void setTravailleId(String p_id) { this.travailleId = p_id; }
     public String getMatricule() { return matricule; }
     public void setMatricule(String p_mat) { this.matricule = p_mat; }
@@ -39,11 +39,20 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     // ******************
     public GestionnaireDTO getDTO() throws ParseException {
         GestionnaireDTO dto = new GestionnaireDTO();
-        dto.setId(getId());
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getMatricule());
         dto.setMatricule(getMatricule());
+
+        isNotEmpty(getBureau());
         dto.setBureau(getBureau());
-        dto.setCitoyenId(getCitoyenId());
-        dto.setTravailleId(getTravailleId());
+
+        isNotEmpty(getCitoyenId());
+        dto.setCitoyenId(convertUUID(getCitoyenId()));
+
+        isNotEmpty(getTravailleId());
+        dto.setTravailleId(convertUUID(getTravailleId()));
         return dto;
     }
 }

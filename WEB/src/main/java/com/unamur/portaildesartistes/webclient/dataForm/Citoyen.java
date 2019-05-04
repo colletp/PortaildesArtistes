@@ -2,6 +2,8 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +12,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Citoyen extends DataForm<CitoyenDTO> {
+    private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.dataForm.Citoyen.class);
 
     // ******************
     // Champs/propriétés
@@ -35,52 +38,23 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     // Setter/Getter
     // ******************
 
-    public String getNom() {
-        hasLengthMin(nom,2);
-		containsOnlyLetters(nom);
-        return nom; }
+    public String getNom() { return nom; }
     public void setNom(String p_nom) { this.nom = p_nom; }
-    public String getPrenom() {
-        hasLengthMin(prenom,2);
-		containsOnlyLetters(prenom);
-        return prenom;
-    }
+    public String getPrenom() { return prenom; }
     public void setPrenom(String p_prenom) { this.prenom = p_prenom; }
-    public Date getDateNaissance() {
-        Date date = convertDate(date_naissance);
-        isMajor( date );
-        return date;
-    }
+    public String getDateNaissance() { return date_naissance; }
     public void setDateNaissance(String p_date_naissance) { this.date_naissance= p_date_naissance; }
-    public String getTel() {
-        //isTel(tel);
-        containsOnlyNumbers(tel);
-        return tel;
-    }
+    public String getTel() { return tel; }
     public void setTel(String p_tel) { this.tel = p_tel; }
-    public String getGsm() {
-        //isTel(gsm);
-        containsOnlyNumbers(gsm);
-        return gsm;
-    }
+    public String getGsm() { return gsm; }
     public void setGsm(String p_gsm) { this.gsm = p_gsm; }
-    public String getMail() {
-        isEmail(mail);
-        return mail;
-    }
+    public String getMail() { return mail; }
     public void setMail(String p_mail) { this.mail = p_mail; }
-    public String getNrn()throws ParseException {
-        isValidNrn(nrn);
-        return nrn;
-    }
+    public String getNrn(){ return nrn; }
     public void setNrn(String p_nrn) { this.nrn = p_nrn; }
-    public String getNation() {
-        hasLengthMin(nation,3);
-        containsOnlyLetters(nation);
-		return nation;
-    }
+    public String getNation() { return nation; }
     public void setNation(String p_nation) { this.nation = p_nation; }
-    public UUID getReside(){return convertUUID( reside  );}
+    public String getReside(){return reside;}
     public void setReside(String p_reside) { this.reside = p_reside; }
 
     // ******************
@@ -97,7 +71,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         System.out.println(nrn);
         long val=nrn/100;
         Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
-        if( getDateNaissance().after(dateControle) )
+        if( convertDate(getDateNaissance()).after(dateControle) )
             val+=2000000000;
         System.out.println(val);
         long valControle = 97 - (val % 97);
@@ -110,26 +84,59 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     }
     Boolean isMajor(Date dateNaissance){
         //Controle si le citoyen à plus de 18 ans
-        long resultat;
-        Date date=new Date();
-        resultat = (date.getTime()-(dateNaissance.getTime()));
-       // resultat = ChronoUnit.YEARS.between( (new Date()).toInstant() , dateNaissance.toInstant());
-        if(resultat<18)
+        Long resultat = new Date().getTime() - dateNaissance.getTime();
+        logger.error( Long.toString(resultat/1000/60/60/24/365 ) );
+        if(resultat< (18*365*24*60*60*1000) )
             throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
         return true;
     }
 
     public CitoyenDTO getDTO()throws ParseException {
-        CitoyenDTO cit = new CitoyenDTO();
-        cit.setId( getId() );
-        cit.setNom( getNom() );
-        cit.setDateNaissance(getDateNaissance());
-        cit.setTel(getTel());
-        cit.setGsm(getGsm());
-        cit.setMail(getMail());
-        cit.setNrn(getNrn());
-        cit.setNation(getNation());
-        cit.setReside(getReside());
-        return cit;
+        logger.error("getDTO");
+        CitoyenDTO dto = new CitoyenDTO();
+        if( getId()!=null && !getId().isEmpty())
+        dto.setId( convertUUID(getId()) );
+        logger.error("id OK");
+
+        hasLengthMin(getNom(),2);
+        containsOnlyLetters(getNom());
+        dto.setNom( getNom() );
+        logger.error("nom OK");
+
+        hasLengthMin(getPrenom(),2);
+        containsOnlyLetters(getPrenom());
+        dto.setPrenom( getPrenom() );
+        logger.error("prenom OK");
+
+        Date dateNais = convertDate(getDateNaissance());
+        isMajor( dateNais );
+        dto.setDateNaissance(dateNais);
+        logger.error("dateNais OK");
+
+        isTel(getTel());
+        dto.setTel(getTel());
+        logger.error("telOK");
+
+        isTel(getGsm());
+        dto.setGsm(getGsm());
+        logger.error("gsm OK");
+
+        isEmail(mail);
+        dto.setMail(getMail());
+        logger.error("mail OK");
+
+        isValidNrn(nrn);
+        dto.setNrn(getNrn());
+        logger.error("nrn OK");
+
+        hasLengthMin(getNation(),3);
+        containsOnlyLetters(getNation());
+        dto.setNation(getNation());
+        logger.error("nation OK");
+
+        if(getReside()!=null && !getReside().isEmpty())
+        dto.setReside( convertUUID(getReside()) );
+        logger.error("reside OK");
+        return dto;
     }
 }

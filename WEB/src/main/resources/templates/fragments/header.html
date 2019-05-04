@@ -4,14 +4,53 @@
 
 <body>
 
-<div th:fragment="head">
-    <header>
+<header th:fragment="head">
         <div id="topsection">
-            <div class="tps"><img src="img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-            <div class="tps"><img src="img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
+            <div class="tps"><img th:src="@{img/logoPortail.png}" alt="Portail des artistes" width="500"/></div>
+            <div class="tps"><img th:src="@{img/spfblabla.png}" alt="SPF Blabla" width="220"/></div>
         </div>
-    </header>
-</div>
+</header>
+
+
+<nav th:fragment="nav1">
+    <div id="navsection">
+        <div class="element"><a class="whitea" href="accueil">Accueil</a></div>
+        <div class="element"><a class="whitea" href="login.html">Me connecter</a></div>
+        <div class="element"><a class="whitea" href="home">EN</a></div>
+    </div>
+</nav>
+
+<nav th:fragment="nav2">
+    <div id="navsection">
+        <div class="element"><a class="whitea" href="accueil">Accueil</a></div>
+        <div class="element"><a class="whitea" href="home">EN</a></div>
+    </div>
+</nav>
+
+<nav th:fragment="nav3">
+    <div id="navsection">
+        <div class="element"><a class="whitea" href="home.html">Home</a></div>
+        <div class="element"><a class="whitea" href="">Log in</a></div>
+        <div class="element"><a class="whitea" href="accueil.html">FR</a></div>
+    </div>
+</nav>
+
+<nav th:fragment="nav4">
+    <div id="navsection">
+        <div class="element"><a class="whitea" href="choixRole.html">Accueil</a></div>
+        <div class="element"><a class="whitea" href="post.html">Mon profil</a></div>
+        <div class="element"><a class="whitea" href="accueil.html">Déconnexion</a></div>
+        <div class="element"><a class="whitea" href="home.html">EN</a></div>
+    </div>
+</nav>
+
+<nav th:fragment="nav5">
+    <div id="navsection">
+        <div class="element"><a class="whitea" href="choixRole.html">Accueil</a></div>
+        <div class="element"><a class="whitea" href="accueil.html">Déconnexion</a></div>
+        <div class="element"><a class="whitea" href="home.html">EN</a></div>
+    </div>
+</nav>
 
 </body>
 

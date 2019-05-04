@@ -26,19 +26,16 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     @Transactional
     public List<FormulaireDTO> list(){
         List<FormulaireDTO> formDTOList = formImpl.list();
-        for( FormulaireDTO form : formDTOList ){
-            form.setActivites( actImpl.getByFormId( form.getId() ) );
-            for( ActiviteDTO act : form.getActivites() ){
-                act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
-            }
-        }
         return formDTOList;
     }
     
     @Transactional
     public FormulaireDTO getById( UUID uuid ){
         FormulaireDTO form= formImpl.getById(uuid);
-        //form.setCitoyen( citImpl.getById( form.getCitoyenId() ) );
+        form.setActivites( actImpl.getByFormId( form.getId() ) );
+        /*for( ActiviteDTO act : form.getActivites() ){
+            act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
+        }*/
         return form;
     }
 

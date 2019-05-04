@@ -2,7 +2,6 @@ package com.unamur.portaildesartistes.wsartiste.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,8 +19,8 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     public Authentication authenticate( Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String name = auth.getName();
-logger.info("username="+name);
-logger.info("password="+auth.getCredentials().toString() );
+        logger.info("username="+name);
+        logger.info("password="+auth.getCredentials().toString() );
         UserDetails user = super.getUserDetailsService().loadUserByUsername(name);
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
@@ -36,8 +35,7 @@ logger.info("password="+auth.getCredentials().toString() );
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 for( GrantedAuthority g : authorities )logger.info( g.getAuthority() );
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken( user, user.getPassword(), authorities);
-        return usernamePasswordAuthenticationToken;
+        return new UsernamePasswordAuthenticationToken( user, user.getPassword(), authorities);
     }
 
     @Override

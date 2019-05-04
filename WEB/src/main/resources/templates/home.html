@@ -10,26 +10,11 @@
 	<link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 
-   <body>
-
+<body>
    <div th:insert="~{/fragments/header :: head}"></div>
+   <div th:replace="~{/fragments/header :: nav3}"></div>
 
-   <nav>
-		   <div id="navsection">
-			   <div class="element"><a class="whitea" href="home.html">Home</a></div>
-			   <div class="element"><a class="whitea" href="">Log in</a></div>
-			   <div class="element"><a class="whitea" href="accueil.html">FR</a></div>
-		   </div>
-	   </nav>
-
-
-		<section>
-			<h1>
-			Welcome to the SPF Blabla Artists Portal
-			<br/><br/>
-			being manufactured
-			<br/>
-			 </h1>
-			<a class="aBouton" href="javascript:history.go(-1)">Return</a>		</section>
-</div></body>
+	<h1>Welcome to the SPF Blabla Artists Portal<br/><br/>	being manufactured<br/></h1>
+	<a class="aBouton" href="javascript:history.go(-1)">Return</a>
+</body>
 </html>

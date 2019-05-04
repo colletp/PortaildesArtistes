@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UtilistateurServiceImpl implements IService<UtilisateurDTO> {
+public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
 
-    private static final Logger logger = LoggerFactory.getLogger(UtilistateurServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceImpl.class);
+
+    //@Autowired
+    //PasswordEncoder encoder;
 
     @Autowired
     private DonneeCitoyenImpl citImpl;
@@ -100,16 +103,35 @@ public class UtilistateurServiceImpl implements IService<UtilisateurDTO> {
     }
 
     @Transactional
+    public UUID getUuidByName( String userName ){
+        UtilisateurDTO usr= usrImpl.getByName(userName);
+        return usr.getId();
+    }
+
+    @Transactional
     public void update( UtilisateurDTO usr ){
-        if(usr.getPassword()!="")
-            usr.setPassword( WebSecurityConfig.encoder().encode(usr.getPassword()) );
-        usrImpl.update(usr);
+        if( !usr.getPassword().isEmpty() ) {
+            usr.setPassword(WebSecurityConfig.encoder().encode(usr.getPassword()));
+            usrImpl.update(usr);
+        }
     }
 
     @Transactional
     public UUID insert( UtilisateurDTO usr ){
         usr.setPassword( WebSecurityConfig.encoder().encode(usr.getPassword()) );
-        return usrImpl.insert(usr);
+        UUID cit = null;
+        if( usr.getCitoyen()!=null ){
+            UUID adr=null;
+            if( usr.getCitoyen().getResideAdr()!=null )
+                adr=adrImpl.insert(usr.getCitoyen().getResideAdr());
+            else
+                throw new IllegalArgumentException("Insertion d'un citoyen sans adresse");
+            usr.getCitoyen().setReside(adr);
+            cit=citImpl.insert(usr);
+        }
+        else
+            throw new IllegalArgumentException("Insertion d'un utilisateur sans citoyen");
+        return cit;
     }
 
     @Transactional

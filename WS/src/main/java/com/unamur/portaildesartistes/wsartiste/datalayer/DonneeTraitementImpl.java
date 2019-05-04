@@ -30,7 +30,7 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
     }
 
     @Override
-    TraitementDTO getById(UUID id) {
+    public TraitementDTO getById(UUID id) {
         return super.Exec(TraitementSQLs.class).getById(id);
     }
 
@@ -39,12 +39,12 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
     }
 
     @Override
-    void update(TraitementDTO item) {
+    public void update(TraitementDTO item) {
         super.Exec(TraitementSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(TraitementSQLs.class).delete(id);
     }
 

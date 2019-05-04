@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,12 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginControlerTest {
 
     private LoginControler connect;
-    private UtilisateurDTO user;
+    private Utilisateur user;
+    private UtilisateurDTO userDTO;
 
     @BeforeEach
     void setUp() {
         connect=new LoginControler();
-        user=new UtilisateurDTO();
+        user=new Utilisateur();
         user.setUsername("test1");
         user.setPassword("i234");
     }

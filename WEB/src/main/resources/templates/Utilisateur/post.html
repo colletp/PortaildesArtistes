@@ -6,46 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
+    <link th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <div id="topsection">
-            <div class="tps"><img src="/img/logoPortail.png" alt="Portail des artistes" width="500"/></div>
-            <div class="tps"><img src="/img/spfblabla.png" alt="SPF Blabla" width="220"/></div>
-        </div>
-    </header>
-    <nav>
-        <div id="navsection">
-            <div class="element"><a class="whitea" href="/webArtiste/accueil">Accueil</a></div>
-            <div class="element"><a class="whitea" href="/webArtiste/home">EN</a></div>
-        </div>
-    </nav>
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav5}"></div>
 
 <form class="formbox400" th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="post">
 
         <input type="hidden" th:field="*{id}" />
 
-        Login:<input type="text" th:field="*{username}" /><br/>
-        Password:<input th:type="password" th:field="*{password}" /><br/>
-<fieldset>
-<legend>Citoyen</legend>
-    Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
-    Prénom:<input th:type="text" th:field="*{citoyen.prenom}" /><br/>
-    Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" /><br/>
-    Tel:<input th:type="text" th:field="*{citoyen.tel}" /><br/>
-    Gsm:<input th:type="text" th:field="*{citoyen.gsm}" /><br/>
-    Email:<input th:type="text" th:field="*{citoyen.mail}" /><br/>
-    No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" /><br/>
-    Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
-    <fieldset>
-        <legend>Résidence</legend>
-        Rue:<input th:type="text" th:field="*{citoyen.resideAdr.rue}" /><br/>
-        Num:<input th:type="text" th:field="*{citoyen.resideAdr.numero}" /><br/>
-        Boite:<input th:type="text" th:field="*{citoyen.resideAdr.boite}" /><br/>
-        Ville:<input th:type="text" th:field="*{citoyen.resideAdr.ville}" /><br/>
-    </fieldset>
-</fieldset>
+        <fieldset><legend>Identifiant</legend>
+            Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
+            Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
+        </fieldset>
+        <br/><br/>
+        <fieldset>
+        <legend>Citoyen</legend>
+            Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
+            Prénom:<input th:type="text" th:field="*{citoyen.prenom}" /><br/>
+            Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" /><br/>
+            Tel:<input th:type="text" th:field="*{citoyen.tel}" /><br/>
+            Gsm:<input th:type="text" th:field="*{citoyen.gsm}" /><br/>
+            Email:<input th:type="text" th:field="*{citoyen.mail}" /><br/>
+            No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" /><br/>
+            Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
+        </fieldset>
+        <br/><br/>
+        <fieldset>
+            <legend>Résidence</legend>
+            Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
+            Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
+            Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
+            Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
+        </fieldset>
+        <br/><br/>
         <input th:type="submit" />
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
