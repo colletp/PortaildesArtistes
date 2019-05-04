@@ -26,7 +26,7 @@ class InscriptionControlerTest {
     @BeforeEach
     void setUp() {
         inscCtrl=new InscriptionControler();
-  
+
         Utilisateur usr;
         Citoyen citoyen;
         Adresse adresse;

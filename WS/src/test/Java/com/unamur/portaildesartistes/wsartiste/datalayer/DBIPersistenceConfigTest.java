@@ -5,13 +5,13 @@ import org.junit.jupiter.api.*;
 
 class DBIPersistenceConfigTest {
 
+    DBIPersistenceConfig test;
+
     @BeforeEach
     void setUp() {
+        test=new DBIPersistenceConfig();
     }
 
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     void jodaModule() {
@@ -21,4 +21,8 @@ class DBIPersistenceConfigTest {
     void dbiBean() {
     }
 
+    @AfterEach
+    void tearDown() {
+        test=null;
+    }
 }

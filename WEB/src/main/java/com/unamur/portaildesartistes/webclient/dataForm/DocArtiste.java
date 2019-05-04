@@ -55,12 +55,16 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         dto.setCitoyenId( convertUUID(getCitoyenId()));
 
         isNotEmpty(getTypeDocArtiste());
+        if(   !getTypeDocArtiste().equals("Carte artiste")
+            &&!getTypeDocArtiste().equals("Visa artiste")){
+            throw new IllegalArgumentException("Carte artiste ou Visa artiste");
+        }
         dto.setTypeDocArtiste(getTypeDocArtiste());
 
         hasLengthMin(getNomArtiste(),2);
         dto.setNomArtiste(getNomArtiste());
 
-        hasLengthMin(getNomArtiste(),2);
+        hasLengthMin(getNoDoc(),2);
         dto.setNoDoc(getNoDoc());
 
         isNotEmpty(getReponseId());

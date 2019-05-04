@@ -66,6 +66,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         dto.setCarte( getCarte()!=null );
 
         isNotEmpty(getLangue());
+        if(!langue.equals("FR")&&!langue.equals("EN")){
+            throw new IllegalArgumentException("FR ou EN");
+        }
         dto.setLangue( getLangue());
 
         dto.setRessources(getRessources());

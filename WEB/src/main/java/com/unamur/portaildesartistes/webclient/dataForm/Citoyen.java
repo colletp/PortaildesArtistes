@@ -63,19 +63,23 @@ public class Citoyen extends DataForm<CitoyenDTO> {
 
     Boolean isValidNrn(String toValidate)throws ParseException{
         //Contrôle de la validité de la valeur reprise dans le NRN
+
         if(toValidate.length()!=11)
             throw new IllegalArgumentException("Numéro de registre national incorrect");
-/*        int nrn=Integer.parseInt( toValidate );
-        int val=nrn/100;
+        System.out.println(toValidate);
+        long nrn=Long.parseLong( toValidate );
+        System.out.println(nrn);
+        long val=nrn/100;
         Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
         if( convertDate(getDateNaissance()).after(dateControle) )
             val+=2000000000;
-        int valControle = 97 - (val % 97);
+        System.out.println(val);
+        long valControle = 97 - (val % 97);
        //TODO: attention, val%97 varie de 0 à 96 => valControle n'est jamais == 0 . Vérifier la formule
         if (valControle==0)
             valControle=97;
         if(valControle!=(nrn%100))
-            throw new IllegalArgumentException("Numéro de registre national incorrect");*/
+            throw new IllegalArgumentException("Numéro de registre national incorrect");
         return true;
     }
     Boolean isMajor(Date dateNaissance){
@@ -86,6 +90,13 @@ public class Citoyen extends DataForm<CitoyenDTO> {
             throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
         return true;
     }
+
+    Boolean isTel(String toValidate){
+        if( false )
+            throw new IllegalArgumentException("N° de tel non valide");
+        return true;
+    }
+
 
     public CitoyenDTO getDTO()throws ParseException {
         logger.error("getDTO");
