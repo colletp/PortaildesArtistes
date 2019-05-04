@@ -2,11 +2,14 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
+import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 import java.util.UUID;
 
 @Controller
@@ -31,11 +34,20 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
     @PostMapping(value = "/Utilisateur")
     public String citoyenPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final Utilisateur usrForm
+            ,@ModelAttribute("form") final UtilisateurInscript usrForm
             ,Model model){
         logger.error("citoyen(post) "+method+" : Authentication received! Cookie : "+cookieValue );
         //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-        return super.postForm(cookieValue,usrForm,method,model);
+        UtilisateurDTO usrDTO=null;
+        try{
+            usrDTO = usrForm.getDTO();
+        }catch(IllegalArgumentException e){
+            logger.error(e.getMessage());
+        }catch(ParseException e){
+            logger.error(e.getMessage());
+        }
+
+        return super.postForm(cookieValue,usrDTO,method,model);
     }
 
     @GetMapping(value = "/Utilisateur")//initialisation du login

@@ -17,8 +17,8 @@
         <input type="hidden" th:field="*{id}" />
 
         <fieldset><legend>Identifiant</legend>
-            Login:<input type="text" th:field="*{username}" /><br/>
-            Password:<input th:type="password" th:field="*{password}" /><br/>
+            Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
+            Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         </fieldset>
         <br/><br/>
         <fieldset>
@@ -35,10 +35,10 @@
         <br/><br/>
         <fieldset>
             <legend>Résidence</legend>
-            Rue:<input th:type="text" th:field="*{citoyen.resideAdr.rue}" /><br/>
-            Num:<input th:type="text" th:field="*{citoyen.resideAdr.numero}" /><br/>
-            Boite:<input th:type="text" th:field="*{citoyen.resideAdr.boite}" /><br/>
-            Ville:<input th:type="text" th:field="*{citoyen.resideAdr.ville}" /><br/>
+            Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
+            Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
+            Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
+            Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
         </fieldset>
         <br/><br/>
         <input th:type="submit" />

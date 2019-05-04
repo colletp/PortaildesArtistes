@@ -14,8 +14,9 @@
     <div th:replace="~{/fragments/header :: head}"></div>
     <div th:replace="~{/fragments/header :: nav2}"></div>
 
+    <div class="Msg">[[${Msg}]]</div>
+    <div class="Err">[[${Err}]]</div>
     <form class="formbox400" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
-
             Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
             Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         <fieldset>

@@ -82,9 +82,11 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
     }
 
     protected String postForm( String cookieValue,final V form,final String method,Model model){
+        logger.error("postForm1");
 		return postForm(cookieValue,form,method,model,"");
     }
     protected String postForm( String cookieValue,final V form,final String method,Model model,String newUri){
+        logger.error("postForm2");
         T objDTO;
         try{
             objDTO = form.getDTO();
@@ -95,9 +97,11 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         }
     }
     protected String postForm( String cookieValue,T objDTO,String method,Model model) {
+        logger.error("postForm3");
         return postForm( cookieValue,objDTO,method,model,"");
     }
     protected String postForm( String cookieValue,T objDTO,String method,Model model,String newUri){
+        logger.error("postForm4");
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
         try{

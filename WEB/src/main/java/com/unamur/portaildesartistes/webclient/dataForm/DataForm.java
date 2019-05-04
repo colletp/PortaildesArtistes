@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.DTO;
-import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import java.util.regex.Pattern;
 
 public abstract class DataForm<T extends DTO> implements Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
+    public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
     private String id;
     // ******************
@@ -38,44 +37,41 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // Tests de validité interne aux descendants
     // ******************
     protected Boolean isNotEmpty(String s)throws IllegalArgumentException{
-//        if(s.isEmpty())
-//            throw new IllegalArgumentException("Valeur vide");
+        if(s.isEmpty())
+            throw new IllegalArgumentException("Valeur vide");
         return true;
     }
 
     protected Boolean containsOnlyLetters(String toValidate)throws IllegalArgumentException{
-//        for(int i=0;i<toValidate.length();i++){
-//            int a=Character.getNumericValue(toValidate.charAt(i));
-//            if(a<=9&&a>=0)
-//                throw new IllegalArgumentException("Contient utre choe que des lettres");
-//        }
+        for(int i=0;i<toValidate.length();i++){
+            int a=Character.getNumericValue(toValidate.charAt(i));
+            if(a<=9&&a>=0)
+                throw new IllegalArgumentException("Contient utre choe que des lettres");
+        }
         return true;
     }
 
     protected Boolean isEmail(String toValidate)throws IllegalArgumentException{
         //Vérification du format du mail
-        //Pattern patternMail=Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
-        //Matcher testMail= patternMail.matcher(toValidate);
-        //if(!testMail.matches())
-        //    throw new IllegalArgumentException("Adresse mail format incorrect");
+        Pattern patternMail=Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
+        Matcher testMail= patternMail.matcher(toValidate);
+        if(!testMail.matches())
+            throw new IllegalArgumentException("Adresse mail format incorrect");
         return true;
     }
     protected Boolean isTel(String s)throws IllegalArgumentException{
-        //if(s.isEmpty())
-        //    throw new IllegalArgumentException("Valeur vide");
+        if(s.isEmpty())
+            throw new IllegalArgumentException("Valeur vide");
         return true;
     }
     protected Boolean isURL(String s)throws IllegalArgumentException{
-        /*if(s.isEmpty())
+        if(s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");
-        */
         return true;
     }
     protected Boolean hasLengthMin(String s , int size)throws IllegalArgumentException{
-        /*
         if( s==null || s.isEmpty() || s.length()<size)
             throw new IllegalArgumentException("Taille minimum de "+size+" pas respectée" );
-        */
         return true;
     }
 

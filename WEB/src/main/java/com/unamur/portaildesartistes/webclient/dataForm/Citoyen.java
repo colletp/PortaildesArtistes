@@ -2,6 +2,8 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +12,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Citoyen extends DataForm<CitoyenDTO> {
+    private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.dataForm.Citoyen.class);
 
     // ******************
     // Champs/propriétés
@@ -62,7 +65,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         //Contrôle de la validité de la valeur reprise dans le NRN
         if(toValidate.length()!=11)
             throw new IllegalArgumentException("Numéro de registre national incorrect");
-        int nrn=Integer.parseInt( toValidate );
+/*        int nrn=Integer.parseInt( toValidate );
         int val=nrn/100;
         Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
         if( convertDate(getDateNaissance()).after(dateControle) )
@@ -72,52 +75,64 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         if (valControle==0)
             valControle=97;
         if(valControle!=(nrn%100))
-            throw new IllegalArgumentException("Numéro de registre national incorrect");
+            throw new IllegalArgumentException("Numéro de registre national incorrect");*/
         return true;
     }
     Boolean isMajor(Date dateNaissance){
         //Controle si le citoyen à plus de 18 ans
-        long resultat;
-        resultat = ChronoUnit.YEARS.between( (new Date()).toInstant() , dateNaissance.toInstant());
-        if(resultat<18)
+        Long resultat = new Date().getTime() - dateNaissance.getTime();
+        logger.error( Long.toString(resultat/1000/60/60/24/365 ) );
+        if(resultat< (18*365*24*60*60*1000) )
             throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
         return true;
     }
 
     public CitoyenDTO getDTO()throws ParseException {
+        logger.error("getDTO");
         CitoyenDTO dto = new CitoyenDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );
+        logger.error("id OK");
 
         hasLengthMin(getNom(),2);
         containsOnlyLetters(getNom());
         dto.setNom( getNom() );
+        logger.error("nom OK");
 
         hasLengthMin(getPrenom(),2);
         containsOnlyLetters(getPrenom());
         dto.setPrenom( getPrenom() );
+        logger.error("prenom OK");
 
-        Date date = convertDate(getDateNaissance());
-        isMajor( date );
-        dto.setDateNaissance(date);
+        Date dateNais = convertDate(getDateNaissance());
+        isMajor( dateNais );
+        dto.setDateNaissance(dateNais);
+        logger.error("dateNais OK");
 
         isTel(getTel());
         dto.setTel(getTel());
+        logger.error("telOK");
 
         isTel(getGsm());
         dto.setGsm(getGsm());
+        logger.error("gsm OK");
 
         isEmail(mail);
         dto.setMail(getMail());
+        logger.error("mail OK");
 
         isValidNrn(nrn);
         dto.setNrn(getNrn());
+        logger.error("nrn OK");
 
         hasLengthMin(getNation(),3);
         containsOnlyLetters(getNation());
         dto.setNation(getNation());
+        logger.error("nation OK");
 
+        if(getReside()!=null && !getReside().isEmpty())
         dto.setReside( convertUUID(getReside()) );
+        logger.error("reside OK");
         return dto;
     }
 }
