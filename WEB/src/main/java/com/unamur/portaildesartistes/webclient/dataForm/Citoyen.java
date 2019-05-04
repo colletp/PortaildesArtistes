@@ -91,6 +91,13 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         return true;
     }
 
+    Boolean isTel(String toValidate){
+        if( false )
+            throw new IllegalArgumentException("N° de tel non valide");
+        return true;
+    }
+
+
     public CitoyenDTO getDTO()throws ParseException {
         logger.error("getDTO");
         CitoyenDTO dto = new CitoyenDTO();
