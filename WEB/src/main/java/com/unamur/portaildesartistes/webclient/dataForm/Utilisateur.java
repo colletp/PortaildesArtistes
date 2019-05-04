@@ -18,7 +18,7 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     }
     public void setUsername(String p_login) { this.login = p_login; }
     public String getPassword() {
-        hasLengthMin( login,4 );
+        hasLengthMin( password,4 );
         isComplexPassword(password);
         return password;
     }

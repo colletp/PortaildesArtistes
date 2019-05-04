@@ -37,7 +37,12 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
     public Date getDatePeremption() { isNotEmpty(datePeremption);return convertDate(datePeremption); }
     public void setDatePeremption(String p_date) { this.datePeremption = p_date; }
-    public String getTypeDocArtiste() { isNotEmpty(typeDocArtiste);return typeDocArtiste; }
+    public String getTypeDocArtiste()throws IllegalArgumentException {
+        if(!typeDocArtiste.equals("Carte artiste")&&!typeDocArtiste.equals("Visa artiste")){
+            throw new IllegalArgumentException("Carte artiste ou Visa artiste");
+        }
+        return typeDocArtiste;
+    }
     public void setTypeDocArtiste(String p_type) { this.typeDocArtiste = p_type; }
 
     // ******************

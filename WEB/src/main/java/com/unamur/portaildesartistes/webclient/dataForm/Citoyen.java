@@ -53,12 +53,14 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     }
     public void setDateNaissance(String p_date_naissance) { this.date_naissance= p_date_naissance; }
     public String getTel() {
-        isTel(tel);
+        //isTel(tel);
+        containsOnlyNumbers(tel);
         return tel;
     }
     public void setTel(String p_tel) { this.tel = p_tel; }
     public String getGsm() {
-        isTel(gsm);
+        //isTel(gsm);
+        containsOnlyNumbers(gsm);
         return gsm;
     }
     public void setGsm(String p_gsm) { this.gsm = p_gsm; }
@@ -90,12 +92,15 @@ public class Citoyen extends DataForm<CitoyenDTO> {
 
         if(toValidate.length()!=11)
             throw new IllegalArgumentException("Numéro de registre national incorrect");
-        int nrn=Integer.parseInt( toValidate );
-        int val=nrn/100;
+        System.out.println(toValidate);
+        long nrn=Long.parseLong( toValidate );
+        System.out.println(nrn);
+        long val=nrn/100;
         Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
         if( getDateNaissance().after(dateControle) )
             val+=2000000000;
-        int valControle = 97 - (val % 97);
+        System.out.println(val);
+        long valControle = 97 - (val % 97);
        //TODO: attention, val%97 varie de 0 à 96 => valControle n'est jamais == 0 . Vérifier la formule
         if (valControle==0)
             valControle=97;
@@ -106,7 +111,9 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     Boolean isMajor(Date dateNaissance){
         //Controle si le citoyen à plus de 18 ans
         long resultat;
-        resultat = ChronoUnit.YEARS.between( (new Date()).toInstant() , dateNaissance.toInstant());
+        Date date=new Date();
+        resultat = (date.getTime()-(dateNaissance.getTime()));
+       // resultat = ChronoUnit.YEARS.between( (new Date()).toInstant() , dateNaissance.toInstant());
         if(resultat<18)
             throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
         return true;

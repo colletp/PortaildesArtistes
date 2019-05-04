@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.DTO;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -47,25 +48,37 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         for(int i=0;i<toValidate.length();i++){
             int a=Character.getNumericValue(toValidate.charAt(i));
             if(a<=9&&a>=0)
-                throw new IllegalArgumentException("Contient utre choe que des lettres");
+                throw new IllegalArgumentException("Contient autre chose que des lettres");
         }
 
         return true;
     }
 
-    protected Boolean isEmail(String toValidate)throws IllegalArgumentException{
-        //Vérification du format du mail
-        Pattern patternMail=Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
-        Matcher testMail= patternMail.matcher(toValidate);
-        if(!testMail.matches())
-            throw new IllegalArgumentException("Adresse mail format incorrect");
+    protected Boolean containsOnlyNumbers(String toValidate)throws IllegalArgumentException {
+        for (int i = 0; i <toValidate.length(); i++) {
+            int a = Character.getNumericValue(toValidate.charAt(i));
+            if (a > 9 || a < 0) {
+                throw new IllegalArgumentException("Numéro de rue format incorrect");
+            }
+        }
         return true;
     }
-    protected Boolean isTel(String s)throws IllegalArgumentException{
+
+    protected Boolean isEmail(String toValidate)throws IllegalArgumentException{
+        //Vérification du format du mail
+        if(!toValidate.isEmpty()) {
+            Pattern patternMail = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
+            Matcher testMail = patternMail.matcher(toValidate);
+            if (!testMail.matches())
+                throw new IllegalArgumentException("Adresse mail format incorrect");
+        }
+        return true;
+    }
+/*    protected Boolean isTel(String s)throws IllegalArgumentException{
         if(s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");
         return true;
-    }
+    }*/
     protected Boolean isURL(String s)throws IllegalArgumentException{
         if(s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");

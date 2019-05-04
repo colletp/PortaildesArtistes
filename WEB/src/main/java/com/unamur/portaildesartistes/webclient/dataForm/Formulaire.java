@@ -44,7 +44,12 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setExpPro(List<String> ls){ this.expPro=ls;}
     public List<String> getRessources(){ return ressources;}
     public void setRessources(List<String> ls){ this.ressources=ls;}
-    public String getLangue(){ isNotEmpty(langue);return langue;}
+    public String getLangue(){
+        isNotEmpty(langue);
+        if(!langue.equals("FR")&&!langue.equals("EN")){
+            throw new IllegalArgumentException("FR ou EN");
+        }
+        return langue;}
     public void setLangue(String s){ this.langue=s;}
     public Boolean getCarte(){ return carte;}
     public void setCarte(Boolean b){ this.carte=b;}
