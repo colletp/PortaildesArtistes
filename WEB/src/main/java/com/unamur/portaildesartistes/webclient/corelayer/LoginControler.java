@@ -59,10 +59,6 @@ public class LoginControler {
     public String artistehtml(Model model) {
         return "artiste.html";
     }
-    @GetMapping(value="/formulaire")
-    public String formulairehtml(Model model) {
-        return "formulaire.html";
-    }
 
     @GetMapping(value="/mainCSS.css")
     public String maincss(Model model) {

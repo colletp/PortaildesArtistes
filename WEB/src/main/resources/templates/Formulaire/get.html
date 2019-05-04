@@ -13,24 +13,46 @@
 <span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
         Password:[[${form.password}]]<br/>
 <fieldset>
-<legend>Citoyen</legend>
+<legend>Formulaire</legend>
     <span th:text="#{citoyen.nom}" >
-    Nom</span>:[[${form.citoyen.nom}]]<br/>
-    Prénom:[[${form.citoyen.prenom}]]<br/>
-    Date de naissance:[[${form.citoyen.dateNaissance}]]<br/>
-    Tel:[[${form.citoyen.tel}]]<br/>
-    Gsm:[[${form.citoyen.gsm}]]<br/>
-    Email:[[${form.citoyen.mail}]]<br/>
-    No Reg Nat:[[${form.citoyen.nrn}]]<br/>
-    Nationnalité:[[${form.citoyen.nation}]]<br/>
-    <fieldset>
-        <legend>Résidence</legend>
-        Rue:[[${form.citoyen.resideAdr.rue}]]<br/>
-        Num:[[${form.citoyen.resideAdr.numero}]]<br/>
-        Boite:[[${form.citoyen.resideAdr.boite}]]<br/>
-        Ville:[[${form.citoyen.resideAdr.ville}]]<br/>
-    </fieldset>
+    Date Demande:</span>:[[${form.formulaire.dateDemande}]]<br/>
+
+    <!-- Cursus : cursurAc -->
+    <div th:if="${form.formulaire.cursurAc.list != null}">
+        <h1>Cursus</h1>
+        <ul>
+            <th:block th:object="${form.formulaire.cursurAc}">
+                <li th:each="item : *{list}" th:text="${item}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    <!-- Experience Professionnelle : expPro -->
+    <div th:if="${form.formulaire.expPro.list != null}">
+        <h1>Experience professionnelle</h1>
+        <ul>
+            <th:block th:object="${form.formulaire.expPro}">
+                <li th:each="item : *{list}" th:text="${item}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    <!-- ressources -->
+    <div th:if="${form.formulaire.ressources.list != null}">
+        <h1>Autres ressources</h1>
+        <ul>
+            <th:block th:object="${form.formulaire.ressources}">
+                <li th:each="item : *{list}" th:text="${item}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    Langue :[[${form.formulaire.lanque}]]<br/>
+    Carte :[[${form.formulaire.carte}]]<br/>
+    Visa :[[${form.formulaire.visa}]]<br/>
+
 </fieldset>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
