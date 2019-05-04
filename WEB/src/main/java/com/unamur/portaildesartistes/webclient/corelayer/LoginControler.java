@@ -83,7 +83,22 @@ public class LoginControler {
     }
 
     @GetMapping(value = "/login")
-    public String loginView( @ModelAttribute("lang") String lang,Model model ){
+    public String loginView( @ModelAttribute("lang") String lang,@ModelAttribute("error") String Err,@ModelAttribute("message") String Msg,Model model ){
+        String Message="";
+        String Erreur="";
+        switch (Err){
+            case "401":
+            case "403":
+                Erreur="Utilisateur ou mot de passe incorrect";
+                break;
+            case "404":
+                Erreur="Service Rest introuvable";
+                break;
+            default:
+                Erreur="";
+        }
+        model.addAttribute("Msg",Message);
+        model.addAttribute("Err",Erreur);
         logger.error("lang:"+lang);
         return "login.html";
     }
@@ -176,17 +191,15 @@ public class LoginControler {
                 msgAuClient=reponseRest.getBody();
             } catch (HttpClientErrorException.Unauthorized e) {
                         logger.error("Connexion refusée par authentification back-end : " + e.toString());
-                        paramClient.add("Location", "/login?userNotFound");
-                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
+                        paramClient.add("Location", "login?error=401");
                 msgAuClient="Erreur : "+e.getMessage();
             } catch (HttpClientErrorException.Forbidden e) {
                         logger.error("Connexion refusée par back-end car interdit : " + e.toString());
-                        paramClient.add("Location", "login?userNotFound");
-                        m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
+                        paramClient.add("Location", "login?error=403");
                 msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
             } catch (HttpClientErrorException.NotFound e) {
                         logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
-                        paramClient.add("Location", "login?erreurRest");
+                        paramClient.add("Location", "login?error=404");
                 msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
             } catch (HttpClientErrorException.NotAcceptable e) {
                         logger.error("Connexion refusée par back-end car réponse pas acceptable : " + e.toString());

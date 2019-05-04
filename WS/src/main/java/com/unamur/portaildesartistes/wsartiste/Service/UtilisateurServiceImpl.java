@@ -6,7 +6,6 @@ import com.unamur.portaildesartistes.wsartiste.datalayer.*;
 import com.unamur.portaildesartistes.wsartiste.security.WebSecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UtilistateurServiceImpl implements IService<UtilisateurDTO> {
+public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
 
-    private static final Logger logger = LoggerFactory.getLogger(UtilistateurServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceImpl.class);
 
     //@Autowired
     //PasswordEncoder encoder;
@@ -101,6 +100,12 @@ public class UtilistateurServiceImpl implements IService<UtilisateurDTO> {
         usr.setCitoyen( citImpl.getById( usr.getId() ) );
         usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
         return usr;
+    }
+
+    @Transactional
+    public UUID getUuidByName( String userName ){
+        UtilisateurDTO usr= usrImpl.getByName(userName);
+        return usr.getId();
     }
 
     @Transactional

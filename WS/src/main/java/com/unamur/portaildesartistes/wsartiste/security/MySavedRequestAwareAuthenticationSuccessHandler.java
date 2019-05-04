@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.wsartiste.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -12,6 +13,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -27,6 +29,14 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
             Authentication authentication)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            logger.error("Session : "+ authentication.getPrincipal().toString());
+            //LoggedUser user = new LoggedUser(authentication.getName(), activeUserStore);
+            session.setAttribute("username", authentication.getPrincipal().toString() );
+        }else{
+            logger.error("Session pas OK : "+ authentication.getPrincipal().toString());
+        }
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 //response.encodeRedirectURL("/");
 //authentication.setAuthenticated(true);

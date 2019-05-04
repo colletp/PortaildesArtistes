@@ -22,14 +22,8 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
     private DonneeActiviteImpl actImpl;
 
     @Transactional
-    public List<ActiviteDTO> listActivite(){
-        return actImpl.list();
-   }
-
-    @Transactional
     public List<ActiviteDTO> list(){
         return actImpl.list();
-
     }
 
     @Transactional

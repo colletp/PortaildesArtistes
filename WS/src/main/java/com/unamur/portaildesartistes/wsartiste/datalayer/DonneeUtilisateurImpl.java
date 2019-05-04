@@ -50,6 +50,27 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
         return null;
     }
 
+    public UtilisateurDTO getByName(String userName){
+        try{
+            return super.Exec(UtilisateurSQLs.class).getByUsername(userName);
+        }
+        catch(UnableToExecuteStatementException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+        catch(SQLException e){
+            System.err.println( e );
+            System.err.println( e.getCause() );
+            System.err.println( e.getMessage() );
+            System.err.println( e.getClass() );
+            //throw e;
+        }
+        return null;
+    }
+
     public UUID insert(UtilisateurDTO usr){
         return citoyenImpl.insert( usr );
     }

@@ -126,6 +126,38 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         return className+"/get.html";
     }
 
+    protected List<T> listObj( String cookieValue,T objDTO, U clazz ){
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
+        List ret = new ArrayList<T>();
+        try {
+            logger.error("Appel REST");
+            return restTemplateHelper.getForList(clazz, configurationService.getUrl() + "/gestion" + className + "/", headers);
+        } catch (AuthenticationServiceException e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return ret;
+        } catch (HttpClientErrorException.Unauthorized e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return ret;
+        } catch (HttpClientErrorException.Forbidden e) {
+            logger.error("Connexion refusée par authentification back-end : " + e.toString());
+            return ret;
+        } catch (HttpServerErrorException.InternalServerError e) {
+            logger.error("Connexion perdue au back-end : " + e.toString());
+            return ret;
+        } catch (HttpServerErrorException e) {
+            logger.error("Autre erreur du back-end : " + e.toString());
+            return ret;
+        }catch(ServiceNotFoundException e){
+            logger.error( "ServiceNotFoundException" + e.getMessage() );
+            return ret;
+            //HttpServletResponse.SC_UNAUTHORIZED
+        }catch(ClassCastException e){
+            logger.error( e.getMessage() );
+            return ret;
+        }
+    }
+
     protected String list( String cookieValue,T objDTO, U clazz ,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@RestController
 public class ActiviteServiceFront {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiviteServiceFront.class);

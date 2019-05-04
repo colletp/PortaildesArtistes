@@ -1,22 +1,31 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class FormulaireControler extends Controler< FormulaireDTO , Class< FormulaireDTO >, Formulaire > {
     private static final Logger logger = LoggerFactory.getLogger(FormulaireControler.class);
 
+    @Autowired
+    private ActiviteControler actCtrl;
+
     @GetMapping(value = "/Formulaire/creer")
     public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
+        model.addAttribute("form",new Formulaire());
+        List<ActiviteDTO> activites = actCtrl.listObj( cookieValue, new ActiviteDTO(),ActiviteDTO.class );
+        model.addAttribute("act", activites );
 
         return "Formulaire/put.html";
     }

@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
@@ -35,7 +36,10 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     }
 
     public UUID insert(FormulaireDTO item){
-        return UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
+        UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
+        for( ActiviteDTO act : item.getActivites() )
+            super.Exec(FormulaireActiviteSQLs.class).insert(act.getId(),formId);
+        return formId;
     }
 
     @Override
@@ -64,6 +68,27 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
         void update(FormulaireDTO form);
         void delete(UUID id);
+    }
+
+    @RegisterMapper(FormulaireActiviteMapper.class)
+    interface FormulaireActiviteSQLs {
+        @SqlQuery("select * from form_acivite WHERE form_id:form_id ")
+        List<FormulaireDTO> listbyFormulaire(@Bind("form_id") UUID formId );
+
+        @SqlQuery("insert into form_activite (activite_id,form_id) values(:activite_id,:form_id) RETURNING form_activite_id ")
+        String insert(@Bind("activite_id") UUID activiteId,@Bind("form_id") UUID formId );
+
+        void update(FormulaireDTO form);
+        void delete(UUID id);
+    }
+    public static class FormulaireActiviteMapper implements ResultSetMapper<FormulaireDTO> {
+        FormulaireDTO formulaireDTO;
+
+        @Override
+        public FormulaireDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+            formulaireDTO = new FormulaireDTO();
+            return formulaireDTO;
+        }
     }
 
     public static class FormulaireMapper implements ResultSetMapper<FormulaireDTO> {
