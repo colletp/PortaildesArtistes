@@ -91,7 +91,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         logger.error("getDTO");
         CitoyenDTO dto = new CitoyenDTO();
         if( getId()!=null && !getId().isEmpty())
-        dto.setId( convertUUID(getId()) );
+            dto.setId( convertUUID(getId()) );
         logger.error("id OK");
 
         hasLengthMin(getNom(),2);

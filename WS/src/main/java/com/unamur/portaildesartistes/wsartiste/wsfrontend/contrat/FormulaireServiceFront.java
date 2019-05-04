@@ -38,7 +38,8 @@ public class FormulaireServiceFront {
     @PutMapping("/gestionFormulaire")
     public UUID FormulaireCreer(@SessionAttribute("userName") String myUser, @RequestBody FormulaireDTO frm ){
         frm.setCitoyenId( utilisateurServiceImpl.getUuidByName(myUser) );
-        return formulaireServiceImpl.insert(frm); }
+        return formulaireServiceImpl.insert(frm);
+    }
 
     @PostMapping("/gestionFormulaire")
     public void FormulaireModif( @RequestBody FormulaireDTO frm ){ formulaireServiceImpl.update(frm); }

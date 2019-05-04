@@ -14,41 +14,41 @@
 
 <nav th:fragment="nav1">
     <div id="navsection">
-        <div class="element"><a class="whitea" href="accueil">Accueil</a></div>
-        <div class="element"><a class="whitea" href="login.html">Me connecter</a></div>
-        <div class="element"><a class="whitea" href="home">EN</a></div>
+        <div class="element"><a class="whitea" th:href="@{/accueil}">Accueil</a></div>
+        <div class="element"><a class="whitea" th:href="@{/login}">Me connecter</a></div>
+        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
     </div>
 </nav>
 
 <nav th:fragment="nav2">
     <div id="navsection">
-        <div class="element"><a class="whitea" href="accueil">Accueil</a></div>
-        <div class="element"><a class="whitea" href="home">EN</a></div>
+        <div class="element"><a class="whitea" th:href="@{accueil}">Accueil</a></div>
+        <div class="element"><a class="whitea" th:href="@{home}">EN</a></div>
     </div>
 </nav>
 
 <nav th:fragment="nav3">
     <div id="navsection">
-        <div class="element"><a class="whitea" href="home.html">Home</a></div>
-        <div class="element"><a class="whitea" href="">Log in</a></div>
-        <div class="element"><a class="whitea" href="accueil.html">FR</a></div>
+        <div class="element"><a class="whitea" th:href="@{/home}">Home</a></div>
+        <div class="element"><a class="whitea" th:href="@{/login}">Log in</a></div>
+        <div class="element"><a class="whitea" th:href="@{/accueil}">FR</a></div>
     </div>
 </nav>
 
 <nav th:fragment="nav4">
     <div id="navsection">
-        <div class="element"><a class="whitea" href="choixRole.html">Accueil</a></div>
-        <div class="element"><a class="whitea" href="post.html">Mon profil</a></div>
-        <div class="element"><a class="whitea" href="accueil.html">Déconnexion</a></div>
-        <div class="element"><a class="whitea" href="home.html">EN</a></div>
+        <div class="element"><a class="whitea" th:href="@{/choixRole}">Accueil</a></div>
+        <div class="element"><a class="whitea" th:href="@{/Utilisateur/modif/moi}">Mon profil</a></div>
+        <div class="element"><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
+        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
     </div>
 </nav>
 
 <nav th:fragment="nav5">
     <div id="navsection">
-        <div class="element"><a class="whitea" href="choixRole.html">Accueil</a></div>
-        <div class="element"><a class="whitea" href="accueil.html">Déconnexion</a></div>
-        <div class="element"><a class="whitea" href="home.html">EN</a></div>
+        <div class="element"><a class="whitea" th:href="@{/choixRole}">Accueil</a></div>
+        <div class="element"><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
+        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
     </div>
 </nav>
 

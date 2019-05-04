@@ -36,16 +36,16 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 	*
 	**************************************/
     @Autowired
-    private RestTemplateHelper restTemplateHelper;
+    protected RestTemplateHelper restTemplateHelper;
 
     @Autowired
-    private PropertiesConfigurationService configurationService ;
+    protected PropertiesConfigurationService configurationService ;
 
     @Autowired
     @Qualifier("getMediaTypeYaml")
     protected MediaType yaml;
 
-    private HttpHeaders initHeadersRest(String cookieValue){
+    protected HttpHeaders initHeadersRest(String cookieValue){
         HttpHeaders headers = new HttpHeaders( );
         headers.add("Cookie",cookieValue);
         List<MediaType> accept = new ArrayList<>();
@@ -79,6 +79,12 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         }
         model.addAttribute("form", objDTO );
         return className+"/"+formAction+".html";
+    }
+
+    protected UUID getMyId( String cookieValue ){
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        logger.error("getMyId");
+        return restTemplateHelper.getForEntity(UUID.class,configurationService.getUrl()+"/gestionUtilisateur/moi",headers );
     }
 
     protected String postForm( String cookieValue,final V form,final String method,Model model){

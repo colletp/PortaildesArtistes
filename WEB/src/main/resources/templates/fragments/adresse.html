@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="adresseGet(fonction,adr)">
+    <legend>[[${fonction}]]</legend>
+    Rue:[[${adr.rue}]]<br/>
+    Num:[[${adr.numero}]]<br/>
+    Boite:[[${adr.boite}]]<br/>
+    Ville:[[${adr.ville}]]<br/>
+
+</fieldset>
+
+<fieldset th:fragment="adressePost(fonction,adr)">
+    <legend th:text="${fonction}">Résidence</legend>
+    Rue:<input th:type="text" th:field="*{adr.rue}" /><br/>
+    Num:<input th:type="text" th:field="*{adr.numero}" /><br/>
+    Boite:<input th:type="text" th:field="*{adr.boite}" /><br/>
+    Ville:<input th:type="text" th:field="*{adr.ville}" /><br/>
+</fieldset>
+
+</body>
+
+</html>

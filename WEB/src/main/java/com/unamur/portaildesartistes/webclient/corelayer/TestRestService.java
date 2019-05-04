@@ -23,7 +23,7 @@ public class TestRestService {
     @Autowired
     private PropertiesConfigurationService configurationService ;
 
-    @GetMapping(value="/validationrestservice.html")
+    @GetMapping(value="/validationrestservice")
 //@PreAuthorize("hasRole('AUTHOR')")
     public String validationrestservice(Model model) {
 

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.util.UUID;
 
@@ -23,6 +22,12 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
         return "Utilisateur/put.html";
     }
 
+    @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
+    public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
+                                Model model){
+        logger.error("Utilisateur/modif/moi : Authentication received! Cookie : "+cookieValue );
+        return super.getForm(cookieValue,new UtilisateurDTO(),super.getMyId( cookieValue ),UtilisateurDTO.class,"POST",model);
+    }
     @GetMapping(value = "/Utilisateur/modif/{id}")//initialisation du login
     public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
@@ -41,13 +46,16 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
         UtilisateurDTO usrDTO=null;
         try{
             usrDTO = usrForm.getDTO();
+            return super.postForm(cookieValue,usrDTO,method,model);
         }catch(IllegalArgumentException e){
             logger.error(e.getMessage());
+            model.addAttribute("Err",e.getMessage() );
+            return "/Utilisateur/"+method+".html";
         }catch(ParseException e){
             logger.error(e.getMessage());
+            model.addAttribute("Err",e.getMessage() );
+            return "/Utilisateur/"+method+".html";
         }
-
-        return super.postForm(cookieValue,usrDTO,method,model);
     }
 
     @GetMapping(value = "/Utilisateur")//initialisation du login

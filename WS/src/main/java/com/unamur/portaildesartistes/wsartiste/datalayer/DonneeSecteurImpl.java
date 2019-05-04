@@ -33,12 +33,12 @@ public class DonneeSecteurImpl extends Donnee<SecteurDTO>{
     }
 
     @Override
-    void update(SecteurDTO item) {
+    public void update(SecteurDTO item) {
         super.Exec(SecteurSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(SecteurSQLs.class).delete(id);
     }
 

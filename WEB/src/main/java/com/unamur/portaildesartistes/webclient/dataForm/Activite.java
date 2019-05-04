@@ -13,6 +13,7 @@ public class Activite extends DataForm<ActiviteDTO> {
 
     private String secteurId;
     private String nomActivite;
+    private String description;
 
     // ******************
     // Constructeur
@@ -26,7 +27,8 @@ public class Activite extends DataForm<ActiviteDTO> {
     public void setSecteurId( String p_id) { this.secteurId = p_id; }
     public String getNomActivite() { return nomActivite; }
     public void setNomActivite(String p_activite) { this.nomActivite = p_activite; }
-
+    public String getDescription(){ return description; }
+    public void setDescription(String desc){this.description=desc; }
     // ******************
     // Fonctions
     // ******************
@@ -38,8 +40,11 @@ public class Activite extends DataForm<ActiviteDTO> {
         isNotEmpty(getSecteurId());
         dto.setSecteurId( convertUUID(getSecteurId()));
 
-        isNotEmpty(getNomActivite());
-        dto.setNomActivite(getNomActivite());
+        isNotEmpty( getNomActivite() );
+        dto.setNomActivite( getNomActivite() );
+
+        dto.setDescription( getDescription() );
+
         return dto;
     }
 
