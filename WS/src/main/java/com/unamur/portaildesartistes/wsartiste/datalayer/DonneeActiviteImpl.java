@@ -42,6 +42,10 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
         return super.Exec(ActiviteSQLs.class).getByFormId(p_id);
     }
 
+    public List<ActiviteDTO> getBySecteurId(UUID p_id){
+        return super.Exec(ActiviteSQLs.class).getBySecteurId(p_id);
+    }
+
     @RegisterMapper(SecteurMapper.class)
     interface ActiviteSQLs {
         @SqlQuery("select * from activite ")
@@ -56,10 +60,15 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
         @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId ")
         List<ActiviteDTO> getByFormId(@Bind("formId")UUID formId);
 
+        @SqlQuery("select * from activite a JOIN secteur s ON a.secteur_id = s.secteur_id WHERE s.secteur_id=:formId ")
+        List<ActiviteDTO> getBySecteurId(@Bind("formId")UUID formId);
+
         @SqlQuery("INSERT INTO activite (nom_activite,secteur_id) VALUES (:nomActivite,:idSecteur) RETURNING activite_id ")
         String insert(@BindBean ActiviteDTO test);
 
-        void update(ActiviteDTO act);
+        @SqlUpdate("UPDATE activite SET nom_activite=:nomActivite WHERE activite_id=:id ")
+        void update(@BindBean ActiviteDTO act);
+
         void delete(UUID id);
     }
 

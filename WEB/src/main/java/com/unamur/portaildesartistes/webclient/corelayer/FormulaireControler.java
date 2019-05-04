@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
+import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,14 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     @Autowired
     private ActiviteControler actCtrl;
+    @Autowired
+    private SecteurControler sectCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
     public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         model.addAttribute("form",new Formulaire());
-        List<ActiviteDTO> activites = actCtrl.listObj( cookieValue, new ActiviteDTO(),ActiviteDTO.class );
-        model.addAttribute("act", activites );
-
+        String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
         return "Formulaire/put.html";
     }
 
@@ -46,18 +47,22 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         logger.error("Form(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
         try {
             FormulaireDTO formDTO = formForm.getDTO();
-            List<ActiviteDTO> listAct=new ArrayList<>();
-            for(String actId : formForm.getActivitesId() ){
+            /*List<ActiviteDTO> listAct=new ArrayList<>();
+            for(String actId : formForm.getActivitesId() )
                 listAct.add(actCtrl.getObj(cookieValue,UUID.fromString(actId),new ActiviteDTO(),ActiviteDTO.class ));
-            }
-            formDTO.setActivites(listAct);
+            formDTO.setActivites(listAct);*/
         }catch(IllegalArgumentException e){
-            return "err";
+            String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+            model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",formForm);
+            return "/Formulaire/"+method+".html";
         }catch(ParseException e){
-            return "err";
+            String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+            model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",formForm);
+            return "/Formulaire/"+method+".html";
         }
         return super.postForm(cookieValue,formForm,method,model);
     }

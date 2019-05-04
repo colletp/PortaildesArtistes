@@ -22,6 +22,9 @@ public class ActiviteServiceFront {
     @GetMapping("/gestionActivite")
     public List<ActiviteDTO> listActivite(){ return activiteServiceImpl.list(); }
 
+    //@GetMapping("/gestionActivite/secteur")
+    //public List<ActiviteDTO> listActiviteSecteur(){ return activiteServiceImpl.list(); }
+
     @GetMapping("/gestionActivite/{id}")
     public ActiviteDTO ActiviteDetail( @PathVariable("id") UUID id ){ return activiteServiceImpl.getById(id); }
 

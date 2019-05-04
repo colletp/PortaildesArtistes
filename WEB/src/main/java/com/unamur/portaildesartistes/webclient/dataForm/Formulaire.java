@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 
     private String citoyenId;
     private String dateDemande;
-    private List<String> cursurAc;
+    private List<String> cursusAc;
     private List<String> expPro;
     private List<String> ressources;
     private String langue;
@@ -38,8 +39,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
     public String getDateDemande(){ return dateDemande;}
     public void setDateDemande(String d){ this.dateDemande=d;}
-    public List<String> getCursusAc(){ return cursurAc;}
-    public void setCursurAc(List<String> ls){ this.cursurAc=ls;}
+    public List<String> getCursusAc(){ return cursusAc;}
+    public void setCursusAc(List<String> ls){ this.cursusAc=ls;}
     public List<String> getExpPro(){ return expPro;}
     public void setExpPro(List<String> ls){ this.expPro=ls;}
     public List<String> getRessources(){ return ressources;}
@@ -61,8 +62,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         FormulaireDTO dto = new FormulaireDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );
-        dto.setVisa( getVisa().equals("1") );
-        dto.setCarte( getCarte().equals("1") );
+        dto.setVisa( getVisa()!=null );
+        dto.setCarte( getCarte()!=null );
 
         isNotEmpty(getLangue());
         if(!langue.equals("FR")&&!langue.equals("EN")){
@@ -72,13 +73,19 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 
         dto.setRessources(getRessources());
         dto.setExpPro(getExpPro());
-        dto.setCursurAc(getCursusAc());
+        dto.setCursusAc(getCursusAc());
 
         isNotEmpty(getDateDemande());
         dto.setDateDemande( Timestamp.from(convertDate(getDateDemande()).toInstant()) );
 
         isNotEmpty(getCitoyenId());
         dto.setCitoyenId(convertUUID(getCitoyenId()));
+        List<UUID> activitesId = new ArrayList<>();
+        for( String act : getActivitesId() ){
+            logger.error(act);
+            activitesId.add( UUID.fromString(act) );
+        }
+        dto.setActivitesId(activitesId);
         return dto;
     }
 

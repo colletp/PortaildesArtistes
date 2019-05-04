@@ -37,13 +37,20 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
     public UUID insert(FormulaireDTO item){
         UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
-        for( ActiviteDTO act : item.getActivites() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(act.getId(),formId);
+        for( UUID act : item.getActivitesId() )
+            super.Exec(FormulaireActiviteSQLs.class).insert(act,formId);
+        //for( ActiviteDTO act : item.getActivites() )
+        //    super.Exec(FormulaireActiviteSQLs.class).insert(act.getId(),formId);
         return formId;
     }
 
     @Override
     public void update(FormulaireDTO item) {
+        //super.Exec(FormulaireActiviteSQLs.class).deletebyForm( item.getId() );
+        for( UUID act : item.getActivitesId() ) {
+            super.Exec(FormulaireActiviteSQLs.class).insert(act, item.getId());
+        }
+
         super.Exec(FormulaireSQLs.class).update(item);
     }
 
@@ -99,7 +106,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setId((UUID) r.getObject("form_id"));
             formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
-            formulaireDTO.setCursurAc( (List<String>) r.getObject("cursus_ac"));
+            formulaireDTO.setCursusAc( (List<String>) r.getObject("cursus_ac"));
             formulaireDTO.setExpPro( (List<String>) r.getObject("ex_pro"));
             formulaireDTO.setRessources( (List<String>) r.getObject("ressources"));
             formulaireDTO.setLangue( r.getString("langue"));

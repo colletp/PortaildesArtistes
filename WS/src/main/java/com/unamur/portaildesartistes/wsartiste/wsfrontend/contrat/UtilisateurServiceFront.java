@@ -15,7 +15,15 @@ public class UtilisateurServiceFront {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
 
     @Autowired
+    UtilisateurServiceImpl utilisateurServiceImpl;
+
+    @Autowired
     private UtilisateurServiceImpl usrServiceImpl;
+
+    @GetMapping("/gestionUtilisateur/moi")
+    public UUID FormulaireCreer(@SessionAttribute("userName") String myUser){
+        return utilisateurServiceImpl.getUuidByName(myUser);
+    }
 
     @GetMapping("/gestionUtilisateur")
     public List<UtilisateurDTO> listUtilisateur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue){

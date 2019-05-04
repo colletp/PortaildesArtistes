@@ -38,7 +38,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // Tests de validité interne aux descendants
     // ******************
     protected Boolean isNotEmpty(String s)throws IllegalArgumentException{
-        if(s.isEmpty())
+        if(s==null || s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");
         return true;
     }
