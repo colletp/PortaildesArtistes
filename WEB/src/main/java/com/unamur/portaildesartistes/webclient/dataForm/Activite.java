@@ -29,6 +29,13 @@ public class Activite extends DataForm<ActiviteDTO> {
     public void setNomActivite(String p_activite) { this.nomActivite = p_activite; }
     public String getDescription(){ return description; }
     public void setDescription(String desc){this.description=desc; }
+
+    public void setFromDTO(final ActiviteDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setSecteurId(objDTO.getSecteurId().toString());
+        setNomActivite(objDTO.getNomActivite());
+        setDescription(objDTO.getDescription());
+    }
     // ******************
     // Fonctions
     // ******************

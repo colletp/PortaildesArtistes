@@ -30,20 +30,30 @@ public class Traitement extends DataForm<TraitementDTO> {
     // ******************
 
     public String getDateTrt() { return dateTrt; }
-    public void setDateTrt(String p_date) { this.dateTrt = p_date; }
+    public void setDateTrt(String p_date) { dateTrt = p_date; }
     public String getAppreciation() { return appreciation; }
-    public void setAppreciation( String p_ap) { this.appreciation = p_ap; }
+    public void setAppreciation( String p_ap) { appreciation = p_ap; }
     public String getRoleId() { return roleId; }
-    public void setRoleId( String p_id) { this.roleId = p_id; }
+    public void setRoleId( String p_id) { roleId = p_id; }
     public String getGestId() {return gestId; }
-    public void setGestId( String p_id) { this.gestId = p_id; }
+    public void setGestId( String p_id) { gestId = p_id; }
     public String getFormId() { return formId; }
-    public void setFormId( String p_id) { this.formId = p_id; }
+    public void setFormId( String p_id) { formId = p_id; }
     public String getCitoyenPrestId() { return citoyenPrestId; }
-    public void setCitoyenPrestId( String p_id) { this.citoyenPrestId = p_id; }
+    public void setCitoyenPrestId( String p_id) { citoyenPrestId = p_id; }
     public String getTypeRole() { return typeRole; }
-    public void setTypeRole( String p_tr) { this.typeRole = p_tr; }
+    public void setTypeRole( String p_tr) { typeRole = p_tr; }
 
+    public void setFromDTO(final TraitementDTO objDTO){
+        super.setFromDTO(objDTO);
+        setDateTrt( convertDateTime(objDTO.getDateTrt()) );
+        setAppreciation(objDTO.getAppreciation());
+        setRoleId(objDTO.getRoleId().toString());
+        setGestId(objDTO.getGestId().toString());
+        setFormId(objDTO.getFormId().toString());
+        setCitoyenPrestId(objDTO.getCitoyenPrestId().toString());
+        setTypeRole(objDTO.getTypeRole());
+    }
     // ******************
     // Fonctions
     // ******************

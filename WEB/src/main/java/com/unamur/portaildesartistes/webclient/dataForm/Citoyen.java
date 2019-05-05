@@ -29,7 +29,6 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     private String nrn;
     private String nation;
     private String reside;
-    private String resideAdr;
 
     // ******************
     // Constructeur
@@ -59,6 +58,18 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     public String getReside(){return reside;}
     public void setReside(String p_reside) { this.reside = p_reside; }
 
+    public void setFromDTO(final CitoyenDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setNom(objDTO.getNom());
+        setPrenom(objDTO.getPrenom());
+        setDateNaissance(convertDate(objDTO.getDateNaissance()));
+        setTel(objDTO.getTel());
+        setGsm(objDTO.getGsm());
+        setMail(objDTO.getMail());
+        setNrn(objDTO.getNrn());
+        setNation(objDTO.getNation());
+        setReside(objDTO.getReside().toString());
+    }
     // ******************
     // Fonctions
     // ******************

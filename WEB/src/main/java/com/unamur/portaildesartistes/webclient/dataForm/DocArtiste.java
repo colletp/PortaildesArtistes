@@ -40,6 +40,15 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public String getTypeDocArtiste() { return typeDocArtiste; }
     public void setTypeDocArtiste(String p_type) { this.typeDocArtiste = p_type; }
 
+    public void setFromDTO(final DocArtisteDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setCitoyenId(objDTO.getCitoyenId().toString());
+        setReponseId(objDTO.getReponseId().toString());
+        setNoDoc(objDTO.getNoDoc());
+        setNomArtiste(objDTO.getNomArtiste());
+        setDatePeremption(convertDate(objDTO.getDatePeremption()));
+        setTypeDocArtiste(objDTO.getTypeDocArtiste());
+    }
     // ******************
     // Fonctions
     // ******************
