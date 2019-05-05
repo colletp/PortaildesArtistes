@@ -18,6 +18,7 @@ import java.util.UUID;
 public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO > , Secteur> {
     private static final Logger logger = LoggerFactory.getLogger(SecteurControler.class);
 
+    //@GetMapping(value = "/Secteur/Activite")
     public String listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,Model model){
         logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
@@ -33,9 +34,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         }
         return "/fragments/activites.html";
     }
-
-
-
 
 
     @GetMapping(value = "/Secteur/creer")

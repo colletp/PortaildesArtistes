@@ -33,8 +33,11 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
     @Transactional
     public UUID insert( ActiviteDTO act ){ return actImpl.insert(act); }
     @Transactional
-    public void delete( UUID uuid ){
-        actImpl.delete(uuid);
+    public void delete( UUID uuid ){ actImpl.delete(uuid); }
+
+    @Transactional
+    public List<ActiviteDTO> listBySecteur(UUID uuid){
+        return actImpl.getBySecteurId(uuid);
     }
 
 }

@@ -20,12 +20,14 @@ public class SecteurServiceImpl implements IService<SecteurDTO> {
     private DonneeSecteurImpl sectImpl;
     @Autowired
     private DonneeActiviteImpl actImpl;
+    //private ActiviteServiceImpl actImpl;
 
     @Transactional
     public List<SecteurDTO> listSecteurActivite(){
-        List<SecteurDTO> ls = sectImpl.list();
+        List<SecteurDTO> ls = list();
         for( SecteurDTO s : ls )
             s.setActivites( actImpl.getBySecteurId( s.getId() ) );
+            //s.setActivites( actImpl.listBySecteur( s.getId() ) );
         return ls;
     }
     @Transactional

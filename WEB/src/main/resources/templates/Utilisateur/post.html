@@ -12,6 +12,8 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav5}"></div>
 
+<div class="Msg">[[${Msg}]]</div>
+<div class="Err">[[${Err}]]</div>
 <form class="formbox400" th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="post">
 
     <h1>Modification du citoyen</h1><br/>
@@ -30,25 +32,9 @@
             Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         </fieldset>
         <br/><br/>
-        <fieldset>
-        <legend>Citoyen</legend>
-            Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
-            Prénom:<input th:type="text" th:field="*{citoyen.prenom}" /><br/>
-            Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" /><br/>
-            Tel:<input th:type="text" th:field="*{citoyen.tel}" /><br/>
-            Gsm:<input th:type="text" th:field="*{citoyen.gsm}" /><br/>
-            Email:<input th:type="text" th:field="*{citoyen.mail}" /><br/>
-            No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" /><br/>
-            Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
-        </fieldset>
-        <br/><br/>
-        <fieldset>
-            <legend>Résidence</legend>
-            Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
-            Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
-            Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
-            Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
-        </fieldset>
+
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenPostAdr('Citoyen',citoyen,adresse)}"></fieldset>
+
         <br/><br/>
         <input th:type="submit" />
     </form>
