@@ -17,14 +17,14 @@
     Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur">
+<fieldset th:fragment="activiteFormBySecteur(form)">
     <legend>Secteurs</legend>
     <div th:each="sec : ${sect}">
         <fieldset>
             <legend>[[${sec.nomSecteur}]]</legend>
             <ul th:each="act : ${sec.activites}">
                 <li>
-                    <input type="checkbox" name="activite[]" th:value="${act.id}">
+                    <input type="checkbox" name="activitesId[]" th:value="${act.id}" />[[${form.activitesId}]]
                     <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
                 </li>
             </ul>

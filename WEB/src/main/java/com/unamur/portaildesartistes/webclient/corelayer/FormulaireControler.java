@@ -21,14 +21,16 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     private static final Logger logger = LoggerFactory.getLogger(FormulaireControler.class);
 
     @Autowired
-    private ActiviteControler actCtrl;
-    @Autowired
     private SecteurControler sectCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
     public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form",new Formulaire());
+        Formulaire formForm = new Formulaire();
+        //formForm.setRessources();
+        formForm.setActivitesId( new ArrayList<>() );
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",new ArrayList<String>());
         String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
         return "Formulaire/put.html";
     }
@@ -57,11 +59,13 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
+logger.error( formForm.getActivitesId().toString() );
             return "/Formulaire/"+method+".html";
         }catch(ParseException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
+logger.error( formForm.getActivitesId().toString() );
             return "/Formulaire/"+method+".html";
         }
         return super.postForm(cookieValue,formForm,method,model);

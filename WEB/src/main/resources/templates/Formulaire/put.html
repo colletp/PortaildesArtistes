@@ -16,9 +16,7 @@
 <div class="Err">[[${Err}]]</div>
 <form class="formbox400" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
 
-
-        <input type="hidden" th:field="*{citoyenId}" />
-        Cursus Académique:<input type="text" th:field="*{cursusAc}" /><br/>
+     Cursus Académique:<input type="text" th:field="*{cursusAc}" /><br/>
         Expérience professionnelle:<input type="text" th:field="*{expPro}" /><br/>
         Autres ressources:<input type="text" th:field="*{ressources}" /><br/>
         Langue<select name="langue" id="langue">
@@ -28,7 +26,7 @@
         Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
         Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
 
-        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur }"></fieldset>
+        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(form) }"></fieldset>
 
         <input th:type="submit" />
     </form>

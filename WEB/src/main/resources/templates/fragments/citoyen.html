@@ -53,7 +53,7 @@
     Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
 </fieldset>
 
-<fieldset th:fragment="CitoyenPostAdr(fonction,citoyen)">
+<fieldset th:fragment="CitoyenPostAdr(fonction,citoyen,adresse)">
     <legend th:text="${fonction}"></legend>
     <input th:type="hidden" th:field="*{citoyen.id}" /><br/>
     Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
@@ -64,7 +64,7 @@
     Email:<input th:type="text" th:field="*{citoyen.mail}" /><br/>
     No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" /><br/>
     Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
-    <fieldset th:replace="~{/fragments/adresse :: adressePost(${'Résidence'},${citoyen.resideAdr}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',adresse) }"></fieldset>
 </fieldset>
 
 </body>

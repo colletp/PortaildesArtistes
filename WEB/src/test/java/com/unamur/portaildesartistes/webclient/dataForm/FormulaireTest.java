@@ -21,12 +21,12 @@ class FormulaireTest {
         formulaire=new Formulaire();
         formulaire.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         formulaire.setDateDemande("12/04/2019");
-        formulaire.setCursurAc(null);
+        formulaire.setCursusAc(null);
         formulaire.setExpPro(null);
         formulaire.setRessources(null);
         formulaire.setLangue("FR");
-        formulaire.setCarte(true);
-        formulaire.setVisa(false);
+        formulaire.setCarte("1");
+        formulaire.setVisa(null);
     }
 
     @AfterEach
@@ -61,8 +61,8 @@ class FormulaireTest {
     @DisplayName("TC, Test de formulaire visa artiste avec des données valides")
     @Test
     void testFormulaireVisaValide() {
-        formulaire.setVisa(true);
-        formulaire.setCarte(false);
+        formulaire.setVisa("1");
+        formulaire.setCarte(null);
         formulaire.setLangue("EN");
         UUID uuid = UUID.fromString("98a95e7d-8231-4115-8ed9-612de5590d88");
         Date dateDemande = new Date();
@@ -89,8 +89,8 @@ class FormulaireTest {
     @DisplayName("TC, Test de formulaire carte artiste et visa artiste true")
     @Test
     void testFormulaireNonValide1() {
-        formulaire.setVisa(true);
-        formulaire.setCarte(true);
+        formulaire.setVisa("1");
+        formulaire.setCarte("1");
         assertEquals(false, formulaire.getCarte());
         assertEquals(true, formulaire.getVisa());
     }
@@ -99,8 +99,8 @@ class FormulaireTest {
     @DisplayName("TC, Test de formulaire carte artiste et visa artiste false")
     @Test
     void testFormulaireNonValide2() {
-        formulaire.setVisa(false);
-        formulaire.setCarte(false);
+        formulaire.setVisa(null);
+        formulaire.setCarte(null);
         assertEquals(false, formulaire.getCarte());
         assertEquals(true, formulaire.getVisa());
     }

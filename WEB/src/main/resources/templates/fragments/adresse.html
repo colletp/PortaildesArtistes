@@ -4,7 +4,7 @@
 
 <body>
 
-<fieldset th:fragment="adresseGet(fonction,adr)">
+<fieldset th:fragment="AdresseGet(fonction,adr)">
     <legend>[[${fonction}]]</legend>
     Rue:[[${adr.rue}]]<br/>
     Num:[[${adr.numero}]]<br/>
@@ -13,12 +13,12 @@
 
 </fieldset>
 
-<fieldset th:fragment="adressePost(fonction,adr)">
+<fieldset th:fragment="AdressePost(fonction,${adresse})">
     <legend th:text="${fonction}">Résidence</legend>
-    Rue:<input th:type="text" th:field="*{adr.rue}" /><br/>
-    Num:<input th:type="text" th:field="*{adr.numero}" /><br/>
-    Boite:<input th:type="text" th:field="*{adr.boite}" /><br/>
-    Ville:<input th:type="text" th:field="*{adr.ville}" /><br/>
+    Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
+    Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
+    Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
+    Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
 </fieldset>
 
 </body>
