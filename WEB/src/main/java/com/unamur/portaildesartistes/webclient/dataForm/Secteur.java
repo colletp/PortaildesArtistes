@@ -22,8 +22,12 @@ public class Secteur extends DataForm<SecteurDTO> {
     // ******************
 
     public String getNomSecteur() { return nomSecteur; }
-    public void setNomSecteur(String p_secteur) { this.nomSecteur = p_secteur; }
+    public void setNomSecteur(String p_secteur) { nomSecteur = p_secteur; }
 
+    public void setFromDTO(final SecteurDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setNomSecteur(objDTO.getNomSecteur());
+    }
     // ******************
     // Fonctions
     // ******************

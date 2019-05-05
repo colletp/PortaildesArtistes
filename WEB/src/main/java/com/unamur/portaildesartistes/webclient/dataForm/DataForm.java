@@ -15,13 +15,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class DataForm<T extends DTO> implements Serializable {
-
     public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
     private String id;
     // ******************
     // Setter/Getter
     // ******************
+
+    protected void setFromDTO( T objDTO ){setId( objDTO.getId().toString() );}
 
     public String getId(){return id;}
     public void setId( String p_id){this.id = p_id;}
@@ -143,6 +144,9 @@ public abstract class DataForm<T extends DTO> implements Serializable {
 		}
 		return date;
     }
+    protected String convertDate(Date date){return new SimpleDateFormat("dd/MM/yyyy").format(date);}
+    protected String convertDateTime(Date date){return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(date);}
+
     protected UUID convertUUID( String toValidate ){
 		return UUID.fromString(toValidate);
     }

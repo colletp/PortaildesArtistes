@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.wsartiste.Service;
+package com.unamur.portaildesartistes.wsartiste.Business;
 
 import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.wsartiste.datalayer.*;

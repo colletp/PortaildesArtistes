@@ -27,12 +27,18 @@ public class Reponse extends DataForm<ReponseDTO> {
     // ******************
 
     public String getTrtId(){ return trtId; }
-    public void setTrtId( String p_id){ this.trtId = p_id; }
+    public void setTrtId( String p_id){ trtId = p_id; }
     public String getCitoyenId(){ return citoyenId; }
-    public void setCitoyenId( String p_id){ this.citoyenId = p_id; }
+    public void setCitoyenId( String p_id){ citoyenId = p_id; }
     public String getDateReponse() { return dateReponse; }
-    public void setDateReponse(String p_date) { this.dateReponse = p_date; }
+    public void setDateReponse(String p_date) { dateReponse = p_date; }
 
+    public void setFromDTO(final ReponseDTO objDTO){
+        super.setFromDTO(objDTO);
+        setTrtId(objDTO.getTrtId().toString());
+        setCitoyenId(objDTO.getCitoyenId().toString());
+        setDateReponse(convertDateTime(objDTO.getDateReponse()));
+    }
     // ******************
     // Fonctions
     // ******************

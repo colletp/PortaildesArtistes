@@ -20,6 +20,10 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     }
     public void setPassword(String p_password) { this.password = p_password; }
 
+    public void setFromDTO(final UtilisateurDTO objDTO){
+        super.setFromDTO(objDTO);
+        setUsername(objDTO.getUsername());
+    }
     // ******************
     // Fonctions
     // ******************

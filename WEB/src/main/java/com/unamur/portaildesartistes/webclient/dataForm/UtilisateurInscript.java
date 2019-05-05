@@ -1,5 +1,7 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.AdresseDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,16 +17,28 @@ public class UtilisateurInscript {
     private Adresse adresse;
 
     // ******************
+    // Constructor
+    // ******************
+    /*
+    public UtilisateurInscript(){
+        setUtilisateur(new Utilisateur());
+        setCitoyen(new Citoyen());
+        setAdresse(new Adresse());
+    }*/
+    // ******************
     // Setter/Getter
     // ******************
     public Utilisateur getUtilisateur(){return utilisateur; }
     public void setUtilisateur(Utilisateur usr) { this.utilisateur = usr; }
+    public void setUtilisateur(UtilisateurDTO usr) {utilisateur.setFromDTO(usr);}
 
-    public Citoyen getCitoyen(){return citoyen; }
-    public void setCitoyen(Citoyen cit) { this.citoyen = cit; }
+    public Citoyen getCitoyen(){return citoyen;}
+    public void setCitoyen(Citoyen cit) {citoyen = cit;}
+    public void setCitoyen(CitoyenDTO cit) {citoyen.setFromDTO(cit);}
 
-    public Adresse getAdresse(){return adresse; }
-    public void setAdresse(Adresse adr) { this.adresse = adr; }
+    public Adresse getAdresse(){return adresse;}
+    public void setAdresse(Adresse adr){adresse = adr;}
+    public void setAdresse(AdresseDTO adr){adresse.setFromDTO(adr);}
 
     // ******************
     // Fonctions

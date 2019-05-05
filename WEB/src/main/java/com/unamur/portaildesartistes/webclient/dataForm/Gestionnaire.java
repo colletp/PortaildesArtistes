@@ -10,7 +10,6 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     // ******************
     // Champs/propriétés
     // ******************
-
     private String citoyenId;
     private String travailleId;
     private String matricule;
@@ -23,8 +22,6 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     // ******************
     // Setter/Getter
     // ******************
-
-
     public String getCitoyenId(){ return citoyenId; }
     public void setCitoyenId(String p_id) { this.citoyenId = p_id; }
     public String getTravailleId() { return travailleId; }
@@ -34,6 +31,13 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     public String getBureau() { return bureau; }
     public void setBureau(String p_bur) { this.bureau = p_bur; }
 
+    public void setFromDTO(final GestionnaireDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setCitoyenId(objDTO.getCitoyenId().toString());
+        setTravailleId(objDTO.getTravailleId().toString());
+        setMatricule(objDTO.getMatricule());
+        setBureau(objDTO.getBureau());
+    }
     // ******************
     // Fonctions
     // ******************

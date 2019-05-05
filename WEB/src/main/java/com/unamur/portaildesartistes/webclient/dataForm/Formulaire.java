@@ -25,7 +25,21 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String visa;
     private List<String> activitesId;
 
-
+    public void setFromDTO(final FormulaireDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setCitoyenId(objDTO.getCitoyenId().toString());
+        setDateDemande(convertDateTime(objDTO.getDateDemande()));
+        setCursusAc(objDTO.getCursusAc().toString());
+        setExpPro(objDTO.getExpPro().toString());
+        setRessources(objDTO.getRessources().toString());
+        setLangue(objDTO.getLangue());
+        setCarte(objDTO.getCarte().toString());
+        setVisa(objDTO.getVisa().toString());
+        List<String> la = new ArrayList<>();
+        for( UUID uuid : objDTO.getActivitesId() )
+            la.add( uuid.toString() );
+        setActivitesId( la );
+    }
     // ******************
     // Constructeur
     // ******************

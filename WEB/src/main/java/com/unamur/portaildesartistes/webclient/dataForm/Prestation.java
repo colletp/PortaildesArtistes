@@ -48,6 +48,17 @@ public class Prestation extends DataForm<PrestationDTO> {
     public String getCommanditaireId() { return commanditaireId; }
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
+    public void setFromDTO(final PrestationDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setDatePrest(convertDate(objDTO.getDatePrest()));
+        setDuree(objDTO.getDuree().toString());
+        setMontant(objDTO.getMontant().toString());
+        setEtat(objDTO.getEtat());
+        setCommanditaireId(objDTO.getCommanditaireId().toString());
+        setDocArtisteId(objDTO.getDocArtisteId().toString());
+        setActiviteId(objDTO.getActiviteId().toString());
+        setSeDerouleId(objDTO.getSeDerouleId().toString());
+    }
     // ******************
     // Fonctions
     // ******************

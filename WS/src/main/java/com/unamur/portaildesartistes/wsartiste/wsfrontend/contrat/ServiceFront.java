@@ -1,7 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.DTO.DTO;
-import com.unamur.portaildesartistes.wsartiste.Service.IService;
+import com.unamur.portaildesartistes.wsartiste.Business.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
