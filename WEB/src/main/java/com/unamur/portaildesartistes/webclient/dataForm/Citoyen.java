@@ -74,9 +74,6 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         if( convertDate(getDateNaissance()).after(dateControle) )
             val+=2000000000;
         long valControle = 97 - (val % 97);
-       //TODO: attention, val%97 varie de 0 à 96 => valControle n'est jamais == 0 . Vérifier la formule
-        if (valControle==0)
-            valControle=97;
         if(valControle!=(nrn%100))
             throw new IllegalArgumentException("Numéro de registre national incorrect");
         return true;
