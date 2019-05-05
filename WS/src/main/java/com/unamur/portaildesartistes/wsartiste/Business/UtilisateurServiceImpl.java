@@ -88,7 +88,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
     @Transactional
     public UtilisateurDTO getById( UUID uuid ){
         UtilisateurDTO usr= usrImpl.getById(uuid);
-        usr.setCitoyen( citImpl.getById( usr.getId() ) );
+        usr.setCitoyen( citImpl.getById( uuid ) );
         usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
         return usr;
     }

@@ -29,7 +29,7 @@ public class UtilisateurInscript {
     // Setter/Getter
     // ******************
     public Utilisateur getUtilisateur(){return utilisateur; }
-    public void setUtilisateur(Utilisateur usr) { this.utilisateur = usr; }
+    public void setUtilisateur(Utilisateur usr) { utilisateur = usr; }
     public void setUtilisateur(UtilisateurDTO usr) {utilisateur.setFromDTO(usr);}
 
     public Citoyen getCitoyen(){return citoyen;}

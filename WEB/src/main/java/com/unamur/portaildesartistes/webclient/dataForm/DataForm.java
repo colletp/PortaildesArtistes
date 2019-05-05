@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.DTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // Setter/Getter
     // ******************
 
-    protected void setFromDTO( T objDTO ){setId( objDTO.getId().toString() );}
+    protected void setFromDTO( T objDTO ){setId( (objDTO.getId()==null?"":objDTO.getId()).toString() );}
 
     public String getId(){return id;}
     public void setId( String p_id){this.id = p_id;}
