@@ -12,28 +12,19 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class TraitementServiceFront {
-
-
+public class TraitementServiceFront extends ServiceFront<TraitementDTO>{
     private static final Logger logger = LoggerFactory.getLogger(TraitementServiceFront.class);
 
-    @Autowired
-    private TraitementServiceImpl traitementServiceImpl;
+    @PutMapping("/gestionTraitement")
+    public UUID creer( @RequestBody TraitementDTO objDTO ){ return super.create(objDTO); }
+    @GetMapping("/gestionTraitement/{id}")
+    public TraitementDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
+    @PostMapping("/gestionTraitement")
+    public void modif( @RequestBody TraitementDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionTraitement/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
 
     @GetMapping("/gestionTraitement")
-    public List<TraitementDTO> listTraitement(){ return traitementServiceImpl.list(); }
-
-    @GetMapping("/gestionTraitement/{id}")
-    public TraitementDTO TraitementDetail( @PathVariable("id") UUID id ){ return traitementServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionTraitement/{id}")
-    public void TraitementSuppr( @PathVariable("id") UUID id ){ traitementServiceImpl.delete(id); }
-
-    @PutMapping("/gestionTraitement")
-    public UUID TraitementCreer(@RequestBody TraitementDTO frm ){ return traitementServiceImpl.insert(frm); }
-
-    @PostMapping("/gestionTraitement")
-    public void TraitementModif( @RequestBody TraitementDTO frm ){ traitementServiceImpl.update(frm); }
-
+    public List<TraitementDTO> list(){ return super.list(); }
 
 }

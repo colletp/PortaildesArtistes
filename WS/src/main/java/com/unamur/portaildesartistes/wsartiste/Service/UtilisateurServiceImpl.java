@@ -83,16 +83,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
     }
 
     @Transactional
-    public List<UtilisateurDTO> list(){
-        List<UtilisateurDTO> usrDTOList = usrImpl.list();
-        /*for( UtilisateurDTO usr : usrDTOList ){
-            logger.error( usr.getUsername() );
-            logger.error( usr.getId().toString() );
-            usr.setCitoyen( citImpl.getById( usr.getId() ) );
-            usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
-        }*/
-        return usrDTOList;
-    }
+    public List<UtilisateurDTO> list(){ return usrImpl.list(); }
 
     @Transactional
     public UtilisateurDTO getById( UUID uuid ){

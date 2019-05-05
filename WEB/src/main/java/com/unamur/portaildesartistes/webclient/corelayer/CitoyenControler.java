@@ -18,20 +18,19 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
     @GetMapping(value = "/Utilisateur/creer")
     public String citoyenCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-
         return "Utilisateur/put.html";
     }
 
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
-    public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
-                                Model model){
+    public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,Model model){
         logger.error("Utilisateur/modif/moi : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new UtilisateurDTO(),super.getMyId( cookieValue ),UtilisateurDTO.class,"POST",model);
     }
     @GetMapping(value = "/Utilisateur/modif/{id}")//initialisation du login
-    public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
-                                @PathVariable("id") UUID itemId ,
-                                Model model){
+    public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@PathVariable("id") UUID itemId
+            ,Model model){
         logger.error("Utilisateur/modif : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"POST",model);
     }

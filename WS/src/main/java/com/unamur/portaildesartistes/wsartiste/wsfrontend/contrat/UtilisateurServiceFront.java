@@ -11,38 +11,22 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class UtilisateurServiceFront {
+public class UtilisateurServiceFront extends ServiceFront<UtilisateurDTO> {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurServiceFront.class);
 
-    @Autowired
-    UtilisateurServiceImpl utilisateurServiceImpl;
-
-    @Autowired
-    private UtilisateurServiceImpl usrServiceImpl;
-
-    @GetMapping("/gestionUtilisateur/moi")
-    public UUID FormulaireCreer(@SessionAttribute("userName") String myUser){
-        return utilisateurServiceImpl.getUuidByName(myUser);
-    }
+    @PutMapping("/gestionUtilisateur")
+    public UUID creer( @RequestBody UtilisateurDTO objDTO ){ return super.create(objDTO); }
+    @GetMapping("/gestionUtilisateur/{id}")
+    public UtilisateurDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
+    @PostMapping("/gestionUtilisateur")
+    public void modif( @RequestBody UtilisateurDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionUtilisateur/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
 
     @GetMapping("/gestionUtilisateur")
-    public List<UtilisateurDTO> listUtilisateur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue){
-        logger.error( cookieValue );
-        return usrServiceImpl.list();
-    }
+    public List<UtilisateurDTO> list(){ return super.list(); }
 
-    @GetMapping("/gestionUtilisateur/{id}")
-    public UtilisateurDTO utilisateurDetail( @PathVariable("id") UUID id ){ return usrServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionUtilisateur/{id}")
-    public void utilisateurSuppr( @PathVariable("id") UUID id ){ usrServiceImpl.delete(id); }
-
-    @PutMapping("/gestionUtilisateur")
-    public UUID utilisateurCreer( @RequestBody UtilisateurDTO usr ){
-        return usrServiceImpl.insert(usr);
-    }
-
-    @PostMapping("/gestionUtilisateur")
-    public void utilisateurModif( @RequestBody UtilisateurDTO usr ){ usrServiceImpl.update(usr); }
+    @GetMapping("/gestionUtilisateur/moi")
+    public UUID myUserId(@SessionAttribute("userName") String myUser){ return ((UtilisateurServiceImpl)(srvImpl)).getUuidByName(myUser); }
 
 }

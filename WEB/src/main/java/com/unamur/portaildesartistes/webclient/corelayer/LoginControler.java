@@ -171,7 +171,7 @@ public class LoginControler {
                 /**/
                 reponseRest = restTemplateHelper.postForAuth(configurationService.getUrl() + "/Authentification", paramRest, headersRest);
                 logger.debug( reponseRest.getBody() );
-                if (reponseRest.getStatusCodeValue() != 200) {
+                if (reponseRest.getStatusCodeValue() != 200 && reponseRest.getStatusCodeValue()!=302 ) {
                     logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
                     paramClient.add("Location", "login");
                     m.addAttribute("Err","Utilisateur ou mot de passe incorrect");

@@ -20,38 +20,28 @@ public class SecteurServiceImpl implements IService<SecteurDTO> {
     private DonneeSecteurImpl sectImpl;
     @Autowired
     private DonneeActiviteImpl actImpl;
+    //private ActiviteServiceImpl actImpl;
 
     @Transactional
-    public List<SecteurDTO> listActivite(){
-        List<SecteurDTO> ls = sectImpl.list();
+    public List<SecteurDTO> listSecteurActivite(){
+        List<SecteurDTO> ls = list();
         for( SecteurDTO s : ls )
             s.setActivites( actImpl.getBySecteurId( s.getId() ) );
+            //s.setActivites( actImpl.listBySecteur( s.getId() ) );
         return ls;
     }
-
-
     @Transactional
     public List<SecteurDTO> list(){
         return sectImpl.list();
     }
-
     @Transactional
     public SecteurDTO getById( UUID uuid ){
         return sectImpl.getById(uuid);
     }
-
     @Transactional
-    public void update( SecteurDTO sect ){
-        // if(act.getSecteur () != "")
-        sectImpl.update(sect);
-    }
-
+    public void update( SecteurDTO sect ){ sectImpl.update(sect);}
     @Transactional
-    public UUID insert( SecteurDTO sect ){
-        // Ajout des contôles fonctionnels
-        return sectImpl.insert(sect);
-    }
-
+    public UUID insert( SecteurDTO sect ){ return sectImpl.insert(sect); }
     @Transactional
     public void delete( UUID uuid ){
         sectImpl.delete(uuid);

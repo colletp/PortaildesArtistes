@@ -71,7 +71,10 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                             ,"/gestionFormulaire","/gestionFormulaire/*"
                             ,"/gestionReponse","/gestionReponse/*"
                             ,"/gestionTraitement","/gestionTraitement/*"
-                            ,"/gestionDocArtiste","/gestionDocArtiste/*")
+                            ,"/gestionDocArtiste","/gestionDocArtiste/*"
+                            ,"/gestionSecteur","/gestionSecteur/*"
+
+                    )
                     .authenticated()
                 //.hasRole("Gestionnaire de formulaire FR")
                 //.anyRequest()
@@ -82,6 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                         .passwordParameter("password")
                         .successHandler( mySuccessHandler )
                         .failureHandler( myFailureHandler )
+                        //.successForwardUrl("/Authentification")
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy( SessionCreationPolicy.IF_REQUIRED )
@@ -90,7 +94,6 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .logoutUrl("/logout")
-                    //.logoutSuccessUrl("/login")
                     //.logoutSuccessHandler( myLogoutHandler )
                 ;
     }
