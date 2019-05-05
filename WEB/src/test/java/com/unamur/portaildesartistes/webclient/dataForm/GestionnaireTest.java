@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.GestionnaireDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class GestionnaireTest {
 
     private Gestionnaire gestionnaire;
+    private GestionnaireDTO gest;
 
     @BeforeEach
     void setUp() {
         gestionnaire=new Gestionnaire();
+        gest=new GestionnaireDTO();
         gestionnaire.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         gestionnaire.setTravailleId("75e10d8b-a716-4d00-b131-79ccf90923d1");
         gestionnaire.setMatricule("123456");
@@ -28,18 +31,23 @@ class GestionnaireTest {
     @AfterEach
     void tearDown() {
         gestionnaire=null;
+        gest=null;
     }
 
     @DisplayName("TC, Test d'ajout d'un gestionnaire, avec des données valides")
     @Test
     void testAjoutGestionnaireValide(){
-        UUID uuidCitoyen = UUID.fromString("98a95e7d-8231-4115-8ed9-612de5590d88");
-        UUID uuidTravailleur = UUID.fromString("75e10d8b-a716-4d00-b131-79ccf90923d1");
-        assertEquals(uuidTravailleur,gestionnaire.getTravailleId());
-        assertEquals(uuidCitoyen,gestionnaire.getCitoyenId());
+        try {
+            gest = gestionnaire.getDTO();
+        }catch(ParseException e){
+            e=new ParseException("Echec getDTO",3);
+        }
+
         assertAll(
-                ()->assertEquals("123456",gestionnaire.getMatricule()),
-                ()->assertEquals("01",gestionnaire.getBureau())
+                ()->assertEquals(gest.getMatricule(),gestionnaire.getMatricule()),
+                ()->assertEquals(gest.getBureau(),gestionnaire.getBureau()),
+                ()->assertEquals(gest.getTravailleId(),gestionnaire.convertUUID(gestionnaire.getTravailleId())),
+                ()->assertEquals(gest.getCitoyenId(),gestionnaire.convertUUID(gestionnaire.getCitoyenId()))
         );
     }
 
@@ -47,27 +55,27 @@ class GestionnaireTest {
     @Test
     void testAjoutGestionnaireNonValide1() {
         gestionnaire.setCitoyenId("");
-        assertThrows(IllegalArgumentException.class,()->gestionnaire.getCitoyenId());
+        assertThrows(IllegalArgumentException.class,()->gestionnaire.getDTO());
     }
 
     @DisplayName("TC, Test d'ajout d'un gestionnaire, Travailleur ID vide")
     @Test
     void testAjoutGestionnaireNonValide2() {
         gestionnaire.setTravailleId("");
-        assertThrows(IllegalArgumentException.class,()->gestionnaire.getTravailleId());
+        assertThrows(IllegalArgumentException.class,()->gestionnaire.getDTO());
     }
 
     @DisplayName("TC, Test d'ajout d'un gestionnaire, matricule vide")
     @Test
     void testAjoutGestionnaireNonValide3() {
         gestionnaire.setMatricule("");
-        assertThrows(IllegalArgumentException.class,()->gestionnaire.getMatricule());
+        assertThrows(IllegalArgumentException.class,()->gestionnaire.getDTO());
     }
 
     @DisplayName("TC, Test d'ajout d'un gestionnaire, bureau vide")
     @Test
     void testAjoutGestionnaireNonValide4() {
         gestionnaire.setBureau("");
-        assertThrows(IllegalArgumentException.class,()->gestionnaire.getBureau());
+        assertThrows(IllegalArgumentException.class,()->gestionnaire.getDTO());
     }
 }

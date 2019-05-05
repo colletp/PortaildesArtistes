@@ -28,6 +28,7 @@ class ActiviteTest {
     @AfterEach
     void tearDown() {
         activite=null;
+        act=null;
     }
 
     @DisplayName("TC 3.0.6, Test ajout avec des données valides")
