@@ -27,7 +27,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-        Formulaire formForm = new Formulaire();
         //formForm.setRessources();
         formForm.setActivitesId( new ArrayList<>() );
         model.addAttribute("form",formForm);
@@ -72,7 +71,6 @@ logger.error( formForm.getActivitesId().toString() );
 logger.error( formForm.getActivitesId().toString() );
             return "/Formulaire/"+method+".html";
         }
-        return super.postForm(cookieValue,formForm,method,model);
     }
 
     @GetMapping(value = "/Formulaire")//initialisation du login
