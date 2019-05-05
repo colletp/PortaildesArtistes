@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 public class AppAuthProvider extends DaoAuthenticationProvider {

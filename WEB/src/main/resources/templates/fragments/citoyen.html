@@ -53,7 +53,7 @@
     Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
 </fieldset>
 
-<fieldset th:fragment="CitoyenPostAdr(fonction,citoyen)">
+<fieldset th:fragment="CitoyenAdrPost(fonction,citoyen)">
     <legend th:text="${fonction}"></legend>
     <input th:type="hidden" th:field="*{citoyen.id}" /><br/>
     Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>

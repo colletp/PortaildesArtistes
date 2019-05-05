@@ -21,14 +21,13 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     private static final Logger logger = LoggerFactory.getLogger(FormulaireControler.class);
 
     @Autowired
-    private ActiviteControler actCtrl;
-    @Autowired
     private SecteurControler sectCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
     public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-        model.addAttribute("form",new Formulaire());
+        model.addAttribute("form",formForm==null?new Formulaire():formForm);
         String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
         return "Formulaire/put.html";
     }
@@ -36,8 +35,10 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     @GetMapping(value = "/Formulaire/modif/{id}")
     public String FormModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
+                                @ModelAttribute("form") final Formulaire formForm,
                                 Model model){
         logger.error("Formulaire/modif : Authentication received! Cookie : "+cookieValue );
+        model.addAttribute("form",formForm==null?new Formulaire():formForm);
         return super.getForm(cookieValue,new FormulaireDTO(),itemId,FormulaireDTO.class,"POST",model);
     }
 
@@ -53,6 +54,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             for(String actId : formForm.getActivitesId() )
                 listAct.add(actCtrl.getObj(cookieValue,UUID.fromString(actId),new ActiviteDTO(),ActiviteDTO.class ));
             formDTO.setActivites(listAct);*/
+            return super.postForm(cookieValue,formDTO,method,model);
         }catch(IllegalArgumentException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
@@ -64,7 +66,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("form",formForm);
             return "/Formulaire/"+method+".html";
         }
-        return super.postForm(cookieValue,formForm,method,model);
     }
 
     @GetMapping(value = "/Formulaire")//initialisation du login
