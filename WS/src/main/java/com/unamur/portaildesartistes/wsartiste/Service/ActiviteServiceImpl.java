@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @Component
 public class ActiviteServiceImpl implements IService<ActiviteDTO> {
-
     private static final Logger logger = LoggerFactory.getLogger(ActiviteServiceImpl.class);
 
     @Autowired
@@ -25,24 +24,14 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
     public List<ActiviteDTO> list(){
         return actImpl.list();
     }
-
     @Transactional
     public ActiviteDTO getById( UUID uuid ){
         return actImpl.getById(uuid);
     }
-
     @Transactional
-    public void update( ActiviteDTO act ){
-        // if(act.getSecteur () != "")
-        actImpl.update(act);
-    }
-
+    public void update( ActiviteDTO act ){ actImpl.update(act); }
     @Transactional
-    public UUID insert( ActiviteDTO act ){
-        // Ajout des contôles fonctionnels
-        return actImpl.insert(act);
-    }
-
+    public UUID insert( ActiviteDTO act ){ return actImpl.insert(act); }
     @Transactional
     public void delete( UUID uuid ){
         actImpl.delete(uuid);

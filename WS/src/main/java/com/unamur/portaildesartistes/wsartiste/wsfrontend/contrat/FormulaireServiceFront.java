@@ -16,32 +16,22 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class FormulaireServiceFront {
-
+public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(FormulaireServiceFront.class);
-
-    @Autowired
-    private FormulaireServiceImpl formulaireServiceImpl;
 
     @Autowired
     private UtilisateurServiceImpl utilisateurServiceImpl;
 
-    @GetMapping("/gestionFormulaire")
-    public List<FormulaireDTO> listFormulaire(){ return formulaireServiceImpl.list(); }
-
-    @GetMapping("/gestionFormulaire/{id}")
-    public FormulaireDTO FormulaireDetail( @PathVariable("id") UUID id ){ return formulaireServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionFormulaire/{id}")
-    public void FormulaireSuppr( @PathVariable("id") UUID id ){ formulaireServiceImpl.delete(id); }
-
     @PutMapping("/gestionFormulaire")
-    public UUID FormulaireCreer(@SessionAttribute("userName") String myUser, @RequestBody FormulaireDTO frm ){
-        frm.setCitoyenId( utilisateurServiceImpl.getUuidByName(myUser) );
-        return formulaireServiceImpl.insert(frm);
-    }
-
+    public UUID creer( @SessionAttribute("userName") String myUser, @RequestBody FormulaireDTO objDTO ){ objDTO.setCitoyenId( utilisateurServiceImpl.getUuidByName(myUser) ); return super.create(objDTO); }
+    @GetMapping("/gestionFormulaire/{id}")
+    public FormulaireDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionFormulaire")
-    public void FormulaireModif( @RequestBody FormulaireDTO frm ){ formulaireServiceImpl.update(frm); }
+    public void modif( @RequestBody FormulaireDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionFormulaire/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+
+    @GetMapping("/gestionFormulaire")
+    public List<FormulaireDTO> list(){ return super.list(); }
 
 }

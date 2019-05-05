@@ -12,40 +12,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class DocArtisteServiceImpl {
+public class DocArtisteServiceImpl implements IService<DocArtisteDTO> {
     private static final Logger logger = LoggerFactory.getLogger(DocArtisteServiceImpl.class);
 
     @Autowired
     private DonneeDocArtisteImpl artisteImpl;
 
     @Transactional
-    public List<DocArtisteDTO> listDocArtiste(){
-        return artisteImpl.list();
-    }
-
-    @Transactional
-    public List<DocArtisteDTO> list(){
-        return artisteImpl.list();
-
-    }
-
+    public List<DocArtisteDTO> list(){ return artisteImpl.list(); }
     @Transactional
     public DocArtisteDTO getById( UUID uuid ){
         return artisteImpl.getById(uuid);
     }
-
     @Transactional
-    public void update( DocArtisteDTO act ){
-        // if(act.getSecteur () != "")
-        artisteImpl.update(act);
-    }
-
+    public void update( DocArtisteDTO act ){ artisteImpl.update(act); }
     @Transactional
-    public UUID insert( DocArtisteDTO act ){
-        // Ajout des contôles fonctionnels
-        return artisteImpl.insert(act);
-    }
-
+    public UUID insert( DocArtisteDTO act ){ return artisteImpl.insert(act); }
     @Transactional
     public void delete( UUID uuid ){
         artisteImpl.delete(uuid);
