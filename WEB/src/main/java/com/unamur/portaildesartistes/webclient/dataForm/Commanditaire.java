@@ -27,6 +27,11 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
     public String getCitoyenId() { return citoyenId; }
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
 
+    public void setFromDTO(final CommanditaireDTO objDTO) {
+        super.setFromDTO(objDTO);
+        setEntrepriseId(objDTO.getEntrepriseId().toString());
+        setCitoyenId(objDTO.getCitoyenId().toString());
+    }
     // ******************
     // Fonctions
     // ******************

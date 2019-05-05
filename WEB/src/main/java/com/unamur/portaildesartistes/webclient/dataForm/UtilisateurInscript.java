@@ -19,12 +19,12 @@ public class UtilisateurInscript {
     // ******************
     // Constructor
     // ******************
-    /*
+
     public UtilisateurInscript(){
         setUtilisateur(new Utilisateur());
         setCitoyen(new Citoyen());
         setAdresse(new Adresse());
-    }*/
+    }
     // ******************
     // Setter/Getter
     // ******************

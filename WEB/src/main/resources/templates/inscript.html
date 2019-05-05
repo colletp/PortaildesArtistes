@@ -20,7 +20,7 @@
             Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
             Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
 
-            <fieldset th:replace="~{/fragments/citoyen :: CitoyenPostAdr('Citoyen',citoyen,adresse)}"></fieldset>
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
 
             <input th:type="submit" />
     </form>
