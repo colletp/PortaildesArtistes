@@ -18,26 +18,20 @@
 
     <h1>Modification du citoyen</h1><br/>
     <div id="introbox">
-
-        <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.username}]]<br/>
-        <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.password}]]<br/>
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost(${'Citoyen'},${form.citoyen}) }"></fieldset>
-
-    </div>
-
         <input type="hidden" th:field="*{id}" />
 
         <fieldset><legend>Identifiant</legend>
-            Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
-            Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
+            <span th:text="#{username}" >Nom d'utilisateur(def)</span>:<input type="text" th:field="*{utilisateur.username}" /><br/>
+            <span th:text="#{password}" >Mot de passe(def)</span>:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         </fieldset>
         <br/><br/>
 
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenPostAdr('Citoyen',citoyen,adresse)}"></fieldset>
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
 
         <br/><br/>
         <input th:type="submit" />
-    </form>
+    </div>
+</form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

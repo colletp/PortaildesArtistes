@@ -118,6 +118,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
             else
                 throw new IllegalArgumentException("Insertion d'un citoyen sans adresse");
             usr.getCitoyen().setReside(adr);
+            usr.setPassword(WebSecurityConfig.encoder().encode(usr.getPassword()));
             cit=citImpl.insert(usr);
         }
         else

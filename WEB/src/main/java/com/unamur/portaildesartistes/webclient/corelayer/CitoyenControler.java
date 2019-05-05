@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
@@ -26,7 +27,15 @@ public class CitoyenControler extends Controler< UtilisateurDTO , java.lang.Clas
             ,Model model){
         logger.error("Utilisateur/modif/moi : Authentication received! Cookie : "+cookieValue );
         //try {
-            return super.getForm(cookieValue, new UtilisateurDTO(), super.getMyId(cookieValue), UtilisateurDTO.class, "POST", model);
+        UtilisateurInscript usr = new UtilisateurInscript();
+        UtilisateurDTO usrDTO = super.getObj(cookieValue, super.getMyId(cookieValue), new UtilisateurDTO(), UtilisateurDTO.class);
+        usr.setUtilisateur( usrDTO );
+        usr.setCitoyen(usrDTO.getCitoyen());
+        usr.setAdresse(usrDTO.getCitoyen().getResideAdr());
+        //usr.setCitoyen( super.getObj(cookieValue, super.getMyId(cookieValue), new CitoyenDTO(), CitoyenDTO.class) );
+        //usr.setAdresse( super.getObj(cookieValue, super.getMyId(cookieValue), new UtilisateurDTO(), UtilisateurDTO.class) );
+        model.addAttribute("form",usr);
+        return "/Utilisateur/post.html";
         //}catch(ParseException e) {
             /*model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",new UtilisateurInscript().getDTO());
