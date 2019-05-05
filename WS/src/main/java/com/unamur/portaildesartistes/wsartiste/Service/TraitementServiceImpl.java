@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Component
 public class TraitementServiceImpl implements IService<TraitementDTO> {
-
     private static final Logger logger = LoggerFactory.getLogger(ActiviteServiceImpl.class);
     
     @Autowired
@@ -23,29 +22,18 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
     public List<TraitementDTO> listActivite(){
         return traitImpl.list();
     }
-
     @Transactional
     public List<TraitementDTO> list(){
         return traitImpl.list();
     }
-
     @Transactional
     public TraitementDTO getById( UUID uuid ){
         return traitImpl.getById(uuid);
    }
-
     @Transactional
-    public void update( TraitementDTO act ){
-        // if(act.getSecteur () != "")
-        traitImpl.update(act);
-    }
-
+    public void update( TraitementDTO act ){ traitImpl.update(act); }
     @Transactional
-    public UUID insert( TraitementDTO act ){
-        // Ajout des contôles fonctionnels
-        return traitImpl.insert(act);
-    }
-
+    public UUID insert( TraitementDTO act ){ return traitImpl.insert(act); }
     @Transactional
     public void delete( UUID uuid ){
         traitImpl.delete(uuid);

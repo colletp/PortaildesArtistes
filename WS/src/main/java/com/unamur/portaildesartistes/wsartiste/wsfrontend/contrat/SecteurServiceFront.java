@@ -1,6 +1,5 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
-import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.wsartiste.Service.ActiviteServiceImpl;
 import com.unamur.portaildesartistes.wsartiste.Service.SecteurServiceImpl;
@@ -13,29 +12,21 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class SecteurServiceFront {
-
+public class SecteurServiceFront extends ServiceFront<SecteurDTO> {
     private static final Logger logger = LoggerFactory.getLogger(SecteurServiceFront.class);
 
-    @Autowired
-    private SecteurServiceImpl secteurServiceImpl;
+    @PutMapping("/gestionSecteur")
+    public UUID creer( @RequestBody SecteurDTO objDTO ){ return super.create(objDTO); }
+    @GetMapping("/gestionSecteur/{id}")
+    public SecteurDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
+    @PostMapping("/gestionSecteur")
+    public void modif( @RequestBody SecteurDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionSecteur/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
 
     @GetMapping("/gestionSecteur")
-    public List<SecteurDTO> list(){ return secteurServiceImpl.list(); }
+    public List<SecteurDTO> list(){ return super.list(); }
 
     @GetMapping("/gestionSecteur/Activite")
-    public List<SecteurDTO> listSecteurActivite(){ return secteurServiceImpl.listActivite(); }
-
-    @GetMapping("/gestionSecteur/{id}")
-    public SecteurDTO get( @PathVariable("id") UUID id ){ return secteurServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionSecteur/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ secteurServiceImpl.delete(id); }
-
-    @PutMapping("/gestionSecteur")
-    public UUID creer( @RequestBody SecteurDTO sec ){ return secteurServiceImpl.insert(sec); }
-
-    @PostMapping("/gestionSecteur")
-    public void modif( @RequestBody SecteurDTO sec ){ secteurServiceImpl.update(sec); }
-
+    public List<SecteurDTO> listSecteurActivite(){ return ((SecteurServiceImpl)srvImpl).listSecteurActivite(); }
 }

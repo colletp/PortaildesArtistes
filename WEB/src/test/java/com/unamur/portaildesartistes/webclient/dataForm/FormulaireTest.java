@@ -53,8 +53,8 @@ class FormulaireTest {
                 ()->assertEquals(null,formulaire.getExpPro()),
                 ()->assertEquals(null,formulaire.getRessources()),
                 ()->assertEquals("FR",formulaire.getLangue()),
-                ()->assertEquals(true,formulaire.getCarte()),
-                ()->assertEquals(false,formulaire.getVisa())
+                ()->assertEquals("1",formulaire.getCarte()),
+                ()->assertEquals(null,formulaire.getVisa())
         );
     }
 
@@ -80,8 +80,8 @@ class FormulaireTest {
                 () -> assertEquals(null, formulaire.getExpPro()),
                 () -> assertEquals(null, formulaire.getRessources()),
                 () -> assertEquals("EN", formulaire.getLangue()),
-                () -> assertEquals(false, formulaire.getCarte()),
-                () -> assertEquals(true, formulaire.getVisa())
+                () -> assertEquals(null, formulaire.getCarte()),
+                () -> assertEquals("1", formulaire.getVisa())
         );
     }
 
@@ -91,8 +91,8 @@ class FormulaireTest {
     void testFormulaireNonValide1() {
         formulaire.setVisa("1");
         formulaire.setCarte("1");
-        assertEquals(false, formulaire.getCarte());
-        assertEquals(true, formulaire.getVisa());
+        assertEquals(null, formulaire.getCarte());
+        assertEquals("1", formulaire.getVisa());
     }
 
     //Voir si nécessaire?

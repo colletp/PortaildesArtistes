@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 public class AppAuthProvider extends DaoAuthenticationProvider {
@@ -21,13 +22,13 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
         String name = auth.getName();
         logger.info("username="+name);
         logger.info("password="+auth.getCredentials().toString() );
+        logger.error( "pass:"+auth.getCredentials() );
+        logger.error( "pass to update:"+ getPasswordEncoder().encode( auth.getCredentials().toString() ) );
         UserDetails user = super.getUserDetailsService().loadUserByUsername(name);
         if (user == null) {
             throw new BadCredentialsException("Username/Password does not match for " + auth.getPrincipal());
         }
 
-        logger.error( "pass:"+auth.getCredentials()+" -> pass db:"+ user.getPassword() );
-        logger.error( "pass to update:"+ getPasswordEncoder().encode( auth.getCredentials().toString() ) );
         // Database Password already encrypted:
         boolean passwordsMatch = getPasswordEncoder().matches( auth.getCredentials().toString() , user.getPassword() );
         if(!passwordsMatch) {

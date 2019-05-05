@@ -12,29 +12,21 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class ActiviteServiceFront {
-
+public class ActiviteServiceFront extends ServiceFront<ActiviteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(ActiviteServiceFront.class);
 
-    @Autowired
-    private ActiviteServiceImpl activiteServiceImpl;
+    @PutMapping("/gestionActivite")
+    public UUID creer( @RequestBody ActiviteDTO objDTO ){ return super.create(objDTO); }
+    @GetMapping("/gestionActivite/{id}")
+    public ActiviteDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
+    @PostMapping("/gestionActivite")
+    public void modif( @RequestBody ActiviteDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionActivite/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
 
     @GetMapping("/gestionActivite")
-    public List<ActiviteDTO> listActivite(){ return activiteServiceImpl.list(); }
+    public List<ActiviteDTO> list(){ return super.list(); }
 
     //@GetMapping("/gestionActivite/secteur")
     //public List<ActiviteDTO> listActiviteSecteur(){ return activiteServiceImpl.list(); }
-
-    @GetMapping("/gestionActivite/{id}")
-    public ActiviteDTO ActiviteDetail( @PathVariable("id") UUID id ){ return activiteServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionActivite/{id}")
-    public void ActiviteSuppr( @PathVariable("id") UUID id ){ activiteServiceImpl.delete(id); }
-
-    @PutMapping("/gestionActivite")
-    public UUID ActiviteCreer( @RequestBody ActiviteDTO act ){ return activiteServiceImpl.insert(act); }
-
-    @PostMapping("/gestionActivite")
-    public void ActiviteModif( @RequestBody ActiviteDTO act ){ activiteServiceImpl.update(act); }
-
 }

@@ -12,26 +12,19 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class DocArtisteServiceFront {
-
+public class DocArtisteServiceFront extends ServiceFront<DocArtisteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DocArtisteServiceFront.class);
 
-    @Autowired
-    DocArtisteServiceImpl docArtisteServiceImpl;
+    @PutMapping("/gestionDocArtiste")
+    public UUID creer( @RequestBody DocArtisteDTO objDTO ){ return super.create(objDTO); }
+    @GetMapping("/gestionDocArtiste/{id}")
+    public DocArtisteDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
+    @PostMapping("/gestionDocArtiste")
+    public void modif( @RequestBody DocArtisteDTO objDTO ){ super.update(objDTO); }
+    @DeleteMapping("/gestionDocArtiste/{id}")
+    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
 
     @GetMapping("/gestionDocArtiste")
-    public List<DocArtisteDTO> listActivite(){ return docArtisteServiceImpl.list(); }
-
-    @GetMapping("/gestionDocArtiste/{id}")
-    public DocArtisteDTO ActiviteDetail( @PathVariable("id") UUID id ){ return docArtisteServiceImpl.getById(id); }
-
-    @DeleteMapping("/gestionDocArtiste/{id}")
-    public void ActiviteSuppr( @PathVariable("id") UUID id ){ docArtisteServiceImpl.delete(id); }
-
-    @PutMapping("/gestionDocArtiste")
-    public UUID ActiviteCreer( @RequestBody DocArtisteDTO act ){ return docArtisteServiceImpl.insert(act); }
-
-    @PostMapping("/gestionDocArtiste")
-    public void ActiviteModif( @RequestBody DocArtisteDTO act ){ docArtisteServiceImpl.update(act); }
+    public List<DocArtisteDTO> list(){ return super.list(); }
 
 }

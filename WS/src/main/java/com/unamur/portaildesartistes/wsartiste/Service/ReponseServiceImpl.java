@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class ReponseServiceImpl {
-
+public class ReponseServiceImpl implements IService<ReponseDTO>{
     private static final Logger logger = LoggerFactory.getLogger(ReponseServiceImpl.class);
 
     @Autowired
@@ -23,29 +22,18 @@ public class ReponseServiceImpl {
     public List<ReponseDTO> listReponse(){
         return repImpl.list();
     }
-    
     @Transactional
     public List<ReponseDTO> list(){
         return repImpl.list();
     }
-
     @Transactional
     public ReponseDTO getById( UUID uuid ){
         return repImpl.getById(uuid);
     }
-
     @Transactional
-    public void update( ReponseDTO rep ){
-        // if(act.getSecteur () != "")
-        repImpl.update(rep);
-    }
-
+    public void update( ReponseDTO rep ){ repImpl.update(rep); }
     @Transactional
-    public UUID insert(ReponseDTO rep ){
-        // Ajout des contôles fonctionnels
-        return repImpl.insert(rep);
-    }
-
+    public UUID insert(ReponseDTO rep ){ return repImpl.insert(rep); }
     @Transactional
     public void delete( UUID uuid ){
         repImpl.delete(uuid);
