@@ -48,6 +48,14 @@ public class Prestation extends DataForm<PrestationDTO> {
     public String getCommanditaireId() { return commanditaireId; }
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
+
+    protected Boolean isNotOverMontantMax(String p_montant) throws IllegalArgumentException {
+        if (Double.parseDouble(p_montant) > 128.93) {
+            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
+        }
+        return true;
+    }
+
     public void setFromDTO(final PrestationDTO objDTO) {
         super.setFromDTO(objDTO);
         setDatePrest(convertDate(objDTO.getDatePrest()));
@@ -73,9 +81,11 @@ public class Prestation extends DataForm<PrestationDTO> {
         isNotEmpty(getDocArtisteId());
         dto.setDocArtisteId(convertUUID(getDocArtisteId()));
 
+        // isNotEmpty(getEtat()); A ajouter?? (commentaire Bernard G)
         dto.setEtat(getEtat());
 
         isNotEmpty(getMontant());
+        isNotOverMontantMax(getMontant());
         dto.setMontant( convertDouble(getMontant()) );
 
         isNotEmpty(getDuree());
@@ -89,6 +99,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
         isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( convertUUID(getCommanditaireId()));
+
         return dto;
     }
 

@@ -135,12 +135,12 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     protected Date convertDate( String toValidate ){
 		Date date;
 		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(toValidate);
-		}catch(ParseException e){
+            date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toValidate);
+		} catch(ParseException e){
 			try {
-				date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toValidate);
-			}catch(ParseException e2) {
-				throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy) : " + e2.getMessage());
+                date = new SimpleDateFormat("dd/MM/yyyy").parse(toValidate);
+			} catch(ParseException e2) {
+				throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy [HH:mm:ss]) : " + e2.getMessage());
 			}
 		}
 		return date;

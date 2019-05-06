@@ -19,7 +19,7 @@ class PrestationTest {
     @BeforeEach
     void setUp() {
         prestation = new Prestation();
-        prestation.setDatePrest("01/06/2019");
+        prestation.setDatePrest("01/06/2019 20:03:05");
         prestation.setDuree("2");
         prestation.setMontant("100.36");
         prestation.setEtat("Initiee");
@@ -40,8 +40,8 @@ class PrestationTest {
 
         try{
             final PrestationDTO prestDTO = prestation.getDTO();
-            // pas sûr que ce soit la bonne manière de faire pour convertir la date en string
-            assertEquals(new SimpleDateFormat("dd/MM/yyyy").format(prestDTO.getDatePrest()), prestation.getDatePrest() );
+
+            assertEquals(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(prestDTO.getDatePrest()), prestation.getDatePrest() );
             assertEquals(prestDTO.getEtat(), prestation.getEtat());
 
             assertAll(
@@ -56,11 +56,155 @@ class PrestationTest {
                     ()->assertEquals(prestDTO.getMontant().toString(),prestation.getMontant())
             );
 
-        // Vérifier catch
         } catch (ParseException | IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
     }
+
+    @DisplayName("TC 6.2, Test ajout prestation avec date manquante")
+    @Test
+    void testPrestationDateManquante() {
+
+        prestation.setDatePrest(null);
+
+        try {
+            final PrestationDTO prestDTO = prestation.getDTO();
+            assertThrows(IllegalArgumentException.class, ()-> {prestDTO.getDatePrest();}, "Montant null devrait générer une IllegalArgumentException");
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("TC 6.3, Test ajout prestation avec montant manquant")
+    @Test
+    void testPrestationMontantManquant() {
+
+        prestation.setMontant(null);
+
+        try {
+            final PrestationDTO prestDTO = prestation.getDTO();
+            assertThrows(IllegalArgumentException.class, ()-> {prestDTO.getMontant();}, "Montant null devrait générer une IllegalArgumentException");
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("TC 6.4, Test ajout prestation avec activité manquante")
+    @Test
+    void testPrestationActiviteManquante() {
+
+        prestation.setActiviteId(null);
+
+        try {
+            final PrestationDTO prestDTO = prestation.getDTO();
+            assertThrows(IllegalArgumentException.class, ()-> {prestDTO.getActiviteId();}, "Activité null devrait générer une IllegalArgumentException");
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("TC 6.5, Test ajout prestation avec commanditaire manquant")
+    @Test
+    void testPrestationCommanditaireManquante() {
+
+        prestation.setCommanditaireId(null);
+
+        try {
+            final PrestationDTO prestDTO = prestation.getDTO();
+            assertThrows(IllegalArgumentException.class, ()-> {prestDTO.getCommanditaireId();}, "Commanditaire null devrait générer une IllegalArgumentException");
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @DisplayName("TC 6.7, Test ajout prestation avec durée manquante")
+    @Test
+    void testPrestationDureeManquante() {
+
+        prestation.setDuree(null);
+
+        try {
+            final PrestationDTO prestDTO = prestation.getDTO();
+            assertThrows(IllegalArgumentException.class, ()-> {prestDTO.getDuree();}, "Durée null devrait générer une IllegalArgumentException");
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("TC 6.9, Test ajout prestation avec montant > 128.93€")
+    @Test
+    void testPrestationSupMontantMax() {
+
+        prestation.setMontant("128.94");
+
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Montant > 128.93 devrait générer une IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // To Do
+    @DisplayName("TC 6.11, Test ajout prestation avec durée > 7 jours")
+    @Test
+    void testPrestationSupDureeMax() {
+
+        prestation.setDuree("8");
+
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Durée > 7 jours devrait générer une IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // To Do
+    @DisplayName("TC 6.13, Test ajout prestation avec format date non valide")
+    @Test
+    void testPrestationDateInvalide() {
+
+        prestation.setDatePrest("01.06.2019 20:30:00");
+        //prestation.setDatePrest("29.02.2019 20:30:00"); //test supplémentaire
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Format date invalide devrait générer une IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // To Do
+    @DisplayName("TC 6.14, Test ajout prestation avec format durée non valide")
+    @Test
+    void testPrestationDureeInvalide() {
+
+        // vérifier format durée
+        prestation.setDuree("2a5A");
+
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Format durée invalide devrait générer une IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // To Do
+    @DisplayName("TC 6.13, Test ajout prestation avec format montant non valide")
+    @Test
+    void testPrestationMontantInvalide() {
+
+
+        prestation.setMontant("6aD6");
+
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Format montant invalide devrait générer une IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
