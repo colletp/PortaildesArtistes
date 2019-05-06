@@ -4,10 +4,8 @@ import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Activite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -15,13 +13,6 @@ import java.util.UUID;
 @Controller
 public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class< ActiviteDTO > , Activite> {
     private static final Logger logger = LoggerFactory.getLogger(ActiviteControler.class);
-
-
-    @ResponseBody
-    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-    public String handleHttpMediaTypeNotAcceptableException() {
-        return "acceptable MIME type:" + MediaType.APPLICATION_JSON_VALUE;
-    }
 
     @GetMapping(value = "/activite/creer")
     public String activiteCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue

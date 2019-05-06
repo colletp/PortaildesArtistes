@@ -1,29 +1,34 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
+import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import com.unamur.portaildesartistes.webclient.dataForm.Citoyen;
+import com.unamur.portaildesartistes.webclient.dataForm.Adresse;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.util.UUID;
 
 @Controller
-public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO >, Citoyen> {
-    private static final Logger logger = LoggerFactory.getLogger(CitoyenControler.class);
+public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO >, Utilisateur > {
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurControler.class);
 
-/*
     @GetMapping(value = "/Utilisateur/creer")
     public String citoyenCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         return "Utilisateur/put.html";
     }
+
+    @Autowired
+    CitoyenControler citControler;
+    @Autowired
+    AdresseControler adrControler;
 
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
     public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -31,14 +36,34 @@ public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO 
         logger.error("Utilisateur/modif/moi : Authentication received! Cookie : "+cookieValue );
         //try {
         UtilisateurInscript usr = new UtilisateurInscript();
-        UtilisateurDTO usrDTO = super.getObj(cookieValue, super.getMyId(cookieValue), new UtilisateurDTO(), UtilisateurDTO.class);
+        UUID uuid = super.getMyId(cookieValue);
+        logger.error(uuid.toString());
+        UtilisateurDTO usrDTO = super.getObj(cookieValue, uuid, new UtilisateurDTO(), UtilisateurDTO.class);
+        logger.error(usrDTO.getUsername());
         usr.setUtilisateur( usrDTO );
-        CitoyenDTO citDTO = super.getObj(cookieValue, super.getMyId(cookieValue), new UtilisateurDTO(), UtilisateurDTO.class);
-
-        usr.setCitoyen( super.getObj(cookieValue, super.getMyId(cookieValue), new CitoyenDTO(), CitoyenDTO.class) );
-        usr.setAdresse( super.getObj(cookieValue, super.getMyId(cookieValue), new UtilisateurDTO(), UtilisateurDTO.class) );
+        CitoyenDTO cit = usrDTO.getCitoyen();
+        if(cit!=null) {
+            logger.error(cit.getNom());
+            usr.setCitoyen(cit);
+            if(cit.getResideAdr()!=null) {
+                logger.error(cit.getResideAdr().getVille());
+                usr.setAdresse(cit.getResideAdr());
+            }else logger.error("Adr null");
+        }else logger.error("Cit null");
+/*
+        CitoyenDTO citDTO = citControler.getObj(cookieValue, uuid, new CitoyenDTO(), CitoyenDTO.class);
+        logger.error(citDTO.getNom());
+        usr.setCitoyen( citDTO );
+        usr.setAdresse( adrControler.getObj(cookieValue, citDTO.getReside(), new AdresseDTO(), AdresseDTO.class) );
+*/
         model.addAttribute("form",usr);
         return "/Utilisateur/post.html";
+        //}catch(ParseException e) {
+            /*model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",new UtilisateurInscript().getDTO());
+            */
+        //    return "/Utilisateur/post.html";
+        //}
     }
     @GetMapping(value = "/Utilisateur/modif/{id}")//initialisation du login
     public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -92,5 +117,4 @@ public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO 
                                 Model model) {
         return super.delete(cookieValue,new UtilisateurDTO(),itemId,model);
     }
-*/
 }

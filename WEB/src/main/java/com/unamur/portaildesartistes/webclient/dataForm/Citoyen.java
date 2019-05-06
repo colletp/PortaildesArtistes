@@ -61,13 +61,13 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     public void setFromDTO(final CitoyenDTO objDTO) {
         super.setFromDTO(objDTO);
         setNom(objDTO.getNom());
-        setPrenom(objDTO.getPrenom());
+        setPrenom(objDTO.getPrenom()==null?"":objDTO.getPrenom());
         setDateNaissance(convertDate(objDTO.getDateNaissance()));
-        setTel(objDTO.getTel());
-        setGsm(objDTO.getGsm());
-        setMail(objDTO.getMail());
+        setTel(objDTO.getTel()==null?"":objDTO.getTel());
+        setGsm(objDTO.getGsm()==null?"":objDTO.getGsm());
+        setMail(objDTO.getMail()==null?"":objDTO.getMail());
         setNrn(objDTO.getNrn());
-        setNation(objDTO.getNation());
+        setNation(objDTO.getNation()==null?"":getNation());
         setReside(objDTO.getReside().toString());
     }
     // ******************

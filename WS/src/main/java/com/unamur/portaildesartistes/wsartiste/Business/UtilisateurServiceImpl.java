@@ -88,7 +88,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
     @Transactional
     public UtilisateurDTO getById( UUID uuid ){
         UtilisateurDTO usr= usrImpl.getById(uuid);
-        usr.setCitoyen( citImpl.getById( usr.getId() ) );
+        usr.setCitoyen( citImpl.getById( uuid ) );
         usr.getCitoyen().setResideAdr( adrImpl.getById( usr.getCitoyen().getReside() ) );
         return usr;
     }
@@ -118,6 +118,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
             else
                 throw new IllegalArgumentException("Insertion d'un citoyen sans adresse");
             usr.getCitoyen().setReside(adr);
+            usr.setPassword(WebSecurityConfig.encoder().encode(usr.getPassword()));
             cit=citImpl.insert(usr);
         }
         else

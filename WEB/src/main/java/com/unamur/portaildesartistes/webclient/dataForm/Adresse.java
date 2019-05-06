@@ -38,10 +38,10 @@ public class Adresse extends DataForm<AdresseDTO> {
 
     public void setFromDTO(final AdresseDTO objDTO) {
         super.setFromDTO(objDTO);
-        setRue(objDTO.getRue());
-        setNumero(objDTO.getNumero());
-        setBoite(objDTO.getBoite());
-        setVille(objDTO.getVille());
+        setRue(objDTO.getRue()==null?"":objDTO.getRue());
+        setNumero(objDTO.getNumero()==null?"":objDTO.getNumero());
+        setBoite(objDTO.getBoite()==null?"":objDTO.getBoite());
+        setVille(objDTO.getVille()==null?"":objDTO.getVille());
     }
     // ******************
     // Fonctions
