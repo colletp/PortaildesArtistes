@@ -43,8 +43,8 @@ class FormulaireTest {
     void testFormulaireCarteValide(){
         try {
             form = formulaire.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
 
         assertAll(
@@ -67,8 +67,8 @@ class FormulaireTest {
         formulaire.setLangue("EN");
         try {
             form = formulaire.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
 
         assertAll(

@@ -35,8 +35,8 @@ class ReponseTest {
     void testAjoutReponseValide(){
         try {
             reponse = resp.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
 
         assertAll(

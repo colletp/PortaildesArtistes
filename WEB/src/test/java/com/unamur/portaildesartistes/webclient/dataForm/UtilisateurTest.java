@@ -35,8 +35,8 @@ class UtilisateurTest {
     void testInscriptValide21() {
         try {
             usr = user.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
 
         assertAll(
@@ -50,8 +50,8 @@ class UtilisateurTest {
         user.setPassword("i234");
         try {
             usr = user.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
 
         assertEquals(usr.getPassword(),user.getPassword());

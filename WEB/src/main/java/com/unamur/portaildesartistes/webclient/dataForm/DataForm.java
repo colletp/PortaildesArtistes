@@ -71,8 +71,12 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     }
 
     protected Boolean isURL(String s)throws IllegalArgumentException{
-        if(s.isEmpty())
-            throw new IllegalArgumentException("Valeur vide");
+        if(!s.isEmpty()) {
+                Pattern patternUrl = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$");
+                Matcher testUrl = patternUrl.matcher(s);
+                if (!testUrl.matches())
+                    throw new IllegalArgumentException("URL non valide");
+        }
         return true;
     }
 
