@@ -57,7 +57,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
             ,@ModelAttribute("usrForm") final SecteurDTO sectForm
             ,Model model){
         logger.error("Secteur(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        return super.postForm(cookieValue,sectForm,method,model);
+        return super.postForm(cookieValue,sectForm,method);
     }
 
     @GetMapping(value = "/Secteur")

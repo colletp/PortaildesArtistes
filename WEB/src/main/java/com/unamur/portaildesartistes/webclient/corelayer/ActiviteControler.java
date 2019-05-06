@@ -35,7 +35,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
             ,@ModelAttribute("usrForm") final ActiviteDTO usrForm
             ,Model model){
         logger.error("activite(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        return super.postForm(cookieValue,usrForm,method,model);
+        return super.postForm(cookieValue,usrForm,method);
     }
 
     @GetMapping(value = "/activite")

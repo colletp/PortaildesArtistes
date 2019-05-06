@@ -7,8 +7,8 @@
 <!-- éléments de la barre d'en-tête -->
 <header th:fragment="head">
         <div id="topsection">
-            <div class="tps"><img th:src="@{img/logoPortail.png}" alt="Portail des artistes" width="500"/></div>
-            <div class="tps"><img th:src="@{img/spfblabla.png}" alt="SPF Blabla" width="220"/></div>
+            <div class="tps"><img th:src="@{/img/logoPortail.png}" alt="Portail des artistes" width="500"/></div>
+            <div class="tps"><img th:src="@{/img/spfblabla.png}" alt="SPF Blabla" width="220"/></div>
         </div>
 </header>
 
@@ -44,13 +44,13 @@
         <div class=navtext th:remove="${(select/256)%2!=1}? all : none"><a class="whitea">Gestionnaire</a></div>
 
         <div class=menu th:remove="${(select/4)%2!=1}? all : none">Mon profil &#9660;
-            <div class=ssmenu><a class="whitea">Mes informations</a></div>
+            <div class=ssmenu><a class="whitea" th:href="@{/Utilisateur/modif/moi}">Mes informations</a></div>
             <div class=ssmenu><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
         </div>
 
         <div class=menu th:remove="${(select/8)%2!=1}? all : none">Langue &#9660;
             <div class=ssmenu><a class="whitea">Fançais</a></div>
-            <div class=ssmenu><a class="whitea" th:href="@{/home}">Englais</a></div>
+            <div class=ssmenu><a class="whitea" th:href="@{/home}">Anglais</a></div>
         </div>
     </div>
 </nav>

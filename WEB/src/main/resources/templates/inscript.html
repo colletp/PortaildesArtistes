@@ -22,7 +22,8 @@
 
             <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
 
-            <input th:type="submit" />
+        <input th:type="submit" value="Je m'inscris" />
+        <button th:onclick="'history.go(-1)'">Revenir à la page précédente</button>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

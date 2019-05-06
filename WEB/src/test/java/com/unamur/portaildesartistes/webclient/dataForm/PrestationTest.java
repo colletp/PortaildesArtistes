@@ -19,7 +19,7 @@ class PrestationTest {
     @BeforeEach
     void setUp() {
         prestation = new Prestation();
-        prestation.setDatePrest("01/06/2019");
+        prestation.setDatePrest("01/06/2019 ");
         prestation.setDuree("2");
         prestation.setMontant("100.36");
         prestation.setEtat("Initiee");

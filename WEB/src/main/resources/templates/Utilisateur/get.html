@@ -18,7 +18,7 @@
 
     <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.username}]]<br/>
     <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.password}]]<br/>
-    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.citoyen.resideAdr}) }"></fieldset>
 
 </div>
 

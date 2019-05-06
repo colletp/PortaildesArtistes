@@ -87,26 +87,26 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         return restTemplateHelper.getForEntity(UUID.class,configurationService.getUrl()+"/gestionUtilisateur/moi",headers );
     }
 
-    protected String postForm( String cookieValue,final V form,final String method,Model model){
+    protected String postForm( String cookieValue,final V form,final String method){
         logger.error("postForm1");
-		return postForm(cookieValue,form,method,model,"");
+		return postForm(cookieValue,form,method,"");
     }
-    protected String postForm( String cookieValue,final V form,final String method,Model model,String newUri){
+    protected String postForm( String cookieValue,final V form,final String method,String newUri){
         logger.error("postForm2");
         T objDTO;
         try{
             objDTO = form.getDTO();
-			return postForm(cookieValue,objDTO,method,model);
+			return postForm(cookieValue,objDTO,method);
         }catch(Exception e){
             logger.error( e.getMessage() );
             return "?";
         }
     }
-    protected String postForm( String cookieValue,T objDTO,String method,Model model) {
+    protected String postForm( String cookieValue,T objDTO,String method) {
         logger.error("postForm3");
-        return postForm( cookieValue,objDTO,method,model,"");
+        return postForm( cookieValue,objDTO,method,"");
     }
-    protected String postForm( String cookieValue,T objDTO,String method,Model model,String newUri){
+    protected String postForm( String cookieValue,T objDTO,String method,String newUri){
         logger.error("postForm4");
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
@@ -128,7 +128,6 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         catch(ClassCastException e){
             logger.error( e.getMessage() );
         }
-        model.addAttribute("form", objDTO );
         return className+"/get.html";
     }
 

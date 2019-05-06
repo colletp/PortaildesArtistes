@@ -40,7 +40,7 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         }
         String resp = "";
         try {
-            resp = postForm("", usrInscrForm.getDTO(), "PUT", model, "inscript");
+            resp = postForm("", usrInscrForm.getDTO(), "PUT","inscript");
             model.addAttribute("Msg","Inscription effectuée. Veuillez vous connecter");
             return "login.html";
         } catch (IllegalArgumentException e) {

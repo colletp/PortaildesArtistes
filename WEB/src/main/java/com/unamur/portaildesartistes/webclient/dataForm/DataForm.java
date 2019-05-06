@@ -1,10 +1,8 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.DTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -23,18 +21,15 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // Setter/Getter
     // ******************
 
-    protected void setFromDTO( T objDTO ){setId( (objDTO.getId()==null?"":objDTO.getId()).toString() );}
+    protected void setFromDTO( T objDTO ){setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );}
 
     public String getId(){return id;}
-    public void setId( String p_id){this.id = p_id;}
+    public void setId( String p_id){id = p_id;}
     // ******************
     // A implémenter
     // ******************
 
     public abstract T getDTO()throws ParseException;
-    /*protected <T> String toString( T obj, java.lang.Class<T> clazz )throws NotFoundException {
-        return "";
-    }*/
 
     // ******************
     // Tests de validité interne aux descendants
@@ -74,16 +69,13 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         }
         return true;
     }
-/*    protected Boolean isTel(String s)throws IllegalArgumentException{
-        if(s.isEmpty())
-            throw new IllegalArgumentException("Valeur vide");
-        return true;
-    }*/
+
     protected Boolean isURL(String s)throws IllegalArgumentException{
         if(s.isEmpty())
             throw new IllegalArgumentException("Valeur vide");
         return true;
     }
+
     protected Boolean hasLengthMin(String s , int size)throws IllegalArgumentException{
         if( s==null || s.isEmpty() || s.length()<size)
             throw new IllegalArgumentException("Taille minimum de "+size+" pas respectée" );
@@ -145,8 +137,16 @@ public abstract class DataForm<T extends DTO> implements Serializable {
 		}
 		return date;
     }
-    protected String convertDate(Date date){return new SimpleDateFormat("dd/MM/yyyy").format(date);}
-    protected String convertDateTime(Date date){return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(date);}
+    protected String convertDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(date);
+        //return (new SimpleDateFormat("dd/MM/yyyy")).format(date);
+    }
+    protected String convertDateTime(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return sdf.format(date);
+        //return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(date);
+    }
 
     protected UUID convertUUID( String toValidate ){
 		return UUID.fromString(toValidate);
