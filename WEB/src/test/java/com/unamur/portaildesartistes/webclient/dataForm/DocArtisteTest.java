@@ -41,8 +41,8 @@ class DocArtisteTest {
     void testCreationCarteArtisteValide() {
         try {
             docArt = doc.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
         assertAll(
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
@@ -60,8 +60,8 @@ class DocArtisteTest {
         doc.setTypeDocArtiste("Visa artiste");
         try {
             docArt = doc.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
         assertAll(
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
@@ -79,8 +79,8 @@ class DocArtisteTest {
         doc.setNomArtiste("");
         try {
             docArt = doc.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
         assertAll(
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),

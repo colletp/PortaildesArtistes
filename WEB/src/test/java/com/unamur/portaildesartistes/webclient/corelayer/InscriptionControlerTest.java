@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+//import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
@@ -20,12 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InscriptionControlerTest {
 
-    private InscriptionControler inscCtrl;
     private UtilisateurInscript usrInscr;
 
     @BeforeEach
     void setUp() {
-        inscCtrl=new InscriptionControler();
+        usrInscr=new UtilisateurInscript();
 
         Utilisateur usr;
         Citoyen citoyen;
@@ -35,18 +34,18 @@ class InscriptionControlerTest {
         usr.setUsername("teSt2");
         usr.setPassword("i5Ts");
         citoyen=new Citoyen();
-        usrInscr.getCitoyen().setNom("Dupont");
-        usrInscr.getCitoyen().setPrenom("Henri");
-        usrInscr.getCitoyen().setDateNaissance("01/01/2000");
+        citoyen.setNom("Dupont");
+        citoyen.setPrenom("Henri");
+        citoyen.setDateNaissance("01/01/2001");
         adresse = new Adresse();
-        usrInscr.getAdresse().setRue("Petite rue d'en face");
-        usrInscr.getAdresse().setNumero("6");
-        usrInscr.getAdresse().setVille("Namur");
-        usrInscr.getCitoyen().setNrn("01010100522");
-        usrInscr.getCitoyen().setNation("Belge");
-        usrInscr.getCitoyen().setTel("081010155");
-        usrInscr.getCitoyen().setGsm("0495010155");
-        usrInscr.getCitoyen().setMail("dupont.henry@bosso.be");
+        adresse.setRue("Petite rue d'en face");
+        adresse.setNumero("6");
+        adresse.setVille("Namur");
+        citoyen.setNrn("01010100522");
+        citoyen.setNation("Belge");
+        citoyen.setTel("081010155");
+        citoyen.setGsm("0495010155");
+        citoyen.setMail("dupont.henry@bosso.be");
         usrInscr.setUtilisateur(usr);
         usrInscr.setCitoyen(citoyen);
         usrInscr.setAdresse(adresse);
@@ -56,7 +55,6 @@ class InscriptionControlerTest {
     @Test
     void testInscriptValide21() {
         assertDoesNotThrow( ()->usrInscr.getDTO() );
-        //assertEquals(true,inscCtrl.ValideInscript(usrInscr));
     }
 
     @DisplayName("TC 2.2, Test d’inscription avec un mots de passe existant")
@@ -70,7 +68,7 @@ class InscriptionControlerTest {
     @Test
     void testInscriptNonValide23() {
         usrInscr.getUtilisateur().setUsername("test1");
-        assertDoesNotThrow( ()->usrInscr.getDTO() );
+        assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO());
     }
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")
@@ -225,30 +223,20 @@ class InscriptionControlerTest {
         usrInscr.getCitoyen().setMail("abc@b");
         assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO() );
     }
-/*
+
     @DisplayName("TC 2.26, Test sur la date de naissance, valeur absente")
     @Test
     void testInscriptNonValide226() {
-        Date dateNaissance=new Date();
-        dateNaissance=null;
-        usrInscr.getCitoyen().setDateNaissance(dateNaissance);
-        assertThrows(IllegalArgumentException.class,()->usrInscr.getCitoyen().ValideInscript(usrInscr));
+        usrInscr.getCitoyen().setDateNaissance("");
+        assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO() );
     }
 
     @DisplayName("TC 2.27, Test sur la date de naissance, format non conforme")
     @Test
     void testInscriptNonValide227() {
-        Date dateNaissance=new Date();
-        String dateNaiss = "32 13 AnIX";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            dateNaissance = simpleDateFormat.parse(dateNaiss);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        usrInscr.getCitoyen().setDateNaissance(dateNaissance);
-        assertThrows(IllegalArgumentException.class,()->usrInscr.getCitoyen().ValideInscript(usrInscr));
-    }*/
+        usrInscr.getCitoyen().setDateNaissance("32 13 AnIX");
+        assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO() );
+    }
 
     @DisplayName("TC 2.28, Test sur la date de naissance, date invalide")
     @Test
@@ -259,7 +247,6 @@ class InscriptionControlerTest {
     @AfterEach
     void tearDown() {
         usrInscr=null;
-        inscCtrl=null;
     }
 
 

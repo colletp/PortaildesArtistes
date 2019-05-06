@@ -36,8 +36,8 @@ class ActiviteTest {
     void testAjoutActiviteValide(){
         try {
             act = activite.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+                e.printStackTrace();
         }
         assertAll(
                 ()->assertEquals(act.getNomActivite(),activite.getNomActivite()),
@@ -66,8 +66,8 @@ class ActiviteTest {
         activite.setDescription("");
         try {
             act = activite.getDTO();
-        }catch(ParseException e){
-            e=new ParseException("Echec getDTO",3);
+        }catch (ParseException | IllegalArgumentException  e) {
+            e.printStackTrace();
         }
         assertAll(
                 ()->assertEquals(act.getNomActivite(),activite.getNomActivite()),
