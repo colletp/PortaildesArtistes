@@ -4,6 +4,7 @@
 
 <body>
 
+<!-- éléments de la barre d'en-tête -->
 <header th:fragment="head">
         <div id="topsection">
             <div class="tps"><img th:src="@{img/logoPortail.png}" alt="Portail des artistes" width="500"/></div>
@@ -12,43 +13,45 @@
 </header>
 
 
-<nav th:fragment="nav1">
+<!-- éléments de la barre de navigation
+000000000001 1    Accueil
+000000000010 2    Menu
+000000000100 4    Mon profil
+000000001000 8    Langue
+000000010000 16   S'inscrire
+000000100000 32   Se connecter
+000001000000 64   Artiste
+000010000000 128  Commanditaire
+000100000000 256  Gestionnaire
+001000000000 512
+010000000000 1024
+100000000000 2048
+-->
+<nav th:fragment="nav (select)">
     <div id="navsection">
-        <div class="element"><a class="whitea" th:href="@{/accueil}">Accueil</a></div>
-        <div class="element"><a class="whitea" th:href="@{/login}">Me connecter</a></div>
-        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
-    </div>
-</nav>
+        <div class=navtext th:remove="${select%2!=1}? all : none"><a class="whitea" th:href="@{accueil}">Accueil</a></div>
+        <div class=navtext th:remove="${(select/2)%2!=1}? all : none"><a class="whitea" th:href="@{/choixRole}">Menu</a></div>
+        <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}">S'inscrire</a></div>
+        <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}">Se connecter</a></div>
 
-<nav th:fragment="nav2">
-    <div id="navsection">
-        <div class="element"><a class="whitea" th:href="@{accueil}">Accueil</a></div>
-        <div class="element"><a class="whitea" th:href="@{home}">EN</a></div>
-    </div>
-</nav>
+        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}">Artiste &#9660;</a>
+            <div class=ssmenu><a class="whitea">Prestations</a></div>
+            <div class=ssmenu><a class="whitea">Carte artiste</a></div>
+            <div class=ssmenu><a class="whitea">Carte visa</a></div>
+        </div>
 
-<nav th:fragment="nav3">
-    <div id="navsection">
-        <div class="element"><a class="whitea" th:href="@{/home}">Home</a></div>
-        <div class="element"><a class="whitea" th:href="@{/login}">Log in</a></div>
-        <div class="element"><a class="whitea" th:href="@{/accueil}">FR</a></div>
-    </div>
-</nav>
+        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea">Commanditaire</a></div>
+        <div class=navtext th:remove="${(select/256)%2!=1}? all : none"><a class="whitea">Gestionnaire</a></div>
 
-<nav th:fragment="nav4">
-    <div id="navsection">
-        <div class="element"><a class="whitea" th:href="@{/choixRole}">Accueil</a></div>
-        <div class="element"><a class="whitea" th:href="@{/Utilisateur/modif/moi}">Mon profil</a></div>
-        <div class="element"><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
-        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
-    </div>
-</nav>
+        <div class=menu th:remove="${(select/4)%2!=1}? all : none">Mon profil &#9660;
+            <div class=ssmenu><a class="whitea">Mes informations</a></div>
+            <div class=ssmenu><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
+        </div>
 
-<nav th:fragment="nav5">
-    <div id="navsection">
-        <div class="element"><a class="whitea" th:href="@{/choixRole}">Accueil</a></div>
-        <div class="element"><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
-        <div class="element"><a class="whitea" th:href="@{/home}">EN</a></div>
+        <div class=menu th:remove="${(select/8)%2!=1}? all : none">Langue &#9660;
+            <div class=ssmenu><a class="whitea">Fançais</a></div>
+            <div class=ssmenu><a class="whitea" th:href="@{/home}">Englais</a></div>
+        </div>
     </div>
 </nav>
 

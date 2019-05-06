@@ -51,24 +51,63 @@ h2{
 }
 
 
-#navsection{
+#navsection
+{
     display: flex;
-    justify-content: space-around;
-    padding-top: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+//padding-top: 8px;
     height:35px;
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: bold;
     font-family: Arial,"Arial Black", Impact,sans-serif;
     color: white;
     background-color: teal;
+    border-radius: 3px;
 }
 
-.element{
-    margin-right: 30px;
+.navtext{
+    height: 25px;
+    width:140px;
+    border: 3px solid ;
+    border-left-color: grey;
+    border-bottom-color: teal;
+    border-top-color: teal;
+    border-right-color: teal;
+    text-align: center;
+    padding-top: 5px;
+
 }
 
-.element:nth-child(1){
-    flex: 1;
-    margin-left: 50px;
+.menu{
+    height: 25px;
+    width:150px;
+    border: 3px solid ;
+    border-left-color: grey;
+    border-bottom-color: teal;
+    border-top-color: teal;
+    border-right-color: teal;
+    text-align: center;
+    padding-top: 5px;
+//background-color: white;
+}
+
+.menu:hover {
+    height: 150px;
+    background-color: teal;
+}
+
+.ssmenu{
+    display:none;
+    margin-top:  12px;
+    padding-left: 15px;
+    text-align: left;
+}
+
+.menu:hover .ssmenu
+{
+    display:block;
+    color: red;
 }
 
 

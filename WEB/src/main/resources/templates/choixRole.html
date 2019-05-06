@@ -11,10 +11,10 @@
 
 <body>
 	<div th:replace="~{/fragments/header :: head}"></div>
-	<div th:replace="~{/fragments/header :: nav4}"></div>
+	<div th:replace="~{/fragments/header :: nav(select=${460})}"></div>
 
 
-	<h1>Bienvenue sur le portail des artistes du SPF Blabla</h1><br/>
+	<br/><br/>
 	<div id="choixbox">
 		<div class="choixtxt"><a href="artiste.html">Je suis un artiste.</a></div>
 		<div class="choixtxt"><a href="commanditaire.html">Je suis un commanditaire.</a></div>
