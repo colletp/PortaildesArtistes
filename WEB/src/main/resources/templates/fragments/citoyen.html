@@ -16,7 +16,7 @@
     Nationnalité:[[${citoyen.nation}]]<br/>
 </fieldset>
 
-<fieldset th:fragment="CitoyenAdrGet(fonction,citoyen)">
+<fieldset th:fragment="CitoyenAdrGet(fonction,citoyen,adresse)">
     <legend>[[${fonction}]]</legend>
     <span th:text="#{citoyen.nom}" >Nom</span>:[[${citoyen.nom}]]<br/>
     Prénom:[[${citoyen.prenom}]]<br/>
@@ -27,7 +27,7 @@
     No Reg Nat:[[${citoyen.nrn}]]<br/>
     Nationnalité:[[${citoyen.nation}]]<br/>
 
-    <fieldset th:replace="~{/fragments/adresse :: adresseGet(${'Résidence'},${citoyen.resideAdr}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/adresse :: AdresseGet('Résidence',adresse) }"></fieldset>
 </fieldset>
 
 <fieldset th:fragment="CitoyenSummaryGet(fonction,citoyen)">

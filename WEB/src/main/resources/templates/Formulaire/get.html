@@ -10,6 +10,9 @@
 </head>
 <body>
 
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
 <span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
         Password:[[${form.password}]]<br/>
 <fieldset>

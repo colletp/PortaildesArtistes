@@ -9,7 +9,11 @@
     <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="put">
+
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<form th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="put">
 
         Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
         Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>

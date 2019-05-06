@@ -13,7 +13,6 @@ class LoginControlerTest {
 
     private LoginControler connect;
     private Utilisateur user;
-    private UtilisateurDTO userDTO;
 
     @BeforeEach
     void setUp() {

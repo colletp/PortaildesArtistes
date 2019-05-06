@@ -57,7 +57,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             for(String actId : formForm.getActivitesId() )
                 listAct.add(actCtrl.getObj(cookieValue,UUID.fromString(actId),new ActiviteDTO(),ActiviteDTO.class ));
             formDTO.setActivites(listAct);*/
-            return super.postForm(cookieValue,formDTO,method,model);
+            return super.postForm(cookieValue,formDTO,method);
         }catch(IllegalArgumentException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());

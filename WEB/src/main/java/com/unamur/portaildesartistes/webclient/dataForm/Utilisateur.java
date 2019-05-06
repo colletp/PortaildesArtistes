@@ -14,15 +14,15 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     public String getUsername() {
         return login;
     }
-    public void setUsername(String p_login) { this.login = p_login; }
+    public void setUsername(String p_login) { login = p_login; }
     public String getPassword() {
         return password;
     }
-    public void setPassword(String p_password) { this.password = p_password; }
+    public void setPassword(String p_password) { password = p_password; }
 
     public void setFromDTO(final UtilisateurDTO objDTO){
-        super.setFromDTO(objDTO);
-        setUsername(objDTO.getUsername());
+            super.setFromDTO(objDTO);
+            setUsername(objDTO.getUsername());
     }
     // ******************
     // Fonctions

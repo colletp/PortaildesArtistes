@@ -12,7 +12,7 @@
 
 <body>
    <div th:insert="~{/fragments/header :: head}"></div>
-   <div th:replace="~{/fragments/header :: nav3}"></div>
+   <div th:replace="~{/fragments/header :: nav(select=${1})}"></div>
 
 	<h1>Welcome to the SPF Blabla Artists Portal<br/><br/>	being manufactured<br/></h1>
 	<a class="aBouton" href="javascript:history.go(-1)">Return</a>

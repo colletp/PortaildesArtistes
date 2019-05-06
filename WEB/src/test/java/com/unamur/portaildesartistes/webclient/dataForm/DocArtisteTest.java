@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class DocArtisteTest {
 
     private DocArtiste doc;
+    private DocArtisteDTO docArt;
 
     @BeforeEach
     void setUp() {
         doc=new DocArtiste();
+        docArt=new DocArtisteDTO();
         doc.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         doc.setReponseId("c91dce79-20a4-431f-957f-b6d09b9b876b");
         doc.setDatePeremption("12/04/2019");
@@ -30,30 +33,24 @@ class DocArtisteTest {
     @AfterEach
     void tearDown() {
         doc=null;
+        docArt=null;
     }
 
     @DisplayName("TC , Test de création Carte Artiste avec valeur valide")
     @Test
     void testCreationCarteArtisteValide() {
-        UUID uuidCitoyen=UUID.fromString("98a95e7d-8231-4115-8ed9-612de5590d88");
-        UUID uuidReponse=UUID.fromString("c91dce79-20a4-431f-957f-b6d09b9b876b");
-        Date datePeremp=new Date();
-        String date = "12/04/2019";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            datePeremp = simpleDateFormat.parse(date);
-        } catch (ParseException e) {
+        try {
+            docArt = doc.getDTO();
+        }catch (ParseException | IllegalArgumentException  e) {
             e.printStackTrace();
         }
-        assertEquals(datePeremp,doc.getDatePeremption());
         assertAll(
-                ()->assertEquals(uuidCitoyen,doc.getCitoyenId()),
-                ()->assertEquals(uuidReponse,doc.getReponseId())
-        );
-        assertAll(
-                ()->assertEquals("Nico",doc.getNomArtiste()),
-                ()->assertEquals("123456",doc.getNoDoc()),
-                ()->assertEquals("Carte artiste",doc.getTypeDocArtiste())
+                ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
+                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
+                ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
+                ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
+                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
+                ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
 
@@ -61,25 +58,18 @@ class DocArtisteTest {
     @Test
     void testCreationVisaArtisteValide() {
         doc.setTypeDocArtiste("Visa artiste");
-        UUID uuidCitoyen=UUID.fromString("98a95e7d-8231-4115-8ed9-612de5590d88");
-        UUID uuidReponse=UUID.fromString("c91dce79-20a4-431f-957f-b6d09b9b876b");
-        Date datePeremp=new Date();
-        String date = "12/04/2019";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            datePeremp = simpleDateFormat.parse(date);
-        } catch (ParseException e) {
+        try {
+            docArt = doc.getDTO();
+        }catch (ParseException | IllegalArgumentException  e) {
             e.printStackTrace();
         }
-        assertEquals(datePeremp,doc.getDatePeremption());
         assertAll(
-                ()->assertEquals(uuidCitoyen,doc.getCitoyenId()),
-                ()->assertEquals(uuidReponse,doc.getReponseId())
-        );
-        assertAll(
-                ()->assertEquals("Nico",doc.getNomArtiste()),
-                ()->assertEquals("123456",doc.getNoDoc()),
-                ()->assertEquals("Visa artiste",doc.getTypeDocArtiste())
+                ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
+                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
+                ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
+                ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
+                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
+                ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
 
@@ -87,25 +77,18 @@ class DocArtisteTest {
     @Test
     void testCreationDocArtisteValide() {
         doc.setNomArtiste("");
-        UUID uuidCitoyen=UUID.fromString("98a95e7d-8231-4115-8ed9-612de5590d88");
-        UUID uuidReponse=UUID.fromString("c91dce79-20a4-431f-957f-b6d09b9b876b");
-        Date datePeremp=new Date();
-        String date = "12/04/2019";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            datePeremp = simpleDateFormat.parse(date);
-        } catch (ParseException e) {
+        try {
+            docArt = doc.getDTO();
+        }catch (ParseException | IllegalArgumentException  e) {
             e.printStackTrace();
         }
-        assertEquals(datePeremp,doc.getDatePeremption());
         assertAll(
-                ()->assertEquals(uuidCitoyen,doc.getCitoyenId()),
-                ()->assertEquals(uuidReponse,doc.getReponseId())
-        );
-        assertAll(
-                ()->assertEquals("",doc.getNomArtiste()),
-                ()->assertEquals("123456",doc.getNoDoc()),
-                ()->assertEquals("Visa artiste",doc.getTypeDocArtiste())
+                ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
+                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
+                ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
+                ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
+                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
+                ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
 
@@ -113,44 +96,42 @@ class DocArtisteTest {
     @Test
     void testCreationDocArtisteNonValide1() {
         doc.setTypeDocArtiste("artiste");
-        assertThrows(IllegalArgumentException.class,()->doc.getTypeDocArtiste());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
     @DisplayName("TC , Test de création Doc Artiste avec Type de Doc Artiste absent")
     @Test
     void testCreationDocArtisteNonValide2() {
         doc.setTypeDocArtiste("");
-        assertThrows(IllegalArgumentException.class,()->doc.getTypeDocArtiste());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
     @DisplayName("TC , Test de création Doc Artiste avec date de péremption absent")
     @Test
     void testCreationDocArtisteNonValide3() {
         doc.setDatePeremption("");
-        assertThrows(IllegalArgumentException.class,()->doc.getDatePeremption());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
     @DisplayName("TC , Test de création Doc Artiste avec numéro de document absent")
     @Test
     void testCreationDocArtisteNonValide4() {
         doc.setNoDoc("");
-        assertThrows(IllegalArgumentException.class,()->doc.getNoDoc());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
     @DisplayName("TC , Test de création Doc Artiste avec Reponse ID absent")
     @Test
     void testCreationDocArtisteNonValide5() {
         doc.setReponseId("");
-        assertThrows(IllegalArgumentException.class,()->doc.getReponseId());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
     @DisplayName("TC , Test de création Doc Artiste avec Citoyen ID absent")
     @Test
     void testCreationDocArtisteNonValide6() {
         doc.setCitoyenId("");
-        assertThrows(IllegalArgumentException.class,()->doc.getCitoyenId());
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
-
-
 
 }

@@ -25,6 +25,15 @@ public class UtilisateurInscript {
         setCitoyen(new Citoyen());
         setAdresse(new Adresse());
     }
+    public UtilisateurInscript( UtilisateurDTO usr ){
+        setUtilisateur(new Utilisateur());
+        setCitoyen(new Citoyen());
+        setAdresse(new Adresse());
+
+        setUtilisateur(usr);
+        setCitoyen(usr.getCitoyen());
+        setAdresse(usr.getCitoyen().getResideAdr());
+    }
     // ******************
     // Setter/Getter
     // ******************
@@ -44,13 +53,9 @@ public class UtilisateurInscript {
     // Fonctions
     // ******************
     public UtilisateurDTO getDTO()throws ParseException {
-        logger.error("getDTO");
         UtilisateurDTO usr = utilisateur.getDTO();
-        logger.error("usr OK");
         usr.setCitoyen( citoyen.getDTO() );
-        logger.error("cit OK");
         usr.getCitoyen().setResideAdr( adresse.getDTO() );
-        logger.error("adr OK");
         return usr;
     }
 }
