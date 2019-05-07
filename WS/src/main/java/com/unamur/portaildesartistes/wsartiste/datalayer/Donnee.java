@@ -18,9 +18,9 @@ public abstract class Donnee<T extends DTO> {
         return ret;
     }
 
-    abstract List<T> list();
-    abstract T getById(UUID id);
-    abstract UUID insert(T item);
-    abstract void update(T item);
-    abstract void delete(UUID id);
+    public abstract List<T> list();
+    public abstract T getById(UUID id);
+    public abstract UUID insert(T item);
+    public abstract void update(T item);
+    public abstract void delete(UUID id);
 }

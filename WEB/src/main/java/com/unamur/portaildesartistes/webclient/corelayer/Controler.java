@@ -59,66 +59,61 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 	**************************************/
 
 	//Complete les données d'un formulaire qui sera affiché
-    protected String getForm( String cookieValue,T objDTO,UUID itemId,U clazz,String formAction,Model model){
+    protected String getForm(String cookieValue, T objDTO, V objForm, UUID itemId, U clazz, String method, Model model){
+    //protected String getForm( String cookieValue,V objForm,UUID itemId,U clazz,String method,Model model){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
-        switch( formAction.toUpperCase() ){
+        switch( method.toUpperCase() ){
             case "PUT":
                 break;
             case "POST":
             case "GET":
                 try{
                     //charge les données qui préremplissent la page
-                    objDTO = restTemplateHelper.getForEntity( clazz , configurationService.getUrl()+"/gestion"+className+"/"+itemId , headers );
+                    objForm.setFromDTO( restTemplateHelper.getForEntity( clazz , configurationService.getUrl()+"/gestion"+className+"/"+itemId , headers ) );
                 }
-                catch(ClassCastException e){
+                catch(Exception e){
                     logger.error( e.getMessage() );
+                    return className+"/error.html";
                 }
                 break;
             default:
         }
-        model.addAttribute("form", objDTO );
-        return className+"/"+formAction+".html";
+        model.addAttribute("form", objForm );
+        return className+"/"+method.toUpperCase()+".html";
     }
 
     protected UUID getMyId( String cookieValue ){
         HttpHeaders headers = initHeadersRest(cookieValue);
-        logger.error("getMyId");
         return restTemplateHelper.getForEntity(UUID.class,configurationService.getUrl()+"/gestionUtilisateur/moi",headers );
     }
 
     protected String postForm( String cookieValue,final V form,final String method){
-        logger.error("postForm1");
 		return postForm(cookieValue,form,method,"");
     }
     protected String postForm( String cookieValue,final V form,final String method,String newUri){
-        logger.error("postForm2");
         T objDTO;
         try{
             objDTO = form.getDTO();
 			return postForm(cookieValue,objDTO,method);
         }catch(Exception e){
             logger.error( e.getMessage() );
-            return "?";
+            return "/error.html";
         }
     }
     protected String postForm( String cookieValue,T objDTO,String method) {
-        logger.error("postForm3");
         return postForm( cookieValue,objDTO,method,"");
     }
     protected String postForm( String cookieValue,T objDTO,String method,String newUri){
-        logger.error("postForm4");
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
         try{
             switch(method.toUpperCase()){
                 case "PUT":
-                    logger.error( "Appel REST PUT" );
-                    UUID uuid = restTemplateHelper.putForEntity( UUID.class, configurationService.getUrl()+"/"+( (! newUri.equals("") )?newUri:("gestion"+className+"/")) , objDTO , headers );
-                    objDTO.setId(uuid);
+                    objDTO.setId(restTemplateHelper.putForEntity( UUID.class, configurationService.getUrl()+"/"+( (! newUri.equals("") )?newUri:("gestion"+className+"/")) , objDTO , headers ) );
                     break;
                 case "POST":
-                    logger.error( "Appel REST POST" );
+                case "":
                     restTemplateHelper.postForEntity( configurationService.getUrl()+"/"+((! newUri.equals(""))?newUri:("gestion"+className+"/")) , objDTO , headers );
                     break;
                 default :

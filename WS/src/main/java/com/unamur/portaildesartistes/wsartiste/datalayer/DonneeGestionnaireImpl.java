@@ -25,26 +25,28 @@ import java.util.UUID;
 public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeGestionnaireImpl.class);
 
+    @Override
     public List<GestionnaireDTO> list(){
         return super.Exec(GestionnaireSQLs.class).list();
     }
 
     @Override
-    GestionnaireDTO getById(UUID id) {
+    public GestionnaireDTO getById(UUID id) {
         return super.Exec(GestionnaireSQLs.class).getById(id);
     }
 
+    @Override
     public UUID insert(GestionnaireDTO item){
         return UUID.fromString(super.Exec(GestionnaireSQLs.class).insert(item));
     }
 
     @Override
-    void update(GestionnaireDTO item) {
+    public void update(GestionnaireDTO item) {
         super.Exec(GestionnaireSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(GestionnaireSQLs.class).delete(id);
     }
 

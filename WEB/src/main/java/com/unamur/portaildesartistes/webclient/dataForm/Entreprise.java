@@ -38,7 +38,7 @@ public class Entreprise extends DataForm<EntrepriseDTO> {
     public void setStatutLegal(String p_sta) { this.statutLegal = p_sta; }
 
     public void setFromDTO(final EntrepriseDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setContactId(objDTO.getContactId().toString());
         setSiegeId(objDTO.getSiegeId().toString());
         setBce(objDTO.getBce());

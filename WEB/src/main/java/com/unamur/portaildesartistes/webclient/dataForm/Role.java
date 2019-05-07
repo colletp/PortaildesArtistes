@@ -15,7 +15,7 @@ public class Role extends DataForm<RoleDTO> {
     public void setLang(String lang) { this.lang = lang; }
 
     public void setFromDTO(final RoleDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setNomRole(objDTO.getNomRole());
         setLang(objDTO.getLang());
     }

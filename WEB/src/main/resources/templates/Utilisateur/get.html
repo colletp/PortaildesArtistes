@@ -16,9 +16,9 @@
 <h1>Profil du citoyen</h1><br/>
 <div id="introbox">
 
-    <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.username}]]<br/>
-    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.password}]]<br/>
-    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.citoyen.resideAdr}) }"></fieldset>
+    <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.utilisateur.username}]]<br/>
+    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.utilisateur.password}]]<br/>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.adresse}) }"></fieldset>
 
 </div>
 

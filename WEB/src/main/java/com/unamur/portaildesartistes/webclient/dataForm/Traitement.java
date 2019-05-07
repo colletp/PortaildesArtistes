@@ -45,7 +45,7 @@ public class Traitement extends DataForm<TraitementDTO> {
     public void setTypeRole( String p_tr) { typeRole = p_tr; }
 
     public void setFromDTO(final TraitementDTO objDTO){
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDateTrt( convertDateTime(objDTO.getDateTrt()) );
         setAppreciation(objDTO.getAppreciation());
         setRoleId(objDTO.getRoleId().toString());

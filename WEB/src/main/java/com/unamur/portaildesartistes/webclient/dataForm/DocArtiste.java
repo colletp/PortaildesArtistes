@@ -41,7 +41,7 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public void setTypeDocArtiste(String p_type) { this.typeDocArtiste = p_type; }
 
     public void setFromDTO(final DocArtisteDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setCitoyenId(objDTO.getCitoyenId().toString());
         setReponseId(objDTO.getReponseId().toString());
         setNoDoc(objDTO.getNoDoc());

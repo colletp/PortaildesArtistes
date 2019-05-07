@@ -25,7 +25,7 @@ public class Secteur extends DataForm<SecteurDTO> {
     public void setNomSecteur(String p_secteur) { nomSecteur = p_secteur; }
 
     public void setFromDTO(final SecteurDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setNomSecteur(objDTO.getNomSecteur());
     }
     // ******************

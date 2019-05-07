@@ -37,7 +37,7 @@ public class Adresse extends DataForm<AdresseDTO> {
     public String toString() { return getRue()+", "+getNumero()+" "+getBoite()+" - "+getVille(); }
 
     public void setFromDTO(final AdresseDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setRue(objDTO.getRue());
         setNumero(objDTO.getNumero());
         setBoite(objDTO.getBoite());
