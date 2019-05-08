@@ -74,7 +74,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
                 }
                 catch(Exception e){
                     logger.error( e.getMessage() );
-                    return className+"/error.html";
+                    return "/error.html";
                 }
                 break;
             default:
@@ -192,7 +192,6 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         try {
             logger.error("Appel REST");
             model.addAttribute("form", restTemplateHelper.getForList(clazz, configurationService.getUrl() + "/gestion" + className + "/", headers) );
-
         } catch (AuthenticationServiceException e) {
             logger.error("Connexion refusée par authentification back-end : " + e.toString());
             return "/login";
