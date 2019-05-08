@@ -24,7 +24,7 @@
             <legend>[[${sec.nomSecteur}]]</legend>
             <ul th:each="act : ${sec.activites}">
                 <li>
-                    <input type="checkbox" name="activitesId[]" th:value="${act.id}" />[[${form.activitesId}]]
+                    <input type="checkbox" name="activitesId[]" th:value="${act.id}" />
                     <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
                 </li>
             </ul>

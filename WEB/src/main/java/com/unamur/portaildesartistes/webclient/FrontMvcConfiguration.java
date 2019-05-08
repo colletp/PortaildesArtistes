@@ -17,6 +17,8 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import java.util.Locale;
+
 @Configuration
 public class FrontMvcConfiguration extends WebMvcConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(FrontMvcConfiguration.class);
