@@ -5,11 +5,13 @@
 	<div th:replace="~{/fragments/header :: head}"></div>
 	<div th:replace="~{/fragments/header :: nav(select=${56})}"></div>
 
-	<h1>Bienvenue sur le portail des artistes du SPF Blabla</h1><br/>
+	<h1 th:text="#{accueil.bienvenue}"></h1><br/>
 	<div id="introbox">
-		<div class="introtxt">Vous êtes artiste et vous voulez encoder et contôler vos prestations. Rien de plus simple via notre plateforme, gérez facilement l'encodage et le suivi de l'ensemble de vos prestations.</div>
-		<div class="introtxt">Vous êtes commanditaire, et vous devez valider les prestations d'un ou plusieurs artistes. Utilisez cette plateforme pour confirmer rapidement et en toute simplicité les prestations de vos artistes.</div>
-		<div class="introtxt">En tant qu'agent administratif pour la gestion des artistes au SPF Blabla, cette plateforme va vous permettre de prendre en charge efficacement l'ensemble de vos dossiers.</div>
+		<div class="introtxt" th:text="#{accueil.artiste}"></div>
+		<div class="introtxt" th:text="#{accueil.commanditaire}"></div>
+		<div class="introtxt" th:text="#{accueil.gestionnaire}"></div>
 	</div>
+	<div th:replace="~{/fragments/header :: multiscript}"></div>
+
 </body>
 </html>

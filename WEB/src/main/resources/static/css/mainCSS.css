@@ -79,6 +79,16 @@ h2{
 
 }
 
+.navbouton{
+    color: white;
+    background-color: teal;
+    border: none;
+}
+.navbouton:hover{
+    text-decoration: underline;
+    color: white;
+}
+
 .menu{
     height: 25px;
     width:150px;
