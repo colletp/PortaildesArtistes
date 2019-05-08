@@ -6,46 +6,44 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
-        Password:[[${form.password}]]<br/>
 <fieldset>
 <legend>Formulaire</legend>
     <span th:text="#{citoyen.nom}" >
-    Date Demande:</span>:[[${form.formulaire.dateDemande}]]<br/>
+    Date Demande:</span>:[[${form.dateDemande}]]<br/>
 
     <!-- Cursus : cursurAc -->
-    <div th:if="${form.formulaire.cursurAc.list != null}">
+    <div th:if="${form.cursurAc.list != null}">
         <h1>Cursus</h1>
         <ul>
-            <th:block th:object="${form.formulaire.cursurAc}">
+            <th:block th:object="${form.cursurAc}">
                 <li th:each="item : *{list}" th:text="${item}"></li>
             </th:block>
         </ul>
     </div>
 
     <!-- Experience Professionnelle : expPro -->
-    <div th:if="${form.formulaire.expPro.list != null}">
+    <div th:if="${form.expPro.list != null}">
         <h1>Experience professionnelle</h1>
         <ul>
-            <th:block th:object="${form.formulaire.expPro}">
+            <th:block th:object="${form.expPro}">
                 <li th:each="item : *{list}" th:text="${item}"></li>
             </th:block>
         </ul>
     </div>
 
     <!-- ressources -->
-    <div th:if="${form.formulaire.ressources.list != null}">
+    <div th:if="${form.ressources.list != null}">
         <h1>Autres ressources</h1>
         <ul>
-            <th:block th:object="${form.formulaire.ressources}">
+            <th:block th:object="${form.ressources}">
                 <li th:each="item : *{list}" th:text="${item}"></li>
             </th:block>
         </ul>
     </div>
 
-    Langue :[[${form.formulaire.lanque}]]<br/>
-    Carte :[[${form.formulaire.carte}]]<br/>
-    Visa :[[${form.formulaire.visa}]]<br/>
+    Langue :[[${form.langue}]]<br/>
+    Carte :[[${form.carte}]]<br/>
+    Visa :[[${form.visa}]]<br/>
 
 </fieldset>
 

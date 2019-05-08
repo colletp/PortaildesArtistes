@@ -27,11 +27,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 
     public void setFromDTO(final FormulaireDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
-        setCitoyenId(objDTO.getCitoyenId().toString());
+        setCitoyenId(objDTO.getCitoyenId()==null?"":objDTO.getCitoyenId().toString());
         setDateDemande(convertDateTime(objDTO.getDateDemande()));
-        setCursusAc(objDTO.getCursusAc().toString());
-        setExpPro(objDTO.getExpPro().toString());
-        setRessources(objDTO.getRessources().toString());
+        setCursusAc(objDTO.getCursusAc()==null?"":objDTO.getCursusAc().toString());
+        setExpPro(objDTO.getExpPro()==null?"":objDTO.getExpPro().toString());
+        setRessources(objDTO.getRessources()==null?"":objDTO.getRessources().toString());
         setLangue(objDTO.getLangue());
         setCarte(objDTO.getCarte().toString());
         setVisa(objDTO.getVisa().toString());
@@ -49,15 +49,15 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
 
     public String getCitoyenId() { return citoyenId; }
-    public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
+    public void setCitoyenId( String p_id) { citoyenId = p_id; }
     public String getDateDemande(){ return dateDemande;}
-    public void setDateDemande(String d){ this.dateDemande=d;}
+    public void setDateDemande(String d){ dateDemande=d;}
     public String getCursusAc(){ return cursusAc;}
-    public void setCursusAc(String ls){ this.cursusAc=ls;}
+    public void setCursusAc(String ls){ cursusAc=ls;}
     public String getExpPro(){ return expPro;}
-    public void setExpPro(String ls){ this.expPro=ls;}
+    public void setExpPro(String ls){ expPro=ls;}
     public String getRessources(){ return ressources;}
-    public void setRessources(String ls){ this.ressources=ls;}
+    public void setRessources(String ls){ ressources=ls;}
 //    public List<String> getCursusAc(){ return cursusAc;}
 //    public void setCursusAc(List<String> ls){ this.cursusAc=ls;}
 //    public List<String> getExpPro(){ return expPro;}
@@ -65,11 +65,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 //    public List<String> getRessources(){ return ressources;}
 //    public void setRessources(List<String> ls){ this.ressources=ls;}
     public String getLangue(){ return langue;}
-    public void setLangue(String s){ this.langue=s;}
+    public void setLangue(String s){ langue=s;}
     public String getCarte(){ return carte;}
-    public void setCarte(String b){ this.carte=b;}
+    public void setCarte(String b){ carte=b;}
     public String getVisa(){ return visa;}
-    public void setVisa(String b){ this.visa=b;}
+    public void setVisa(String b){ visa=b;}
 
     public List<String> getActivitesId(){ return activitesId; }
     public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
