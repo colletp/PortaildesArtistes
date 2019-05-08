@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public abstract class DataForm<T extends DTO> implements Serializable {
     public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
 
@@ -129,6 +130,9 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         }        
         return true;*/
     }
+
+
+    /*
     protected Date convertDate( String toValidate ){
 		Date date;
 		try {
@@ -141,7 +145,42 @@ public abstract class DataForm<T extends DTO> implements Serializable {
 			}
 		}
 		return date;
+    }*/
+
+
+    protected Date convertDate( String toValidate ) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        dateFormat.setLenient(false);
+        Date date = null;
+
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat2.setLenient(false);
+
+        try {
+            date = dateFormat.parse(toValidate);
+        } catch(ParseException  e) {
+
+            try {
+                date = dateFormat2.parse(toValidate);
+            } catch (ParseException e2) {
+                throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy [HH:mm:ss]) : " + e2.getMessage());
+            }
+
+        }
+        /*try {
+            date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toValidate);
+        } catch(ParseException e){
+            try {
+                date = new SimpleDateFormat("dd/MM/yyyy").parse(toValidate);
+            } catch(ParseException e2) {
+                throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy [HH:mm:ss]) : " + e2.getMessage());
+            }
+        }*/
+        return date;
+
     }
+
     protected String convertDate(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);

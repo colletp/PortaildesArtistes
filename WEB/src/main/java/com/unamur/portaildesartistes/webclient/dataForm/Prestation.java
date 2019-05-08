@@ -63,8 +63,10 @@ public class Prestation extends DataForm<PrestationDTO> {
     // ******************
     // Fonctions
     // ******************
-    protected Boolean isNotOverMontantMax(String montant) throws IllegalArgumentException {
-        if (Double.parseDouble(montant) > 128.93) {
+    protected Boolean isNotOverMontantMax(String montant, String duree) throws IllegalArgumentException {
+
+
+        if (Double.parseDouble(montant) > 128.93 * Integer.parseInt(duree) ) {
             throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
         }
         return true;
@@ -93,11 +95,10 @@ public class Prestation extends DataForm<PrestationDTO> {
 
         isNotEmpty(getMontant());
         convertDouble(getMontant());
-        isNotOverMontantMax(getMontant());
+        isNotOverMontantMax(getMontant(), getDuree());
         dto.setMontant( convertDouble(getMontant()) );
 
         isNotEmpty(getDuree());
-        //containsOnlyNumbers(getDuree());
         isNotOverDureeMax(getDuree());
         dto.setDuree( convertInt(getDuree()));
 
