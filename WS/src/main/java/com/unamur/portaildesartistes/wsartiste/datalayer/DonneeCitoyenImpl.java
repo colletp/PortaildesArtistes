@@ -67,10 +67,17 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
     public void update(UtilisateurDTO item){
         adrImpl.update( item.getCitoyen().getResideAdr() );
-        if( item.getPassword().isEmpty() )
-            super.Exec(UtilisateurSQLs.class).update( item , item.getCitoyen() );
-        else
-            super.Exec(UtilisateurSQLs.class).updatePass( item , item.getCitoyen() );
+        try{
+            if( item.getPassword().isEmpty() )
+                super.Exec(UtilisateurSQLs.class).update( item , item.getCitoyen() );
+            else
+                super.Exec(UtilisateurSQLs.class).updatePass( item , item.getCitoyen() );
+        }catch(UnableToExecuteStatementException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
+        }
+
     }
 
     @RegisterMapper(CitoyenMapper.class)
@@ -90,10 +97,10 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
                                "VALUES (:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:username,:password,:reside) RETURNING citoyen_id ")
         String insert(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit) throws SQLException;
 
-        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:=tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation WHERE citoyen_id=:id")
+        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation WHERE citoyen_id=:id")
         void update(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit);
 
-        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:=tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation, login=:username, password=:password WHERE citoyen_id=:id")
+        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation, login=:username, password=:password WHERE citoyen_id=:id")
         void updatePass(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit);
     }
 

@@ -34,17 +34,15 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
             return super.Exec(UtilisateurSQLs.class).getById(uuid);
         }
         catch(UnableToExecuteStatementException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
         }
         catch(SQLException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
         }
         return null;
@@ -55,17 +53,15 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
             return super.Exec(UtilisateurSQLs.class).getByUsername(userName);
         }
         catch(UnableToExecuteStatementException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
         }
         catch(SQLException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
         }
         return null;
@@ -78,19 +74,15 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
     public void update(UtilisateurDTO usr){
         try{
             super.Exec(UtilisateurSQLs.class).update(usr);
-        }
-            catch(UnableToExecuteStatementException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+        }catch(UnableToExecuteStatementException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
-        }
-            catch(SQLException e){
-            System.err.println( e );
-            System.err.println( e.getCause() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
+        }catch(SQLException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().getName() );
             //throw e;
         }
     }
