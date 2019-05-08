@@ -44,7 +44,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,Model model){
         logger.error("Utilisateur/modif : Authentication received! Cookie : "+cookieValue );
         model.addAttribute("form", new UtilisateurInscript(super.getObj(cookieValue, itemId, new UtilisateurDTO(), UtilisateurDTO.class)) );
-        return "/Utilisateur/list.html";
+        return "/Utilisateur/post.html";
         //return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"POST",model);
     }
 
