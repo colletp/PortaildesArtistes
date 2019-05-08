@@ -99,7 +99,6 @@ logger.error( formForm.getActivitesId().toString() );
     public String FormList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
         logger.error("Form List : Authentication received! Cookie : "+cookieValue );
-
         return super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model);
     }
 
