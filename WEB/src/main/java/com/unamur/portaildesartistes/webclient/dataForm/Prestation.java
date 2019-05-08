@@ -57,7 +57,7 @@ public class Prestation extends DataForm<PrestationDTO> {
     }
 
     public void setFromDTO(final PrestationDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDatePrest(convertDate(objDTO.getDatePrest()));
         setDuree(objDTO.getDuree().toString());
         setMontant(objDTO.getMontant().toString());

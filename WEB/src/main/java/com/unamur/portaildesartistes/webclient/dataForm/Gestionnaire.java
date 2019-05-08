@@ -32,7 +32,7 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     public void setBureau(String p_bur) { this.bureau = p_bur; }
 
     public void setFromDTO(final GestionnaireDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setCitoyenId(objDTO.getCitoyenId().toString());
         setTravailleId(objDTO.getTravailleId().toString());
         setMatricule(objDTO.getMatricule());

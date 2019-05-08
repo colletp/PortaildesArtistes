@@ -42,7 +42,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
                                 Model model){
         logger.error("Formulaire/modif : Authentication received! Cookie : "+cookieValue );
         model.addAttribute("form",formForm==null?new Formulaire():formForm);
-        return super.getForm(cookieValue,new FormulaireDTO(),itemId,FormulaireDTO.class,"POST",model);
+        return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"POST",model);
     }
 
     @PostMapping(value = "/Formulaire")
@@ -86,7 +86,7 @@ logger.error( formForm.getActivitesId().toString() );
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("Form : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new FormulaireDTO(),itemId,FormulaireDTO.class,"GET",model);
+        return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"GET",model);
     }
 
     @GetMapping(value = "Formulaire/suppr/{id}")

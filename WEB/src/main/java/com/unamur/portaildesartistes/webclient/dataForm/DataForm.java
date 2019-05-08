@@ -21,7 +21,8 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // Setter/Getter
     // ******************
 
-    protected void setFromDTO( T objDTO ){setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );}
+    //protected void setFromDTO( DTO objDTO ){setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );}
+    public abstract void setFromDTO( T objDTO);
 
     public String getId(){return id;}
     public void setId( String p_id){id = p_id;}

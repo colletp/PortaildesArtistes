@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 
-public class UtilisateurInscript {
+public class UtilisateurInscript extends Utilisateur{
     private static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript.class);
 
 /* Cette classe est un assemblage de formulaires, retournant un Utilisateur avec un citoyen et une adresse. */
-    private Utilisateur utilisateur;
+    //private Utilisateur utilisateur;
     private Citoyen citoyen;
     private Adresse adresse;
 
@@ -21,25 +21,20 @@ public class UtilisateurInscript {
     // ******************
 
     public UtilisateurInscript(){
-        setUtilisateur(new Utilisateur());
         setCitoyen(new Citoyen());
         setAdresse(new Adresse());
     }
     public UtilisateurInscript( UtilisateurDTO usr ){
-        setUtilisateur(new Utilisateur());
         setCitoyen(new Citoyen());
         setAdresse(new Adresse());
-
-        setUtilisateur(usr);
-        setCitoyen(usr.getCitoyen());
-        setAdresse(usr.getCitoyen().getResideAdr());
+        setFromDTO(usr);
     }
     // ******************
     // Setter/Getter
     // ******************
-    public Utilisateur getUtilisateur(){return utilisateur; }
-    public void setUtilisateur(Utilisateur usr) { utilisateur = usr; }
-    public void setUtilisateur(UtilisateurDTO usr) {utilisateur.setFromDTO(usr);}
+    public Utilisateur getUtilisateur(){return this; }
+    public void setUtilisateur(Utilisateur usr) { setUsername(usr.getUsername());setPassword(usr.getPassword()); }
+    public void setUtilisateur(UtilisateurDTO usr) {super.setFromDTO(usr);}
 
     public Citoyen getCitoyen(){return citoyen;}
     public void setCitoyen(Citoyen cit) {citoyen = cit;}
@@ -52,10 +47,19 @@ public class UtilisateurInscript {
     // ******************
     // Fonctions
     // ******************
+    @Override
     public UtilisateurDTO getDTO()throws ParseException {
-        UtilisateurDTO usr = utilisateur.getDTO();
+        UtilisateurDTO usr = super.getDTO();
         usr.setCitoyen( citoyen.getDTO() );
+        usr.setId(usr.getCitoyen().getId());
         usr.getCitoyen().setResideAdr( adresse.getDTO() );
+        usr.getCitoyen().setReside(usr.getCitoyen().getResideAdr().getId());
         return usr;
+    }
+    @Override
+    public void setFromDTO(UtilisateurDTO usr){
+        setUtilisateur(usr);
+        setCitoyen(usr.getCitoyen());
+        setAdresse(usr.getCitoyen().getResideAdr());
     }
 }

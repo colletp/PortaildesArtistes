@@ -148,7 +148,7 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
         UtilisateurDTO getById(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
 
         @SqlUpdate("UPDATE citoyen SET login=:username,password=:password WHERE citoyen_id=:id")
-        void update(@BindBean UtilisateurDTO test) throws SQLException;
+        void update(@BindBean UtilisateurDTO usr) throws SQLException;
     }
 
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {

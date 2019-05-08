@@ -34,7 +34,7 @@ public class Reponse extends DataForm<ReponseDTO> {
     public void setDateReponse(String p_date) { dateReponse = p_date; }
 
     public void setFromDTO(final ReponseDTO objDTO){
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setTrtId(objDTO.getTrtId().toString());
         setCitoyenId(objDTO.getCitoyenId().toString());
         setDateReponse(convertDateTime(objDTO.getDateReponse()));

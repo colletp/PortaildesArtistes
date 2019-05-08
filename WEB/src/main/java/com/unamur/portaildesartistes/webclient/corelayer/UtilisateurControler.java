@@ -86,12 +86,14 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,Model model){
         logger.error("citoyen(post) "+(method.isEmpty()?"POST":method)+" : Authentication received! Cookie : "+cookieValue );
         //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-        UtilisateurDTO usrDTO=null;
         try{
-            usrDTO = usrForm.getDTO();
-            //return
-                   super.postForm(cookieValue,usrDTO,method);
-            return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
+            UtilisateurDTO usrDTO = usrForm.getDTO();
+            super.postForm(cookieValue,usrDTO,method);
+            model.addAttribute("form", new UtilisateurInscript(usrDTO) );
+            model.addAttribute("Msg","Le profil a été mis à jour" );
+
+            return "/Utilisateur/get.html";
+            //super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
         }catch(IllegalArgumentException e){
             logger.error(e.getMessage());
             model.addAttribute("Err",e.getMessage() );
@@ -110,7 +112,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("citoyen : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
+        return super.getForm(cookieValue,new UtilisateurDTO(),new UtilisateurInscript(),itemId,UtilisateurDTO.class,"GET",model);
     }
 
     @GetMapping(value = "Utilisateur/suppr/{id}")

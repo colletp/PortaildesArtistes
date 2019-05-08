@@ -105,6 +105,11 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
             usr.setPassword(WebSecurityConfig.encoder().encode(usr.getPassword()));
             usrImpl.update(usr);
         }
+        if(usr.getCitoyen()!=null){
+            citImpl.update(usr);
+            if( usr.getCitoyen().getResideAdr()!=null )
+                adrImpl.update(usr.getCitoyen().getResideAdr());
+        }
     }
 
     @Transactional

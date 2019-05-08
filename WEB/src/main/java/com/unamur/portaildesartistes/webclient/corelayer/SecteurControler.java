@@ -48,7 +48,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         logger.error("Secteur/modif : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new SecteurDTO(),itemId,SecteurDTO.class,"POST",model);
+        return super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"POST",model);
     }
 
     @PostMapping(value = "/Secteur")
@@ -72,7 +72,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new SecteurDTO(),itemId,SecteurDTO.class,"GET",model);
+        return super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"GET",model);
     }
 
     @GetMapping(value = "/Secteur/suppr/{id}")

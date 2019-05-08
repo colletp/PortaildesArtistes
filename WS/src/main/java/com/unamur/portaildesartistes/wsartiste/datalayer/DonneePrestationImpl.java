@@ -26,7 +26,7 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
     }
 
     @Override
-    PrestationDTO getById(UUID id) {
+    public PrestationDTO getById(UUID id) {
         return super.Exec(PrestationSQLs.class).getById(id);
     }
 
@@ -35,12 +35,12 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
     }
 
     @Override
-    void update(PrestationDTO item) {
+    public void update(PrestationDTO item) {
         super.Exec(PrestationSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(PrestationSQLs.class).delete(id);
     }
 

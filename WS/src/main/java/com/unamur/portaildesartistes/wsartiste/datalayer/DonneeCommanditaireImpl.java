@@ -35,12 +35,12 @@ public class DonneeCommanditaireImpl extends Donnee<CommanditaireDTO>{
     }
 
     @Override
-    void update(CommanditaireDTO item) {
+    public void update(CommanditaireDTO item) {
         super.Exec(CommanditaireSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(CommanditaireSQLs.class).delete(id);
     }
 

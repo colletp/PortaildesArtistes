@@ -36,18 +36,20 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
 
     @Override
-    UUID insert(CitoyenDTO item) {
+    public UUID insert(CitoyenDTO item) {
         throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
     }
 
     @Override
-    void update(CitoyenDTO item) {
-        super.Exec(CitoyenSQLs.class).update(item);
+    public void update(CitoyenDTO item) {
+        throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
+        //super.Exec(CitoyenSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
-        super.Exec(CitoyenSQLs.class).delete(id);
+    public void delete(UUID id) {
+        throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
+        //super.Exec(CitoyenSQLs.class).delete(id);
     }
 
     public UUID insert(UtilisateurDTO item){
@@ -63,6 +65,13 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
             return null;
         }
     }
+    public void update(UtilisateurDTO item){
+        adrImpl.update( item.getCitoyen().getResideAdr() );
+        if( item.getPassword().isEmpty() )
+            super.Exec(UtilisateurSQLs.class).update( item , item.getCitoyen() );
+        else
+            super.Exec(UtilisateurSQLs.class).updatePass( item , item.getCitoyen() );
+    }
 
     @RegisterMapper(CitoyenMapper.class)
     interface CitoyenSQLs {
@@ -72,14 +81,20 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
         CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
 
-        void update(CitoyenDTO cit);
-        void delete(UUID id);
+        //void update(CitoyenDTO cit);
+        //void delete(UUID id);
     }
     @RegisterMapper(UtilisateurMapper.class)
     interface UtilisateurSQLs {
         @SqlQuery("INSERT INTO citoyen ( nom, prenom,date_naissance, tel, gsm, mail, nrn, nation, login   , password, reside) " +
                                "VALUES (:nom,:prenom,:dateNaissance,:tel,:gsm,:mail,:nrn,:nation,:username,:password,:reside) RETURNING citoyen_id ")
         String insert(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit) throws SQLException;
+
+        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:=tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation WHERE citoyen_id=:id")
+        void update(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit);
+
+        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:=tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation, login=:username, password=:password WHERE citoyen_id=:id")
+        void updatePass(@BindBean UtilisateurDTO usr,@BindBean CitoyenDTO cit);
     }
 
     public static class CitoyenMapper implements ResultSetMapper<CitoyenDTO> {

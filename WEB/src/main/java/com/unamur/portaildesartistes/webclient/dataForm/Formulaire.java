@@ -26,7 +26,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private List<String> activitesId;
 
     public void setFromDTO(final FormulaireDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setCitoyenId(objDTO.getCitoyenId().toString());
         setDateDemande(convertDateTime(objDTO.getDateDemande()));
         setCursusAc(objDTO.getCursusAc().toString());
