@@ -31,12 +31,18 @@
 
     <div class="formbox400">
         <fieldset>
-            <legend>Vous n'avez pas de compte ?</legend>
-            <a class="aBouton" th:href="@{/inscript}">Créer un nouveau compte</a>
+            <legend th:text="#{pasdecompte}"></legend>
+            <a class="aBouton" th:href="@{/inscript}"  th:text="#{creercompte}"></a>
         </fieldset>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
+
+
 </body>
+
+
 </html>

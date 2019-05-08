@@ -29,10 +29,10 @@
 -->
 <nav th:fragment="nav (select)">
     <div id="navsection">
-        <div class=navtext th:remove="${select%2!=1}? all : none"><a class="whitea" th:href="@{accueil}">Accueil</a></div>
+        <div class=navtext th:remove="${select%2!=1}? all : none"><a class="whitea" th:href="@{accueil}" th:text="#{accueil}"></a></div>
         <div class=navtext th:remove="${(select/2)%2!=1}? all : none"><a class="whitea" th:href="@{/choixRole}">Menu</a></div>
-        <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}">S'inscrire</a></div>
-        <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}">Se connecter</a></div>
+        <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}" th:text="#{register}"></a></div>
+        <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
         <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}">Artiste &#9660;</a>
             <div class=ssmenu><a class="whitea">Prestations</a></div>
@@ -48,12 +48,19 @@
             <div class=ssmenu><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
         </div>
 
-        <div class=menu th:remove="${(select/8)%2!=1}? all : none">Langue &#9660;
-            <div class=ssmenu><a class="whitea">Fançais</a></div>
-            <div class=ssmenu><a class="whitea" th:href="@{/home}">Anglais</a></div>
+        <div class=menu th:remove="${(select/8)%2!=1}? all : none"><span th:text="#{language}"></span> &#9660;
+            <div class=ssmenu><button class="navbouton" onclick="changeLangue('fr')" th:text="#{lang.fr}"></button></div>
+            <div class=ssmenu><button class="navbouton" onclick="changeLangue('en')" th:text="#{lang.eng}"></button></div>
         </div>
     </div>
 </nav>
+
+
+<script type="text/javascript" th:fragment="multiscript">
+     function changeLangue(valeur){
+            window.location.replace(window.location.pathname + '?lang=' + valeur);
+    }
+</script>
 
 </body>
 
