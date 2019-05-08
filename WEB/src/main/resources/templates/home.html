@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
-<head>
-	<title>Springboot Rest Client</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="icon" href="favicon.ico" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-	<link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
-</head>
-
+<head th:replace="~{/fragments/header :: meta}"></head>
 <body>
    <div th:insert="~{/fragments/header :: head}"></div>
    <div th:replace="~{/fragments/header :: nav(select=${1})}"></div>
 
-	<h1>Welcome to the SPF Blabla Artists Portal<br/><br/>	being manufactured<br/></h1>
+	<h1 th:text="#{accueil.bienvenue}"><br/><br/>	being manufactured<br/></h1>
 	<a class="aBouton" href="javascript:history.go(-1)">Return</a>
+   <div th:replace="~{/fragments/header :: multiscript}"></div>
+
 </body>
 </html>

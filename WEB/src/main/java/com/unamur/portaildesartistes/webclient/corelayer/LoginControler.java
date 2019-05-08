@@ -81,6 +81,10 @@ public class LoginControler {
     public String spfblablaPng(Model model) {
         return "spfblabla.png";
     }
+    @GetMapping(value="/favicon.ico")
+    public String favicon(Model model) {
+        return "favicon.ico";
+    }
 
     @GetMapping(value = "/login")
     public String loginView( @ModelAttribute("lang") String lang,@ModelAttribute("error") String Err,@ModelAttribute("message") String Msg,Model model ){

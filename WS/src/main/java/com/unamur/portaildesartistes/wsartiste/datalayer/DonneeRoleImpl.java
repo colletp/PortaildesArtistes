@@ -29,27 +29,27 @@ public class DonneeRoleImpl extends Donnee<RoleDTO>{
     }
 
     @Override
-    List<RoleDTO> list() {
+    public List<RoleDTO> list() {
         return super.Exec(RoleSQLs.class).list();
     }
 
     @Override
-    RoleDTO getById(UUID id) {
+    public RoleDTO getById(UUID id) {
         return super.Exec(RoleSQLs.class).getById(id);
     }
 
     @Override
-    UUID insert(RoleDTO item) {
+    public UUID insert(RoleDTO item) {
         return UUID.fromString(super.Exec(RoleSQLs.class).insert(item));
     }
 
     @Override
-    void update(RoleDTO item) {
+    public void update(RoleDTO item) {
         super.Exec(RoleSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(RoleSQLs.class).delete(id);
     }
 

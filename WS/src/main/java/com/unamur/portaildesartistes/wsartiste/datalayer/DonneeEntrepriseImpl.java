@@ -35,12 +35,12 @@ public class DonneeEntrepriseImpl extends Donnee<EntrepriseDTO>{
     }
 
     @Override
-    void update(EntrepriseDTO item) {
+    public void update(EntrepriseDTO item) {
         super.Exec(EntrepriseSQLs.class).update(item);
     }
 
     @Override
-    void delete(UUID id) {
+    public void delete(UUID id) {
         super.Exec(EntrepriseSQLs.class).delete(id);
     }
 

@@ -31,7 +31,7 @@ public class Activite extends DataForm<ActiviteDTO> {
     public void setDescription(String desc){this.description=desc; }
 
     public void setFromDTO(final ActiviteDTO objDTO) {
-        super.setFromDTO(objDTO);
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setSecteurId(objDTO.getSecteurId().toString());
         setNomActivite(objDTO.getNomActivite());
         setDescription(objDTO.getDescription());

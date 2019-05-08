@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
-<head>
-    <title>Springboot Rest Client</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <link href="../../static/css/mainCSS.css" th:href="@{/css/mainCSS.css}" rel="stylesheet" />
-</head>
+<head th:replace="~{/fragments/header :: meta}"></head>
 <body>
 
 <div th:replace="~{/fragments/header :: head}"></div>
@@ -16,9 +9,9 @@
 <h1>Profil du citoyen</h1><br/>
 <div id="introbox">
 
-    <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.username}]]<br/>
-    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.password}]]<br/>
-    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.citoyen.resideAdr}) }"></fieldset>
+    <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.utilisateur.username}]]<br/>
+    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.utilisateur.password}]]<br/>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.adresse}) }"></fieldset>
 
 </div>
 

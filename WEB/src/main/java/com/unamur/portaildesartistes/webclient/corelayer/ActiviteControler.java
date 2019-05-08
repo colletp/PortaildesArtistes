@@ -26,7 +26,9 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         logger.error("activite/modif : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new ActiviteDTO(),itemId,ActiviteDTO.class,"POST",model);
+        Activite actForm = new Activite();
+        return super.getForm(cookieValue,new ActiviteDTO(),actForm,itemId,ActiviteDTO.class,"POST",model);
+
     }
 
     @PostMapping(value = "/activite")
@@ -50,7 +52,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("activite : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new ActiviteDTO(),itemId,ActiviteDTO.class,"GET",model);
+        return super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"GET",model);
     }
 
     @GetMapping(value = "activite/suppr/{id}")

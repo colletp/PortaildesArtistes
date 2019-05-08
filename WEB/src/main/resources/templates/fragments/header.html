@@ -4,6 +4,17 @@
 
 <body>
 
+<!-- éléments dans l'entête de la page -->
+<head th:fragment="meta">
+    <title>Springboot Rest Client</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" th:href="@{/img/favicon.ico}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link th:href="@{/css/mainCSS.css}" rel="stylesheet" />
+</head>
+
+
 <!-- éléments de la barre d'en-tête -->
 <header th:fragment="head">
         <div id="topsection">
@@ -29,15 +40,15 @@
 -->
 <nav th:fragment="nav (select)">
     <div id="navsection">
-        <div class=navtext th:remove="${select%2!=1}? all : none"><a class="whitea" th:href="@{accueil}">Accueil</a></div>
+        <div class=navtext th:remove="${select%2!=1}? all : none"><a class="whitea" th:href="@{accueil}" th:text="#{accueil}"></a></div>
         <div class=navtext th:remove="${(select/2)%2!=1}? all : none"><a class="whitea" th:href="@{/choixRole}">Menu</a></div>
-        <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}">S'inscrire</a></div>
-        <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}">Se connecter</a></div>
+        <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}" th:text="#{register}"></a></div>
+        <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
         <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}">Artiste &#9660;</a>
-            <div class=ssmenu><a class="whitea">Prestations</a></div>
-            <div class=ssmenu><a class="whitea">Carte artiste</a></div>
-            <div class=ssmenu><a class="whitea">Carte visa</a></div>
+            <div class=ssmenu><a th:href="@{/Prestations}" class="whitea">Prestations</a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea">Carte artiste</a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea">Carte visa</a></div>
         </div>
 
         <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea">Commanditaire</a></div>
@@ -45,15 +56,22 @@
 
         <div class=menu th:remove="${(select/4)%2!=1}? all : none">Mon profil &#9660;
             <div class=ssmenu><a class="whitea" th:href="@{/Utilisateur/modif/moi}">Mes informations</a></div>
-            <div class=ssmenu><a class="whitea" th:href="@{/accueil}">Déconnexion</a></div>
+            <div class=ssmenu><a class="whitea" th:href="@{/logout2}">Déconnexion</a></div>
         </div>
 
-        <div class=menu th:remove="${(select/8)%2!=1}? all : none">Langue &#9660;
-            <div class=ssmenu><a class="whitea">Fançais</a></div>
-            <div class=ssmenu><a class="whitea" th:href="@{/home}">Anglais</a></div>
+        <div class=menu th:remove="${(select/8)%2!=1}? all : none"><span th:text="#{language}"></span> &#9660;
+            <div class=ssmenu><button class="navbouton" onclick="changeLangue('fr')" th:text="#{lang.fr}"></button></div>
+            <div class=ssmenu><button class="navbouton" onclick="changeLangue('en')" th:text="#{lang.eng}"></button></div>
         </div>
     </div>
 </nav>
+
+
+<script type="text/javascript" th:fragment="multiscript">
+     function changeLangue(valeur){
+            window.location.replace(window.location.pathname + '?lang=' + valeur);
+    }
+</script>
 
 </body>
 

@@ -21,8 +21,8 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
     public void setPassword(String p_password) { password = p_password; }
 
     public void setFromDTO(final UtilisateurDTO objDTO){
-            super.setFromDTO(objDTO);
-            setUsername(objDTO.getUsername());
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
+        setUsername(objDTO.getUsername());
     }
     // ******************
     // Fonctions
