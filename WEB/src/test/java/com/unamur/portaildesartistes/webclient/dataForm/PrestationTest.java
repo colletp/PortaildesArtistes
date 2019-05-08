@@ -140,24 +140,29 @@ class PrestationTest {
         prestation.setMontant("128.94");
 
         try {
-            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Montant > 128.93 devrait générer une IllegalArgumentException");
+            assertThrows(IllegalArgumentException.class, ()-> {prestation.getDTO();}, "Montant > 128.93 devrait générer une IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
-    // To Do
     @DisplayName("TC 6.11, Test ajout prestation avec durée > 7 jours")
     @Test
     void testPrestationSupDureeMax() {
 
-        prestation.setDuree("8");
+        prestation.setDuree("iiii");
 
-        try {
-            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Durée > 7 jours devrait générer une IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+
+
+        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Durée > 7 jours devrait générer une IllegalArgumentException");
+
+
+
+//        try {
+//            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Durée > 7 jours devrait générer une IllegalArgumentException");
+//        } catch (IllegalArgumentException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // To Do
@@ -175,23 +180,17 @@ class PrestationTest {
     }
 
 
-    // To Do
     @DisplayName("TC 6.14, Test ajout prestation avec format durée non valide")
     @Test
     void testPrestationDureeInvalide() {
 
-        // vérifier format durée
         prestation.setDuree("2a5A");
 
-        try {
-            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Format durée invalide devrait générer une IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format durée invalide devrait générer une IllegalArgumentException");
     }
 
     // To Do
-    @DisplayName("TC 6.13, Test ajout prestation avec format montant non valide")
+    @DisplayName("TC 6.15, Test ajout prestation avec format montant non valide")
     @Test
     void testPrestationMontantInvalide() {
 
@@ -199,7 +198,7 @@ class PrestationTest {
         prestation.setMontant("6aD6");
 
         try {
-            assertThrows(IllegalArgumentException.class, ()-> {PrestationDTO prestDTO = prestation.getDTO();}, "Format montant invalide devrait générer une IllegalArgumentException");
+            assertThrows(IllegalArgumentException.class, ()-> {prestation.getDTO();}, "Format montant invalide devrait générer une IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

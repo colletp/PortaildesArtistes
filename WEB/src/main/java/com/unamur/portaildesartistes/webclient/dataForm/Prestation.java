@@ -49,13 +49,6 @@ public class Prestation extends DataForm<PrestationDTO> {
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
 
-    protected Boolean isNotOverMontantMax(String p_montant) throws IllegalArgumentException {
-        if (Double.parseDouble(p_montant) > 128.93) {
-            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
-        }
-        return true;
-    }
-
     public void setFromDTO(final PrestationDTO objDTO) {
         super.setFromDTO(objDTO);
         setDatePrest(convertDate(objDTO.getDatePrest()));
@@ -70,6 +63,20 @@ public class Prestation extends DataForm<PrestationDTO> {
     // ******************
     // Fonctions
     // ******************
+    protected Boolean isNotOverMontantMax(String montant) throws IllegalArgumentException {
+        if (Double.parseDouble(montant) > 128.93) {
+            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
+        }
+        return true;
+    }
+
+    protected Boolean isNotOverDureeMax(String duree) throws IllegalArgumentException {
+        if (Integer.parseInt(duree) > 7) {
+            throw new IllegalArgumentException("Durée maximale d'une prestation dépassée");
+        }
+        return true;
+    }
+
     public PrestationDTO getDTO()throws ParseException {
         PrestationDTO dto = new PrestationDTO();
         if( getId()!=null && !getId().isEmpty())
@@ -85,10 +92,13 @@ public class Prestation extends DataForm<PrestationDTO> {
         dto.setEtat(getEtat());
 
         isNotEmpty(getMontant());
+        convertDouble(getMontant());
         isNotOverMontantMax(getMontant());
         dto.setMontant( convertDouble(getMontant()) );
 
         isNotEmpty(getDuree());
+        //containsOnlyNumbers(getDuree());
+        isNotOverDureeMax(getDuree());
         dto.setDuree( convertInt(getDuree()));
 
         isNotEmpty(getActiviteId());
@@ -102,5 +112,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
         return dto;
     }
+
+
 
 }
