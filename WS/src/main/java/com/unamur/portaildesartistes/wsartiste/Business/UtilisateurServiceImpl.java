@@ -63,7 +63,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
                 for( ActiviteDTO act : doc.getActivites() ){
                     act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
                 }
-                doc.setPrestations( prestImpl.getByDocId( doc.getId() ) );
+                doc.setPrestations( prestImpl.listbyTypeId( doc, doc.getId() ) );
                 for( PrestationDTO prest : doc.getPrestations() ){
                     CommanditaireDTO com = comImpl.getById( prest.getCommanditaireId() );
                         com.setCitoyen(  citImpl.getById( com.getCitoyenId() ) );
