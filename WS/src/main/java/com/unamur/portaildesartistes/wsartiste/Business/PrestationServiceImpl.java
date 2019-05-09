@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-public class PrestationServiceImpl  implements IService<PrestationDTO> {
+public class PrestationServiceImpl implements IService<PrestationDTO> {
 
     private static final Logger logger = LoggerFactory.getLogger(PrestationServiceImpl.class);
 
@@ -19,6 +19,9 @@ public class PrestationServiceImpl  implements IService<PrestationDTO> {
 
         @Transactional
         public List<PrestationDTO> list(){ return prestationImpl.list(); }
+
+        @Transactional
+        public List<PrestationDTO> listbyTypeId(Object searcType, UUID uuid){ return prestationImpl.list(); }
 
         @Transactional
         public PrestationDTO getById( UUID uuid ){
