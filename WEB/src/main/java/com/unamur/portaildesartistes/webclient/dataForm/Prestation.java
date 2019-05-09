@@ -1,11 +1,7 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
-
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.UUID;
 
 public class Prestation extends DataForm<PrestationDTO> {
 
@@ -49,13 +45,6 @@ public class Prestation extends DataForm<PrestationDTO> {
     public void setCommanditaireId( String p_id) { this.commanditaireId= p_id; }
 
 
-    protected Boolean isNotOverMontantMax(String p_montant) throws IllegalArgumentException {
-        if (Double.parseDouble(p_montant) > 128.93) {
-            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
-        }
-        return true;
-    }
-
     public void setFromDTO(final PrestationDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDatePrest(convertDate(objDTO.getDatePrest()));
@@ -70,6 +59,22 @@ public class Prestation extends DataForm<PrestationDTO> {
     // ******************
     // Fonctions
     // ******************
+    protected Boolean isNotOverMontantMax(String montant, String duree) throws IllegalArgumentException {
+
+
+        if (Double.parseDouble(montant) > 128.93 * Integer.parseInt(duree) ) {
+            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
+        }
+        return true;
+    }
+
+    protected Boolean isNotOverDureeMax(String duree) throws IllegalArgumentException {
+        if (Integer.parseInt(duree) > 7) {
+            throw new IllegalArgumentException("Durée maximale d'une prestation dépassée");
+        }
+        return true;
+    }
+
     public PrestationDTO getDTO()throws ParseException {
         PrestationDTO dto = new PrestationDTO();
         if( getId()!=null && !getId().isEmpty())
@@ -85,22 +90,26 @@ public class Prestation extends DataForm<PrestationDTO> {
         dto.setEtat(getEtat());
 
         isNotEmpty(getMontant());
-        isNotOverMontantMax(getMontant());
+        convertDouble(getMontant());
+        isNotOverMontantMax(getMontant(), getDuree());
         dto.setMontant( convertDouble(getMontant()) );
 
         isNotEmpty(getDuree());
+        isNotOverDureeMax(getDuree());
         dto.setDuree( convertInt(getDuree()));
 
         isNotEmpty(getActiviteId());
         dto.setActiviteId(convertUUID(getActiviteId()));
 
         isNotEmpty(getDatePrest());
-        dto.setDatePrest(Timestamp.from(convertDate(getDatePrest()).toInstant()) );
+        dto.setDatePrest( convertDate(getDatePrest()) );
 
         isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( convertUUID(getCommanditaireId()));
 
         return dto;
     }
+
+
 
 }

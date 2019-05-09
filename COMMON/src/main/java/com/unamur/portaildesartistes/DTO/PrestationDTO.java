@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.DTO;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 public class PrestationDTO extends DTO {
@@ -10,7 +9,7 @@ public class PrestationDTO extends DTO {
     // Champs/propriétés
     // ******************
 
-    private Timestamp datePrest;
+    private Date datePrest;
     private Integer duree;
     private Double montant;
     private String etat;
@@ -32,8 +31,8 @@ public class PrestationDTO extends DTO {
     // Setter/Getter
     // ******************
 
-    public Timestamp getDatePrest() { return datePrest; }
-    public void setDatePrest(Timestamp p_date) { this.datePrest = p_date; }
+    public Date getDatePrest() { return datePrest; }
+    public void setDatePrest(Date p_date) { this.datePrest = p_date; }
     public Integer getDuree() { return duree; }
     public void setDuree( Integer p_duree) { this.duree = p_duree; }
     public Double getMontant() { return montant; }
