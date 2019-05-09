@@ -25,21 +25,6 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String visa;
     private List<String> activitesId;
 
-    public void setFromDTO(final FormulaireDTO objDTO) {
-        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
-        setCitoyenId(objDTO.getCitoyenId()==null?"":objDTO.getCitoyenId().toString());
-        setDateDemande(convertDateTime(objDTO.getDateDemande()));
-        setCursusAc(objDTO.getCursusAc()==null?"":objDTO.getCursusAc().toString());
-        setExpPro(objDTO.getExpPro()==null?"":objDTO.getExpPro().toString());
-        setRessources(objDTO.getRessources()==null?"":objDTO.getRessources().toString());
-        setLangue(objDTO.getLangue());
-        setCarte(objDTO.getCarte().toString());
-        setVisa(objDTO.getVisa().toString());
-        List<String> la = new ArrayList<>();
-        for( UUID uuid : objDTO.getActivitesId() )
-            la.add( uuid.toString() );
-        setActivitesId( la );
-    }
     // ******************
     // Constructeur
     // ******************
@@ -91,9 +76,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         }
         dto.setLangue( getLangue());
 
-        dto.setRessources( Arrays.asList(getRessources()) );
-        dto.setExpPro( Arrays.asList(getExpPro()) );
-        dto.setCursusAc( Arrays.asList(getCursusAc()) );
+        dto.setRessources( Arrays.asList(getRessources()==null?"":getRessources()) );
+        dto.setExpPro( Arrays.asList(getExpPro()==null?"":getExpPro()) );
+        dto.setCursusAc( Arrays.asList(getCursusAc()==null?"":getCursusAc()) );
 
 //        dto.setRessources(getRessources());
 //        dto.setExpPro(getExpPro());
@@ -113,6 +98,22 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         }
         dto.setActivitesId(activitesId);
         return dto;
+    }
+
+    public void setFromDTO(final FormulaireDTO objDTO) {
+        setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
+        setCitoyenId(objDTO.getCitoyenId()==null?"":objDTO.getCitoyenId().toString());
+        setDateDemande(convertDateTime(objDTO.getDateDemande()));
+        setCursusAc(objDTO.getCursusAc()==null?"":objDTO.getCursusAc().toString());
+        setExpPro(objDTO.getExpPro()==null?"":objDTO.getExpPro().toString());
+        setRessources(objDTO.getRessources()==null?"":objDTO.getRessources().toString());
+        setLangue(objDTO.getLangue());
+        setCarte(objDTO.getCarte().toString());
+        setVisa(objDTO.getVisa().toString());
+        List<String> la = new ArrayList<>();
+        for( UUID uuid : objDTO.getActivitesId() )
+            la.add( uuid.toString() );
+        setActivitesId( la );
     }
 
 }

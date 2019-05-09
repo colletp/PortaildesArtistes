@@ -1,11 +1,7 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
-
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.UUID;
 
 public class Prestation extends DataForm<PrestationDTO> {
 
@@ -106,7 +102,7 @@ public class Prestation extends DataForm<PrestationDTO> {
         dto.setActiviteId(convertUUID(getActiviteId()));
 
         isNotEmpty(getDatePrest());
-        dto.setDatePrest(Timestamp.from(convertDate(getDatePrest()).toInstant()) );
+        dto.setDatePrest( convertDate(getDatePrest()) );
 
         isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( convertUUID(getCommanditaireId()));

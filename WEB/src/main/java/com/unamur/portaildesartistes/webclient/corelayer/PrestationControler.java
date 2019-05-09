@@ -21,22 +21,22 @@ import java.util.UUID;
 
 @Controller
 public class PrestationControler extends Controler<PrestationDTO, Class< PrestationDTO >, Prestation> {
-    private static final Logger logger = LoggerFactory.getLogger(FormulaireControler.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrestationControler.class);
 
     @Autowired
     private SecteurControler sectCtrl;
 
-    @GetMapping(value = "/Prestation/creer")
-    public String FormCreate(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    /*@GetMapping(value = "/Prestation/creer")
+    public String prestCreate(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             , @ModelAttribute("form") final Prestation formPrest
             , Model model){
         model.addAttribute("form",formPrest);
         String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
         return "Prestation/put.html";
-    }
+    }*/
 
     @GetMapping(value = "/Prestation/creer")
-    public String FormCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String prestCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Prestation formPrest
             ,Model model){
 
@@ -47,7 +47,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     }
 
     @GetMapping(value = "/Prestation/modif/{id}")
-    public String FormModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
+    public String prestModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                              @PathVariable("id") UUID itemId ,
                              @ModelAttribute("form") final Prestation formPrest,
                              Model model){
@@ -56,8 +56,8 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),itemId,PrestationDTO.class,"POST",model);
     }
 
-    @PostMapping(value = "/Formulaire")
-    public String FormPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    @PostMapping(value = "/Prestation")
+    public String prestPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Prestation formPrest
             ,Model model){
@@ -78,7 +78,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     }
 
     @GetMapping(value = "/Prestation")//initialisation du login
-    public String FormList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String prestList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         logger.error("Form List : Authentication received! Cookie : "+cookieValue );
 
@@ -94,7 +94,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     }
 
     @GetMapping(value = "Prestation/suppr/{id}")
-    public String FormSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
+    public String prestSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                              @PathVariable("id") UUID itemId,
                              Model model) {
         return super.delete(cookieValue,new PrestationDTO(),itemId,model);
