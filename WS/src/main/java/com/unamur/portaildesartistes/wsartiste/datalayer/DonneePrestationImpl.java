@@ -45,7 +45,26 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
     }
 
 
-    public List<PrestationDTO> listbyTypeId(Object searcType, UUID p_id){ return super.Exec(PrestationSQLs.class).getByDocId( p_id );}
+    public List<PrestationDTO> listbyTypeId(Object searcType, UUID p_id) {
+
+        switch(searcType.getClass().getName())
+        {
+            case "DocArtisteDTO" :
+                return super.Exec(PrestationSQLs.class).getByDocId( p_id );
+
+            case "CommanditaireDTO" :
+                return super.Exec(PrestationSQLs.class).getByComId( p_id );
+
+            case "ActiviteDTO" :
+                return super.Exec(PrestationSQLs.class).getByActId( p_id );
+
+            case "AdresseDTO" :
+                return super.Exec(PrestationSQLs.class).getByPlaceId( p_id );
+        }
+
+        return null;
+
+    }
 
     @RegisterMapper(PrestationMapper.class)
     interface PrestationSQLs {
