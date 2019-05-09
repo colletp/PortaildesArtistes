@@ -1,15 +1,13 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
+import com.unamur.portaildesartistes.DTO.DTO;
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -21,49 +19,40 @@ import java.util.UUID;
 public class DonneePrestationImpl extends Donnee<PrestationDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneePrestationImpl.class);
 
+    @Override
     public List<PrestationDTO> list(){
         return super.Exec(PrestationSQLs.class).list();
     }
-
     @Override
     public PrestationDTO getById(UUID id) {
         return super.Exec(PrestationSQLs.class).getById(id);
     }
-
+    @Override
     public UUID insert(PrestationDTO item){
         return UUID.fromString(super.Exec(PrestationSQLs.class).insert(item));
     }
-
     @Override
     public void update(PrestationDTO item) {
         super.Exec(PrestationSQLs.class).update(item);
     }
-
     @Override
     public void delete(UUID id) {
         super.Exec(PrestationSQLs.class).delete(id);
     }
 
-
-    public List<PrestationDTO> listbyTypeId(Object searcType, UUID p_id) {
-
-        switch(searcType.getClass().getName())
-        {
+    public List<PrestationDTO> listByTypeId(DTO searcType, UUID p_id) {
+        switch(searcType.getClass().getName()){
             case "DocArtisteDTO" :
                 return super.Exec(PrestationSQLs.class).getByDocId( p_id );
-
             case "CommanditaireDTO" :
                 return super.Exec(PrestationSQLs.class).getByComId( p_id );
-
             case "ActiviteDTO" :
                 return super.Exec(PrestationSQLs.class).getByActId( p_id );
-
             case "AdresseDTO" :
                 return super.Exec(PrestationSQLs.class).getByPlaceId( p_id );
+            default:
+                return null;
         }
-
-        return null;
-
     }
 
     @RegisterMapper(PrestationMapper.class)

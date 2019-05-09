@@ -17,7 +17,7 @@
     Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur(form)">
+<fieldset th:fragment="activiteFormBySecteur(form,sect)">
     <legend>Secteurs</legend>
     <div th:each="sec : ${sect}">
         <fieldset>
@@ -32,9 +32,9 @@
     </div>
 </fieldset>
 
-<fieldset th:fragment="activiteShowBySecteur">
+<fieldset th:fragment="activiteShowBySecteur(form)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec : ${sect}">
+    <fieldset th:each="sec : ${form.secteurActivites}">
         <legend th:text="${sec.nomSecteur}">Secteurs</legend>
         <ul th:each="act : ${sec.activites}">
             <li>

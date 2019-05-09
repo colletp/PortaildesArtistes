@@ -52,10 +52,11 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
             usr.setRoles( roleImpl.getByCitoyenId( usr.getId() ) );
             usr.setFormulaires( formImpl.getByCitoyenId( usr.getId() ) );
             for( FormulaireDTO form : usr.getFormulaires() ){
-                form.setActivites( actImpl.getByFormId( form.getId() ) );
+                /*
+                form.setActivitesId(  );
                 for( ActiviteDTO act : form.getActivites() ){
                     act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
-                }
+                }*/
             }
             usr.setDocArtistes( docImpl.getByCitoyenId( usr.getId() ) );
             for( DocArtisteDTO doc : usr.getDocArtistes() ){
@@ -63,7 +64,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
                 for( ActiviteDTO act : doc.getActivites() ){
                     act.setSecteur( sectImpl.getById( act.getSecteurId() ) );
                 }
-                doc.setPrestations( prestImpl.listbyTypeId( doc, doc.getId() ) );
+                doc.setPrestations( prestImpl.listByTypeId( doc, doc.getId() ) );
                 for( PrestationDTO prest : doc.getPrestations() ){
                     CommanditaireDTO com = comImpl.getById( prest.getCommanditaireId() );
                         com.setCitoyen(  citImpl.getById( com.getCitoyenId() ) );
