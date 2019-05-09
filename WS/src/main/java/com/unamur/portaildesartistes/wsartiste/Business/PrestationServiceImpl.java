@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.wsartiste.Business;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
 
+import com.unamur.portaildesartistes.wsartiste.datalayer.DonneePrestationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class PrestationServiceImpl implements IService<PrestationDTO> {
     private static final Logger logger = LoggerFactory.getLogger(PrestationServiceImpl.class);
 
         @Autowired
-        private PrestationServiceImpl prestationImpl;
+        private DonneePrestationImpl prestationImpl;
 
         @Transactional
         public List<PrestationDTO> list(){ return prestationImpl.list(); }
