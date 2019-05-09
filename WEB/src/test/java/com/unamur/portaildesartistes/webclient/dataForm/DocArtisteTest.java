@@ -113,6 +113,13 @@ class DocArtisteTest {
         assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
+    @DisplayName("TC , Test de création Doc Artiste avec date de péremption non valide")
+    @Test
+    void testCreationDocArtisteNonValide3b() {
+        doc.setDatePeremption("29/02/2019");
+        assertThrows(IllegalArgumentException.class,()->doc.getDTO());
+    }
+
     @DisplayName("TC , Test de création Doc Artiste avec numéro de document absent")
     @Test
     void testCreationDocArtisteNonValide4() {

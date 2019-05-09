@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,7 +43,7 @@ class ReponseTest {
         assertAll(
                 ()->assertEquals(reponse.getTrtId(),resp.convertUUID(resp.getTrtId())),
                 ()->assertEquals(reponse.getCitoyenId(),resp.convertUUID(resp.getCitoyenId())),
-                ()->assertEquals(reponse.getDateReponse(),resp.convertDate(resp.getDateReponse()))
+                ()->assertEquals(reponse.getDateReponse(), Timestamp.from(resp.convertDate(resp.getDateReponse()).toInstant()))
         );
     }
 
