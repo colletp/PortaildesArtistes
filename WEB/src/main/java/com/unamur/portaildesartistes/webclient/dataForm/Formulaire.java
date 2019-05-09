@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
+import com.unamur.portaildesartistes.DTO.SecteurDTO;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -24,6 +25,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String carte;
     private String visa;
     private List<String> activitesId;
+
+//    private List<SecteurDTO> lSecteurs;
 
     // ******************
     // Constructeur
@@ -59,6 +62,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public List<String> getActivitesId(){ return activitesId; }
     public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
 
+//    public void setSecteurActivites(List<SecteurDTO> ls){ lSecteurs=ls; }
+//    public List<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
     // ******************
     // Fonctions
     // ******************
@@ -114,6 +119,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         for( UUID uuid : objDTO.getActivitesId() )
             la.add( uuid.toString() );
         setActivitesId( la );
+//        setSecteurActivites( objDTO.getSecteurActivites() );
     }
 
 }

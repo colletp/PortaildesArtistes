@@ -1,18 +1,12 @@
 package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.ReponseDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -24,6 +18,7 @@ import java.util.UUID;
 public class DonneeReponseImpl extends Donnee<ReponseDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeReponseImpl.class);
 
+    @Override
     public List<ReponseDTO> list(){
         return super.Exec(ReponseSQLs.class).list();
     }
@@ -33,6 +28,7 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
         return super.Exec(ReponseSQLs.class).getById(id);
     }
 
+    @Override
     public UUID insert(ReponseDTO item){
         return UUID.fromString(super.Exec(ReponseSQLs.class).insert(item));
     }

@@ -27,6 +27,8 @@ public class SecteurDTO extends DTO {
     public void setActivites(List<ActiviteDTO> la ){ activites=la; }
     public List<ActiviteDTO> getActivites(){ return activites; }
 
+    public void add(ActiviteDTO act){ activites.add(act); }
+
     // ******************
     // Fonctions
     // ******************
