@@ -44,9 +44,8 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
         super.Exec(PrestationSQLs.class).delete(id);
     }
 
-    public List<PrestationDTO> getByDocId(UUID p_id){
-        return super.Exec(PrestationSQLs.class).getByDocId( p_id );
-    }
+
+    public List<PrestationDTO> listbyTypeId(Object searcType, UUID p_id){ return super.Exec(PrestationSQLs.class).getByDocId( p_id );}
 
     @RegisterMapper(PrestationMapper.class)
     interface PrestationSQLs {
