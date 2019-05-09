@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@RestController
 public class PrestationServiceFront extends ServiceFront<PrestationDTO> {
     private static final Logger logger = LoggerFactory.getLogger(FormulaireServiceFront.class);
 
