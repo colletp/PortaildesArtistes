@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ public class FormulaireDTO extends DTO {
 
     private List<UUID> lActivitesId;
     private List<ActiviteDTO> lActivites;
-    private List<SecteurDTO> lSecteurs;
+    private Collection<SecteurDTO> lSecteurs;
 
 
     // ******************
@@ -52,11 +53,11 @@ public class FormulaireDTO extends DTO {
     public void setActivitesId(List<UUID> l){lActivitesId=l;}
     public List<UUID> getActivitesId(){return lActivitesId;}
 
-    public void setActivites(List<ActiviteDTO> l){lActivites=l;}
-    public List<ActiviteDTO> getActivites(){return lActivites;}
+    //public void setActivites(List<ActiviteDTO> l){lActivites=l;}
+    //public List<ActiviteDTO> getActivites(){return lActivites;}
 
-    public void setSecteurActivites(List<SecteurDTO> ls){lSecteurs=ls;}
-    public List<SecteurDTO> getSecteurActivites(){return lSecteurs;}
+    public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
+    public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
 
     // ******************
     // Fonctions

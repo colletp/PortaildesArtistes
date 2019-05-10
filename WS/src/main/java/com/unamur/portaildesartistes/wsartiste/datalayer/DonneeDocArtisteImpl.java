@@ -56,11 +56,16 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
         @SqlQuery("select * from doc_artiste WHERE citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlUpdate("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) RETURNING doc_artiste_id ")
+        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) RETURNING doc_artiste_id ")
         String insert(@BindBean DocArtisteDTO test);
 
-        DocArtisteDTO getById(UUID id);
+        @SqlQuery("select * from doc_artiste WHERE doc_artiste_id=:p_id ")
+        DocArtisteDTO getById( @Bind("p_id") UUID p_id );
+
+        //pas d'update, une fois créé il ne doit plus être modifié
+        //@SqlUpdate("UPDATE doc_artiste SET no_doc,nom_artiste,date_peremption WHERE doc_artiste_id=:id")
         void update(DocArtisteDTO doc);
+
         void delete(UUID id);
     }
 

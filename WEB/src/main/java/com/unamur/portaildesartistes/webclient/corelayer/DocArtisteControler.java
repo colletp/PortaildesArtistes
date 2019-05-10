@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             ,Model model){
         FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,itemId);
         List<UUID> lActIdDTO = formDTO.getActivitesId();
-        List<SecteurDTO> lSectDTO = formDTO.getSecteurActivites();
+        Collection<SecteurDTO> lSectDTO = formDTO.getSecteurActivites();
 
         model.addAttribute("form",formDocArt);
         model.addAttribute("activites", lActIdDTO );

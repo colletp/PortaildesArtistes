@@ -17,25 +17,23 @@
     Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur(form,sect)">
+<fieldset th:fragment="activiteFormBySecteur(actId,listSect)">
     <legend>Secteurs</legend>
-    <div th:each="sec : ${sect}">
-        <fieldset>
-            <legend>[[${sec.nomSecteur}]]</legend>
-            <ul th:each="act : ${sec.activites}">
-                <li>
-                    <input type="checkbox" name="activitesId[]" th:value="${act.id}" />
-                    <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
-                </li>
-            </ul>
-        </fieldset>
-    </div>
+    <fieldset th:each="sec : ${listSect}">
+        <legend th:text="${sec.nomSecteur}">Secteur</legend>
+        <ul th:each="act : ${sec.activites}">
+            <li>
+                <input type="checkbox" name="activitesId[]" th:value="${act.id}" th:checked="${#lists.contains(actId, act.id)}" />
+                <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
+            </li>
+        </ul>
+    </fieldset>
 </fieldset>
 
-<fieldset th:fragment="activiteShowBySecteur(form)">
+<fieldset th:fragment="activiteShowBySecteur(listSect)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec : ${form.secteurActivites}">
-        <legend th:text="${sec.nomSecteur}">Secteurs</legend>
+    <fieldset th:each="sec : ${listSect}">
+        <legend th:text="${sec.nomSecteur}">Secteur</legend>
         <ul th:each="act : ${sec.activites}">
             <li>
                 <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>

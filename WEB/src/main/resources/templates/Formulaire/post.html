@@ -8,18 +8,18 @@
 <div class="Msg">[[${Msg}]]</div>
 <div class="Err">[[${Err}]]</div>
 <form class="formbox400" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="post">
-    <input type="hidden" th:field="id" />
+    <input type="hidden" th:field="*{id}" />
     Cursus Académique:<input type="text" th:field="*{cursusAc}" /><br/>
     Expérience professionnelle:<input type="text" th:field="*{expPro}" /><br/>
     Autres ressources:<input type="text" th:field="*{ressources}" /><br/>
-    Langue<select name="langue" id="langue">
-    <option value="FR">FR</option>
-    <option value="EN">EN</option>
+    Langue<select th:field="*{langue}">
+    <option value="FR" th:selected="*{langue}=='FR'">FR</option>
+    <option value="EN" th:selected="*{langue}=='EN'">EN</option>
 </select><br/>
-    Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+    Carte<input type="checkbox" value="1" th:field="*{carte}" th:checked="*{carte}" />[[*{carte}]]<br/>
+    Visa<input type="checkbox" value="1" th:field="*{visa}" th:checked="*{visa}" />[[*{visa}]]<br/>
 
-    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(form) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form.activitesId},${secteurs}) }"></fieldset>
 
     <input th:type="submit" />
 </form>

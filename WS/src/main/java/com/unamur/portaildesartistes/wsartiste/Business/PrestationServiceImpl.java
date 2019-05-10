@@ -22,7 +22,9 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
         @Transactional
         public List<PrestationDTO> list(){ return prestationImpl.list(); }
         @Transactional
-        public List<PrestationDTO> listByTypeId(DTO searchType, UUID uuid){ return prestationImpl.listByTypeId(searchType,uuid); }
+        public List<PrestationDTO> listByTypeId(DTO searchType, UUID uuid){
+            return prestationImpl.listByTypeId(searchType,uuid);
+        }
         @Transactional
         public PrestationDTO getById( UUID uuid ){
             return prestationImpl.getById(uuid);
