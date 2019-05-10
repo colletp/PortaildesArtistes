@@ -45,6 +45,8 @@
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
 
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(form) }"></fieldset>
+
 </fieldset>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

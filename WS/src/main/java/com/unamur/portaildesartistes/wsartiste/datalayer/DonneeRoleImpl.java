@@ -73,8 +73,11 @@ public class DonneeRoleImpl extends Donnee<RoleDTO>{
         List<RoleDTO> getByCitoyenUserName(@Bind("username")String username);
 
         RoleDTO getById(UUID id);
+
         void update(RoleDTO rol);
+
         void delete(UUID id);
+
         String insert(RoleDTO rol);
     }
 

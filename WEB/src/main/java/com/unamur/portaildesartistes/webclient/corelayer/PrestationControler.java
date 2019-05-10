@@ -24,16 +24,9 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     private static final Logger logger = LoggerFactory.getLogger(PrestationControler.class);
 
     @Autowired
+    private DocArtisteControler docCtrl;
+    @Autowired
     private SecteurControler sectCtrl;
-
-    /*@GetMapping(value = "/Prestation/creer")
-    public String prestCreate(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            , @ModelAttribute("form") final Prestation formPrest
-            , Model model){
-        model.addAttribute("form",formPrest);
-        String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
-        return "Prestation/put.html";
-    }*/
 
     @GetMapping(value = "/Prestation/creer")
     public String prestCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -42,7 +35,14 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
         model.addAttribute("form",formPrest);
         model.addAttribute("activites",new ArrayList<String>());
-        String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+
+        UUID usrId = docCtrl.getMyId(cookieValue);
+        //UUID formId =
+
+
+        UUID docId = null; //TODO prendre ici l'identifiant du formulaire en fonction de l'utilisateur
+
+        //String fragment = sectCtrl.listSecteurActiviteByDocument( cookieValue,docId , model );
         return "Prestation/put.html";
     }
 

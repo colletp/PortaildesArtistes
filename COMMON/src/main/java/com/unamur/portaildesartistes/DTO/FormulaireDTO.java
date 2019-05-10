@@ -21,6 +21,7 @@ public class FormulaireDTO extends DTO {
 
     private List<UUID> lActivitesId;
     private List<ActiviteDTO> lActivites;
+    private List<SecteurDTO> lSecteurs;
 
 
     // ******************
@@ -32,27 +33,31 @@ public class FormulaireDTO extends DTO {
     // ******************
 
     public UUID getCitoyenId() { return citoyenId; }
-    public void setCitoyenId( UUID p_id) { this.citoyenId = p_id; }
+    public void setCitoyenId( UUID p_id) { citoyenId = p_id; }
     public Timestamp getDateDemande(){ return dateDemande;}
-    public void setDateDemande(Timestamp d){ this.dateDemande=d;}
+    public void setDateDemande(Timestamp d){ dateDemande=d;}
     public List<String> getCursusAc(){ return cursusAc;}
-    public void setCursusAc(List<String> ls){ this.cursusAc=ls;}
+    public void setCursusAc(List<String> ls){ cursusAc=ls;}
     public List<String> getExpPro(){ return expPro;}
-    public void setExpPro(List<String> ls){ this.expPro=ls;}
+    public void setExpPro(List<String> ls){ expPro=ls;}
     public List<String> getRessources(){ return ressources;}
-    public void setRessources(List<String> ls){ this.ressources=ls;}
+    public void setRessources(List<String> ls){ ressources=ls;}
     public String getLangue(){ return langue;}
-    public void setLangue(String s){ this.langue=s;}
+    public void setLangue(String s){ langue=s;}
     public Boolean getCarte(){ return carte;}
-    public void setCarte(Boolean b){ this.carte=b;}
+    public void setCarte(Boolean b){ carte=b;}
     public Boolean getVisa(){ return visa;}
-    public void setVisa(Boolean b){ this.visa=b;}
+    public void setVisa(Boolean b){ visa=b;}
 
-    public void setActivitesId(List<UUID> l){this.lActivitesId=l;}
-    public List<UUID> getActivitesId(){return this.lActivitesId;}
+    public void setActivitesId(List<UUID> l){lActivitesId=l;}
+    public List<UUID> getActivitesId(){return lActivitesId;}
 
-    public void setActivites(List<ActiviteDTO> l){this.lActivites=l;}
-    public List<ActiviteDTO> getActivites(){return this.lActivites;}
+    public void setActivites(List<ActiviteDTO> l){lActivites=l;}
+    public List<ActiviteDTO> getActivites(){return lActivites;}
+
+    public void setSecteurActivites(List<SecteurDTO> ls){lSecteurs=ls;}
+    public List<SecteurDTO> getSecteurActivites(){return lSecteurs;}
+
     // ******************
     // Fonctions
     // ******************

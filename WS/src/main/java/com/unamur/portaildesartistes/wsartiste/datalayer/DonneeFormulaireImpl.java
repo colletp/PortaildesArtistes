@@ -16,7 +16,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -27,9 +29,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         return super.Exec(FormulaireSQLs.class).list();
     }
 
-    public FormulaireDTO getById(UUID p_id){
-        return super.Exec(FormulaireSQLs.class).getById( p_id );
-    }
+    public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
 
     public List<FormulaireDTO> getByCitoyenId(UUID p_id){
         return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id );
@@ -46,7 +46,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
     @Override
     public void update(FormulaireDTO item) {
-        //super.Exec(FormulaireActiviteSQLs.class).deletebyForm( item.getId() );
+        super.Exec(FormulaireActiviteSQLs.class).deleteByForm( item.getId() );
         for( UUID act : item.getActivitesId() ) {
             super.Exec(FormulaireActiviteSQLs.class).insert(act, item.getId());
         }
@@ -80,21 +80,24 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     @RegisterMapper(FormulaireActiviteMapper.class)
     interface FormulaireActiviteSQLs {
         @SqlQuery("select * from form_acivite WHERE form_id:form_id ")
-        List<FormulaireDTO> listbyFormulaire(@Bind("form_id") UUID formId );
+        List<ActiviteDTO> listbyFormulaire(@Bind("form_id") UUID formId );
 
         @SqlQuery("insert into form_activite (activite_id,form_id) values(:activite_id,:form_id) RETURNING form_activite_id ")
         String insert(@Bind("activite_id") UUID activiteId,@Bind("form_id") UUID formId );
 
         void update(FormulaireDTO form);
         void delete(UUID id);
-    }
-    public static class FormulaireActiviteMapper implements ResultSetMapper<FormulaireDTO> {
-        FormulaireDTO formulaireDTO;
 
+        @SqlUpdate("DELETE FROM form_activite WHERE form_id=:formId")
+        void deleteByForm(@Bind("formId") UUID formId);
+    }
+    public static class FormulaireActiviteMapper implements ResultSetMapper<Map<UUID,UUID>>{
+        Map<UUID,UUID> formAct;
         @Override
-        public FormulaireDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
-            formulaireDTO = new FormulaireDTO();
-            return formulaireDTO;
+        public Map<UUID,UUID> map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+            formAct =new HashMap<>();
+            formAct.put( (UUID)r.getObject("activity_id") , (UUID)r.getObject("form_id") );
+            return formAct;
         }
     }
 

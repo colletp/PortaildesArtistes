@@ -24,7 +24,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     private SecteurControler sectCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
-    public String FormCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         //formForm.setRessources();
@@ -36,7 +36,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     }
 
     @GetMapping(value = "/Formulaire/creer/{typeDoc}")
-    public String FormCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String formCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable(name="typeDoc")final String typeDoc
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
@@ -58,7 +58,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     }
 
     @GetMapping(value = "/Formulaire/modif/{id}")
-    public String FormModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
+    public String formModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 @ModelAttribute("form") final Formulaire formForm,
                                 Model model){
@@ -68,7 +68,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     }
 
     @PostMapping(value = "/Formulaire")
-    public String FormPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String formPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
@@ -96,22 +96,31 @@ logger.error( formForm.getActivitesId().toString() );
     }
 
     @GetMapping(value = "/Formulaire")//initialisation du login
-    public String FormList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String formList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
         logger.error("Form List : Authentication received! Cookie : "+cookieValue );
         return super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model);
     }
 
     @GetMapping(value = "/Formulaire/{id}")//initialisation du login
-    public String Form( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
+    public String formDetail( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
         logger.error("Form : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"GET",model);
     }
 
+    public FormulaireDTO formGetById( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+                        ,@PathVariable("id") UUID itemId
+                        //,Model model
+                        ){
+        logger.error("Form : Authentication received! Cookie : "+cookieValue );
+        return super.getObj( cookieValue,itemId,new FormulaireDTO(), FormulaireDTO.class );
+    }
+
+
     @GetMapping(value = "Formulaire/suppr/{id}")
-    public String FormSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
+    public String formSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         return super.delete(cookieValue,new FormulaireDTO(),itemId,model);
