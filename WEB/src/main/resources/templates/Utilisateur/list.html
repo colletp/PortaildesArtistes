@@ -3,23 +3,25 @@
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
 
-<table>
     <div th:replace="~{/fragments/header :: head}"></div>
     <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
     <tr><th th:text="#{username}">Nom d'utilisateur</th><th>Action</th></tr>
 
+<div class="formbox600">
+    <table>
+        <caption><H1>Liste des utilisateur</H1></caption>
     <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
         <td id="boutonsFlex">
-            <a class="aBouton" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a>
-            <a class="aBouton" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
-            <a class="aBouton" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a></p>
         </td>
     </tr>
 
 </table>
-
+</div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

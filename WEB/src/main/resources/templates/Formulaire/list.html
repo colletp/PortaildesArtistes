@@ -6,8 +6,9 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<H1>Formulaires</H1>
+<div class="formbox800">
 <table>
+    <caption><H1>Formulaires</H1></caption>
     <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.dateDemande}]]</td>
@@ -15,13 +16,13 @@
         <td>[[${frm.carte}]]</td>
         <td>[[${frm.visa}]]</td>
         <td id="boutonsFlex">
-            <a class="aBouton" th:href="@{/Formulaire/{id}(id=${frm.id})}">Détail</a>
-            <a class="aBouton" th:href="@{/Formulaire/modif/{id}(id=${frm.id})}">Modifier</a>
-            <a class="aBouton" th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}">Supprimer</a>
+            <p class="customButton"><a class="whitea" th:href="@{/Formulaire/{id}(id=${frm.id})}">Détail</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Formulaire/modif/{id}(id=${frm.id})}">Modifier</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}">Supprimer</a></p>
         </td>
     </tr>
 </table>
-
+</div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
