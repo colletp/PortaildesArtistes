@@ -17,14 +17,29 @@
     Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur(actId,listSect)">
+<fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec : ${listSect}">
-        <legend th:text="${sec.nomSecteur}">Secteur</legend>
-        <ul th:each="act : ${sec.activites}">
+<!--
+    <ul th:each="actId : ${activitesId}">
+        <li>
+            <span th:text="${actId}"></span>
+        </li>
+    </ul>
+    <ul th:each="actId : ${form.activitesId}">
+        <li>
+            <span th:text="${actId}"></span>
+        </li>
+    </ul>
+-->
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+        <legend th:text="*{nomSecteur}">Secteur</legend>
+        <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
-                <input type="checkbox" name="activitesId[]" th:value="${act.id}" th:checked="${#lists.contains(actId, act.id)}" />
-                <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
+                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
+                <!--
+                <input type="checkbox" name="activitesId[]" th:value="*{id}" th:checked="${#lists.contains(activitesId, id)}" />
+                -->
+                <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
             </li>
         </ul>
     </fieldset>

@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.TimeZone;
 
 // Disable Auto Config DataSource & DataSourceTransactionManager
@@ -67,6 +68,11 @@ public class SpringBootWSRestPortailArtiste {
         dataSource.setUrl(env.getProperty("spring.datasource.url."+instance));
         dataSource.setUsername(env.getProperty("spring.datasource.username."+instance));
         dataSource.setPassword(env.getProperty("spring.datasource.password."+instance));
+
+        Properties p = new Properties();
+        p.setProperty("stringtype","unspecified");//permet d'insérer des types personnalisés en tant que texte
+        dataSource.setConnectionProperties( p );
+
         logger.info("Initializing DataSourceTest:"+instance );
         return dataSource;
     }

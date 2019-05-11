@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.TimeZone;
 
 
@@ -48,10 +49,30 @@ public class DBIPersistenceConfig {
         return dbi;
     }
 
+
+    public static class ArrayArgumentFactory implements ArgumentFactory<Array> {
+        @Override
+        public boolean accepts(Class<?> expectedType, Object value, StatementContext ctx) {
+            return value != null && Array.class.isAssignableFrom(value.getClass());
+        }
+
+        @Override
+        public Argument build(Class<?> expectedType, final Array value, StatementContext ctx) {
+            return new Argument() {
+                @Override
+                public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
+                    logger.error("SQL Array");
+                    statement.setArray( position,value );
+                }
+            };
+        }
+    }
+
+
+
     private static Calendar getUtcCalendar() {
         return Calendar.getInstance(TimeZone.getTimeZone("UTC"));
     }
-
     /**
      * DBI argument factory for converting joda DateTime to sql timestamp
      */

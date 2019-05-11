@@ -16,12 +16,13 @@ public class FormulaireDTO extends DTO {
     private List<String> cursusAc;
     private List<String> expPro;
     private List<String> ressources;
-    private String langue;
+    public enum Lang {FR,EN;}
+    private Lang langue;
     private Boolean carte;
     private Boolean visa;
 
     private List<UUID> lActivitesId;
-    private List<ActiviteDTO> lActivites;
+    //private List<ActiviteDTO> lActivites;
     private Collection<SecteurDTO> lSecteurs;
 
 
@@ -43,8 +44,20 @@ public class FormulaireDTO extends DTO {
     public void setExpPro(List<String> ls){ expPro=ls;}
     public List<String> getRessources(){ return ressources;}
     public void setRessources(List<String> ls){ ressources=ls;}
-    public String getLangue(){ return langue;}
-    public void setLangue(String s){ langue=s;}
+    public String getLangueStr(){
+        if(langue == Lang.FR)return "FR";
+        if(langue == Lang.EN)return "EN";
+        return "FR";
+    }
+    public String getLangue(){ return getLangueStr();}
+//    public Lang getLangue(){ return langue;}
+    public void setLangue(String s){
+        switch(s){
+            case "FR":langue=Lang.FR;break;
+            case "EN":langue=Lang.EN;break;
+            default:  langue=null;
+        }
+    }
     public Boolean getCarte(){ return carte;}
     public void setCarte(Boolean b){ carte=b;}
     public Boolean getVisa(){ return visa;}
@@ -52,10 +65,6 @@ public class FormulaireDTO extends DTO {
 
     public void setActivitesId(List<UUID> l){lActivitesId=l;}
     public List<UUID> getActivitesId(){return lActivitesId;}
-
-    //public void setActivites(List<ActiviteDTO> l){lActivites=l;}
-    //public List<ActiviteDTO> getActivites(){return lActivites;}
-
     public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
     public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
 

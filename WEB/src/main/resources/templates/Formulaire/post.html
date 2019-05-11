@@ -16,8 +16,8 @@
     <option value="FR" th:selected="*{langue}=='FR'">FR</option>
     <option value="EN" th:selected="*{langue}=='EN'">EN</option>
 </select><br/>
-    Carte<input type="checkbox" value="1" th:field="*{carte}" th:checked="*{carte}" />[[*{carte}]]<br/>
-    Visa<input type="checkbox" value="1" th:field="*{visa}" th:checked="*{visa}" />[[*{visa}]]<br/>
+    Carte<input type="checkbox" value="1" th:field="*{carte}" th:checked="*{carte}=='1'" /><br/>
+    Visa<input type="checkbox" value="1" th:field="*{visa}" th:checked="*{visa}=='1'" /><br/>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form.activitesId},${secteurs}) }"></fieldset>
 

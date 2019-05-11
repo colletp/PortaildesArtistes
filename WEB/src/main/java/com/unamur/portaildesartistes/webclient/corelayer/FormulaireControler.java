@@ -86,12 +86,14 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
 logger.error( formForm.getActivitesId().toString() );
+            model.addAttribute("activites",formForm.getActivitesId());
             return "/Formulaire/"+method+".html";
         }catch(ParseException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
 logger.error( formForm.getActivitesId().toString() );
+            model.addAttribute("activites",formForm.getActivitesId());
             return "/Formulaire/"+method+".html";
         }
     }

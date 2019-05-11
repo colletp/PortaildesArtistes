@@ -25,37 +25,31 @@ import java.util.UUID;
 public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeFormulaireImpl.class);
 
+    public List<FormulaireDTO> getByCitoyenId(UUID p_id){ return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id ); }
+
+    @Override
     public List<FormulaireDTO> list(){
         return super.Exec(FormulaireSQLs.class).list();
     }
-
+    @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
-
-    public List<FormulaireDTO> getByCitoyenId(UUID p_id){
-        return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id );
-    }
-
+    @Override
     public UUID insert(FormulaireDTO item){
         UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
-        for( UUID act : item.getActivitesId() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(act,formId);
-        //for( ActiviteDTO act : item.getActivites() )
-        //    super.Exec(FormulaireActiviteSQLs.class).insert(act.getId(),formId);
+        for( UUID actId : item.getActivitesId() )
+            super.Exec(FormulaireActiviteSQLs.class).insert(actId,formId);
         return formId;
     }
-
     @Override
-    public void update(FormulaireDTO item) {
+    public void update(FormulaireDTO item){
         super.Exec(FormulaireActiviteSQLs.class).deleteByForm( item.getId() );
-        for( UUID act : item.getActivitesId() ) {
-            super.Exec(FormulaireActiviteSQLs.class).insert(act, item.getId());
-        }
-
+        for( UUID actId : item.getActivitesId() )
+            super.Exec(FormulaireActiviteSQLs.class).insert(actId, item.getId());
         super.Exec(FormulaireSQLs.class).update(item);
     }
-
     @Override
-    public void delete(UUID id) {
+    public void delete(UUID id){
+        super.Exec(FormulaireActiviteSQLs.class).deleteByForm( id );
         super.Exec(FormulaireSQLs.class).delete(id);
     }
 
@@ -71,9 +65,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         List<FormulaireDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
         @SqlQuery("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) RETURNING form_id ")
-        String insert(@BindBean FormulaireDTO test);
+        String insert(@BindBean FormulaireDTO form);
 
-        void update(FormulaireDTO form);
+        @SqlUpdate("UPDATE formulaires SET cursus_ac=:cursusAc,ex_pro=:expPro,ressources=:ressources,langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
+        //@SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
+        void update(@BindBean FormulaireDTO form);
+
         void delete(UUID id);
     }
 
@@ -105,6 +102,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         FormulaireDTO formulaireDTO;
         @Override
         public FormulaireDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
+
             formulaireDTO = new FormulaireDTO();
             formulaireDTO.setId((UUID) r.getObject("form_id"));
             formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
@@ -119,6 +117,5 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             return formulaireDTO;
         }
     }
-
 }
 

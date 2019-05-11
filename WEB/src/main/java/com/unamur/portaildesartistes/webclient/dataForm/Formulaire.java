@@ -31,7 +31,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
     // Constructeur
     // ******************
-
+    public Formulaire(){
+        cursusAc = new ArrayList<>();
+        expPro = new ArrayList<>();
+        ressources = new ArrayList<>();
+    }
     // ******************
     // Setter/Getter
     // ******************
@@ -47,11 +51,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     //public String getRessources(){ return ressources;}
     //public void setRessources(String ls){ ressources=ls;}
     public List<String> getCursusAc(){ return cursusAc;}
-    public void setCursusAc(List<String> ls){ this.cursusAc=ls;}
+    public void setCursusAc(List<String> ls){for(String s : ls)cursusAc.add(s);}
     public List<String> getExpPro(){ return expPro;}
-    public void setExpPro(List<String> ls){ this.expPro=ls;}
+    public void setExpPro(List<String> ls){for(String s : ls)expPro.add(s);}
     public List<String> getRessources(){ return ressources;}
-    public void setRessources(List<String> ls){ this.ressources=ls;}
+    public void setRessources(List<String> ls){for(String s : ls)ressources.add(s);}
 
     public String getLangue(){ return langue;}
     public void setLangue(String s){ langue=s;}
@@ -73,22 +77,18 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );
 
-        dto.setVisa( getVisa()!=null );
-        dto.setCarte( getCarte()!=null );
+        dto.setVisa( getVisa()!=null?getVisa().equals("1"):false );
+        dto.setCarte( getCarte()!=null?getCarte().equals("1"):false );
 
-        isNotEmpty(getLangue());
+        isNotEmpty( getLangue() );
         if(!langue.equals("FR")&&!langue.equals("EN")){
             throw new IllegalArgumentException("FR ou EN");
         }
-        dto.setLangue( getLangue());
+        dto.setLangue( getLangue() );
 
-        dto.setRessources( getRessources()==null?Arrays.asList():getRessources() );
-        dto.setExpPro( getExpPro()==null?Arrays.asList():getExpPro() );
-        dto.setCursusAc( getCursusAc()==null?Arrays.asList():getCursusAc() );
-
-//        dto.setRessources(getRessources());
-//        dto.setExpPro(getExpPro());
-//        dto.setCursusAc(getCursusAc());
+        dto.setRessources( getRessources() );
+        dto.setExpPro( getExpPro() );
+        dto.setCursusAc( getCursusAc() );
 
         /*
         isNotEmpty(getDateDemande());
@@ -113,9 +113,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setCursusAc(objDTO.getCursusAc()==null?Arrays.asList():objDTO.getCursusAc());
         setExpPro(objDTO.getExpPro()==null?Arrays.asList():objDTO.getExpPro());
         setRessources(objDTO.getRessources()==null?Arrays.asList():objDTO.getRessources());
-        setLangue(objDTO.getLangue());
-        setCarte(objDTO.getCarte().toString());
-        setVisa(objDTO.getVisa().toString());
+        setLangue(objDTO.getLangueStr());
+        setCarte(objDTO.getCarte()?"1":"0");
+        setVisa(objDTO.getVisa()?"1":"0");
+
         List<String> la = new ArrayList<>();
         for( UUID uuid : objDTO.getActivitesId() )
             la.add( uuid.toString() );

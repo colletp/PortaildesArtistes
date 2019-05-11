@@ -3,14 +3,12 @@ package com.unamur.portaildesartistes.DTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 @Component
 public class RoleDTO extends DTO implements GrantedAuthority {
 
     private String nomRole;
     private String lang;
+    private FormulaireDTO.Lang langue;
 
     public String getNomRole() {
         return nomRole;
