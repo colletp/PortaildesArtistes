@@ -12,9 +12,9 @@
     <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
         <td id="boutonsFlex">
-            <a class="aBouton" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a>
-            <a class="aBouton" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
-            <a class="aBouton" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a></p>
+            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a></p>
         </td>
     </tr>
 

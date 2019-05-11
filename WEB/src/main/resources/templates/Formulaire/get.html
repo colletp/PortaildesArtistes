@@ -6,7 +6,7 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<fieldset>
+<fieldset class="formbox800">
 <legend>Formulaire</legend>
     <span th:text="#{citoyen.nom}" >
     Date Demande:</span>:[[${form.dateDemande}]]<br/>

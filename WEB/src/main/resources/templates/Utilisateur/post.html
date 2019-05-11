@@ -7,15 +7,15 @@
 
 <div class="Msg">[[${Msg}]]</div>
 <div class="Err">[[${Err}]]</div>
-<form class="formbox400" th:action="@{/Utilisateur/{id}(id=${form.utilisateur.id})}" th:name="form" th:object="${form}" th:method="post">
+<form class="formbox600" th:action="@{/Utilisateur/{id}(id=${form.utilisateur.id})}" th:name="form" th:object="${form}" th:method="post">
 
     <h1>Modification du citoyen</h1><br/>
-    <div id="introbox">
+    <div>
         <input type="hidden" th:field="*{utilisateur.id}" />
 
         <fieldset><legend>Identifiant</legend>
-            <span th:text="#{utilisateur.username}" >Nom d'utilisateur(def)</span>:<input type="text" th:field="*{utilisateur.username}" /><br/>
-            <span th:text="#{utilisateur.password}" >Mot de passe(def)</span>:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
+            <span th:text="#{username}" >Nom d'utilisateur(def)</span>:<input type="text" th:field="*{utilisateur.username}" /><br/>
+            <span th:text="#{password}" >Mot de passe(def)</span>:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
         </fieldset>
         <br/><br/>
 

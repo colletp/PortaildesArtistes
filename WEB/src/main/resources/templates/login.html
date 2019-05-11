@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="fr">
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
 
@@ -8,26 +8,19 @@
 
     <div class="Msg">[[${Msg}]]</div>
     <div class="Err">[[${Err}]]</div>
-    <form class="formbox400" th:action="@{/login}" th:name="form" th:method="post">
-        <fieldset>
+    <form class="formbox600" th:action="@{/login}" th:name="form" th:method="post">
+        <br>
             <legend th:text="#{askConnection}"></legend>
-            <label th:text="#{inputIdent}"><br/></label>
+            <label th:text="#{username}"></label>
             <input th:type="text" th:name="username" />
-            <br/><br />
-            <label th:text="#{inputpwd}"></label>
+            <label th:text="#{password}"></label>
             <input th:type="password" th:name="password" />
-            <p class="mdpoubli"> <a class="bluea" th:href="@{/ChangePassword}" th:text="#{oubli}"></a></p>
-            <br/>
-            <input th:type="submit" />
+            <a class="bluea" th:href="@{/ChangePassword}" th:text="#{oubli}"></a></br></br>
+            <input th:type="submit" th:value="#{connecter}" /></br>
+            <legend th:text="#{pasdecompte}"></legend>
+            <p class="customButton"><a class="whitea" th:href="@{/inscript}"  th:text="#{creercompte}"></a></p>
         </fieldset>
     </form>
-
-    <div class="formbox400">
-        <fieldset>
-            <legend th:text="#{pasdecompte}"></legend>
-            <a class="aBouton" th:href="@{/inscript}"  th:text="#{creercompte}"></a>
-        </fieldset>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

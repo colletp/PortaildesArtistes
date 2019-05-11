@@ -18,30 +18,6 @@ h2{
     font-size: 25px;
 }
 
-.whitea{
-    color: white;
-}
-.whitea:hover{
-    text-decoration: underline;
-    color: white;
-}
-
-.bluea{
-    color: navy;
-}
-.bluea:hover{
-    text-decoration: underline;
-    color: navy;
-}
-
-.blacka{
-    color: black;
-}
-.blacka:hover{
-    text-decoration: underline;
-    color: black;
-}
-
 
 #topsection{
     display: flex;
@@ -56,7 +32,6 @@ h2{
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-end;
-//padding-top: 8px;
     height:35px;
     font-size: 13px;
     font-weight: bold;
@@ -64,6 +39,7 @@ h2{
     color: white;
     background-color: teal;
     border-radius: 3px;
+
 }
 
 .navtext{
@@ -76,7 +52,6 @@ h2{
     border-right-color: teal;
     text-align: center;
     padding-top: 5px;
-
 }
 
 .navbouton{
@@ -99,7 +74,6 @@ h2{
     border-right-color: teal;
     text-align: center;
     padding-top: 5px;
-//background-color: white;
 }
 
 .menu:hover {
@@ -114,56 +88,64 @@ h2{
     text-align: left;
 }
 
-.menu:hover .ssmenu
-{
-    display:block;
-    color: red;
+.menu:hover .ssmenu{display:block;}
+
+a:link, a:visited{
+    text-decoration: none;
+}
+.whitea, .whitea:visited{
+    color: white;
+}
+.whitea:hover{
+    text-decoration: underline;
+    color: white;
+}
+
+.bluea, .bluea:visited{
+    color: navy;
+}
+
+.bluea:hover{
+    text-decoration: underline;
+    color: navy;
+}
+
+.blacka, .blacka:visited{
+    color: black;
+}
+.blacka:hover{
+    text-decoration: underline;
+    color: black;
 }
 
 
-.formbox90pc
-{
+.formbox90pc, .formbox400, .formbox600, .formbox800{
     margin-top: 50px;
     color: Black;
-    margin-left: 50px;
-    width: 90%;
-    background-color: rgb(238,255,247);
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.85;
     padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 15px #555;
+
+
 }
 
-.formbox400{
-    margin-top: 50px;
-    color: Black;
-    margin-left: 50px;
-    width: 400px;
-    background-color: rgb(238,255,247);
-    padding: 10px;
-}
+.formbox90pc {max-width: 90%;}
 
-.formbox600{
-    margin-top: 50px;
-    color: Black;
-    margin-left: 50px;
-    width: 600px;
-    background-color: rgb(238,255,247);
-    padding: 10px;
-}
+.formbox400 {max-width: 400px;}
 
-.formbox800{
-    margin-top: 50px;
-    color: Black;
-    margin-left: 50px;
-    width: 800px;
-    background-color: rgb(238,255,247);
-    padding: 10px;
-}
+.formbox600{max-width: 600px;}
+
+.formbox800{max-width: 800px;}
 
 #introbox
 {
     display: flex;
     flex-wrap: wrap;
     margin-left: 50px;
-
     font-family: "Arial Black",Arial,  Impact,sans-serif;
     font-size: 18px;
     text-align: justify;
@@ -215,17 +197,6 @@ h2{
 .btFlex
 {
     padding-right: 20px;
-}
-
-.aBouton{
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    margin: 20px;
-    border: 1px solid #b3b3b3;
-    color: black;
-    background-color: #d8d8d8;
 }
 
 
@@ -294,4 +265,63 @@ h2{
 .choixtxt:nth-child(3) a
 {
     color: rgb(0,0,160);
+}
+
+fieldset {
+    padding-bottom: 15px;
+}
+
+input{
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+}
+
+input[class=demibox] {
+    width: 50%;
+}
+
+label{
+    display: block;
+}
+
+input[type=text],input[type=password] {
+    padding:5px;
+    border:2px solid #ccc;
+    border-radius: 3px;
+
+}
+
+input[type=text]:focus,input[type=password]:focus  {
+    border:1px solid #66AFDF;
+    box-shadow: 0px 0px 10px -2px #66AFDF;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background:#AC0E35;
+    color:white;
+    border:0 none;
+    cursor:pointer;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+.customButton{
+    padding: 5px 15px;
+    text-align: center;
+    background-color: #014B96;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+button{
+    color: white;
+    background-color: #014B96;
+    border: none;
 }
