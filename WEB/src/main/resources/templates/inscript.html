@@ -8,15 +8,17 @@
     <div class="Msg">[[${Msg}]]</div>
     <div class="Err">[[${Err}]]</div>
     <form class="formbox600" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
-            Login:<input type="text" th:field="*{utilisateur.username}" />
-            Password:<input th:type="password" th:field="*{utilisateur.password}" />
+        <legend th:text="#{inscript.titre}"></legend>
+        Login:<input type="text" th:field="*{utilisateur.username}" />
+        Password:<input th:type="password" th:field="*{utilisateur.password}" />
 
-            <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
+         <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
 
-        <input th:type="submit" value="Je m'inscris" />
+        <input th:type="submit" th:value="#{jeminscris}"/>
         <p class="customButton"><button th:onclick="'history.go(-1)'">Revenir à la page précédente</button></p>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
 </body>
 </html>

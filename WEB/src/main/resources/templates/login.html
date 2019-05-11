@@ -8,8 +8,7 @@
 
     <div class="Msg">[[${Msg}]]</div>
     <div class="Err">[[${Err}]]</div>
-    <form class="formbox600" th:action="@{/login}" th:name="form" th:method="post">
-        <br>
+    <form class="formbox600" th:action="@{/login}" th:name="form" th:method="post"><br>
             <legend th:text="#{askConnection}"></legend>
             <label th:text="#{username}"></label>
             <input th:type="text" th:name="username" />
@@ -19,7 +18,6 @@
             <input th:type="submit" th:value="#{connecter}" /></br>
             <legend th:text="#{pasdecompte}"></legend>
             <p class="customButton"><a class="whitea" th:href="@{/inscript}"  th:text="#{creercompte}"></a></p>
-        </fieldset>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

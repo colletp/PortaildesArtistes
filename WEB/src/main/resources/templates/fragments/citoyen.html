@@ -55,16 +55,16 @@
 </fieldset>
 
 <fieldset th:fragment="CitoyenAdrPost(fonction,citoyen,adresse)">
-    <legend th:text="${fonction}"></legend>
+<!--    <legend th:text="${fonction}"></legend>-->
     <input th:type="hidden" th:field="*{citoyen.id}" />
-    Nom:<input th:type="text" th:field="*{citoyen.nom}" /><br/>
-    Prénom:<input th:type="text" th:field="*{citoyen.prenom}" /><br/>
-    Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" /><br/>
-    Tel:<input th:type="text" th:field="*{citoyen.tel}" /><br/>
-    Gsm:<input th:type="text" th:field="*{citoyen.gsm}" /><br/>
-    Email:<input th:type="text" th:field="*{citoyen.mail}" /><br/>
-    No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" /><br/>
-    Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" /><br/>
+    Nom:<input th:type="text" th:field="*{citoyen.nom}" />
+    Prénom:<input th:type="text" th:field="*{citoyen.prenom}" />
+    Date de naissance:<input th:type="text" th:field="*{citoyen.dateNaissance}" />
+    Tel:<input th:type="text" th:field="*{citoyen.tel}" />
+    Gsm:<input th:type="text" th:field="*{citoyen.gsm}" />
+    Email:<input th:type="text" th:field="*{citoyen.mail}" />
+    No Reg Nat:<input th:type="text" th:field="*{citoyen.nrn}" />
+    Nationnalité:<input th:type="text" th:field="*{citoyen.nation}" />
     <input th:type="hidden" th:field="*{citoyen.reside}" />
     <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${adresse}) }"></fieldset>
 </fieldset>

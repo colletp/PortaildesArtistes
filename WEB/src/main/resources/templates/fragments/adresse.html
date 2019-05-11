@@ -13,12 +13,12 @@
 </fieldset>
 
 <fieldset th:fragment="AdressePost(fonction,adresse)">
-    <legend th:text="${fonction}">Résidence</legend>
+<!--    <legend th:text="${fonction}">Résidence</legend>-->
     <input type="hidden" th:field="*{adresse.id}" />
-    Rue:<input th:type="text" th:field="*{adresse.rue}" /><br/>
-    Num:<input th:type="text" th:field="*{adresse.numero}" /><br/>
-    Boite:<input th:type="text" th:field="*{adresse.boite}" /><br/>
-    Ville:<input th:type="text" th:field="*{adresse.ville}" /><br/>
+    Rue:<input th:type="text" th:field="*{adresse.rue}" />
+    Num:<input th:type="text" th:field="*{adresse.numero}" />
+    Boite:<input th:type="text" th:field="*{adresse.boite}" />
+    Ville:<input th:type="text" th:field="*{adresse.ville}" />
 </fieldset>
 
 </body>

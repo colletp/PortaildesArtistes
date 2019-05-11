@@ -6,8 +6,9 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
+<div class="formbox90pc">
 <table>
-    <caption><H1>Prestation</H1></caption>
+    <caption><H1>Liste des prestations</H1></caption>
     <tr>
         <th>DATE</th>
         <th>DUREE</th>
@@ -20,14 +21,14 @@
         <td th:text="${prest.montant}" th:alt="${prest.montant}"></td>
         <td th:text="${prest.etat}" th:alt="${prest.etat}"></td>
         <td id="boutonsFlex">
-            <a class="aBouton" th:href="@{/Prestation/{id}(id=${prest.id})}">Détail</a>
-            <a class="aBouton" th:href="@{/Prestation/modif/{id}(id=${prest.id})}">Modifier</a>
-            <a class="aBouton" th:href="@{/Prestation/suppr/{id}(id=${prest.id})}">Supprimer</a>
+            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/{id}(id=${prest.id})}">Détail</a></p>
+            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/modif/{id}(id=${prest.id})}">Modifier</a></p>
+            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/suppr/{id}(id=${prest.id})}">Supprimer</a></p>
         </td>
     </tr>
     </tbody>
 </table>
-
+</div>
 
 
 </body>
