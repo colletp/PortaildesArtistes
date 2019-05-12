@@ -12,17 +12,17 @@
     Date Demande:</span>:[[${form.dateDemande}]]<br/>
 
     <!-- Cursus : cursurAc -->
-    <div th:if="${form.cursurAc.list != null}">
+    <div th:if="${! #lists.isEmpty(form.cursusAc)}">
         <h1>Cursus</h1>
         <ul>
-            <th:block th:object="${form.cursurAc}">
+            <th:block th:object="${form.cursusAc}">
                 <li th:each="item : *{list}" th:text="${item}"></li>
             </th:block>
         </ul>
     </div>
 
     <!-- Experience Professionnelle : expPro -->
-    <div th:if="${form.expPro.list != null}">
+    <div th:if="${! #lists.isEmpty(form.expPro)}">
         <h1>Experience professionnelle</h1>
         <ul>
             <th:block th:object="${form.expPro}">
@@ -32,7 +32,7 @@
     </div>
 
     <!-- ressources -->
-    <div th:if="${form.ressources.list != null}">
+    <div th:if="${! #lists.isEmpty(form.ressources)}">
         <h1>Autres ressources</h1>
         <ul>
             <th:block th:object="${form.ressources}">
@@ -45,7 +45,7 @@
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
 
-    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(form) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
 
 </fieldset>
 

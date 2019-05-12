@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,10 @@ public class SecteurDTO extends DTO {
     public void setActivites(List<ActiviteDTO> la ){ activites=la; }
     public List<ActiviteDTO> getActivites(){ return activites; }
 
-    public void add(ActiviteDTO act){ activites.add(act); }
+    public void addActivite(ActiviteDTO act){
+        if(activites==null)activites=new ArrayList<>();
+        activites.add(act);
+    }
 
     // ******************
     // Fonctions

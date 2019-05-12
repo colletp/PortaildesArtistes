@@ -26,7 +26,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         List<SecteurDTO> lSectDTO;
         try{
             lSectDTO=restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
-            model.addAttribute("sect", lSectDTO );
+            model.addAttribute("secteurs", lSectDTO );
         }catch( IllegalArgumentException e ){
             model.addAttribute("Err", e.getMessage() );
         //}catch( ParseException e ){

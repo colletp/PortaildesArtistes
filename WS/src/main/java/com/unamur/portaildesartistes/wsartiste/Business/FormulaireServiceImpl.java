@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FormulaireServiceImpl implements IService<FormulaireDTO> {
@@ -28,14 +27,24 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     @Transactional
     public FormulaireDTO getById( UUID uuid ){
         FormulaireDTO form= formImpl.getById(uuid);
-        form.setActivites( actImpl.getByFormId( form.getId() ) );
+
+        List<ActiviteDTO> lAct = actImpl.getByFormId( form.getId() );
+        List<UUID> lActId = new ArrayList<>();
+
         List<SecteurDTO> lSect = sectImpl.list();
-        for( SecteurDTO sect : lSect ){
-            for( ActiviteDTO act : form.getActivites() ){
-                if( act.getSecteurId()==sect.getId() )
-                    sect.add(act);
+        Set<SecteurDTO> lSectForm = new HashSet<>();
+        for( ActiviteDTO act : lAct ){
+            lActId.add(act.getId());
+            for( SecteurDTO sect : lSect ){
+                if( act.getSecteurId().toString().equals(sect.getId().toString()) ){
+                    if(!lSectForm.contains(sect))lSectForm.add(sect);
+                    sect.addActivite(act);
+                }
             }
         }
+        form.setSecteurActivites( lSectForm );
+        form.setActivitesId(lActId);
+
         return form;
     }
     @Transactional

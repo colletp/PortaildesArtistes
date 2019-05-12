@@ -40,8 +40,23 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
         super.Exec(PrestationSQLs.class).delete(id);
     }
 
-    public List<PrestationDTO> listByTypeId(DTO searcType, UUID p_id) {
-        switch(searcType.getClass().getName()){
+    public List<PrestationDTO> listByTypeId(DTO searchType, UUID p_id) {
+        switch(searchType.getClass().getName()){
+            case "DocArtisteDTO" :
+                return super.Exec(PrestationSQLs.class).getByDocId( p_id );
+            case "CommanditaireDTO" :
+                return super.Exec(PrestationSQLs.class).getByComId( p_id );
+            case "ActiviteDTO" :
+                return super.Exec(PrestationSQLs.class).getByActId( p_id );
+            case "AdresseDTO" :
+                return super.Exec(PrestationSQLs.class).getByPlaceId( p_id );
+            default:
+                return null;
+        }
+    }
+
+    public <U extends java.lang.Class<DTO>> List<PrestationDTO> listByClassId(U searchType, UUID p_id) {
+        switch(searchType.getClass().getName()){
             case "DocArtisteDTO" :
                 return super.Exec(PrestationSQLs.class).getByDocId( p_id );
             case "CommanditaireDTO" :

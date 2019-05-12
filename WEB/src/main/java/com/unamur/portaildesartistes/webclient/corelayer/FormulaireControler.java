@@ -1,6 +1,5 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
-import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -30,8 +28,9 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         //formForm.setRessources();
         formForm.setActivitesId( new ArrayList<>() );
         model.addAttribute("form",formForm);
-        model.addAttribute("activites",new ArrayList<String>());
-        String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        //String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
         return "Formulaire/put.html";
     }
 
@@ -53,7 +52,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         }
         model.addAttribute("form",formForm);
         model.addAttribute("activites",new ArrayList<String>());
-        String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+        sectCtrl.listSecteurActivite( cookieValue, model);
         return "Formulaire/put.html";
     }
 
@@ -63,7 +62,9 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
                                 @ModelAttribute("form") final Formulaire formForm,
                                 Model model){
         logger.error("Formulaire/modif : Authentication received! Cookie : "+cookieValue );
-        model.addAttribute("form",formForm==null?new Formulaire():formForm);
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId());
+        sectCtrl.listSecteurActivite( cookieValue, model);
         return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"POST",model);
     }
 
@@ -85,12 +86,14 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
 logger.error( formForm.getActivitesId().toString() );
+            model.addAttribute("activites",formForm.getActivitesId());
             return "/Formulaire/"+method+".html";
         }catch(ParseException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formForm);
 logger.error( formForm.getActivitesId().toString() );
+            model.addAttribute("activites",formForm.getActivitesId());
             return "/Formulaire/"+method+".html";
         }
     }
