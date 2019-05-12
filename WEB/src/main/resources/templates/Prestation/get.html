@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<span th:text="#{username}" >Nom d'utilisateur</span>:[[${form.username}]]<br/>
+        Password:[[${form.password}]]<br/>
+<fieldset>
+<legend>Prestation</legend>
+    <span th:text="#{citoyen.nom}" >
+    Date prestation:</span>:[[${form.prestation.datePrest}]]<br/>
+    Duree:</span>:[[${form.prestation.duree}]]<br/>
+    Montant:</span>:[[${form.prestation.montant}]]<br/>
+    Statut:</span>:[[${form.prestation.etat}]]<br/>
+
+    Commanditaire:</span>:[[${form.prestation.commanditaire}]]<br/>
+    Doc artiste:</span>:[[${form.prestation.docArtiste}]]<br/>
+
+    <!-- Experience Professionnelle : expPro -->
+    <div th:if="${form.formulaire.expPro.list != null}">
+        <h1>Experience professionnelle</h1>
+        <ul>
+            <th:block th:object="${form.formulaire.expPro}">
+                <li th:each="item : *{list}" th:text="${item}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    <!-- ressources -->
+    <div th:if="${form.formulaire.ressources.list != null}">
+        <h1>Autres ressources</h1>
+        <ul>
+            <th:block th:object="${form.formulaire.ressources}">
+                <li th:each="item : *{list}" th:text="${item}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    Langue :[[${form.formulaire.lanque}]]<br/>
+    Carte :[[${form.formulaire.carte}]]<br/>
+    Visa :[[${form.formulaire.visa}]]<br/>
+
+</fieldset>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
