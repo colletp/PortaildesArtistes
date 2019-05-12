@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.wsartiste.datalayer;
+package com.unamur.portaildesartistes.wsartiste.config;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -50,7 +50,7 @@ public class DBIPersistenceConfig {
     }
 
 
-    public static class ArrayArgumentFactory implements ArgumentFactory<Array> {
+    /*public static class ArrayArgumentFactory implements ArgumentFactory<Array> {
         @Override
         public boolean accepts(Class<?> expectedType, Object value, StatementContext ctx) {
             return value != null && Array.class.isAssignableFrom(value.getClass());
@@ -63,6 +63,29 @@ public class DBIPersistenceConfig {
                 public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
                     logger.error("SQL Array");
                     statement.setArray( position,value );
+                }
+            };
+        }
+    }*/
+    public static class CollectionArgumentFactory implements ArgumentFactory<Collection<String>> {
+        @Autowired
+        private DataSource dataSource;
+
+        @Override
+        public boolean accepts(Class<?> expectedType, Object value, StatementContext ctx) {
+            return value != null && Collection.class.isAssignableFrom(value.getClass());
+        }
+
+        @Override
+        public Argument build(Class<?> expectedType, final Collection<String> value, StatementContext ctx) {
+            return new Argument() {
+                @Override
+                public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
+                    logger.error("SQL Collection");
+                    Connection connection = dataSource.getConnection();
+                    //TODO a corriger
+                    //final java.sql.Array sqlArray = connection.createArrayOf( sqlArray.getBaseTypeName() , value.toArray() );
+                    //statement.setArray( position, sqlArray );
                 }
             };
         }

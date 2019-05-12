@@ -113,7 +113,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setCursusAc(objDTO.getCursusAc()==null?Arrays.asList():objDTO.getCursusAc());
         setExpPro(objDTO.getExpPro()==null?Arrays.asList():objDTO.getExpPro());
         setRessources(objDTO.getRessources()==null?Arrays.asList():objDTO.getRessources());
-        setLangue(objDTO.getLangueStr());
+        setLangue(objDTO.getLangue());
         setCarte(objDTO.getCarte()?"1":"0");
         setVisa(objDTO.getVisa()?"1":"0");
 

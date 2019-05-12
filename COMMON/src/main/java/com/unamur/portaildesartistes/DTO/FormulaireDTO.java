@@ -44,20 +44,23 @@ public class FormulaireDTO extends DTO {
     public void setExpPro(List<String> ls){ expPro=ls;}
     public List<String> getRessources(){ return ressources;}
     public void setRessources(List<String> ls){ ressources=ls;}
-    public String getLangueStr(){
-        if(langue == Lang.FR)return "FR";
+    public String getLangue(){
+        return langue.toString();
+        /*if(langue == Lang.FR)return "FR";
         if(langue == Lang.EN)return "EN";
-        return "FR";
+        return "FR";*/
     }
-    public String getLangue(){ return getLangueStr();}
-//    public Lang getLangue(){ return langue;}
+    //public String getLangue(){ return getLangueStr();}
+    //public Lang getLangue(){ return langue;}
     public void setLangue(String s){
-        switch(s){
+        langue = Lang.valueOf(s);
+        /*switch(s){
             case "FR":langue=Lang.FR;break;
             case "EN":langue=Lang.EN;break;
             default:  langue=null;
-        }
+        }*/
     }
+    public void setLangue(Lang l){langue=l;}
     public Boolean getCarte(){ return carte;}
     public void setCarte(Boolean b){ carte=b;}
     public Boolean getVisa(){ return visa;}
