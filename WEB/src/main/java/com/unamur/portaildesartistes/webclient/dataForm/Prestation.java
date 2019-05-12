@@ -1,7 +1,10 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.text.ParseException;
+import java.util.Date;
 
 public class Prestation extends DataForm<PrestationDTO> {
 
@@ -9,7 +12,9 @@ public class Prestation extends DataForm<PrestationDTO> {
     // Champs/propriétés
     // ******************
 
-    private String datePrest;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date datePrest;
+
     private String duree;
     private String montant;
     private String etat;
@@ -26,8 +31,8 @@ public class Prestation extends DataForm<PrestationDTO> {
     // Setter/Getter
     // ******************
 
-    public String getDatePrest() { return datePrest; }
-    public void setDatePrest(String p_date) { this.datePrest = p_date; }
+    public Date getDatePrest() { return datePrest; }
+    public void setDatePrest(Date p_date) { this.datePrest = p_date; }
     public String getDuree() { return duree; }
     public void setDuree( String p_duree) { this.duree = p_duree; }
     public String getMontant() { return montant; }
@@ -47,7 +52,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
     public void setFromDTO(final PrestationDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
-        setDatePrest(convertDate(objDTO.getDatePrest()));
+        setDatePrest(objDTO.getDatePrest());
         setDuree(objDTO.getDuree().toString());
         setMontant(objDTO.getMontant().toString());
         setEtat(objDTO.getEtat());
@@ -101,8 +106,8 @@ public class Prestation extends DataForm<PrestationDTO> {
         isNotEmpty(getActiviteId());
         dto.setActiviteId(convertUUID(getActiviteId()));
 
-        isNotEmpty(getDatePrest());
-        dto.setDatePrest( convertDate(getDatePrest()) );
+        //isNotEmpty(getDatePrest());
+        dto.setDatePrest( getDatePrest() );
 
         isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( convertUUID(getCommanditaireId()));

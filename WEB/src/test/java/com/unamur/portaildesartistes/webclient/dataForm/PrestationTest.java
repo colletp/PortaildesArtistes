@@ -19,7 +19,7 @@ class PrestationTest {
     @BeforeEach
     void setUp() {
         prestation = new Prestation();
-        prestation.setDatePrest("01/06/2019 20:03:05");
+        //prestation.setDatePrest("01/06/2019 20:03:05");
         prestation.setDuree("2");
         prestation.setMontant("100.36");
         prestation.setEtat("Initiee");
@@ -158,7 +158,7 @@ class PrestationTest {
     @DisplayName("TC 6.13, Test ajout prestation avec format date non valide")
     @Test
     void testPrestationDateInvalide() {
-
+/*
         prestation.setDatePrest("28.02.2019 20:30:00");
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide (dd.mm.yyyy) devrait générer une IllegalArgumentException");
 
@@ -174,7 +174,7 @@ class PrestationTest {
         prestation.setDatePrest("28/02/0000 20:30:00");
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Date invalide (année inexistante) devrait générer une IllegalArgumentException");
 
-        /*prestation.setDatePrest("28/02/2019 25:30:00");
+        prestation.setDatePrest("28/02/2019 25:30:00");
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide devrait générer une IllegalArgumentException");
 
         prestation.setDatePrest("28/02/2019 20:60:00");
