@@ -7,29 +7,37 @@
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
 <div class="formbox90pc">
-<table>
-    <caption><H1>Liste des prestations</H1></caption>
-    <tr>
-        <th>DATE</th>
-        <th>DUREE</th>
-        <th>MONTANT</th>
-        <th>STATUT</th>
-    </tr>
+<table border="1">
+    <thead>
+        <tr>
+            <caption><H1>Liste des prestations</H1></caption>
+        </tr>
+        <tr>
+            <th>Date         </th>
+            <th>Durée        </th>
+            <th>Montant      </th>
+            <th>Statut       </th>
+        </tr>
+    </thead>
+    <tbody>
     <tr th:each="prest : ${form}">
         <td th:text="${prest.datePrest}" th:alt="${prest.datePrest}"></td>
         <td th:text="${prest.duree}" th:alt="${prest.duree}"></td>
         <td th:text="${prest.montant}" th:alt="${prest.montant}"></td>
         <td th:text="${prest.etat}" th:alt="${prest.etat}"></td>
+        <td> secteur</td>
         <td id="boutonsFlex">
             <p class="customButton"><a class="whitea"  th:href="@{/Prestation/{id}(id=${prest.id})}">Détail</a></p>
             <p class="customButton"><a class="whitea"  th:href="@{/Prestation/modif/{id}(id=${prest.id})}">Modifier</a></p>
             <p class="customButton"><a class="whitea"  th:href="@{/Prestation/suppr/{id}(id=${prest.id})}">Supprimer</a></p>
         </td>
     </tr>
+    <tr>
+        <td><p class="customButton"><a class="whitea"  th:href="@{/Prestation/creer}">Ajouter</a></p></td>
+    </tr>
     </tbody>
 </table>
 </div>
-
 
 </body>
 </html>
