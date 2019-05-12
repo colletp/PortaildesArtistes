@@ -46,6 +46,7 @@ public class DBIPersistenceConfig {
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());
         dbi.registerArgumentFactory(new LocalDateArgumentFactory());
         dbi.registerColumnMapper(new JodaDateTimeMapper());
+        //dbi.registerArgumentFactory(new CollectionArgumentFactory());
         return dbi;
     }
 
@@ -67,6 +68,8 @@ public class DBIPersistenceConfig {
             };
         }
     }*/
+
+    @Service
     public static class CollectionArgumentFactory implements ArgumentFactory<Collection<String>> {
         @Autowired
         private DataSource dataSource;
@@ -83,9 +86,12 @@ public class DBIPersistenceConfig {
                 public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
                     logger.error("SQL Collection");
                     Connection connection = dataSource.getConnection();
-                    //TODO a corriger
-                    //final java.sql.Array sqlArray = connection.createArrayOf( sqlArray.getBaseTypeName() , value.toArray() );
-                    //statement.setArray( position, sqlArray );
+
+                    logger.error("Connection:"+ (connection==null?"null":"OK"));
+                    logger.error("Value:"+ (value==null?"null":"OK"));
+
+                    final java.sql.Array sqlArray = connection.createArrayOf( "character varying[]"  , value.toArray() );
+                    statement.setArray( position, sqlArray );
                 }
             };
         }
