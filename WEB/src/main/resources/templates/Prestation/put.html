@@ -20,24 +20,27 @@
         </tr>
         <tr>
             <td>Montant : </td>
-            <td><input type="text" th:field="*{montant}" /></td>
+            <td><input type="text" th:field="${#numbers.formatDecimal(montant, 0, 'COMMA', 2, 'POINT')}" /></td>
         </tr>
         <tr>
             <td>Etat : </td>
             <td><select name="etat" id="etat">
-                <option value="VIDE">VIDE</option>
-                <option value="REMPLIE">REMPLIE</option>
-                <option value="SOUMISE">SOUMISE</option>
-                <option value="EN ATENTE">EN ATENTE</option>
-                <option value="EN TRAITMENT">EN TRAITMENT</option>
-                <option value="CONFIRMEE">CONFIRMEE</option>
-                <option value="REFUSEE">REFUSEE</option>
+                <option value="NOUVELLE">Nouvelle</option>
+                <option value="REMPLIE">Validée par le commenditaire</option>
+                <option value="SOUMISE">Validé par le gestionaire</option>
+                <option value="EN ATENTE">Exécutée</option>
+                <option value="EN TRAITMENT">Annulée par l'artiste</option>
+                <option value="EN TRAITMENT">Annulé par le commenditaire</option>
+                <option value="EN TRAITMENT">Annulé par le gestionnaire</option>
+                <option value="CONFIRMEE">Confirmée</option>
             </select></td>
         </tr>
-<!--
+
         <tr>
             <td><fieldset th:replace="~{/fragments/commanditaire :: commenditaireFormById(form) }"></fieldset></td>
         </tr>
+
+<!--
         <tr>
             <td><fieldset th:replace="~{/fragments/docartiste :: docAcrtisteFormById(form) }"></fieldset></td>
         </tr>
