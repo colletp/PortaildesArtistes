@@ -6,6 +6,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Prestation extends DataForm<PrestationDTO> {
@@ -24,10 +25,11 @@ public class Prestation extends DataForm<PrestationDTO> {
     private Double montant;
 
     private String etat;
+
+    private UUID activiteId;
     private UUID commanditaireId;
     private UUID docArtisteId;
-    private UUID activiteId;
-    private UUID seDerouleId;
+    private UUID adresseId;
 
     // ******************
     // Constructeur
@@ -46,8 +48,8 @@ public class Prestation extends DataForm<PrestationDTO> {
     public String getEtat() { return etat; }
     public void setEtat( String p_etat) { this.etat = p_etat; }
 
-    public UUID getSeDerouleId() { return seDerouleId; }
-    public void setSeDerouleId( UUID p_id) { this.seDerouleId = p_id; }
+    public UUID getSeDerouleId() { return adresseId; }
+    public void setSeDerouleId( UUID p_id) { this.adresseId = p_id; }
     public UUID getDocArtisteId() { return docArtisteId; }
     public void setDocArtisteId( UUID p_id) { this.docArtisteId = p_id; }
     public UUID getActiviteId() { return activiteId; }

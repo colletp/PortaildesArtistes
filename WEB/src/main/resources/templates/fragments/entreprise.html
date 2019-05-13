@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="EntrepriseGet(fonction,entreprise,adresse,citoyen)">
+    <legend th:text="${}">Entreprise</legend>
+    Numéro d'entreprise:<span th:text="*{entreprise.bce}"></span><br/>
+    Dénomination:<span th:text="*{entreprise.denomination}"></span><br/>
+    Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
+
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet('',${}) }"></fieldset>
+
+    <fieldset th:replace="~{/fragments/adresse :: AdresseGet('Résidence',${adresse}) }"></fieldset>
+
+</fieldset>
+
+<fieldset th:fragment="EntreprisPost(fonction,entreprise,adresse,citoyen)">
+    <legend th:text="${}">Entreprise</legend>
+    Numéro d'entreprise:<span th:text="*{entreprise.bce}"></span><br/>
+    Dénomination:<span th:text="*{entreprise.denomination}"></span><br/>
+    Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
+
+    <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${adresse}) }"></fieldset>
+
+</fieldset>
+
+</body>
+
+</html>

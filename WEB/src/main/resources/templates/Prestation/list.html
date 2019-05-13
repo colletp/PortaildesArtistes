@@ -7,7 +7,7 @@
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
 <div class="formbox90pc">
-<table border="1">
+<table class=".table-cellule">
     <caption><H1>Liste des prestations</H1></caption>
     <thead class=".table-header">
         <tr>
@@ -21,11 +21,13 @@
     </thead>
     <tbody>
     <tr th:each="prest : ${form}" class="" >
-        <td th:datetime="${prest.dateprest}" th:alt="${prest.dateprest}"></td>
+        <td th:text="${#dates.format(prest.datePrest, 'dd-MMM-yyyy')}" th:alt="${prest.datePrest}"></td>
         <td th:text="${prest.duree}" th:alt="${prest.duree}"></td>
         <td th:text="${#numbers.formatDecimal(prest.montant, 0, 'COMMA', 2, 'POINT')}" th:alt="${prest.montant}"></td>
         <td th:text="${prest.etat}" th:alt="${prest.etat}"></td>
-        <td> secteur</td>
+
+        <td><fieldset th:if="${prest.activiteId}" th:replace="~{/fragments/activites :: activiteGet('Activité',activite) }"></fieldset></td>
+
         <td id="boutonsFlex">
             <p class="customButton"><a class="whitea"  th:href="@{/Prestation/{id}(id=${prest.id})}">Détail</a></p>
             <p class="customButton"><a class="whitea"  th:href="@{/Prestation/modif/{id}(id=${prest.id})}">Modifier</a></p>
