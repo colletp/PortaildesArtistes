@@ -10,7 +10,7 @@ public class PrestationDTO extends DTO {
     // ******************
 
     private Date datePrest;
-    private Integer duree;
+    private int duree;
     private Double montant;
     private String etat;
     private UUID commanditaireId;
@@ -33,8 +33,8 @@ public class PrestationDTO extends DTO {
 
     public Date getDatePrest() { return datePrest; }
     public void setDatePrest(Date p_date) { this.datePrest = p_date; }
-    public Integer getDuree() { return duree; }
-    public void setDuree( Integer p_duree) { this.duree = p_duree; }
+    public int getDuree() { return duree; }
+    public void setDuree( int p_duree) { this.duree = p_duree; }
     public Double getMontant() { return montant; }
     public void setMontant( Double p_montant) { this.montant = p_montant; }
     public String getEtat() { return etat; }

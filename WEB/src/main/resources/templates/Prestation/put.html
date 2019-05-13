@@ -10,17 +10,20 @@
 <form class="formbox400" th:action="@{/prestation}" th:name="form" th:object="${form}" th:method="put">
 
     <table>
+        <caption ><H1>Nouvelle prestation</H1></caption>
+        <thead class=".table-header">
+        </thead>
         <tr>
             <td>Date prestation : </td>
-            <td><input type="date" th:field="*{datePrest}" id="date-started" /></td>
+            <td><input type="date" th:value="${datePrest}" id="date-started" /></td>
         </tr>
         <tr>
             <td>Durée : </td>
-            <td><input type="text" th:field="*{duree}" /></td>
+            <td><input type="text" th:value="${duree}" /></td>
         </tr>
         <tr>
             <td>Montant : </td>
-            <td><input type="text" th:field="${#numbers.formatDecimal(montant, 0, 'COMMA', 2, 'POINT')}" /></td>
+            <td><input type="text" th:value="${#numbers.formatDecimal(montant, 1, 2)}" /></td>
         </tr>
         <tr>
             <td>Etat : </td>
@@ -36,21 +39,23 @@
             </select></td>
         </tr>
 
-        <tr>
-            <td><fieldset th:replace="~{/fragments/commanditaire :: commenditaireFormById(form) }"></fieldset></td>
-        </tr>
 
-<!--
-        <tr>
-            <td><fieldset th:replace="~{/fragments/docartiste :: docAcrtisteFormById(form) }"></fieldset></td>
-        </tr>
-        <tr>
-            <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(form) }"></fieldset></td>
-        </tr>
-        <tr>
-            <td><fieldset th:replace="~{/fragments/adresse :: adresseFormById(form) }"></fieldset></td>
-        </tr>
--->
+        <!--<tr>-->
+            <!--<td><fieldset th:replace="~{/fragments/commanditaire :: commenditaireFormById( ${form} ) }"></fieldset></td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+            <!--<td><fieldset th:replace="~{/fragments/docartiste :: docAcrtisteFormById( ${form}) }"></fieldset></td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+             <!--<td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur( ${form}, ${secteurs}) }"></fieldset><td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+            <!--<td><fieldset th:replace="~{/fragments/adresse :: adresseFormById( ${form}) }"></fieldset></td>-->
+        <!--</tr>-->
+
     </table>
 
     <input th:type="submit" />
