@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,11 @@ public class FormulaireDTO extends DTO {
     // ******************
     // Constructeur
     // ******************
-
+    public FormulaireDTO(){
+        cursusAc=new ArrayList<>();
+        expPro=new ArrayList<>();
+        ressources=new ArrayList<>();
+    }
     // ******************
     // Setter/Getter
     // ******************
@@ -46,19 +51,9 @@ public class FormulaireDTO extends DTO {
     public void setRessources(List<String> ls){ ressources=ls;}
     public String getLangue(){
         return langue.toString();
-        /*if(langue == Lang.FR)return "FR";
-        if(langue == Lang.EN)return "EN";
-        return "FR";*/
     }
-    //public String getLangue(){ return getLangueStr();}
-    //public Lang getLangue(){ return langue;}
     public void setLangue(String s){
         langue = Lang.valueOf(s);
-        /*switch(s){
-            case "FR":langue=Lang.FR;break;
-            case "EN":langue=Lang.EN;break;
-            default:  langue=null;
-        }*/
     }
     public void setLangue(Lang l){langue=l;}
     public Boolean getCarte(){ return carte;}
