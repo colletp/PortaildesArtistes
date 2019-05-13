@@ -298,3 +298,14 @@ button{
     background-color: #014B96;
     border: none;
 }
+
+tr:nth-of-type(odd) {
+    background-color:#014B96;}
+
+tr:nth-of-type(even) {
+    background-color:#66AFDF;}
+
+.table-header {
+    background-color: blue;
+    color: cornsilk;
+}
