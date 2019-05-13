@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<div class="Msg">[[${Msg}]]</div>
+<div class="Err">[[${Err}]]</div>
+<form class="formbox400" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="post">
+
+    <table>
+        <tr>
+            <td>Date prestation : </td>
+            <td><input type="date" th:field="*{datePrest}" id="date-started" /></td>
+        </tr>
+        <tr>
+            <td>Durée : </td>
+            <td><input type="text" th:field="*{duree}" /></td>
+        </tr>
+        <tr>
+            <td>Montant : </td>
+            <td><input type="text" th:field="*{montant}" /></td>
+        </tr>
+        <tr>
+            <td>Etat : </td>
+            <td><select name="etat" id="etat">
+                <option value="VIDE">VIDE</option>
+                <option value="REMPLIE">REMPLIE</option>
+                <option value="SOUMISE">SOUMISE</option>
+                <option value="EN ATENTE">EN ATENTE</option>
+                <option value="EN TRAITMENT">EN TRAITMENT</option>
+                <option value="CONFIRMEE">CONFIRMEE</option>
+                <option value="REFUSEE">REFUSEE</option>
+            </select></td>
+        </tr>
+        <!--
+                <tr>
+                    <td><fieldset th:replace="~{/fragments/commanditaire :: commenditaireFormById(form) }"></fieldset></td>
+                </tr>
+                <tr>
+                    <td><fieldset th:replace="~{/fragments/docartiste :: docAcrtisteFormById(form) }"></fieldset></td>
+                </tr>
+                <tr>
+                    <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(form) }"></fieldset></td>
+                </tr>
+                <tr>
+                    <td><fieldset th:replace="~{/fragments/adresse :: adresseFormById(form) }"></fieldset></td>
+                </tr>
+        -->
+    </table>
+
+    <input th:type="submit" />
+
+</form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

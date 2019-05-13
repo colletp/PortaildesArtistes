@@ -100,7 +100,7 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
         public PrestationDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
             prestDTO = new PrestationDTO();
             prestDTO.setId((UUID) r.getObject("prest_id"));
-            prestDTO.setDatePrest(r.getTimestamp("date_prest"));
+            prestDTO.setDatePrest(r.getDate("date_prest"));
             prestDTO.setDuree(r.getInt("duree"));
             prestDTO.setMontant( r.getBigDecimal("montant").doubleValue() );
             prestDTO.setEtat( r.getString("etat") );

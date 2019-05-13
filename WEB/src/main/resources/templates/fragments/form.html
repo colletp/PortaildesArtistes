@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="formArray(fonction,url,form)">
+    <legend th:text="${fonction}"></legend>
+    <a th:href="@{${url}+'?addRow'}">Ajouter</a>
+    <ul th:each="item : ${form}">
+        <li><input type="text" th:field="*{item}" />
+            <a th:href="@{${url}+'?removeRow='+${rowStat.index}}">Supprimer</a>
+        </li>
+    </ul>
+</fieldset>
+
+
+<fieldset th:fragment="activiteGet(fonction,act)">
+    <legend>[[${fonction}]]</legend>
+    Nom:[[${act.nomActivite}]]<br/>
+    Desription:[[${act.description}]]<br/>
+</fieldset>
+
+<fieldset th:fragment="activiteModif(fonction,act)">
+    <legend>[[${fonction}]]</legend>
+    <input type="hidden" th:field="*{act.id}" />
+    Nom:<input type="text" th:field="*{act.nomActivite}" /><br/>
+    Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
+</fieldset>
+
+<fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
+    <legend>Secteurs</legend>
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+        <legend th:text="*{nomSecteur}">Secteur</legend>
+        <ul th:each="act : *{activites}"  th:object="${act}">
+            <li>
+                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
+                <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
+            </li>
+        </ul>
+    </fieldset>
+</fieldset>
+
+<fieldset th:fragment="activiteShowBySecteur(listSect)">
+    <legend>Secteurs</legend>
+    <fieldset th:each="sec : ${listSect}">
+        <legend th:text="${sec.nomSecteur}">Secteur</legend>
+        <ul th:each="act : ${sec.activites}">
+            <li>
+                <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
+            </li>
+        </ul>
+    </fieldset>
+</fieldset>
+
+</body>
+
+</html>

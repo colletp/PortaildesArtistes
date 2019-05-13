@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
-import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -31,6 +31,30 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         model.addAttribute("activites",formForm.getActivitesId() );
         sectCtrl.listSecteurActivite( cookieValue, model);
         //String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+        return "Formulaire/put.html";
+    }
+
+    @RequestMapping(value="/Formulaire/creer", params={"addRow"})
+    public String addRowCursusAc( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+            //final SeedStarter seedStarter, final BindingResult bindingResult
+            ) {
+        formForm.getCursusAc().add( new String() );
+
+        model.addAttribute("form",formForm);
+        return "Formulaire/put.html";
+    }
+
+    @RequestMapping(value="/Formulaire/creer", params={"removeRow"})
+    public String removeRowCursusAc(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+            //,final BindingResult bindingResult
+            ,final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        formForm.getCursusAc().remove(rowId.intValue());
+        model.addAttribute("form",formForm);
         return "Formulaire/put.html";
     }
 

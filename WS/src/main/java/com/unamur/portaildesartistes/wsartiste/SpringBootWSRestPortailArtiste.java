@@ -1,6 +1,5 @@
 package com.unamur.portaildesartistes.wsartiste;
 
-import com.unamur.portaildesartistes.config.WebMvcConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
