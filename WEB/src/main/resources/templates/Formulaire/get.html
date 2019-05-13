@@ -13,31 +13,25 @@
 
     <!-- Cursus : cursurAc -->
     <div th:if="${! #lists.isEmpty(form.cursusAc)}">
-        <h1>Cursus</h1>
-        <ul>
-            <th:block th:object="${form.cursusAc}">
-                <li th:each="item : *{list}" th:text="${item}"></li>
-            </th:block>
+        <h1>Cursus académique</h1>
+        <ul th:each="item : ${form.cursusAc}">
+            <li th:text="*{item}"></li>
         </ul>
     </div>
 
     <!-- Experience Professionnelle : expPro -->
     <div th:if="${! #lists.isEmpty(form.expPro)}">
         <h1>Experience professionnelle</h1>
-        <ul>
-            <th:block th:object="${form.expPro}">
-                <li th:each="item : *{list}" th:text="${item}"></li>
-            </th:block>
+        <ul th:each="item : ${form.expPro}">
+            <li th:text="*{item}"></li>
         </ul>
     </div>
 
     <!-- ressources -->
     <div th:if="${! #lists.isEmpty(form.ressources)}">
         <h1>Autres ressources</h1>
-        <ul>
-            <th:block th:object="${form.ressources}">
-                <li th:each="item : *{list}" th:text="${item}"></li>
-            </th:block>
+        <ul th:each="item : ${form.ressources}">
+            <li th:text="*{item}"></li>
         </ul>
     </div>
 
