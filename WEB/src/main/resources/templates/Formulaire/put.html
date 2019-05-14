@@ -9,18 +9,10 @@
 <div class="Err">[[${Err}]]</div>
 <form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
 
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','/Formulaire/creer',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
 
-    <fieldset><legend>Cursus Académique</legend>
-        <a th:href="@{/Formulaire/creer?addRow}">Ajouter</a>
-        <ul th:each="cur : *{cursusAc}" th:object="${cursusAc}">
-            <li><input type="text" th:field="*{cur}" />
-                <a th:href="@{/Formulaire/creer?removeRow}+'''=+${rowStat.index}">Supprimer</a>
-            </li>
-        </ul>
-    </fieldset>
-        Expérience professionnelle:<input type="text" th:field="*{expPro}" /><br/>
-        Autres ressources:<input type="text" th:field="*{ressources}" /><br/>
         Langue<select name="langue" id="langue">
                 <option value="FR">FR</option>
                 <option value="EN">EN</option>
@@ -30,7 +22,7 @@
 
         <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
-        <input th:type="submit" />
+        <input th:type="submit" name="submit" />
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -39,7 +39,8 @@
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
 
-    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/form :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
 
 </fieldset>
 
