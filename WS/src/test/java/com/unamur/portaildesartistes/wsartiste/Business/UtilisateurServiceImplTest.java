@@ -3,7 +3,6 @@ package com.unamur.portaildesartistes.wsartiste.Business;
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
-import com.unamur.portaildesartistes.wsartiste.security.WebSecurityConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
