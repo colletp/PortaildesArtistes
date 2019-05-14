@@ -17,11 +17,12 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Service
-@ComponentScan("com.unamur.portaildesartistes")
+//@ComponentScan("com.unamur.portaildesartistes")
 class UtilisateurServiceImplTest {
 
     @Autowired
     UtilisateurServiceImpl usrServImpl;
+    AdresseServiceImpl adrServImpl;
 //    @Autowired
 //    WebSecurityConfig cfg;
 
@@ -61,7 +62,7 @@ class UtilisateurServiceImplTest {
 
     @AfterEach
     void tearDown() {
-        usrServImpl.delete(usrId);
+
     }
 
     @Test
@@ -104,6 +105,9 @@ class UtilisateurServiceImplTest {
         newUsr.getId() .equals( newUsr.getCitoyen().getId() );
         newUsr.getCitoyen().getReside();
 
+        //défaire spécifiquement le insert
+        adrServImpl.delete( newUsr.getCitoyen().getReside() );
+        usrServImpl.delete(usrId);
     }
 
     @Test
