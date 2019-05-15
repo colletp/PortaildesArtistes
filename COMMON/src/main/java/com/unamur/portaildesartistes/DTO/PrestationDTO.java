@@ -50,13 +50,13 @@ public class PrestationDTO extends DTO {
     public void setSeDerouleId( UUID p_id) { this.seDerouleId = p_id; }
 
     public CommanditaireDTO getCommanditaire() { return commanditaire; }
-    public void setCommanditaire( CommanditaireDTO p_id) { this.commanditaire = p_id; }
+    public void setCommanditaire( CommanditaireDTO p_obj) { this.commanditaire = p_obj; }
     public DocArtisteDTO getDocArtiste() { return docArtiste; }
-    public void setDocArtiste( DocArtisteDTO p_id) { this.docArtiste = p_id; }
+    public void setDocArtiste( DocArtisteDTO p_obj) { this.docArtiste = p_obj; }
     public ActiviteDTO getActivite() { return activite; }
-    public void setActivite( ActiviteDTO p_id) { this.activite = p_id; }
+    public void setActivite( ActiviteDTO p_obj) { this.activite = p_obj; }
     public AdresseDTO getSeDeroule() { return seDeroule; }
-    public void setSeDeroule( AdresseDTO p_id) { this.seDeroule = p_id; }
+    public void setSeDeroule( AdresseDTO p_obj) { this.seDeroule = p_obj; }
 
     // ******************
     // Fonctions
