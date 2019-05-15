@@ -1,6 +1,12 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
+import com.unamur.portaildesartistes.DTO.AdresseDTO;
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
+import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
+import com.unamur.portaildesartistes.DTO.CommanditaireDTO;
+
+import org.apache.tomcat.jni.Address;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -31,6 +37,12 @@ public class Prestation extends DataForm<PrestationDTO> {
     private UUID docArtisteId;
     private UUID adresseId;
 
+    private ActiviteDTO oActivite;
+    private CommanditaireDTO oCommanditaire;
+    private DocArtisteDTO oDocArtiste;
+    private AdresseDTO oAdresse;
+
+
     // ******************
     // Constructeur
     // ******************
@@ -58,6 +70,15 @@ public class Prestation extends DataForm<PrestationDTO> {
     public void setCommanditaireId( UUID p_id) { this.commanditaireId= p_id; }
 
 
+    public AdresseDTO getSeDeroule() { return oAdresse; }
+    public void setSeDeroule( AdresseDTO oAdresse) { this.oAdresse = oAdresse; }
+    public DocArtisteDTO getDocArtiste() { return oDocArtiste; }
+    public void setDocArtiste( DocArtisteDTO oDocArtiste) { this.oDocArtiste = oDocArtiste; }
+    public ActiviteDTO getActivite() { return oActivite; }
+    public void setActivite( ActiviteDTO oActivite) { this.oActivite = oActivite; }
+    public CommanditaireDTO getCommanditaire() { return oCommanditaire; }
+    public void setCommanditaire( CommanditaireDTO oCommanditaire) { this.oCommanditaire = oCommanditaire; }
+
     public void setFromDTO(final PrestationDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDatePrest(objDTO.getDatePrest());
@@ -68,6 +89,11 @@ public class Prestation extends DataForm<PrestationDTO> {
         setDocArtisteId(objDTO.getDocArtisteId());
         setActiviteId(objDTO.getActiviteId());
         setSeDerouleId(objDTO.getSeDerouleId());
+
+        setCommanditaire(objDTO.getCommanditaire());
+        setDocArtiste(objDTO.getDocArtiste());
+        setActivite(objDTO.getActivite());
+        setSeDeroule(objDTO.getSeDeroule());
     }
     // ******************
     // Fonctions
@@ -96,8 +122,12 @@ public class Prestation extends DataForm<PrestationDTO> {
         //isNotEmpty(getSeDerouleId());
         dto.setSeDerouleId(getSeDerouleId());
 
+        dto.setSeDeroule(getSeDeroule());
+
         //isNotEmpty(getDocArtisteId());
         dto.setDocArtisteId(getDocArtisteId());
+
+        dto.setDocArtiste(getDocArtiste());
 
         // isNotEmpty(getEtat()); A ajouter?? (commentaire Bernard G)
         dto.setEtat(getEtat());
@@ -114,11 +144,15 @@ public class Prestation extends DataForm<PrestationDTO> {
         //isNotEmpty(getActiviteId());
         dto.setActiviteId(getActiviteId());
 
+        dto.setActivite(getActivite());
+
         //isNotEmpty(getDatePrest());
         dto.setDatePrest( getDatePrest() );
 
         //isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( getCommanditaireId());
+
+        dto.setCommanditaire( getCommanditaire() );
 
         return dto;
     }
