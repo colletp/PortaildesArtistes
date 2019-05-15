@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +32,8 @@ class FormulaireTest {
         formulaire.setLangue("FR");
         formulaire.setCarte("1");
         formulaire.setVisa("0");
+        List <String> tab=new ArrayList<>();
+        formulaire.setActivitesId(tab);
     }
 
     @AfterEach
@@ -55,7 +59,8 @@ class FormulaireTest {
                 ()->assertEquals(form.getCarte(),formulaire.getCarte()),
                 ()->assertEquals(form.getVisa(),formulaire.getVisa()),
                 ()->assertEquals(form.getDateDemande(),formulaire.convertDate(formulaire.getDateDemande())),
-                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId()))
+                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
+                ()->assertEquals(form.getActivitesId(),formulaire.getActivitesId())
         );
     }
 
@@ -79,7 +84,8 @@ class FormulaireTest {
                 ()->assertEquals(form.getCarte(),formulaire.getCarte()),
                 ()->assertEquals(form.getVisa(),formulaire.getVisa()),
                 ()->assertEquals(form.getDateDemande(),formulaire.convertDate(formulaire.getDateDemande())),
-                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId()))
+                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
+                ()->assertEquals(form.getActivitesId(),formulaire.getActivitesId())
         );
     }
 

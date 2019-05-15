@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,14 +20,14 @@ class PrestationTest {
     @BeforeEach
     void setUp() {
         prestation = new Prestation();
-        prestation.setDatePrest("01/06/2019 20:03:05");
-        prestation.setDuree("2");
-        prestation.setMontant("100.36");
+        prestation.setDatePrest(prestation.convertDate("01/06/2019 20:03:05"));
+        prestation.setDuree(2);
+        prestation.setMontant(100.36);
         prestation.setEtat("Initiee");
-        prestation.setCommanditaireId("98a95e7d-8231-4115-8ed9-612de5590d85");
-        prestation.setDocArtisteId("98a95e7d-8231-4115-8ed9-612de5590d86");
-        prestation.setActiviteId("98a95e7d-8231-4115-8ed9-612de5590d87");
-        prestation.setSeDerouleId("98a95e7d-8231-4115-8ed9-612de5590d88");
+        prestation.setCommanditaireId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d85"));
+        prestation.setDocArtisteId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d86"));
+        prestation.setActiviteId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d87"));
+        prestation.setSeDerouleId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d88"));
     }
 
     @AfterEach
@@ -52,7 +53,7 @@ class PrestationTest {
             );
 
             assertAll(
-                    ()->assertEquals(prestDTO.getDuree().toString(),  prestation.getDuree()),
+                    ()->assertEquals(prestDTO.getDuree(),  prestation.getDuree()),
                     ()->assertEquals(prestDTO.getMontant().toString(),prestation.getMontant())
             );
 
@@ -80,7 +81,7 @@ class PrestationTest {
     @Test
     void testPrestationMontantManquant() {
 
-        prestation.setMontant(null);
+        prestation.setMontant(0.0);
 
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
@@ -88,7 +89,7 @@ class PrestationTest {
         } catch (ParseException | IllegalArgumentException e) {
             e.printStackTrace();
         }
-    }
+  }
 
     @DisplayName("TC 6.4, Test ajout prestation avec activité manquante")
     @Test
@@ -123,7 +124,7 @@ class PrestationTest {
     @Test
     void testPrestationDureeManquante() {
 
-        prestation.setDuree(null);
+        prestation.setDuree(0);
 
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
@@ -137,12 +138,12 @@ class PrestationTest {
     @Test
     void testPrestationSupMontantMax() {
 
-        prestation.setMontant("128.94");
-        prestation.setDuree("1");
+        prestation.setMontant(128.94);
+        prestation.setDuree(1);
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Montant > 128.93€ devrait générer une IllegalArgumentException");
 
-        prestation.setMontant("644.66");
-        prestation.setDuree("5");
+        prestation.setMontant(644.66);
+        prestation.setDuree(5);
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Montant > 128.93€ * durée (nbr jours) devrait générer une IllegalArgumentException");
     }
 
@@ -150,7 +151,7 @@ class PrestationTest {
     @Test
     void testPrestationSupDureeMax() {
 
-        prestation.setDuree("8");
+        prestation.setDuree(8);
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Durée > 7 jours devrait générer une IllegalArgumentException");
 
     }
@@ -159,33 +160,29 @@ class PrestationTest {
     @Test
     void testPrestationDateInvalide() {
 
-        prestation.setDatePrest("28.02.2019 20:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide (dd.mm.yyyy) devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("29/02/2019 20:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Date invalide (29/02 d'une année non bissextile) devrait générer une IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28.02.2019 20:30:00")), "Format date invalide (dd.mm.yyyy) devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("31/04/2019 20:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Date invalide (jours inexistant) devrait générer une IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("29/02/2019 20:30:00")), "Date invalide (29/02 d'une année non bissextile) devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("28/13/2019 20:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Date invalide (mois inexistant) devrait générer une IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("31/04/2019 20:30:00")), "Date invalide (jours inexistant) devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("28/02/0000 20:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Date invalide (année inexistante) devrait générer une IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28/13/2019 20:30:00")), "Date invalide (mois inexistant) devrait générer une IllegalArgumentException");
 
-        /*prestation.setDatePrest("28/02/2019 25:30:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide devrait générer une IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28/02/0000 20:30:00")), "Date invalide (année inexistante) devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("28/02/2019 20:60:00");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide devrait générer une IllegalArgumentException");
+        //à corriger pour les heurers
+        /*
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28/02/2019 25:30:00")), "Format date invalide devrait générer une IllegalArgumentException");
 
-        prestation.setDatePrest("28/02/2019 20:30:60");
-        assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format date invalide devrait générer une IllegalArgumentException");
-        */
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28/02/2019 20:60:00")), "Format date invalide devrait générer une IllegalArgumentException");
+
+        assertThrows(IllegalArgumentException.class, ()-> prestation.setDatePrest(prestation.convertDate("28/02/2019 20:30:60")), "Format date invalide devrait générer une IllegalArgumentException");
+*/
     }
 
-
+    //test ok pour le format car seul les Integers et les Doubles sont acceptés
+/*
     @DisplayName("TC 6.14, Test ajout prestation avec format durée non valide")
     @Test
     void testPrestationDureeInvalide() {
@@ -199,9 +196,9 @@ class PrestationTest {
     @Test
     void testPrestationMontantInvalide() {
 
-        prestation.setMontant("6aD6");
+        prestation.setMontant(6aD6);
         assertThrows(IllegalArgumentException.class, ()-> prestation.getDTO(), "Format montant invalide devrait générer une IllegalArgumentException");
-    }
+    }*/
 
 
 }

@@ -2,6 +2,8 @@ package com.unamur.portaildesartistes.DTO;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,4 +57,28 @@ public class UtilisateurDTO extends DTO implements UserDetails {
     public String getSession(){ return sess; }
     public void setSession(String s){ sess=s; }
 
+    @Override
+    public boolean equals(Object obj){
+        if( obj.getClass().getSimpleName().equals( this.getClass().getSimpleName() ) ){
+            return this.equals( (UtilisateurDTO) obj );
+        }
+
+        return false;
+    }
+    private boolean equals(UtilisateurDTO usr){
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if( ! this.getUsername().equals(usr.getUsername() ))return false;
+        boolean passwordsMatch1 = encoder.matches( this.getPassword() // mot de passe qu'on a défini (non crypté)
+                , usr.getPassword() //mot de passe repris de la DB (cryypté)
+        );
+        boolean passwordsMatch2 = encoder.matches( usr.getPassword() // mot de passe qu'on a défini (non crypté)
+                , this.getPassword() //mot de passe repris de la DB (cryypté)
+        );
+        if( !passwordsMatch1 && !passwordsMatch2 )return false;
+
+        // TODO tester le reste
+
+        return true;
+    }
 }

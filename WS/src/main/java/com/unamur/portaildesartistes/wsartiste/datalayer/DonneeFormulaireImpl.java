@@ -8,18 +8,17 @@ import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
+import org.skife.jdbi.v2.unstable.BindIn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
@@ -36,8 +35,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     @Override
     public UUID insert(FormulaireDTO item){
         UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
+        item.setId(formId);
         for( UUID actId : item.getActivitesId() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(actId,formId);
+            super.Exec(FormulaireActiviteSQLs.class).insert(actId,item.getId());
+        super.Exec("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id",item.getId(),item.getCursusAc().toArray());
+        super.Exec("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id",item.getId(),item.getExpPro().toArray());
+        super.Exec("UPDATE formulaires SET ressources=:array WHERE form_id=:id",item.getId(),item.getRessources().toArray());
         return formId;
     }
     @Override
@@ -45,7 +48,11 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         super.Exec(FormulaireActiviteSQLs.class).deleteByForm( item.getId() );
         for( UUID actId : item.getActivitesId() )
             super.Exec(FormulaireActiviteSQLs.class).insert(actId, item.getId());
+
         super.Exec(FormulaireSQLs.class).update(item);
+        super.Exec("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id",item.getId(),item.getCursusAc().toArray());
+        super.Exec("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id",item.getId(),item.getExpPro().toArray());
+        super.Exec("UPDATE formulaires SET ressources=:array WHERE form_id=:id",item.getId(),item.getRessources().toArray());
     }
     @Override
     public void delete(UUID id){
@@ -64,12 +71,11 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         @SqlQuery("select * from formulaires where citoyen_id = :citoyenId")
         List<FormulaireDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlQuery("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) RETURNING form_id ")
+        @SqlQuery("insert into formulaires (citoyen_id,langue,carte,visa) values(:citoyenId,:langue,:carte,:visa) RETURNING form_id ")
         String insert(@BindBean FormulaireDTO form);
 
-        @SqlUpdate("UPDATE formulaires SET cursus_ac=:cursusAc,ex_pro=:expPro,ressources=:ressources,langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
-        //@SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
-        void update(@BindBean FormulaireDTO form);
+        @SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
+        void update(@BindBean FormulaireDTO form );
 
         void delete(UUID id);
     }
@@ -107,9 +113,9 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setId((UUID) r.getObject("form_id"));
             formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
-            formulaireDTO.setCursusAc( (List<String>) r.getObject("cursus_ac"));
-            formulaireDTO.setExpPro( (List<String>) r.getObject("ex_pro"));
-            formulaireDTO.setRessources( (List<String>) r.getObject("ressources"));
+            formulaireDTO.setCursusAc( Arrays.asList((String[]) r.getArray("cursus_ac").getArray()) );
+            formulaireDTO.setExpPro( Arrays.asList((String[]) r.getArray("ex_pro").getArray()) );
+            formulaireDTO.setRessources( Arrays.asList((String[]) r.getArray("ressources").getArray()) );
             formulaireDTO.setLangue( r.getString("langue"));
             formulaireDTO.setCarte( r.getBoolean("carte"));
             formulaireDTO.setVisa( r.getBoolean("visa"));

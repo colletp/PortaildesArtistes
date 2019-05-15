@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
-import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -20,6 +20,8 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     @Autowired
     private SecteurControler sectCtrl;
+    @Autowired
+    private ActiviteControler actCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
     public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -31,6 +33,82 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         model.addAttribute("activites",formForm.getActivitesId() );
         sectCtrl.listSecteurActivite( cookieValue, model);
         //String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+        return "Formulaire/put.html";
+    }
+
+    @PostMapping(value="/Formulaire", params={"addRowcursusAcCreate"})
+    public String addRowCursusAc( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+            //final SeedStarter seedStarter, final BindingResult bindingResult
+            ) {
+        formForm.getCursusAc().add( String.valueOf(formForm.getCursusAc().size()) );
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        return "Formulaire/put.html";
+    }
+    @PostMapping(value="/Formulaire", params={"removeRowcursusAcCreate"})
+    public String removeRowCursusAc(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+            //,final BindingResult bindingResult
+            ,final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRowcursusAcCreate"));
+        formForm.getCursusAc().remove(rowId.intValue());
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        return "Formulaire/put.html";
+    }
+    @PostMapping(value="/Formulaire", params={"addRowexpProCreate"})
+    public String addRowExpPro( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+                                  //final SeedStarter seedStarter, final BindingResult bindingResult
+    ) {
+        formForm.getExpPro().add( String.valueOf(formForm.getExpPro().size()) );
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        return "Formulaire/put.html";
+    }
+    @PostMapping(value="/Formulaire", params={"removeRowexpProCreate"})
+    public String removeRowExpPro(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+                                    //,final BindingResult bindingResult
+            ,final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRowexpProCreate"));
+        formForm.getExpPro().remove(rowId.intValue());
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        return "Formulaire/put.html";
+    }
+    @PostMapping(value="/Formulaire", params={"addRowressourcesCreate"})
+    public String addRowRessources( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+                                  //final SeedStarter seedStarter, final BindingResult bindingResult
+    ) {
+        formForm.getRessources().add( String.valueOf(formForm.getRessources().size()) );
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
+        return "Formulaire/put.html";
+    }
+    @PostMapping(value="/Formulaire", params={"removeRowressourcesCreate"})
+    public String removeRowRessources(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,Model model
+                                    //,final BindingResult bindingResult
+            ,final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRowressourcesCreate"));
+        formForm.getRessources().remove(rowId.intValue());
+        model.addAttribute("form",formForm);
+        model.addAttribute("activites",formForm.getActivitesId() );
+        sectCtrl.listSecteurActivite( cookieValue, model);
         return "Formulaire/put.html";
     }
 
@@ -68,7 +146,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"POST",model);
     }
 
-    @PostMapping(value = "/Formulaire")
+    @PostMapping(value = "/Formulaire" , params={"submit"})
     public String formPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Formulaire formForm
@@ -80,7 +158,13 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             for(String actId : formForm.getActivitesId() )
                 listAct.add(actCtrl.getObj(cookieValue,UUID.fromString(actId),new ActiviteDTO(),ActiviteDTO.class ));
             formDTO.setActivites(listAct);*/
-            return super.postForm(cookieValue,formDTO,method);
+            String str = super.postForm(cookieValue,formDTO,method);
+            model.addAttribute("form",formForm);
+            model.addAttribute("activites",formForm.getActivitesId() );
+            sectCtrl.listSecteurActivite( cookieValue, model);
+
+            //actCtrl.activite();
+            return str;
         }catch(IllegalArgumentException e){
             String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
             model.addAttribute("Err",e.getMessage());
