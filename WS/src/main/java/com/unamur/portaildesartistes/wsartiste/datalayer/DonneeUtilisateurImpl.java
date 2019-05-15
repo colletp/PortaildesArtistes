@@ -88,7 +88,7 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
     }
 
     public void delete(UUID uuid){
-        /*try{
+        try{
             super.Exec(UtilisateurSQLs.class).delete(uuid);
         }
         catch(UnableToExecuteStatementException e){
@@ -105,7 +105,6 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
             System.err.println( e.getClass() );
             //throw e;
         }
-        */
     }
 
     //implemente la sécurité
@@ -141,6 +140,9 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
 
         @SqlUpdate("UPDATE citoyen SET login=:username,password=:password WHERE citoyen_id=:id")
         void update(@BindBean UtilisateurDTO usr) throws SQLException;
+
+        @SqlUpdate("DELETE FROM citoyen WHERE citoyen_id=:citoyen_id")
+        void delete(@Bind("citoyen_id") UUID citoyen_id) throws SQLException;
     }
 
     public static class UtilisateurMapper implements ResultSetMapper<UtilisateurDTO> {

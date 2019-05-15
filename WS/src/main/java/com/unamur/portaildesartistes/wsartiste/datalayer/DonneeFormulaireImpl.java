@@ -35,8 +35,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     @Override
     public UUID insert(FormulaireDTO item){
         UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
+        item.setId(formId);
         for( UUID actId : item.getActivitesId() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(actId,formId);
+            super.Exec(FormulaireActiviteSQLs.class).insert(actId,item.getId());
+        super.Exec("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id",item.getId(),item.getCursusAc().toArray());
+        super.Exec("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id",item.getId(),item.getExpPro().toArray());
+        super.Exec("UPDATE formulaires SET ressources=:array WHERE form_id=:id",item.getId(),item.getRessources().toArray());
         return formId;
     }
     @Override
@@ -67,9 +71,8 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         @SqlQuery("select * from formulaires where citoyen_id = :citoyenId")
         List<FormulaireDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlQuery("insert into formulaires (citoyen_id,date_demande,cursus_ac,ex_pro,ressources,langue,carte,visa) values(:citoyen_id,:date_demande,:cursus_ac,:ex_pro,:ressources,:langue,:carte,:visa) RETURNING form_id ")
+        @SqlQuery("insert into formulaires (citoyen_id,langue,carte,visa) values(:citoyenId,:langue,:carte,:visa) RETURNING form_id ")
         String insert(@BindBean FormulaireDTO form);
-
 
         @SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
         void update(@BindBean FormulaireDTO form );

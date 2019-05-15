@@ -34,7 +34,11 @@ public class Secteur extends DataForm<SecteurDTO> {
     public SecteurDTO getDTO()throws ParseException {
         SecteurDTO dto = new SecteurDTO();
         if( getId()!=null && !getId().isEmpty())
+
+        isNotEmpty(getId());
         dto.setId( convertUUID(getId()) );
+
+        isNotEmpty(getNomSecteur());
         dto.setNomSecteur(getNomSecteur() );
         return dto;
     }
