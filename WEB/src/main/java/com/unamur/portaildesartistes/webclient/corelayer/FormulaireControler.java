@@ -151,24 +151,17 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         logger.error("Form(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        formForm.setSecteurActivites( sectCtrl.listSecteurActivite(cookieValue) );
         try {
-            FormulaireDTO formDTO = formForm.getDTO();
-            String str = super.postForm(cookieValue,formDTO,method);
-            //formDTO.setSecteurActivites( sectCtrl.listSecteurActivite(cookieValue) );
-            //super.getForm( cookieValue,formDTO,formForm,formDTO.getId(),FormulaireDTO.class,method,model );
-
+            UUID formId = super.postForm(cookieValue,formForm,method);
+            model.addAttribute("Msg","Données sauvées");
+            formForm.setId(formId.toString());
+            formForm.setSecteurActivites( sectCtrl.listSecteurActiviteByForm(cookieValue,formId ) );
             model.addAttribute("form",formForm);
-            //model.addAttribute("activites",formForm.getActivitesId() );
-            //sectCtrl.listSecteurActivite( cookieValue, model);
-
-            //actCtrl.activite();
-            return str;
+            return "/Formulaire/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
-        }catch(ParseException e){
-            model.addAttribute("Err",e.getMessage());
         }
+        formForm.setSecteurActivites( sectCtrl.listSecteurActivite(cookieValue) );
         model.addAttribute("form",formForm);
         model.addAttribute("activites",formForm.getActivitesId());
         return "/Formulaire/"+method+".html";

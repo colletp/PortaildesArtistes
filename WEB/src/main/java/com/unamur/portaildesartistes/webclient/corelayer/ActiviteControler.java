@@ -14,48 +14,44 @@ import java.util.UUID;
 public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class< ActiviteDTO > , Activite> {
     private static final Logger logger = LoggerFactory.getLogger(ActiviteControler.class);
 
-    @GetMapping(value = "/activite/creer")
+    @GetMapping(value = "/Activite/creer")
     public String activiteCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-
         return "activite/put.html";
     }
 
-    @GetMapping(value = "/activite/modif/{id}")
+    @GetMapping(value = "/Activite/modif/{id}")
     public String activiteModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        logger.error("activite/modif : Authentication received! Cookie : "+cookieValue );
         Activite actForm = new Activite();
         return super.getForm(cookieValue,new ActiviteDTO(),actForm,itemId,ActiviteDTO.class,"POST",model);
 
     }
 
-    @PostMapping(value = "/activite")
+    @PostMapping(value = "/Activite")
     public String activitePost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("usrForm") final ActiviteDTO usrForm
+            ,@ModelAttribute("form") final Activite form
             ,Model model){
-        logger.error("activite(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        return super.postForm(cookieValue,usrForm,method);
+        super.postForm(cookieValue,form,method);
+        return "/Activite/get.html";
     }
 
-    @GetMapping(value = "/activite")
+    @GetMapping(value = "/Activite")
     public String activiteList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        logger.error("activite List : Authentication received! Cookie : "+cookieValue );
         return super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model);
     }
 
-    @GetMapping(value = "/activite/{id}")
+    @GetMapping(value = "/Activite/{id}")
     public String activite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        logger.error("activite : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"GET",model);
     }
 
-    @GetMapping(value = "activite/suppr/{id}")
+    @GetMapping(value = "Activite/suppr/{id}")
     public String activiteSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {

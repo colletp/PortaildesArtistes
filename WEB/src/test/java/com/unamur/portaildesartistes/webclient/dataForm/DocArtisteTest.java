@@ -41,7 +41,7 @@ class DocArtisteTest {
     void testCreationCarteArtisteValide() {
         try {
             docArt = doc.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertAll(
@@ -60,7 +60,7 @@ class DocArtisteTest {
         doc.setTypeDocArtiste("Visa artiste");
         try {
             docArt = doc.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertAll(
@@ -79,7 +79,7 @@ class DocArtisteTest {
         doc.setNomArtiste("");
         try {
             docArt = doc.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertAll(

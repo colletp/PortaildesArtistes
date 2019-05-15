@@ -37,7 +37,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         return "/fragments/activites.html";
     }*/
 
-    public List<SecteurDTO> listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue){
+    public List<SecteurDTO> listSecteurActivite( String cookieValue){
         logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
@@ -47,6 +47,27 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         }
         return new ArrayList<>();
     }
+    public List<SecteurDTO> listSecteurActiviteByForm( String cookieValue, UUID formId){
+        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        try{
+            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Form/"+formId.toString(),headers );
+        }catch( ServiceNotFoundException e ){
+            //}catch( IllegalArgumentException e ){
+        }
+        return new ArrayList<>();
+    }
+    public List<SecteurDTO> listSecteurActiviteByDoc( String cookieValue, UUID docId){
+        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        try{
+            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Doc/"+docId.toString(),headers );
+        }catch( ServiceNotFoundException e ){
+            //}catch( IllegalArgumentException e ){
+        }
+        return new ArrayList<>();
+    }
+
 
     @GetMapping(value = "/Secteur/creer")
     public String createSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -69,7 +90,9 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
             ,@ModelAttribute("usrForm") final SecteurDTO sectForm
             ,Model model){
         logger.error("Secteur(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        return super.postForm(cookieValue,sectForm,method);
+        sectForm.setId(super.postForm(cookieValue,sectForm,method));
+        model.addAttribute("form",sectForm);
+        return "/Secteur/get.html";
     }
 
     @GetMapping(value = "/Secteur")

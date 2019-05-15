@@ -38,56 +38,40 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
-        String resp = "";
         try {
-            resp = postForm("", usrInscrForm.getDTO(), "PUT","inscript");
+            postForm("", usrInscrForm.getDTO(), "PUT","inscript");
             model.addAttribute("Msg","Inscription effectuée. Veuillez vous connecter");
             return "login.html";
         } catch (IllegalArgumentException e) {
-            logger.error("Erreur lors de la validation du formualaire (Illegal argument): " + e.getMessage());
-            resp="Erreur lors de la validation du formualaire (Illegal argument): " + e.getMessage();
-        } catch (ParseException e) {
-            logger.error("Erreur lors de la validation du formualaire (Parse) : " + e.getMessage());
-            resp="Erreur lors de la validation du formualaire (Parse): " + e.getMessage();
+            model.addAttribute("Err","Erreur lors de la validation du formualaire (Illegal argument): " + e.getMessage());
         } catch (HttpClientErrorException e) {
-            logger.error("Réponse du serveur: " + e.getStatusCode().toString());
             switch (e.getStatusCode().value()) {
                 case 401:
-                    logger.error("Connexion refusée par authentification back-end : " + e.toString());
+                    model.addAttribute("Err","Connexion refusée par authentification back-end : " + e.toString());
                     break;
                 case 403:
-                    logger.error("Connexion refusée par back-end car interdit : " + e.toString());
+                    model.addAttribute("Err","Connexion refusée par back-end car interdit : " + e.toString());
                     break;
                 case 404:
-                    logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
+                    model.addAttribute("Err","Connexion refusée par back-end car rest introuvable : " + e.toString());
                     break;
                 case 406:
-                    logger.error("Connexion refusée par back-end car réponse pas acceptable : " + e.toString());
+                    model.addAttribute("Err","Connexion refusée par back-end car réponse pas acceptable : " + e.toString());
                     break;
                 case 415:
-                    logger.error("Connexion refusée par back-end car média pas supporté : " + e.toString());
+                    model.addAttribute("Err","Connexion refusée par back-end car média pas supporté : " + e.toString());
                     break;
                 default:
-                    logger.error(e.getMessage());
-                    logger.error(e.toString());
-                    logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
+                    model.addAttribute("Err",e.getMessage());
             }
-            resp = "Connexion refusée par back-end : " + e.getMessage() + "(voir logs)";
+            model.addAttribute("Err","Connexion refusée par back-end : " + e.getMessage());
         } catch (ResourceAccessException e) {
-            logger.error("Serveur back-end indisponible : " + e.getMessage());
-            resp = "Serveur back-end indisponible (voir logs)";
+            model.addAttribute("Err","Serveur back-end indisponible : " + e.getMessage());
         } catch (RestClientException e) {
-            logger.error("RestClientException : " + e.getMessage() + e.getLocalizedMessage());
-            resp = "Serveur back-end en erreur REST (voir logs)";
+            model.addAttribute("Err","RestClientException : " + e.getMessage() + e.getLocalizedMessage());
         } catch (Exception e) {
-            logger.error(e.toString());
-            logger.error(e.getClass().toString());
-            logger.error(e.getMessage());
-            logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
-            resp = "Autre erreur non gérée (voir logs)";
+            model.addAttribute("Err",e.toString());
         }
-        logger.error(resp);
-        model.addAttribute("Err",resp);
         return "inscript.html";
     }
 }

@@ -54,4 +54,13 @@ public class SecteurServiceImpl implements IService<SecteurDTO> {
         }
         return lSectDTO;
     }
+    @Transactional
+    public List<SecteurDTO> listSecteurActiviteByDocId(UUID docId){
+        List<SecteurDTO> lSectDTO = sectImpl.getByDocId(docId);
+        for( SecteurDTO sectDTO : lSectDTO){
+            sectDTO.setActivites( actImpl.getBySectDocId( docId,sectDTO.getId() ) );
+        }
+        return lSectDTO;
+    }
+
 }

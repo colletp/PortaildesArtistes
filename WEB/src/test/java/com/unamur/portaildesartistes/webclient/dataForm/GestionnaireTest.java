@@ -39,7 +39,7 @@ class GestionnaireTest {
     void testAjoutGestionnaireValide(){
         try {
             gest = gestionnaire.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 

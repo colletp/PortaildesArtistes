@@ -42,7 +42,7 @@ class CitoyenTest {
     void testInscriptValide21() {
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
@@ -129,7 +129,7 @@ class CitoyenTest {
         citoyen.setMail("");
             try {
                 cit = citoyen.getDTO();
-            }catch (ParseException | IllegalArgumentException  e) {
+            }catch (IllegalArgumentException  e) {
                 e.printStackTrace();
             }
         assertEquals(cit.getMail(),citoyen.getMail());
@@ -176,7 +176,7 @@ class CitoyenTest {
         citoyen.setTel("");
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(cit.getTel(),citoyen.getTel());
@@ -188,7 +188,7 @@ class CitoyenTest {
         citoyen.setGsm("");
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(cit.getGsm(),citoyen.getGsm());
@@ -200,7 +200,7 @@ class CitoyenTest {
         citoyen.setTel("081/010155");
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(cit.getNrn(),citoyen.getNrn());
@@ -212,7 +212,7 @@ class CitoyenTest {
         citoyen.setGsm("0495/010155");
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(cit.getNrn(),citoyen.getNrn());
@@ -225,7 +225,7 @@ class CitoyenTest {
         citoyen.setDateNaissance("01/03/1981");
         try {
             cit = citoyen.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(cit.getNrn(),citoyen.getNrn());

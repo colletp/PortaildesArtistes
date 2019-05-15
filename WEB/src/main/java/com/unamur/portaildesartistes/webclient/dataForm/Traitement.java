@@ -57,7 +57,7 @@ public class Traitement extends DataForm<TraitementDTO> {
     // ******************
     // Fonctions
     // ******************
-    public TraitementDTO getDTO()throws ParseException {
+    public TraitementDTO getDTO(){
         TraitementDTO dto = new TraitementDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

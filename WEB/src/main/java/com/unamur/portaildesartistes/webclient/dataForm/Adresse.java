@@ -55,7 +55,7 @@ public class Adresse extends DataForm<AdresseDTO> {
         return true;
     }
 
-    public AdresseDTO getDTO()throws ParseException {
+    public AdresseDTO getDTO(){
         AdresseDTO dto = new AdresseDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

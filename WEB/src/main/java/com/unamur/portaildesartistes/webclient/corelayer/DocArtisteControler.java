@@ -57,7 +57,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
     }
 
     @PostMapping(value = "/DocArtiste")
-    public String docArtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public UUID docArtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final DocArtiste formDocArt
             ,Model model){
@@ -69,13 +69,8 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formDocArt);
-            return "/DocArtiste/"+method+".html";
-        }catch(ParseException e){
-            model.addAttribute("Err",e.getMessage());
-            model.addAttribute("form",formDocArt);
-            return "/DocArtiste/"+method+".html";
+            throw e;
         }
-
     }
 
     @GetMapping(value = "/DocArtiste")//initialisation du login

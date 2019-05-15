@@ -48,7 +48,7 @@ public class UtilisateurInscript extends Utilisateur{
     // Fonctions
     // ******************
     @Override
-    public UtilisateurDTO getDTO()throws ParseException {
+    public UtilisateurDTO getDTO(){
         UtilisateurDTO usr = super.getDTO();
         usr.setCitoyen( citoyen.getDTO() );
         usr.setId(usr.getCitoyen().getId());

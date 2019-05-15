@@ -36,7 +36,7 @@ class ActiviteTest {
     void testAjoutActiviteValide(){
         try {
             act = activite.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
                 e.printStackTrace();
         }
         assertAll(
@@ -66,7 +66,7 @@ class ActiviteTest {
         activite.setDescription("");
         try {
             act = activite.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertAll(

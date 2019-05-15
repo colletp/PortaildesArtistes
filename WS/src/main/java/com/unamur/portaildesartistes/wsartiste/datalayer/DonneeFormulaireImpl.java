@@ -60,7 +60,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
     @RegisterMapper(FormulaireMapper.class)
     interface FormulaireSQLs {
-        @SqlQuery("select * from formulaires")
+        @SqlQuery("select form_id,citoyen_id,date_demande,langue,carte,visa from formulaires")
         List<FormulaireDTO> list();
 
         @SqlQuery("select * from formulaires where form_id = :form_id")

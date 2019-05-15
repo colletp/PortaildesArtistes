@@ -110,21 +110,6 @@ public class LoginControler {
     @Autowired
     UserDetailsServiceWeb uDS;
 
-    public Boolean ValideConnect(Utilisateur usr){
-
-        UtilisateurDTO usrDTO=null;
-        try{
-            usrDTO = usr.getDTO();
-            return true;
-        }
-        catch(IllegalArgumentException e){
-            return false;
-        }
-        catch(ParseException e){
-            return false;
-        }
-    }
-
     //Envoi des identifiants de connexion pour authentification
     @PostMapping(value = "/login")
     public ResponseEntity<String> authenticate(
@@ -146,89 +131,79 @@ public class LoginControler {
         String msgAuClient;
         ResponseEntity<String> reponseAuClient;
 
-        if( ! ValideConnect(usr)){
-            logger.error("ValideConnect : false" );
-            reponseRest=new ResponseEntity<>( HttpStatus.OK );
-            paramClient.add("Location","login");
-            msgAuClient=reponseRest.getBody();
+        UtilisateurDTO usrDTO=null;
+        try{
+            usrDTO = usr.getDTO();
         }
-        else {
-            UtilisateurDTO usrDTO=null;
-            try{
-                usrDTO = usr.getDTO();
+        catch(IllegalArgumentException e){
+            paramClient.add("Err",e.getMessage());
+            paramClient.add("Location","login");
+        }
+        HttpHeaders headersRest = new HttpHeaders();
+        //headersRest.setContentType( yaml );
+        MultiValueMap<String, String> paramRest = new LinkedMultiValueMap<>();
+        paramRest.add("username", usrDTO.getUsername());
+        paramRest.add("password", usrDTO.getPassword());
+        try {
+            /* ici test match? encodage supplémentaire */
+            //UserDetails uD = uDS.loadUserByUsername( usrDTO.getUsername() );
+            //uD.
+            /**/
+            reponseRest = restTemplateHelper.postForAuth(configurationService.getUrl() + "/Authentification", paramRest, headersRest);
+            logger.debug( reponseRest.getBody() );
+            if (reponseRest.getStatusCodeValue() != 200 && reponseRest.getStatusCodeValue()!=302 ) {
+                logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
+                paramClient.add("Location", "login");
+                m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
+            } else {
+                logger.debug("Authentification OK");
+                logger.debug("Session : " + reponseRest.getHeaders().get("Set-Cookie").toString());
+                //transfert au front-end
+                paramClient.add("Set-Cookie",
+                        //prends le header coté back-end générant un cookie(avec le n° de session)
+                        reponseRest.getHeaders().get("Set-Cookie").get(0)
+                                //transforme le contexte (répertoire du front-end à la place du back-end)
+                                .replace(" Path=" + configurationService.getBackEndPath() + ";",
+                                        " Path=" + configurationService.getFrontEndPath() + ";")
+                );
+                paramClient.add("Location", "choixRole");
             }
-            catch(IllegalArgumentException e){
-
-            }
-            catch(ParseException e){
-
-            }
-            HttpHeaders headersRest = new HttpHeaders();
-            //headersRest.setContentType( yaml );
-            MultiValueMap<String, String> paramRest = new LinkedMultiValueMap<>();
-            paramRest.add("username", usrDTO.getUsername());
-            paramRest.add("password", usrDTO.getPassword());
-            try {
-                /* ici test match? encodage supplémentaire */
-                //UserDetails uD = uDS.loadUserByUsername( usrDTO.getUsername() );
-                //uD.
-                /**/
-                reponseRest = restTemplateHelper.postForAuth(configurationService.getUrl() + "/Authentification", paramRest, headersRest);
-                logger.debug( reponseRest.getBody() );
-                if (reponseRest.getStatusCodeValue() != 200 && reponseRest.getStatusCodeValue()!=302 ) {
-                    logger.error("Auth NOK Réponse du serveur: " + reponseRest.getStatusCodeValue());
-                    paramClient.add("Location", "login");
-                    m.addAttribute("Err","Utilisateur ou mot de passe incorrect");
-                } else {
-                    logger.debug("Authentification OK");
-                    logger.debug("Session : " + reponseRest.getHeaders().get("Set-Cookie").toString());
-                    //transfert au front-end
-                    paramClient.add("Set-Cookie",
-                            //prends le header coté back-end générant un cookie(avec le n° de session)
-                            reponseRest.getHeaders().get("Set-Cookie").get(0)
-                                    //transforme le contexte (répertoire du front-end à la place du back-end)
-                                    .replace(" Path=" + configurationService.getBackEndPath() + ";",
-                                            " Path=" + configurationService.getFrontEndPath() + ";")
-                    );
-                    paramClient.add("Location", "choixRole");
-                }
-                msgAuClient=reponseRest.getBody();
-            } catch (HttpClientErrorException.Unauthorized e) {
-                        logger.error("Connexion refusée par authentification back-end : " + e.toString());
-                        paramClient.add("Location", "login?error=401");
-                msgAuClient="Erreur : "+e.getMessage();
-            } catch (HttpClientErrorException.Forbidden e) {
-                        logger.error("Connexion refusée par back-end car interdit : " + e.toString());
-                        paramClient.add("Location", "login?error=403");
-                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
-            } catch (HttpClientErrorException.NotFound e) {
-                        logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
-                        paramClient.add("Location", "login?error=404");
-                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
-            } catch (HttpClientErrorException.NotAcceptable e) {
-                        logger.error("Connexion refusée par back-end car réponse pas acceptable : " + e.toString());
-                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
-            } catch (HttpClientErrorException.UnsupportedMediaType e) {
-                        logger.error("Connexion refusée par back-end car média pas supporté : " + e.toString());
-                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
-            } catch (HttpClientErrorException e) {
-                        logger.error(e.getMessage());
-                        logger.error(e.toString());
-                        logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
-                msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
-            } catch (ResourceAccessException e) {
-                logger.error("Serveur back-end indisponible : " + e.getMessage());
-                msgAuClient="Serveur back-end indisponible (voir logs)";
-            } catch (RestClientException e) {
-                logger.error(e.getMessage());
-                msgAuClient="Serveur front-end converter non dispo (voir logs)";
-            } catch (Exception e) {
-                logger.error(e.toString());
-                logger.error(e.getClass().toString());
-                logger.error(e.getMessage());
-                logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
-                msgAuClient="Autre erreur non gérée (voir logs)";
-            }
+            msgAuClient=reponseRest.getBody();
+        } catch (HttpClientErrorException.Unauthorized e) {
+                    logger.error("Connexion refusée par authentification back-end : " + e.toString());
+                    paramClient.add("Location", "login?error=401");
+            msgAuClient="Erreur : "+e.getMessage();
+        } catch (HttpClientErrorException.Forbidden e) {
+                    logger.error("Connexion refusée par back-end car interdit : " + e.toString());
+                    paramClient.add("Location", "login?error=403");
+            msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+        } catch (HttpClientErrorException.NotFound e) {
+                    logger.error("Connexion refusée par back-end car rest introuvable : " + e.toString());
+                    paramClient.add("Location", "login?error=404");
+            msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+        } catch (HttpClientErrorException.NotAcceptable e) {
+                    logger.error("Connexion refusée par back-end car réponse pas acceptable : " + e.toString());
+            msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+        } catch (HttpClientErrorException.UnsupportedMediaType e) {
+                    logger.error("Connexion refusée par back-end car média pas supporté : " + e.toString());
+            msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+        } catch (HttpClientErrorException e) {
+                    logger.error(e.getMessage());
+                    logger.error(e.toString());
+                    logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
+            msgAuClient="Erreur : " + e.getMessage() + "(voir logs)";
+        } catch (ResourceAccessException e) {
+            logger.error("Serveur back-end indisponible : " + e.getMessage());
+            msgAuClient="Serveur back-end indisponible (voir logs)";
+        } catch (RestClientException e) {
+            logger.error(e.getMessage());
+            msgAuClient="Serveur front-end converter non dispo (voir logs)";
+        } catch (Exception e) {
+            logger.error(e.toString());
+            logger.error(e.getClass().toString());
+            logger.error(e.getMessage());
+            logger.error(e.getCause() == null ? "" : e.getCause().getMessage());
+            msgAuClient="Autre erreur non gérée (voir logs)";
         }
         reponseAuClient = new ResponseEntity<>(msgAuClient, paramClient, HttpStatus.SEE_OTHER);
         return reponseAuClient;

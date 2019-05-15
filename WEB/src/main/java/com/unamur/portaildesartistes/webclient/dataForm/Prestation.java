@@ -86,7 +86,7 @@ public class Prestation extends DataForm<PrestationDTO> {
         return true;
     }
 
-    public PrestationDTO getDTO()throws ParseException {
+    public PrestationDTO getDTO(){
         PrestationDTO dto = new PrestationDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

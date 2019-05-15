@@ -113,23 +113,23 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         return restTemplateHelper.getForEntity(UUID.class,configurationService.getUrl()+"/gestionUtilisateur/moi",headers );
     }
 
-    protected String postForm( String cookieValue,final V form,final String method){
+    protected UUID postForm( String cookieValue,final V form,final String method){
 		return postForm(cookieValue,form,method,"");
     }
-    protected String postForm( String cookieValue,final V form,final String method,String newUri){
+    protected UUID postForm( String cookieValue,final V form,final String method,String newUri){
         T objDTO;
         try{
             objDTO = form.getDTO();
 			return postForm(cookieValue,objDTO,method);
-        }catch(Exception e){
+        }catch(IllegalArgumentException e){
             logger.error( e.getMessage() );
-            return "/error.html";
+            throw e;
         }
     }
-    protected String postForm( String cookieValue,T objDTO,String method) {
+    protected UUID postForm( String cookieValue,T objDTO,String method) {
         return postForm( cookieValue,objDTO,method,"");
     }
-    protected String postForm( String cookieValue,T objDTO,String method,String newUri){
+    protected UUID postForm( String cookieValue,T objDTO,String method,String newUri){
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
         try{
@@ -144,11 +144,12 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
                 default :
                     logger.error( "Appel REST : "+method );
             }
+            return objDTO.getId();
         }
         catch(ClassCastException e){
             logger.error( e.getMessage() );
+            throw e;
         }
-        return className+"/get.html";
     }
 
     protected List<T> list( String cookieValue,T objDTO, U clazz)throws Exception {

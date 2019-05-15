@@ -97,21 +97,21 @@ public class FrontMvcConfiguration extends WebMvcConfiguration {
 
     @Bean
     public LocaleResolver localeResolver() {
-        logger.error("localeResolver");
+        logger.debug("localeResolver");
         CookieLocaleResolver clr = new CookieLocaleResolver();
         //clr.setDefaultLocale(Locale.FRENCH);
         return clr;
     }
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        logger.error("localeChangeInterceptor");
+        logger.debug("localeChangeInterceptor");
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        logger.error("addInterceptors");
+        logger.debug("addInterceptors");
         registry.addInterceptor(localeChangeInterceptor());
     }
 

@@ -57,9 +57,9 @@ public class DonneeSecteurImpl extends Donnee<SecteurDTO>{
         @SqlQuery("INSERT INTO secteur (nom_secteur) VALUES (:nomSecteur) ")
         String insert(@BindBean SecteurDTO test);
 
-        @SqlQuery("select distinct s.* from secteur JOIN activite a ON s.secteur_id=a.secteur_id JOIN doc_artiste_activite da ON a.activite_id = da.activite_id WHERE da.doc_artiste_id=:docId ")
+        @SqlQuery("select distinct s.* from secteur s JOIN activite a ON s.secteur_id=a.secteur_id JOIN doc_artiste_activite da ON a.activite_id = da.activite_id WHERE da.doc_artiste_id=:docId ")
         List<SecteurDTO> getByDocId(@Bind("docId")UUID docId);
-        @SqlQuery("select distinct s.* from secteur JOIN activite a ON s.secteur_id=a.secteur_id JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId ")
+        @SqlQuery("select distinct s.* from secteur s JOIN activite a ON s.secteur_id=a.secteur_id JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId ")
         List<SecteurDTO> getByFormId(@Bind("formId")UUID formId);
 
 

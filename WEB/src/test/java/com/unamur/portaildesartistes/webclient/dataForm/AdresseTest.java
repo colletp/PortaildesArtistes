@@ -37,7 +37,7 @@ class AdresseTest {
     void testInscriptValide21() {
         try {
             adr = adresse.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
@@ -88,7 +88,7 @@ class AdresseTest {
         adresse.setNumero("123B");
         try {
             adr = adresse.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
         assertEquals(adr.getNumero(),adresse.getNumero());
