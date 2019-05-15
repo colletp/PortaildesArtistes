@@ -34,26 +34,24 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
     @Override
     public UUID insert(FormulaireDTO item){
-        UUID formId = UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item));
-        item.setId(formId);
-        for( UUID actId : item.getActivitesId() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(actId,item.getId());
-        super.Exec("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id",item.getId(),item.getCursusAc().toArray());
-        super.Exec("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id",item.getId(),item.getExpPro().toArray());
-        super.Exec("UPDATE formulaires SET ressources=:array WHERE form_id=:id",item.getId(),item.getRessources().toArray());
-        return formId;
+        item.setId( UUID.fromString(super.Exec(FormulaireSQLs.class).insert(item)) );
+        updateFormDetails(item);
+        return item.getId();
     }
     @Override
     public void update(FormulaireDTO item){
         super.Exec(FormulaireActiviteSQLs.class).deleteByForm( item.getId() );
-        for( UUID actId : item.getActivitesId() )
-            super.Exec(FormulaireActiviteSQLs.class).insert(actId, item.getId());
-
         super.Exec(FormulaireSQLs.class).update(item);
-        super.Exec("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id",item.getId(),item.getCursusAc().toArray());
-        super.Exec("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id",item.getId(),item.getExpPro().toArray());
-        super.Exec("UPDATE formulaires SET ressources=:array WHERE form_id=:id",item.getId(),item.getRessources().toArray());
+        updateFormDetails(item);
     }
+    private void updateFormDetails(FormulaireDTO item){
+        for( UUID actId : item.getActivitesId() )
+            super.Exec(FormulaireActiviteSQLs.class).insert(actId,item.getId());
+        super.Exec(FormulaireSQLs.class).updateCursusAc  (item.getId(),item.getCursusAc()  .toArray(new String[item.getCursusAc()  .size()]) );
+        super.Exec(FormulaireSQLs.class).updateExpPro    (item.getId(),item.getExpPro()    .toArray(new String[item.getExpPro()    .size()]) );
+        super.Exec(FormulaireSQLs.class).updateRessources(item.getId(),item.getRessources().toArray(new String[item.getRessources().size()]) );
+    }
+
     @Override
     public void delete(UUID id){
         super.Exec(FormulaireActiviteSQLs.class).deleteByForm( id );
@@ -77,7 +75,15 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         @SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa WHERE form_id=:id ")
         void update(@BindBean FormulaireDTO form );
 
-        void delete(UUID id);
+        @SqlUpdate("UPDATE formulaires SET cursus_ac=:array WHERE form_id=:id")
+        void updateCursusAc( @Bind("id") UUID id, @Bind("array") String[] array);
+        @SqlUpdate("UPDATE formulaires SET ex_pro=:array WHERE form_id=:id")
+        void updateExpPro( @Bind("id") UUID id, @Bind("array") String[] array);
+        @SqlUpdate("UPDATE formulaires SET ressources=:array WHERE form_id=:id")
+        void updateRessources( @Bind("id") UUID id, @Bind("array") String[] array);
+
+        @SqlUpdate("DELETE from formulaires where form_id = :form_id")
+        void delete(@Bind("form_id") UUID p_id);
     }
 
     @RegisterMapper(FormulaireActiviteMapper.class)

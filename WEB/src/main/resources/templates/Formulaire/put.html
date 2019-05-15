@@ -20,7 +20,7 @@
         Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
         Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
 
-        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
+        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${form.secteurActivites}) }"></fieldset>
 
         <input th:type="submit" name="submit" />
     </form>

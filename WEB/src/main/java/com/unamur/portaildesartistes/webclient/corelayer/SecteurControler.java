@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.ServiceNotFoundException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     private static final Logger logger = LoggerFactory.getLogger(SecteurControler.class);
 
     //@GetMapping(value = "/Secteur/Activite")
-    public String listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    /*public String listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
@@ -34,8 +35,18 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
             model.addAttribute("Err", e.getMessage() );
         }
         return "/fragments/activites.html";
-    }
+    }*/
 
+    public List<SecteurDTO> listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue){
+        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        try{
+            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
+        }catch( ServiceNotFoundException e ){
+            //}catch( IllegalArgumentException e ){
+        }
+        return new ArrayList<>();
+    }
 
     @GetMapping(value = "/Secteur/creer")
     public String createSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
