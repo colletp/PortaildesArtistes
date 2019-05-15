@@ -46,5 +46,12 @@ public class SecteurServiceImpl implements IService<SecteurDTO> {
     public void delete( UUID uuid ){
         sectImpl.delete(uuid);
     }
-
+    @Transactional
+    public List<SecteurDTO> listSecteurActiviteByFormId(UUID formId){
+        List<SecteurDTO> lSectDTO = sectImpl.getByFormId(formId);
+        for( SecteurDTO sectDTO : lSectDTO){
+            sectDTO.setActivites( actImpl.getBySectFormId( formId,sectDTO.getId() ) );
+        }
+        return lSectDTO;
+    }
 }
