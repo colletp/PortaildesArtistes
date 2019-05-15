@@ -9,13 +9,15 @@
     <div class="Err">[[${Err}]]</div>
     <form class="formbox600" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
         <legend th:text="#{inscript.titre}"></legend>
-        Login:<input type="text" th:field="*{utilisateur.username}" />
-        Password:<input th:type="password" th:field="*{utilisateur.password}" />
+        <label th:text="#{username}"></label>
+        <input th:type="text" th:field="*{utilisateur.username}" />
+        <label th:text="#{password}"></label>
+        <input th:type="password" th:field="*{utilisateur.password}" />
 
-         <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
 
         <input th:type="submit" th:value="#{jeminscris}"/>
-        <p class="customButton"><button th:onclick="'history.go(-1)'">Revenir à la page précédente</button></p>
+        <p class="customButton"><a class="whitea" th:href="@{/login}"  th:text="#{annuler}"></a></p>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
