@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="commanditaireGet(fonction,commanditaire)">
+    <legend th:text="${fonction}">Commanditaire</legend>
+
+    <div th:if= "${ not commanditaire.EntrepriseId} == null">
+        <fieldset th:replace="~{/fragments/entreprise :: EntrepriseGetEnt(${'Entreprise'},${commanditaire.EnterpriseId}) }"></fieldset>
+    </div>
+
+    <div th:if= "${ not commanditaire.CitoyenId} == null">
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${commanditaire.CitoyenId}) }"></fieldset>
+    </div>
+
+</fieldset>
