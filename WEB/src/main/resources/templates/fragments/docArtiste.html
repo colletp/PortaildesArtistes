@@ -7,16 +7,16 @@
 <fieldset th:fragment="docArtisteGet(fonction,docArtiste)">
     <legend th:text="${fonction}">Document Artiste</legend>
 
-   <span th:text="#{docArtiste.noDoc}" >Numéro</span>:[[${docArtiste.noDoc}]]<br/>
-   <span th:text="#{docArtiste.nomArtiste}" >Nom</span>:[[${docArtiste.nomArtiste}]]<br/>
-   <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>:[[${docArtiste.datePeremption}]]<br/>
-   <span th:text="#{docArtiste.typeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
+   <span th:text="#{docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
+   <span th:text="#{docArtiste.NomArtiste}" >Nom</span>:[[${docArtiste.NomArtiste}]]<br/>
+   <span th:text="#{docArtiste.DatePeremption}" >Date peremption</span>:[[${docArtiste.DatePeremption}]]<br/>
+   <span th:text="#{docArtiste.TypeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
 
-    <div th:if= "${ not docArtiste.citoyenId} == null">
+    <div th:if= "${ docArtiste.citoyenId} != null">
         <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
     </div>
 
-    <div th:if= "${ not docArtiste.reponseId} == null">
+    <div th:if= "${ docArtiste.reponseId} != null">
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
     </div>
 
