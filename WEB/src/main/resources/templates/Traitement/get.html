@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<fieldset class="formbox800">
+<legend>Traitement d'une demande</legend>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>
+    Date Demande:[[${form.dateDemande}]]<br/>
+
+    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
+
+    Langue :[[${form.langue}]]<br/>
+    Carte :[[${form.carte}]]<br/>
+    Visa :[[${form.visa}]]<br/>
+
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
+
+</fieldset>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

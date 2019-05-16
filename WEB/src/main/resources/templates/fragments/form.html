@@ -4,6 +4,44 @@
 
 <body>
 
+<fieldset th:fragment="getForm(form)">
+    <legend>Demande de document d'artiste</legend>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>
+    Date Demande:[[${form.dateDemande}]]<br/>
+
+    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
+
+    Langue :[[${form.langue}]]<br/>
+    Carte :[[${form.carte}]]<br/>
+    Visa :[[${form.visa}]]<br/>
+    <!-- <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset> -->
+
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
+
+</fieldset>
+
+<fieldset th:fragment="postForm(form,secteurs)">
+    <legend>Demande de document d'artiste</legend>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>
+    Date Demande:[[${form.dateDemande}]]<br/>
+    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
+
+    Langue<select th:field="${form.langue}">
+        <option value="FR">FR</option>
+        <option value="EN">EN</option>
+    </select><br/>
+    Carte<input type="checkbox" th:field="${form.carte}" value="1" /><br/>
+    Visa<input type="checkbox" th:field="${form.visa}" value="1" /><br/>
+
+    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
+
+    <input th:type="submit" />
+</fieldset>
+
 <fieldset th:fragment="formArray(fonction,name,form)">
     <legend th:text="${fonction}"></legend>
     <button type="submit" th:name="'addRow'+${name}+'Create'">Ajouter</button>

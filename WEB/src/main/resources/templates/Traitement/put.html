@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<div class="Msg">[[${Msg}]]</div>
+<div class="Err">[[${Err}]]</div>
+<form class="formbox800" th:action="@{/Traitement}" th:name="form" th:object="${form}" th:method="put">
+
+    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form}) }"></fieldset>
+
+    Date de traitement<span></span>
+    Appréciation<textarea></textarea><br/>
+
+    <fieldset>
+        <legend>Réponse</legend>
+        <button type="submit" th:name="'addRowRepCreate'">Répondre au citoyen</button>
+        <ul th:each="item,rowStat : ${form}" th:object="${form}">
+            <li>
+                <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
+                <button type="submit" th:name="'removeRowRepCreate'" th:value="${rowStat.index}">Supprimer</button>
+
+                <fieldset>
+                    <legend>Carte d'artiste</legend>
+                    <button type="submit" th:name="'addRowCarteCreate'">Générer une carte d'artiste</button>
+                    <ul th:each="item,rowStat : ${form}" th:object="${form}">
+                        <li>
+                            <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
+                            <button type="submit" th:name="'removeRowCarteCreate'" th:value="${rowStat.index}">Supprimer</button>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Visa d'artiste</legend>
+                    <button type="submit" th:name="'addRowVisaCreate'">Générer un visa d'artiste</button>
+                    <ul th:each="item,rowStat : ${form}" th:object="${form}">
+                        <li>
+                            <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
+                            <button type="submit" th:name="'removeRowVisaCreate'" th:value="${rowStat.index}">Supprimer</button>
+                        </li>
+                    </ul>
+                </fieldset>
+            </li>
+        </ul>
+    </fieldset>
+
+
+
+        <input th:type="submit" name="submit" />
+    </form>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

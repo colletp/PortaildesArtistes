@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -23,14 +22,13 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     @GetMapping(value = "/Formulaire/creer")
     public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-        //formForm.setRessources();
+        Formulaire formForm = new Formulaire();
         formForm.setActivitesId( new ArrayList<>() );
         formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue ) );
         model.addAttribute("form",formForm);
         model.addAttribute("activites",formForm.getActivitesId() );
-        //String fragment = sectCtrl.listSecteurActivite( cookieValue , model );
+
         return "Formulaire/put.html";
     }
 
@@ -135,13 +133,14 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     @GetMapping(value = "/Formulaire/modif/{id}")
     public String formModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
-                                @ModelAttribute("form") final Formulaire formForm,
                                 Model model){
-        logger.error("Formulaire/modif : Authentication received! Cookie : "+cookieValue );
         FormulaireDTO formDTO = super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class );
-        formDTO.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue ) );
+        Formulaire formForm = new Formulaire();
+        formForm.setFromDTO(formDTO);
+        formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue ) );
         model.addAttribute("form",formForm);
-        model.addAttribute("activites",formForm.getActivitesId());
+        model.addAttribute("activites",formForm.getActivitesId() );
+
         return "Formulaire/post.html";
     }
 
@@ -150,7 +149,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-        logger.error("Form(post) "+method+" : Authentication received! Cookie : "+cookieValue );
         try {
             UUID formId = super.postForm(cookieValue,formForm,method);
             model.addAttribute("Msg","Données sauvées");
@@ -160,25 +158,23 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             return "/Formulaire/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
+            formForm.setSecteurActivites( sectCtrl.listSecteurActivite(cookieValue) );
+            model.addAttribute("form",formForm);
+            model.addAttribute("activites",formForm.getActivitesId());
+            return "/Formulaire/"+method+".html";
         }
-        formForm.setSecteurActivites( sectCtrl.listSecteurActivite(cookieValue) );
-        model.addAttribute("form",formForm);
-        model.addAttribute("activites",formForm.getActivitesId());
-        return "/Formulaire/"+method+".html";
     }
 
-    @GetMapping(value = "/Formulaire")//initialisation du login
+    @GetMapping(value = "/Formulaire")
     public String formList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
-        logger.error("Form List : Authentication received! Cookie : "+cookieValue );
         return super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model);
     }
 
-    @GetMapping(value = "/Formulaire/{id}")//initialisation du login
+    @GetMapping(value = "/Formulaire/{id}")
     public String formDetail( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        logger.error("Form : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"GET",model);
     }
 
@@ -186,7 +182,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
                         ,@PathVariable("id") UUID itemId
                         //,Model model
                         ){
-        logger.error("Form : Authentication received! Cookie : "+cookieValue );
         return super.getObj( cookieValue,itemId,new FormulaireDTO(), FormulaireDTO.class );
     }
 

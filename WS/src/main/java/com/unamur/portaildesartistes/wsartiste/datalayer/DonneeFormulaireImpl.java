@@ -27,20 +27,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     public List<FormulaireDTO> getByCitoyenId(UUID p_id){ return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id ); }
 
     @Override
-    public List<FormulaireDTO> list(){
-        return super.Exec(FormulaireSQLs.class).list();
-        /*try{
-            List<FormulaireDTO> l = super.Exec(FormulaireSQLs.class).list();
-            logger.error("list donnee OK"+l.size());
-            return l;
-        }catch(Exception e){
-            logger.error(e.getMessage());
-            for( StackTraceElement el : e.getStackTrace() )
-                logger.error( el.getLineNumber() +":"+el.toString() );
-            return new ArrayList<>();
-        }
-        */
-    }
+    public List<FormulaireDTO> list(){ return super.Exec(FormulaireSQLs.class).list(); }
     @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
     @Override
