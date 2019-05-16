@@ -46,58 +46,8 @@ public class DBIPersistenceConfig {
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());
         dbi.registerArgumentFactory(new LocalDateArgumentFactory());
         dbi.registerColumnMapper(new JodaDateTimeMapper());
-        //dbi.registerArgumentFactory(new CollectionArgumentFactory());
         return dbi;
     }
-
-
-    /*public static class ArrayArgumentFactory implements ArgumentFactory<Array> {
-        @Override
-        public boolean accepts(Class<?> expectedType, Object value, StatementContext ctx) {
-            return value != null && Array.class.isAssignableFrom(value.getClass());
-        }
-
-        @Override
-        public Argument build(Class<?> expectedType, final Array value, StatementContext ctx) {
-            return new Argument() {
-                @Override
-                public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
-                    logger.error("SQL Array");
-                    statement.setArray( position,value );
-                }
-            };
-        }
-    }*/
-
-    @Service
-    public static class CollectionArgumentFactory implements ArgumentFactory<Collection<String>> {
-        @Autowired
-        private DataSource dataSource;
-
-        @Override
-        public boolean accepts(Class<?> expectedType, Object value, StatementContext ctx) {
-            return value != null && Collection.class.isAssignableFrom(value.getClass());
-        }
-
-        @Override
-        public Argument build(Class<?> expectedType, final Collection<String> value, StatementContext ctx) {
-            return new Argument() {
-                @Override
-                public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
-                    logger.error("SQL Collection");
-                    Connection connection = dataSource.getConnection();
-
-                    logger.error("Connection:"+ (connection==null?"null":"OK"));
-                    logger.error("Value:"+ (value==null?"null":"OK"));
-
-                    final java.sql.Array sqlArray = connection.createArrayOf( "character varying[]"  , value.toArray() );
-                    statement.setArray( position, sqlArray );
-                }
-            };
-        }
-    }
-
-
 
     private static Calendar getUtcCalendar() {
         return Calendar.getInstance(TimeZone.getTimeZone("UTC"));

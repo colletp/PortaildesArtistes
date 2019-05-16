@@ -29,6 +29,17 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     @Override
     public List<FormulaireDTO> list(){
         return super.Exec(FormulaireSQLs.class).list();
+        /*try{
+            List<FormulaireDTO> l = super.Exec(FormulaireSQLs.class).list();
+            logger.error("list donnee OK"+l.size());
+            return l;
+        }catch(Exception e){
+            logger.error(e.getMessage());
+            for( StackTraceElement el : e.getStackTrace() )
+                logger.error( el.getLineNumber() +":"+el.toString() );
+            return new ArrayList<>();
+        }
+        */
     }
     @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
@@ -60,7 +71,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
     @RegisterMapper(FormulaireMapper.class)
     interface FormulaireSQLs {
-        @SqlQuery("select form_id,citoyen_id,date_demande,langue,carte,visa from formulaires")
+        @SqlQuery("select * from formulaires")
         List<FormulaireDTO> list();
 
         @SqlQuery("select * from formulaires where form_id = :form_id")
@@ -119,9 +130,18 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setId((UUID) r.getObject("form_id"));
             formulaireDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
-            formulaireDTO.setCursusAc( Arrays.asList((String[]) r.getArray("cursus_ac").getArray()) );
-            formulaireDTO.setExpPro( Arrays.asList((String[]) r.getArray("ex_pro").getArray()) );
-            formulaireDTO.setRessources( Arrays.asList((String[]) r.getArray("ressources").getArray()) );
+            if(r.getArray("cursus_ac")!=null)
+                formulaireDTO.setCursusAc( Arrays.asList((String[]) r.getArray("cursus_ac").getArray()) );
+            //else
+            //    formulaireDTO.setCursusAc( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
+            if(r.getArray("ex_pro")!=null)
+                formulaireDTO.setExpPro( Arrays.asList((String[]) r.getArray("ex_pro").getArray()) );
+            //else
+            //    formulaireDTO.setExpPro( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
+            if(r.getArray("ressources")!=null)
+                formulaireDTO.setRessources( Arrays.asList((String[]) r.getArray("ressources").getArray()) );
+            //else
+            //    formulaireDTO.setRessources( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             formulaireDTO.setLangue( r.getString("langue"));
             formulaireDTO.setCarte( r.getBoolean("carte"));
             formulaireDTO.setVisa( r.getBoolean("visa"));
