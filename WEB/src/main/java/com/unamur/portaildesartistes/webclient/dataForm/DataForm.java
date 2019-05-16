@@ -41,6 +41,11 @@ public abstract class DataForm<T extends DTO> implements Serializable {
             throw new IllegalArgumentException("Valeur vide");
         return true;
     }
+    protected Boolean isNotEmpty(Object obj)throws IllegalArgumentException{
+        if( obj==null )
+            throw new IllegalArgumentException("Valeur vide");
+        return true;
+    }
 
     protected Boolean containsOnlyLetters(String toValidate)throws IllegalArgumentException{
         for(int i=0;i<toValidate.length();i++){

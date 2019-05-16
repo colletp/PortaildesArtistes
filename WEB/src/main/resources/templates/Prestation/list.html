@@ -26,7 +26,7 @@
         <td th:text="${#numbers.formatDecimal(prest.montant, 0, 'COMMA', 2, 'POINT')}" th:alt="${prest.montant}"></td>
         <td th:text="${prest.etat}" th:alt="${prest.etat}"></td>
 
-        <td><fieldset th:if="${prest.adresseId}" th:replace="~{/fragments/adresse :: adresseGet('Activité',SeDeroule) }"></fieldset></td>
+        <td><fieldset th:if="${prest.seDerouleId}" th:replace="~{/fragments/adresse :: AdresseGet('Activité',${prest.seDeroule}) }"></fieldset></td>
 
         <td id="boutonsList">
             <a th:href="@{/Prestation/{id}(id=${prest.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>

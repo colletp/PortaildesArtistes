@@ -6,13 +6,10 @@ import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.DTO.CommanditaireDTO;
 
-import org.apache.tomcat.jni.Address;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class Prestation extends DataForm<PrestationDTO> {
@@ -21,11 +18,12 @@ public class Prestation extends DataForm<PrestationDTO> {
     // Champs/propriétés
     // ******************
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date datePrest;
 
     @NumberFormat(pattern = "#,###,###,###")
-    private int duree;
+    private Integer duree;
 
     @NumberFormat(pattern = "#,###,###,###.##")
     private Double montant;
@@ -53,7 +51,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
     public Date getDatePrest() { return datePrest; }
     public void setDatePrest(Date p_date) { this.datePrest = p_date; }
-    public int getDuree() { return duree; }
+    public Integer getDuree() { return duree; }
     public void setDuree( int p_duree) { this.duree = p_duree; }
     public Double getMontant() { return montant; }
     public void setMontant( Double p_montant) { this.montant = p_montant; }
@@ -79,7 +77,7 @@ public class Prestation extends DataForm<PrestationDTO> {
     public CommanditaireDTO getCommanditaire() { return oCommanditaire; }
     public void setCommanditaire( CommanditaireDTO oCommanditaire) { this.oCommanditaire = oCommanditaire; }
 
-    public void setFromDTO(final PrestationDTO objDTO) {
+    public void setFromDTO(final PrestationDTO objDTO){
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDatePrest(objDTO.getDatePrest());
         setDuree(objDTO.getDuree());
@@ -99,16 +97,14 @@ public class Prestation extends DataForm<PrestationDTO> {
     // Fonctions
     // ******************
     protected Boolean isNotOverMontantMax(double montant, int duree) throws IllegalArgumentException {
-
-
-        if (montant > 128.93 * duree ) {
+        if (montant > 128.93 * duree ){
             throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
         }
         return true;
     }
 
     protected Boolean isNotOverDureeMax(int duree) throws IllegalArgumentException {
-        if (duree > 7) {
+        if (duree > 7){
             throw new IllegalArgumentException("Durée maximale d'une prestation dépassée");
         }
         return true;
@@ -119,44 +115,40 @@ public class Prestation extends DataForm<PrestationDTO> {
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );
 
-        //isNotEmpty(getSeDerouleId());
+        isNotEmpty(getSeDerouleId());
         dto.setSeDerouleId(getSeDerouleId());
 
         dto.setSeDeroule(getSeDeroule());
 
-        //isNotEmpty(getDocArtisteId());
+        isNotEmpty(getDocArtisteId());
         dto.setDocArtisteId(getDocArtisteId());
 
         dto.setDocArtiste(getDocArtiste());
 
-        // isNotEmpty(getEtat()); A ajouter?? (commentaire Bernard G)
-        dto.setEtat(getEtat());
+        dto.setEtat( getEtat().isEmpty()?"Nouveau":getEtat() );
 
-        //isNotEmpty(getMontant());
+        isNotEmpty( getMontant() );
         //convertDouble(getMontant());
-        isNotOverMontantMax(getMontant(), getDuree());
+        isNotOverMontantMax( getMontant(), getDuree() );
         dto.setMontant( getMontant());
 
-        //isNotEmpty(getDuree().getTime());
+        isNotEmpty( getDuree() );
         isNotOverDureeMax(getDuree());
         dto.setDuree( getDuree());
 
-        //isNotEmpty(getActiviteId());
+        isNotEmpty(getActiviteId());
         dto.setActiviteId(getActiviteId());
 
         dto.setActivite(getActivite());
 
-        //isNotEmpty(getDatePrest());
+        isNotEmpty(getDatePrest());
         dto.setDatePrest( getDatePrest() );
 
-        //isNotEmpty(getCommanditaireId());
+        isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( getCommanditaireId());
 
         dto.setCommanditaire( getCommanditaire() );
 
         return dto;
     }
-
-
-
 }

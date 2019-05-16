@@ -25,6 +25,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
     @Autowired
     private DocArtisteControler docCtrl;
+
     @Autowired
     private SecteurControler sectCtrl;
 
@@ -48,12 +49,12 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
     @GetMapping(value = "/Prestation/modif/{id}")
     public String prestModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
-                             @PathVariable("id") UUID itemId ,
+                             @PathVariable("id") String itemId ,
                              @ModelAttribute("form") final Prestation formPrest,
                              Model model){
         logger.error("Prestation/modif : Authentication received! Cookie : "+cookieValue );
         model.addAttribute("form",formPrest==null?new Prestation():formPrest);
-        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),itemId,PrestationDTO.class,"POST",model);
+        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"POST",model);
     }
 
     @PostMapping(value = "/Prestation")
@@ -73,7 +74,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
     }
 
-    @GetMapping(value = "/Prestation")//initialisation du login
+    @GetMapping(value = "/Prestation")
     public String prestList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         logger.error("Form List : Authentication received! Cookie : "+cookieValue );
@@ -81,19 +82,19 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         return super.list(cookieValue,new PrestationDTO(),PrestationDTO.class,model);
     }
 
-    @GetMapping(value = "/Prestation/{id}")//initialisation du login
+    @GetMapping(value = "/Prestation/{id}")
     public String Form( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                        @PathVariable("id") UUID itemId ,
+                        @PathVariable("id") String itemId ,
                         Model model){
         logger.error("Form : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),itemId,PrestationDTO.class,"GET",model);
+        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"GET",model);
     }
 
     @GetMapping(value = "Prestation/suppr/{id}")
     public String prestSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                             @PathVariable("id") UUID itemId,
+                             @PathVariable("id") String itemId,
                              Model model) {
-        return super.delete(cookieValue,new PrestationDTO(),itemId,model);
+        return super.delete(cookieValue,new PrestationDTO(),UUID.fromString(itemId),model);
     }
 
 }

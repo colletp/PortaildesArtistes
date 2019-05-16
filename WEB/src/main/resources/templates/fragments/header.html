@@ -46,7 +46,7 @@
         <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
         <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}"> &#9660;</a>
-            <div class=ssmenu><a th:href="@{/Prestations}" class="whitea">Prestations</a></div>
+            <div class=ssmenu><a th:href="@{/Prestation}" class="whitea">Prestations</a></div>
             <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea" th:text="#{carte}"></a></div>
             <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea" th:text="#{visa}"></a></div>
         </div>
