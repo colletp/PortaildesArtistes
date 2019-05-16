@@ -28,10 +28,10 @@
 
         <td><fieldset th:if="${prest.adresseId}" th:replace="~{/fragments/adresse :: adresseGet('Activité',SeDeroule) }"></fieldset></td>
 
-        <td id="boutonsFlex">
-            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/{id}(id=${prest.id})}">Détail</a></p>
-            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/modif/{id}(id=${prest.id})}">Modifier</a></p>
-            <p class="customButton"><a class="whitea"  th:href="@{/Prestation/suppr/{id}(id=${prest.id})}">Supprimer</a></p>
+        <td id="boutonsList">
+            <a th:href="@{/Prestation/{id}(id=${prest.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+            <a th:href="@{/Prestation/modif/{id}(id=${prest.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
+            <a th:href="@{/Prestation/suppr/{id}(id=${prest.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
         </td>
     </tr>
     <tr>
