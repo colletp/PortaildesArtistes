@@ -35,7 +35,7 @@ class UtilisateurTest {
     void testInscriptValide21() {
         try {
             usr = user.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
@@ -50,7 +50,7 @@ class UtilisateurTest {
         user.setPassword("i234");
         try {
             usr = user.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 

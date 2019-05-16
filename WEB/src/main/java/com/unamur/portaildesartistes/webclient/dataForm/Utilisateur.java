@@ -47,7 +47,7 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
         return true;
 
     }
-    public UtilisateurDTO getDTO()throws ParseException {
+    public UtilisateurDTO getDTO(){
         UtilisateurDTO usr = new UtilisateurDTO();
         if( getId()!=null && !getId().isEmpty() )
             usr.setId( convertUUID(getId()) );

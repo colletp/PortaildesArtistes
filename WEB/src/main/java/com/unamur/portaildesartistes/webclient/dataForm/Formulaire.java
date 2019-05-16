@@ -72,7 +72,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
     // Fonctions
     // ******************
-    public FormulaireDTO getDTO()throws ParseException {
+    public FormulaireDTO getDTO(){
         FormulaireDTO dto = new FormulaireDTO();
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );

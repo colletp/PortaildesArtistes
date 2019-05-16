@@ -320,4 +320,10 @@ tr:nth-of-type(even) {
 .table-header {
     background-color: blue;
     color: cornsilk;
+    padding: 3pt;
+}
+
+.table-cellule {
+    border: 10pt;
+    padding: 15pt;
 }

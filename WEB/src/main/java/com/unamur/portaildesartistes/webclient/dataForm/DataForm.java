@@ -31,7 +31,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // A implémenter
     // ******************
 
-    public abstract T getDTO()throws ParseException;
+    public abstract T getDTO();
 
     // ******************
     // Tests de validité interne aux descendants

@@ -75,14 +75,20 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     // Fonctions
     // ******************
 
-    Boolean isValidNrn(String toValidate)throws ParseException{
+    Boolean isValidNrn(String toValidate){
         //Contrôle de la validité de la valeur reprise dans le NRN
 
         if(toValidate.length()!=11)
             throw new IllegalArgumentException("Numéro de registre national incorrect");
         long nrn=Long.parseLong( toValidate );
         long val=nrn/100;
-        Date dateControle = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateControle;
+         try {
+            dateControle = sdf.parse("31/12/1999");
+        }catch(ParseException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
         if( convertDate(getDateNaissance()).after(dateControle) )
             val+=2000000000;
         long valControle = 97 - (val % 97);
@@ -110,7 +116,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     }
 
 
-    public CitoyenDTO getDTO()throws ParseException {
+    public CitoyenDTO getDTO(){
         CitoyenDTO dto = new CitoyenDTO();
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );

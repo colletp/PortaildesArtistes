@@ -57,7 +57,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     }
 
     @PostMapping(value = "/Prestation")
-    public String prestPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public UUID prestPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Prestation formPrest
             ,Model model){
@@ -68,11 +68,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             model.addAttribute("form",formPrest);
-            return "/Prestation/"+method+".html";
-        }catch(ParseException e){
-            model.addAttribute("Err",e.getMessage());
-            model.addAttribute("form",formPrest);
-            return "/Prestation/"+method+".html";
+            throw e;
         }
 
     }

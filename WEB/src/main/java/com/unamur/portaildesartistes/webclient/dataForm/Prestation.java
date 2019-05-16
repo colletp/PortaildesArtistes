@@ -1,11 +1,18 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
+import com.unamur.portaildesartistes.DTO.AdresseDTO;
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
+import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
+import com.unamur.portaildesartistes.DTO.CommanditaireDTO;
+
+import org.apache.tomcat.jni.Address;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Prestation extends DataForm<PrestationDTO> {
@@ -24,10 +31,17 @@ public class Prestation extends DataForm<PrestationDTO> {
     private Double montant;
 
     private String etat;
+
+    private UUID activiteId;
     private UUID commanditaireId;
     private UUID docArtisteId;
-    private UUID activiteId;
-    private UUID seDerouleId;
+    private UUID adresseId;
+
+    private ActiviteDTO oActivite;
+    private CommanditaireDTO oCommanditaire;
+    private DocArtisteDTO oDocArtiste;
+    private AdresseDTO oAdresse;
+
 
     // ******************
     // Constructeur
@@ -46,8 +60,8 @@ public class Prestation extends DataForm<PrestationDTO> {
     public String getEtat() { return etat; }
     public void setEtat( String p_etat) { this.etat = p_etat; }
 
-    public UUID getSeDerouleId() { return seDerouleId; }
-    public void setSeDerouleId( UUID p_id) { this.seDerouleId = p_id; }
+    public UUID getSeDerouleId() { return adresseId; }
+    public void setSeDerouleId( UUID p_id) { this.adresseId = p_id; }
     public UUID getDocArtisteId() { return docArtisteId; }
     public void setDocArtisteId( UUID p_id) { this.docArtisteId = p_id; }
     public UUID getActiviteId() { return activiteId; }
@@ -55,6 +69,15 @@ public class Prestation extends DataForm<PrestationDTO> {
     public UUID getCommanditaireId() { return commanditaireId; }
     public void setCommanditaireId( UUID p_id) { this.commanditaireId= p_id; }
 
+
+    public AdresseDTO getSeDeroule() { return oAdresse; }
+    public void setSeDeroule( AdresseDTO oAdresse) { this.oAdresse = oAdresse; }
+    public DocArtisteDTO getDocArtiste() { return oDocArtiste; }
+    public void setDocArtiste( DocArtisteDTO oDocArtiste) { this.oDocArtiste = oDocArtiste; }
+    public ActiviteDTO getActivite() { return oActivite; }
+    public void setActivite( ActiviteDTO oActivite) { this.oActivite = oActivite; }
+    public CommanditaireDTO getCommanditaire() { return oCommanditaire; }
+    public void setCommanditaire( CommanditaireDTO oCommanditaire) { this.oCommanditaire = oCommanditaire; }
 
     public void setFromDTO(final PrestationDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
@@ -66,6 +89,11 @@ public class Prestation extends DataForm<PrestationDTO> {
         setDocArtisteId(objDTO.getDocArtisteId());
         setActiviteId(objDTO.getActiviteId());
         setSeDerouleId(objDTO.getSeDerouleId());
+
+        setCommanditaire(objDTO.getCommanditaire());
+        setDocArtiste(objDTO.getDocArtiste());
+        setActivite(objDTO.getActivite());
+        setSeDeroule(objDTO.getSeDeroule());
     }
     // ******************
     // Fonctions
@@ -86,7 +114,7 @@ public class Prestation extends DataForm<PrestationDTO> {
         return true;
     }
 
-    public PrestationDTO getDTO()throws ParseException {
+    public PrestationDTO getDTO(){
         PrestationDTO dto = new PrestationDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );
@@ -94,8 +122,12 @@ public class Prestation extends DataForm<PrestationDTO> {
         //isNotEmpty(getSeDerouleId());
         dto.setSeDerouleId(getSeDerouleId());
 
+        dto.setSeDeroule(getSeDeroule());
+
         //isNotEmpty(getDocArtisteId());
         dto.setDocArtisteId(getDocArtisteId());
+
+        dto.setDocArtiste(getDocArtiste());
 
         // isNotEmpty(getEtat()); A ajouter?? (commentaire Bernard G)
         dto.setEtat(getEtat());
@@ -112,11 +144,15 @@ public class Prestation extends DataForm<PrestationDTO> {
         //isNotEmpty(getActiviteId());
         dto.setActiviteId(getActiviteId());
 
+        dto.setActivite(getActivite());
+
         //isNotEmpty(getDatePrest());
         dto.setDatePrest( getDatePrest() );
 
         //isNotEmpty(getCommanditaireId());
         dto.setCommanditaireId( getCommanditaireId());
+
+        dto.setCommanditaire( getCommanditaire() );
 
         return dto;
     }

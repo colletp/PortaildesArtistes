@@ -35,7 +35,7 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
     // ******************
     // Fonctions
     // ******************
-    public CommanditaireDTO getDTO()throws ParseException {
+    public CommanditaireDTO getDTO(){
         CommanditaireDTO dto = new CommanditaireDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

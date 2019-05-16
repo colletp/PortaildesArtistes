@@ -42,7 +42,7 @@ public class Reponse extends DataForm<ReponseDTO> {
     // ******************
     // Fonctions
     // ******************
-    public ReponseDTO getDTO()throws ParseException {
+    public ReponseDTO getDTO(){
         ReponseDTO dto = new ReponseDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

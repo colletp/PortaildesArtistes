@@ -33,8 +33,6 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
     public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        logger.error("Utilisateur/modif/moi : Authentication received! Cookie : "+cookieValue );
-
         model.addAttribute("form", new UtilisateurInscript( super.getObj(cookieValue, super.getMyId(cookieValue) , new UtilisateurDTO(), UtilisateurDTO.class) ) );
         return "/Utilisateur/post.html";
     }
@@ -42,33 +40,8 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("id") UUID itemId
             ,Model model){
-        logger.error("Utilisateur/modif : Authentication received! Cookie : "+cookieValue );
         model.addAttribute("form", new UtilisateurInscript(super.getObj(cookieValue, itemId, new UtilisateurDTO(), UtilisateurDTO.class)) );
         return "/Utilisateur/post.html";
-        //return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"POST",model);
-    }
-
-    @PostMapping(value = "/Utilisateur")
-    public String citoyenPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final UtilisateurInscript usrForm
-            ,Model model){
-        logger.error("citoyen(post) "+(method.isEmpty()?"POST":method)+" : Authentication received! Cookie : "+cookieValue );
-        //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-
-        UtilisateurDTO usrDTO=null;
-        try{
-            usrDTO = usrForm.getDTO();
-            return super.postForm(cookieValue,usrDTO,method);
-        }catch(IllegalArgumentException e){
-            logger.error(e.getMessage());
-            model.addAttribute("Err",e.getMessage() );
-            return "/Utilisateur/"+(method.isEmpty()?"POST":method)+".html";
-        }catch(ParseException e){
-            logger.error(e.getMessage());
-            model.addAttribute("Err",e.getMessage() );
-            return "/Utilisateur/"+(method.isEmpty()?"POST":method)+".html";
-        }
     }
 
     @GetMapping(value = "/Utilisateur")//initialisation du login
@@ -78,32 +51,23 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         return super.list(cookieValue,new UtilisateurDTO(),UtilisateurDTO.class,model);
     }
 
-    @PostMapping(value = "/Utilisateur/{id}")
+    @PostMapping(value = "/Utilisateur")
     public String citoyenPostConfirm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@PathVariable("id") UUID itemId
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final UtilisateurInscript usrForm
             ,Model model){
-        logger.error("citoyen(post) "+(method.isEmpty()?"POST":method)+" : Authentication received! Cookie : "+cookieValue );
         //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
         try{
             UtilisateurDTO usrDTO = usrForm.getDTO();
             super.postForm(cookieValue,usrDTO,method);
             model.addAttribute("form", new UtilisateurInscript(usrDTO) );
             model.addAttribute("Msg","Le profil a été mis à jour" );
-
             return "/Utilisateur/get.html";
-            //super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
         }catch(IllegalArgumentException e){
-            logger.error(e.getMessage());
+
             model.addAttribute("Err",e.getMessage() );
             model.addAttribute("form",usrForm);
-            return "/Utilisateur/post.html";
-        }catch(ParseException e){
-            logger.error(e.getMessage());
-            model.addAttribute("Err",e.getMessage() );
-            model.addAttribute("form",usrForm);
-            return "/Utilisateur/post.html";
+            return "/Utilisateur/"+(method.isEmpty()?"POST":method)+".html";
         }
     }
 
@@ -111,7 +75,6 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyen( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        logger.error("citoyen : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new UtilisateurDTO(),new UtilisateurInscript(),itemId,UtilisateurDTO.class,"GET",model);
     }
 

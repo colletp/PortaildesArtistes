@@ -20,29 +20,19 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     @Autowired
     private DonneeFormulaireImpl formImpl;
     @Autowired
-    private DonneeSecteurImpl sectImpl;
+    private SecteurServiceImpl sectServImpl;
 
     @Transactional
     public List<FormulaireDTO> list(){ return formImpl.list(); }
     @Transactional
     public FormulaireDTO getById( UUID uuid ){
         FormulaireDTO form= formImpl.getById(uuid);
+        form.setSecteurActivites( sectServImpl.listSecteurActiviteByFormId( uuid ) );
 
         List<ActiviteDTO> lAct = actImpl.getByFormId( form.getId() );
         List<UUID> lActId = new ArrayList<>();
-
-        List<SecteurDTO> lSect = sectImpl.list();
-        Set<SecteurDTO> lSectForm = new HashSet<>();
-        for( ActiviteDTO act : lAct ){
+        for( ActiviteDTO act : lAct )
             lActId.add(act.getId());
-            for( SecteurDTO sect : lSect ){
-                if( act.getSecteurId().toString().equals(sect.getId().toString()) ){
-                    if(!lSectForm.contains(sect))lSectForm.add(sect);
-                    sect.addActivite(act);
-                }
-            }
-        }
-        form.setSecteurActivites( lSectForm );
         form.setActivitesId(lActId);
 
         return form;

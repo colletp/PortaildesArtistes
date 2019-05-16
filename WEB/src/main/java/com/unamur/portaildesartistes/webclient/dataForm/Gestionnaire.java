@@ -41,7 +41,7 @@ public class Gestionnaire extends DataForm<GestionnaireDTO> {
     // ******************
     // Fonctions
     // ******************
-    public GestionnaireDTO getDTO() throws ParseException {
+    public GestionnaireDTO getDTO(){
         GestionnaireDTO dto = new GestionnaireDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

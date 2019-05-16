@@ -55,7 +55,7 @@ public class Entreprise extends DataForm<EntrepriseDTO> {
             throw new IllegalArgumentException("Num BCE incorrect");
         return true;
     }
-    public EntrepriseDTO getDTO()throws ParseException {
+    public EntrepriseDTO getDTO(){
         EntrepriseDTO dto = new EntrepriseDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

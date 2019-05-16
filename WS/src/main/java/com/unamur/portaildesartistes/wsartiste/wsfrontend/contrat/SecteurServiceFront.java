@@ -27,4 +27,9 @@ public class SecteurServiceFront extends ServiceFront<SecteurDTO> {
 
     @GetMapping("/gestionSecteur/Activite")
     public List<SecteurDTO> listSecteurActivite(){ return ((SecteurServiceImpl)srvImpl).listSecteurActivite(); }
+
+    @GetMapping("/gestionSecteur/SecteurActivite/Form/{formId}")
+    public List<SecteurDTO> listSecteurActiviteByForm(@PathVariable("formId")UUID formId){ return ((SecteurServiceImpl)srvImpl).listSecteurActiviteByFormId( formId ); }
+    @GetMapping("/gestionSecteur/SecteurActivite/Doc/{docId}")
+    public List<SecteurDTO> listSecteurActiviteByDoc(@PathVariable("docId")UUID docId){ return ((SecteurServiceImpl)srvImpl).listSecteurActiviteByDocId( docId ); }
 }

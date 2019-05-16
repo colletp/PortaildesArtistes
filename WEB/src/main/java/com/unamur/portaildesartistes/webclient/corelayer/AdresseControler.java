@@ -32,16 +32,21 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
     @PostMapping(value = "/Adresse")
     public String adressePost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("adrForm") final AdresseDTO usrForm
+        ,@ModelAttribute("adrForm") final Adresse adrForm
             ,Model model){
-        logger.error("adresse(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        return super.postForm(cookieValue,usrForm,method);
+        model.addAttribute("form",adrForm);
+        try {
+            adrForm.setId(super.postForm(cookieValue, adrForm, method).toString());
+            return "/Adresse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "/Adresse/"+method+".html";
+        }
     }
 
     @GetMapping(value = "/Adresse")
     public String adresseList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        logger.error("adresse List : Authentication received! Cookie : "+cookieValue );
         return super.list(cookieValue,new AdresseDTO(),AdresseDTO.class,model);
     }
 
@@ -49,7 +54,6 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
     public String adresse( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        logger.error("adresse : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"GET",model);
     }
 

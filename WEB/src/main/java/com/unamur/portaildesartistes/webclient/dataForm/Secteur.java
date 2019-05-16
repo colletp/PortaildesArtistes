@@ -31,7 +31,7 @@ public class Secteur extends DataForm<SecteurDTO> {
     // ******************
     // Fonctions
     // ******************
-    public SecteurDTO getDTO()throws ParseException {
+    public SecteurDTO getDTO(){
         SecteurDTO dto = new SecteurDTO();
         if( getId()!=null && !getId().isEmpty())
 

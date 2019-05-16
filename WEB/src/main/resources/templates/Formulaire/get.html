@@ -7,40 +7,20 @@
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
 <fieldset class="formbox800">
-<legend>Formulaire</legend>
-    <span th:text="#{citoyen.nom}" >
-    Date Demande:</span>:[[${form.dateDemande}]]<br/>
+<legend>Demande de document d'artiste</legend>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>
+    Date Demande:[[${form.dateDemande}]]<br/>
 
-    <!-- Cursus : cursurAc -->
-    <div th:if="${! #lists.isEmpty(form.cursusAc)}">
-        <h1>Cursus académique</h1>
-        <ul th:each="item : ${form.cursusAc}">
-            <li th:text="*{item}"></li>
-        </ul>
-    </div>
-
-    <!-- Experience Professionnelle : expPro -->
-    <div th:if="${! #lists.isEmpty(form.expPro)}">
-        <h1>Experience professionnelle</h1>
-        <ul th:each="item : ${form.expPro}">
-            <li th:text="*{item}"></li>
-        </ul>
-    </div>
-
-    <!-- ressources -->
-    <div th:if="${! #lists.isEmpty(form.ressources)}">
-        <h1>Autres ressources</h1>
-        <ul th:each="item : ${form.ressources}">
-            <li th:text="*{item}"></li>
-        </ul>
-    </div>
+    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
 
     Langue :[[${form.langue}]]<br/>
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
+    <!-- <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset> -->
 
-    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
-    <fieldset th:replace="~{/fragments/form :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
 
 </fieldset>
 

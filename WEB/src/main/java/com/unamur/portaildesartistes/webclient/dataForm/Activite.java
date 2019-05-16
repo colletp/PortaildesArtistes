@@ -39,7 +39,7 @@ public class Activite extends DataForm<ActiviteDTO> {
     // ******************
     // Fonctions
     // ******************
-    public ActiviteDTO getDTO()throws ParseException {
+    public ActiviteDTO getDTO(){
         ActiviteDTO dto = new ActiviteDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

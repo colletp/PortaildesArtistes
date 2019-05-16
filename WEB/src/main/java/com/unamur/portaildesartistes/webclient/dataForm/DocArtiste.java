@@ -52,7 +52,7 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     // ******************
     // Fonctions
     // ******************
-    public DocArtisteDTO getDTO()throws ParseException {
+    public DocArtisteDTO getDTO(){
         DocArtisteDTO dto = new DocArtisteDTO();
         if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );

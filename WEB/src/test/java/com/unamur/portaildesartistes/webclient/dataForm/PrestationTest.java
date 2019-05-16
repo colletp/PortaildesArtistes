@@ -57,7 +57,7 @@ class PrestationTest {
                     ()->assertEquals(prestDTO.getMontant().toString(),prestation.getMontant())
             );
 
-        } catch (ParseException | IllegalArgumentException  e) {
+        } catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
@@ -72,7 +72,7 @@ class PrestationTest {
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
             assertThrows(IllegalArgumentException.class, ()-> prestDTO.getDatePrest(), "Montant null devrait générer une IllegalArgumentException");
-        } catch (ParseException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -86,7 +86,7 @@ class PrestationTest {
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
             assertThrows(IllegalArgumentException.class, ()-> prestDTO.getMontant(), "Montant null devrait générer une IllegalArgumentException");
-        } catch (ParseException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
   }
@@ -100,7 +100,7 @@ class PrestationTest {
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
             assertThrows(IllegalArgumentException.class, ()-> prestDTO.getActiviteId(), "Activité null devrait générer une IllegalArgumentException");
-        } catch (ParseException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -114,7 +114,7 @@ class PrestationTest {
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
             assertThrows(IllegalArgumentException.class, ()-> prestDTO.getCommanditaireId(), "Commanditaire null devrait générer une IllegalArgumentException");
-        } catch (ParseException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -129,7 +129,7 @@ class PrestationTest {
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
             assertThrows(IllegalArgumentException.class, ()-> prestDTO.getDuree(), "Durée null devrait générer une IllegalArgumentException");
-        } catch (ParseException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

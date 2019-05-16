@@ -30,21 +30,22 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     public void delete(UUID id) {
         super.Exec(ActiviteSQLs.class).delete(id);
     }
-
     public ActiviteDTO getById(UUID p_id){
         return super.Exec(ActiviteSQLs.class).getById(p_id);
     }
+
     public List<ActiviteDTO> getByDocId(UUID p_id){
         return super.Exec(ActiviteSQLs.class).getByDocId(p_id);
     }
-
     public List<ActiviteDTO> getByFormId(UUID p_id){
         return super.Exec(ActiviteSQLs.class).getByFormId(p_id);
     }
-
     public List<ActiviteDTO> getBySecteurId(UUID p_id){
         return super.Exec(ActiviteSQLs.class).getBySecteurId(p_id);
     }
+
+    public List<ActiviteDTO> getBySectDocId(UUID p_docId,UUID p_sectId){ return super.Exec(ActiviteSQLs.class).getBySectDocId(p_docId,p_sectId); }
+    public List<ActiviteDTO> getBySectFormId(UUID p_formId,UUID p_sectId){ return super.Exec(ActiviteSQLs.class).getBySectFormId(p_formId,p_sectId); }
 
     @RegisterMapper(SecteurMapper.class)
     interface ActiviteSQLs {
@@ -56,12 +57,15 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
 
         @SqlQuery("select * from activite a JOIN doc_artiste_activite da ON a.activite_id = da.activite_id WHERE da.doc_artiste_id=:docId ")
         List<ActiviteDTO> getByDocId(@Bind("docId")UUID docId);
-
         @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId ")
         List<ActiviteDTO> getByFormId(@Bind("formId")UUID formId);
-
         @SqlQuery("select * from activite a JOIN secteur s ON a.secteur_id = s.secteur_id WHERE s.secteur_id=:formId ")
         List<ActiviteDTO> getBySecteurId(@Bind("formId")UUID formId);
+
+        @SqlQuery("select * from activite a JOIN doc_artiste_activite da ON a.activite_id = da.activite_id WHERE da.doc_artiste_id=:docId AND a.secteur_id=:sectId ")
+        List<ActiviteDTO> getBySectDocId(@Bind("docId")UUID docId,@Bind("sectId")UUID sectId);
+        @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId AND a.secteur_id=:sectId ")
+        List<ActiviteDTO> getBySectFormId(@Bind("formId")UUID formId,@Bind("sectId")UUID sectId);
 
         @SqlQuery("INSERT INTO activite (nom_activite,secteur_id) VALUES (:nomActivite,:idSecteur) RETURNING activite_id ")
         String insert(@BindBean ActiviteDTO test);

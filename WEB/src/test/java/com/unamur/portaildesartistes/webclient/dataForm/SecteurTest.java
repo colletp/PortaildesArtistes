@@ -34,7 +34,7 @@ class SecteurTest {
     void testAjoutSecteurValide(){
         try {
             secteur = sect.getDTO();
-        }catch (ParseException | IllegalArgumentException  e) {
+        }catch (IllegalArgumentException  e) {
             e.printStackTrace();
         }
 
