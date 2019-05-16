@@ -85,6 +85,10 @@ public class LoginControler {
     public String favicon(Model model) {
         return "favicon.ico";
     }
+    @GetMapping(value="/bt_detail.png")
+    public String bt_detail(Model model) {
+        return "bt_detail.png";
+    }
 
     @GetMapping(value = "/login")
     public String loginView( @ModelAttribute("lang") String lang,@ModelAttribute("error") String Err,@ModelAttribute("message") String Msg,Model model ){

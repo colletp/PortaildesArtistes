@@ -295,7 +295,20 @@ input[type=submit] {
 button{
     color: white;
     background-color: #014B96;
-    border: none;
+}
+
+td a{
+    color: black;
+    background-color: #c3c3c3;
+    border-radius: 3px;
+    margin-left: 50px;
+    padding: 5px;
+
+}
+
+td a:hover{
+    text-decoration: underline;
+    color: black;
 }
 
 tr:nth-of-type(odd) {

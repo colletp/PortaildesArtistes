@@ -14,9 +14,9 @@
     <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
         <td id="boutonsFlex">
-            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/{id}(id=${usr.id})}">Détail</a></p>
-            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a></p>
-            <p class="customButton"><a class="whitea" th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a></p>
+            <a th:href="@{/Utilisateur/{id}(id=${usr.id})}"><img src="../img/bt_detail.png" alt="Détail" /></a>
+            <a th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
+            <a th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
         </td>
     </tr>
 

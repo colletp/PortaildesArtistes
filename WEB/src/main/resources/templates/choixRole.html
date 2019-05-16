@@ -8,9 +8,10 @@
 
 	<br/><br/>
 	<div id="choixbox">
-		<div class="choixtxt"><a href="artiste.html">Je suis un artiste.</a></div>
-		<div class="choixtxt"><a href="commanditaire.html">Je suis un commanditaire.</a></div>
-		<div class="choixtxt"><a href="gestionnaire.html">Je suis un gestionnaire.</a></div>
+		<div class="choixtxt"><a th:text="#{choixRole.artiste}" href="artiste.html">Je suis un artiste.</a></div>
+		<div class="choixtxt"><a th:text="#{choixRole.commanditaire}" href="commanditaire.html">Je suis un commanditaire.</a></div>
+		<div class="choixtxt"><a th:text="#{choixRole.gestionnaire}" href="gestionnaire.html">Je suis un gestionnaire.</a></div>
 	</div>
+	<div th:replace="~{/fragments/header :: multiscript}"></div>
 </body>
 </html>

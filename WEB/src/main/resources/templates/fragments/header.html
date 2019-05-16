@@ -45,18 +45,18 @@
         <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}" th:text="#{register}"></a></div>
         <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
-        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}">Artiste &#9660;</a>
+        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}"> &#9660;</a>
             <div class=ssmenu><a th:href="@{/Prestations}" class="whitea">Prestations</a></div>
-            <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea">Carte artiste</a></div>
-            <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea">Carte visa</a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea" th:text="#{carte}"></a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea" th:text="#{visa}"></a></div>
         </div>
 
-        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea">Commanditaire</a></div>
-        <div class=navtext th:remove="${(select/256)%2!=1}? all : none"><a class="whitea">Gestionnaire</a></div>
+        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea" th:text="#{commanditaire}"></a></div>
+        <div class=navtext th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:text="#{gestionnaire}"></a></div>
 
-        <div class=menu th:remove="${(select/4)%2!=1}? all : none">Mon profil &#9660;
-            <div class=ssmenu><a class="whitea" th:href="@{/Utilisateur/modif/moi}">Mes informations</a></div>
-            <div class=ssmenu><a class="whitea" th:href="@{/logout2}">Déconnexion</a></div>
+        <div class=menu th:remove="${(select/4)%2!=1}? all : none"><span th:text="#{monprofil}"></span> &#9660;
+            <div class=ssmenu><a th:href="@{/Utilisateur/modif/moi}" class="whitea"  th:text="#{infopers}"></a></div>
+            <div class=ssmenu><a th:href="@{/logout2}" class="whitea" th:text="#{deconnexion}"></a></div>
         </div>
 
         <div class=menu th:remove="${(select/8)%2!=1}? all : none"><span th:text="#{language}"></span> &#9660;
