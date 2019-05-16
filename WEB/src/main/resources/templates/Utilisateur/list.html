@@ -13,10 +13,10 @@
         <caption><H1>Liste des utilisateur</H1></caption>
     <tr th:each="usr : ${form}">
         <td>[[${usr.username}]]</td>
-        <td id="boutonsFlex">
-            <a th:href="@{/Utilisateur/{id}(id=${usr.id})}"><img src="../img/bt_detail.png" alt="Détail" /></a>
-            <a th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}">Modifier</a>
-            <a th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}">Supprimer</a>
+        <td id="boutonsList">
+            <a th:href="@{/Utilisateur/{id}(id=${usr.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+            <a th:href="@{/Utilisateur/modif/{id}(id=${usr.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
+            <a th:href="@{/Utilisateur/suppr/{id}(id=${usr.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
         </td>
     </tr>
 
