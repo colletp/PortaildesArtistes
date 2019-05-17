@@ -74,7 +74,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
     public Boolean notNullSameTime(String carte,String visa){
         if (carte!="1"&&visa!="1"){
-            throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
+            throw new IllegalArgumentException("Vous devez choisir au moins une carte ou un visa");
         }
         return true;
     }
