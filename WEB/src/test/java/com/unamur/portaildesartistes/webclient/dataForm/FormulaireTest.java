@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,13 +27,15 @@ class FormulaireTest {
         form=new FormulaireDTO();
         formulaire.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         formulaire.setDateDemande("12/04/2019");
-        formulaire.setCursusAc(null);
-        formulaire.setExpPro(null);
-        formulaire.setRessources(null);
+        List<String> test=new ArrayList<>();
+        formulaire.setCursusAc(test);
+        formulaire.setExpPro(test);
+        formulaire.setRessources(test);
         formulaire.setLangue("FR");
         formulaire.setCarte("1");
-        formulaire.setVisa("0");
+        formulaire.setVisa(null);
         List <String> tab=new ArrayList<>();
+        tab.add("98a95e7d-8231-4115-8ed9-612de5590d88");
         formulaire.setActivitesId(tab);
     }
 
@@ -56,11 +59,11 @@ class FormulaireTest {
                 ()->assertEquals(form.getExpPro(),formulaire.getExpPro()),
                 ()->assertEquals(form.getRessources(),formulaire.getRessources()),
                 ()->assertEquals(form.getLangue(),formulaire.getLangue()),
-                ()->assertEquals(form.getCarte(),formulaire.getCarte()),
-                ()->assertEquals(form.getVisa(),formulaire.getVisa()),
-                ()->assertEquals(form.getDateDemande(),formulaire.convertDate(formulaire.getDateDemande())),
+                ()->assertEquals(form.getCarte(),true),
+                ()->assertEquals(form.getVisa(),false),
+                ()->assertEquals(form.getDateDemande(),Timestamp.from(formulaire.convertDate(formulaire.getDateDemande()).toInstant())),
                 ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
-                ()->assertEquals(form.getActivitesId(),formulaire.getActivitesId())
+                ()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString())
         );
     }
 
@@ -81,11 +84,11 @@ class FormulaireTest {
                 ()->assertEquals(form.getExpPro(),formulaire.getExpPro()),
                 ()->assertEquals(form.getRessources(),formulaire.getRessources()),
                 ()->assertEquals(form.getLangue(),formulaire.getLangue()),
-                ()->assertEquals(form.getCarte(),formulaire.getCarte()),
-                ()->assertEquals(form.getVisa(),formulaire.getVisa()),
-                ()->assertEquals(form.getDateDemande(),formulaire.convertDate(formulaire.getDateDemande())),
+                ()->assertEquals(form.getCarte(),false),
+                ()->assertEquals(form.getVisa(),true),
+                ()->assertEquals(form.getDateDemande(), Timestamp.from(formulaire.convertDate(formulaire.getDateDemande()).toInstant())),
                 ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
-                ()->assertEquals(form.getActivitesId(),formulaire.getActivitesId())
+                ()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString())
         );
     }
 

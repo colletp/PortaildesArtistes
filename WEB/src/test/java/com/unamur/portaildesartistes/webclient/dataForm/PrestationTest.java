@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,19 +43,19 @@ class PrestationTest {
         try{
             final PrestationDTO prestDTO = prestation.getDTO();
 
-            assertEquals(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(prestDTO.getDatePrest()), prestation.getDatePrest() );
+            assertEquals(new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH).format(prestDTO.getDatePrest()), prestation.getDatePrest().toString() );
             assertEquals(prestDTO.getEtat(), prestation.getEtat());
 
             assertAll(
-                    ()->assertEquals(prestDTO.getCommanditaireId().toString(),prestation.getCommanditaireId()),
-                    ()->assertEquals(prestDTO.getDocArtisteId().toString(),   prestation.getDocArtisteId()),
-                    ()->assertEquals(prestDTO.getActiviteId().toString(),     prestation.getActiviteId()),
-                    ()->assertEquals(prestDTO.getSeDerouleId().toString(),    prestation.getSeDerouleId())
+                    ()->assertEquals(prestDTO.getCommanditaireId(),prestation.getCommanditaireId()),
+                    ()->assertEquals(prestDTO.getDocArtisteId(),   prestation.getDocArtisteId()),
+                    ()->assertEquals(prestDTO.getActiviteId(),     prestation.getActiviteId()),
+                    ()->assertEquals(prestDTO.getSeDerouleId(),    prestation.getSeDerouleId())
             );
 
             assertAll(
                     ()->assertEquals(prestDTO.getDuree(),  prestation.getDuree()),
-                    ()->assertEquals(prestDTO.getMontant().toString(),prestation.getMontant())
+                    ()->assertEquals(prestDTO.getMontant(),prestation.getMontant())
             );
 
         } catch (IllegalArgumentException  e) {
@@ -81,7 +82,7 @@ class PrestationTest {
     @Test
     void testPrestationMontantManquant() {
 
-        prestation.setMontant(0.0);
+        prestation.setMontant(null);
 
         try {
             final PrestationDTO prestDTO = prestation.getDTO();
