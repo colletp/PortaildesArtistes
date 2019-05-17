@@ -10,7 +10,6 @@
 <div class="formbox600">
     <h1>Profil du citoyen</h1><br/>
     <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.utilisateur.username}]]<br/>
-    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.utilisateur.password}]]<br/>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.adresse}) }"></fieldset>
 
 </div>

@@ -30,13 +30,14 @@
     </fieldset>
 </fieldset>
 
-<fieldset th:fragment="activiteShowBySecteur(listSect)">
+<fieldset th:fragment="activiteShowBySecteur(activitesId,listSect)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec : ${listSect}">
-        <legend th:text="${sec.nomSecteur}">Secteur</legend>
-        <ul th:each="act : ${sec.activites}">
-            <li>
-                <span th:text="${act.nomActivite}" th:alt="${act.description}"></span>
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+        <legend th:text="*{nomSecteur}">Secteur</legend>
+        <ul th:each="act : *{activites}" th:object="${act}">
+            <li th:if="${#lists.contains(form.activitesId, id)}"  >
+                [[${form.activitesId}]],[[*{id}]]
+                <span th:text="*{nomActivite}" th:alt="*{description}"></span>
             </li>
         </ul>
     </fieldset>

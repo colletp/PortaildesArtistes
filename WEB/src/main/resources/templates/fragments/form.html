@@ -4,10 +4,10 @@
 
 <body>
 
-<fieldset th:fragment="getForm(form,citoyen)">
+<fieldset th:fragment="getForm(form,secteurs,citoyen)">
     <legend>Demande de document d'artiste</legend>
 
-    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.adresse}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet('Citoyen',${citoyen},${citoyen.resideAdr}) }"></fieldset>
 
     Date Demande:[[${form.dateDemande}]]<br/>
 
@@ -20,7 +20,8 @@
     Visa :[[${form.visa}]]<br/>
     <!-- <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset> -->
 
-    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
 </fieldset>
 
