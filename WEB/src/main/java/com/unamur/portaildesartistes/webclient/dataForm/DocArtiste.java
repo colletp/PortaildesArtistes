@@ -70,7 +70,7 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         }
         dto.setTypeDocArtiste(getTypeDocArtiste());
 
-        hasLengthMin(getNomArtiste(),2);
+        //hasLengthMin(getNomArtiste(),2);
         dto.setNomArtiste(getNomArtiste());
 
         hasLengthMin(getNoDoc(),2);
