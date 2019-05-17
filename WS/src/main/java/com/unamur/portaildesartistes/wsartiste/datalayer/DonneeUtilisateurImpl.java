@@ -67,9 +67,7 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
         return null;
     }
 
-    public UUID insert(UtilisateurDTO usr){
-        return citoyenImpl.insert( usr );
-    }
+    public UUID insert(UtilisateurDTO usr){ return citoyenImpl.insert( usr ); }
 
     public void update(UtilisateurDTO usr){
         try{

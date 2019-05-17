@@ -72,11 +72,19 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
     // Fonctions
     // ******************
+    public Boolean notNullSameTime(String carte,String visa){
+        if (carte!="1"&&visa!="1"){
+            throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
+        }
+        return true;
+    }
+
     public FormulaireDTO getDTO(){
         FormulaireDTO dto = new FormulaireDTO();
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );
 
+        notNullSameTime(carte,visa);
         dto.setVisa( getVisa()!=null?getVisa().equals("1"):false );
         dto.setCarte( getCarte()!=null?getCarte().equals("1"):false );
 
@@ -90,12 +98,12 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         dto.setExpPro( getExpPro() );
         dto.setCursusAc( getCursusAc() );
 
-        /*
         isNotEmpty(getDateDemande());
         dto.setDateDemande( Timestamp.from(convertDate(getDateDemande()).toInstant()) );
+
+        isNotEmpty(citoyenId);
         if( getCitoyenId()!=null && !getCitoyenId().isEmpty())
             dto.setCitoyenId(convertUUID(getCitoyenId()));
-        */
 
         List<UUID> activitesId = new ArrayList<>();
         for( String act : getActivitesId() ){

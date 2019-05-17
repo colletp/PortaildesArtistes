@@ -36,7 +36,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         model.addAttribute("form", new UtilisateurInscript( super.getObj(cookieValue, super.getMyId(cookieValue) , new UtilisateurDTO(), UtilisateurDTO.class) ) );
         return "/Utilisateur/post.html";
     }
-    @GetMapping(value = "/Utilisateur/modif/{id}")//initialisation du login
+    @GetMapping(value = "/Utilisateur/modif/{id}")
     public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("id") UUID itemId
             ,Model model){
@@ -44,7 +44,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         return "/Utilisateur/post.html";
     }
 
-    @GetMapping(value = "/Utilisateur")//initialisation du login
+    @GetMapping(value = "/Utilisateur")
     public String citoyenList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
         logger.error("citoyen List : Authentication received! Cookie : "+cookieValue );
@@ -64,10 +64,12 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             model.addAttribute("Msg","Le profil a été mis à jour" );
             return "/Utilisateur/get.html";
         }catch(IllegalArgumentException e){
-
             model.addAttribute("Err",e.getMessage() );
             model.addAttribute("form",usrForm);
             return "/Utilisateur/"+(method.isEmpty()?"POST":method)+".html";
+        }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
+            return "/login";
         }
     }
 
@@ -75,7 +77,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyen( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        return super.getForm(cookieValue,new UtilisateurDTO(),new UtilisateurInscript(),itemId,UtilisateurDTO.class,"GET",model);
+        return super.getForm(cookieValue,new UtilisateurDTO(),new Utilisateur(),itemId,UtilisateurDTO.class,"GET",model);
     }
 
     @GetMapping(value = "Utilisateur/suppr/{id}")

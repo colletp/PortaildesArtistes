@@ -56,13 +56,13 @@ class UtilisateurTest {
 
         assertEquals(usr.getPassword(),user.getPassword());
     }
-
+/*
     @DisplayName("TC 2.3, Test d’inscription avec un identifiant existant")
     @Test
     void testInscriptNonValide23() {
         user.setUsername("nico");
         assertThrows(IllegalArgumentException.class,()->user.getDTO());
-    }
+    }*/
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")
     @Test
