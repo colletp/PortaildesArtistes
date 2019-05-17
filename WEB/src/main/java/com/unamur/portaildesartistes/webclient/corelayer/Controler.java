@@ -17,7 +17,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import javax.management.ServiceNotFoundException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -85,9 +84,26 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         }
     }
 
-	//Complete les données d'un formulaire qui sera affiché
+    protected V getForm(String cookieValue, T objDTO, V objForm, UUID itemId, U clazz, String method){
+        switch( method.toUpperCase() ){
+            case "":
+            case "POST":
+            case "GET":
+                try{
+                    objForm.setFromDTO( getObj(cookieValue,itemId,objDTO,clazz) );
+                    return objForm;
+                }
+                catch(Exception e){
+                    logger.error( e.getMessage() );
+                    throw e;
+                }
+            default:
+                return null;
+        }
+    }
+
+    //Complete les données d'un formulaire qui sera affiché
     protected String getForm(String cookieValue, T objDTO, V objForm, UUID itemId, U clazz, String method, Model model){
-    //protected String getForm( String cookieValue,V objForm,UUID itemId,U clazz,String method,Model model){
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
         switch( method.toUpperCase() ){
             case "PUT":
@@ -207,19 +223,5 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 	* Public
 	*
 	**************************************/
-    /*
-    public Boolean isValide(V form){
 
-        T objDTO=null;
-        try{
-            objDTO = form.getDTO();
-            return true;
-        }
-        catch(IllegalArgumentException e){
-            return false;
-        }
-        catch(ParseException e){
-            return false;
-        }
-    }*/
 }

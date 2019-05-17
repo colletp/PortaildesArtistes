@@ -9,7 +9,7 @@
 <div class="Err">[[${Err}]]</div>
 <form class="formbox800" th:action="@{/Traitement}" th:name="form" th:object="${form}" th:method="put">
 
-    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form}) }"></fieldset>
+    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${citoyen}) }"></fieldset>
 
     Date de traitement<span></span>
     Appréciation<textarea></textarea><br/>

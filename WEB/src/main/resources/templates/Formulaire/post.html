@@ -9,7 +9,7 @@
 <div class="Err">[[${Err}]]</div>
 <form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:method="post">
     <input type="hidden" th:field="${form.id}" />
-    <fieldset th:replace="~{/fragments/form :: postForm(${form},${form.secteurActivites}) }"></fieldset>
+    <fieldset th:replace="~{/fragments/form :: postForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
 
 </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

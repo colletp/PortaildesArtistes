@@ -4,9 +4,11 @@
 
 <body>
 
-<fieldset th:fragment="getForm(form)">
+<fieldset th:fragment="getForm(form,citoyen)">
     <legend>Demande de document d'artiste</legend>
-    <span th:text="#{citoyen.nom}" >Mon nom</span>
+
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.adresse}) }"></fieldset>
+
     Date Demande:[[${form.dateDemande}]]<br/>
 
     <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
@@ -22,20 +24,21 @@
 
 </fieldset>
 
-<fieldset th:fragment="postForm(form,secteurs)">
+<fieldset th:fragment="postForm(form,secteurs,citoyen)" th:object="${form}">
     <legend>Demande de document d'artiste</legend>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
     Date Demande:[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
 
-    Langue<select th:field="${form.langue}">
+    Langue<select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
     </select><br/>
-    Carte<input type="checkbox" th:field="${form.carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="${form.visa}" value="1" /><br/>
+    Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
+    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
