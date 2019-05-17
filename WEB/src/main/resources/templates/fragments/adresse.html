@@ -28,6 +28,17 @@
     <label th:text="#{maison.ville}"></label>
     <input th:type="text" th:field="*{ville}" />
 </fieldset>
+<fieldset th:fragment="AdressePut(fonction,adresse)">
+    <legend th:text="#{maison.coordo}"></legend>
+    <label th:text="#{maison.rue}"></label>
+    <input th:type="text" th:field="*{adresse.rue}" />
+    <label th:text="#{maison.num}"></label>
+    <input th:type="text" th:field="*{adresse.numero}" />
+    <label th:text="#{maison.boite}"></label>
+    <input th:type="text" th:field="*{adresse.boite}" />
+    <label th:text="#{maison.ville}"></label>
+    <input th:type="text" th:field="*{adresse.ville}" />
+</fieldset>
 
 </body>
 
