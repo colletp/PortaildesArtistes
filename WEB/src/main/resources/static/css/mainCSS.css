@@ -310,13 +310,14 @@ tr:nth-of-type(even) {
     background-color: #ffffff;}
 
 #boutonsList{
-    width: 190px;
+    width: 220px;
+    text-align: right;
 }
 
-td{  padding: 15px;
-    text-align: left;}
+td{  padding: 15px;}
 
 td img{ width: 32px;}
+
 td a{
     color: black;
     margin: 5px;

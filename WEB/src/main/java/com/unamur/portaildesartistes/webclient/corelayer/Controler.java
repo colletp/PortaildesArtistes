@@ -204,11 +204,11 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         String className = objDTO.getClass().getSimpleName().substring(0, objDTO.getClass().getSimpleName().length() - 3);
         try {
             model.addAttribute("form", list(cookieValue, objDTO, clazz));
+            return className+"/list.html";
         }catch(Exception e){
             model.addAttribute("Err",e.getMessage());
             return "/login";
         }
-        return className+"/list.html";
     }
 
     protected String delete( String cookieValue,T objDTO,UUID itemId,Model model ){

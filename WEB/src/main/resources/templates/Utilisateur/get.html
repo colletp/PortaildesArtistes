@@ -8,14 +8,15 @@
 
 
 <div class="formbox600">
-    <h1>Profil du citoyen</h1><br/>
-    <span th:text="#{username}" >Nom d'utilisateur(def)</span>:[[${form.utilisateur.username}]]<br/>
-    <span th:text="#{password}" >Mot de passe(def)</span>:[[${form.utilisateur.password}]]<br/>
+    <h1 th:text="#{utilgettitre}"></h1><br/>
+    <fieldset><legend th:text="#{compteinfo}"></legend>
+        <span th:text="#{username}"></span> : [[${form.utilisateur.username}]]<br/>
+    </fieldset>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${form.citoyen},${form.adresse}) }"></fieldset>
 
 </div>
 
-
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

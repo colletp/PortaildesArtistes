@@ -7,14 +7,14 @@
 
     <div class="Msg">[[${Msg}]]</div>
     <div class="Err">[[${Err}]]</div>
-    <form class="formbox600" th:action="@{/inscript}" th:name="form" th:object="${form}" th:method="put">
+    <form class="formbox600" th:action="@{/inscript}" th:name="form" th:method="put" th:object="${form}">
         <legend th:text="#{inscript.titre}"></legend>
         <label th:text="#{username}"></label>
-        <input th:type="text" th:field="*{utilisateur.username}" />
+        <input th:type="text" th:field="${form.utilisateur.username}" />
         <label th:text="#{password}"></label>
-        <input th:type="password" th:field="*{utilisateur.password}" />
+        <input th:type="password" th:field="${form.utilisateur.password}" />
 
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPut('Citoyen',${form.citoyen},${form.adresse})}"></fieldset>
 
         <input th:type="submit" th:value="#{jeminscris}"/>
         <p class="customButton"><a class="whitea" th:href="@{/login}"  th:text="#{annuler}"></a></p>
