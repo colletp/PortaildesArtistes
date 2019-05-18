@@ -2,19 +2,14 @@ package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import org.skife.jdbi.v2.unstable.BindIn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -130,16 +125,10 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
             if(r.getArray("cursus_ac")!=null)
                 formulaireDTO.setCursusAc( Arrays.asList((String[]) r.getArray("cursus_ac").getArray()) );
-            //else
-            //    formulaireDTO.setCursusAc( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             if(r.getArray("ex_pro")!=null)
                 formulaireDTO.setExpPro( Arrays.asList((String[]) r.getArray("ex_pro").getArray()) );
-            //else
-            //    formulaireDTO.setExpPro( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             if(r.getArray("ressources")!=null)
                 formulaireDTO.setRessources( Arrays.asList((String[]) r.getArray("ressources").getArray()) );
-            //else
-            //    formulaireDTO.setRessources( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             formulaireDTO.setLangue( r.getString("langue"));
             formulaireDTO.setCarte( r.getBoolean("carte"));
             formulaireDTO.setVisa( r.getBoolean("visa"));

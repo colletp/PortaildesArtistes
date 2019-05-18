@@ -40,10 +40,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // Setter/Getter
     // ******************
 
-    public String getCitoyenId() { return citoyenId; }
-    public void setCitoyenId( String p_id) { citoyenId = p_id; }
-    public String getDateDemande(){ return dateDemande;}
-    public void setDateDemande(String d){ dateDemande=d;}
+    public String getCitoyenId(){ return citoyenId; }
+    public void setCitoyenId(String p_id){ citoyenId = p_id; }
+    public String getDateDemande(){ return dateDemande; }
+    public void setDateDemande(String d){ dateDemande=d; }
     //public String getCursusAc(){ return cursusAc;}
     //public void setCursusAc(String ls){ cursusAc=ls;}
     //public String getExpPro(){ return expPro;}

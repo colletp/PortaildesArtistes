@@ -31,7 +31,7 @@
     <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
     <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
-
+    <input type="hidden" th:field="*{citoyenId}" />
     Langue<select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
