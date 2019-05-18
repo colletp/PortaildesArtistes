@@ -30,13 +30,25 @@
     </fieldset>
 </fieldset>
 
+<fieldset th:fragment="activiteDocBySecteur(activitesId,activitesDocId,listSect)">
+    <legend>Secteurs</legend>
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+        <legend th:text="*{nomSecteur}">Secteur</legend>
+        <ul th:each="act : *{activites}"  th:object="${act}">
+            <li th:if="${#arrays.contains(form.activitesDocId, ''+act.id)}"  >
+                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
+                <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
+            </li>
+        </ul>
+    </fieldset>
+</fieldset>
+
 <fieldset th:fragment="activiteShowBySecteur(activitesId,listSect)">
     <legend>Secteurs</legend>
     <fieldset th:each="sec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}" th:object="${act}">
-            <li th:if="${#lists.contains(form.activitesId, id)}"  >
-                [[${form.activitesId}]],[[*{id}]]
+            <li th:if="${#arrays.contains(form.activitesId, ''+act.id)}"  >
                 <span th:text="*{nomActivite}" th:alt="*{description}"></span>
             </li>
         </ul>

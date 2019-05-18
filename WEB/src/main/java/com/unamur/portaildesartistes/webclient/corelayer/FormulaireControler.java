@@ -24,10 +24,8 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     @GetMapping(value = "/Formulaire/creer")
     public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-        Formulaire formForm = new Formulaire();
-        formForm.setActivitesId( new ArrayList<>() );
-
         return loadForm(cookieValue,formForm,"put",model);
     }
 
@@ -37,7 +35,10 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         model.addAttribute("activites",formForm.getActivitesId() );
         String verb;
         switch(method.toUpperCase()){
-            case "PUT":verb="put";break;
+            case "PUT":
+                model.addAttribute("citoyen", citCtrl.getCitoyen( cookieValue , citCtrl.getMyId(cookieValue) ) );
+                verb="put";
+            break;
             case "POST": case "":
                 model.addAttribute("citoyen", citCtrl.getCitoyen( cookieValue , UUID.fromString(formForm.getCitoyenId()) ) );
                 verb="post"; break;
@@ -126,7 +127,8 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
 
-        formForm.setActivitesId( new ArrayList<>() );
+        formForm.setVisa( typeDoc.equals("visa")?"1":"0" );
+        formForm.setCarte( typeDoc.equals("carte")?"1":"0" );
 
         return loadForm(cookieValue,formForm,"put",model);
     }
