@@ -1,17 +1,37 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.http.HttpHeaders;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 class LoginControlerTest {
 
+    @InjectMocks
     private LoginControler connect;
+    @Mock
+    private BindingResult bindingResult=mock(BindingResult.class);
+    @Mock
+    private Model model=mock(Model.class);
+    @Mock
+    private RestTemplateHelper restTemplateHelper=mock(RestTemplateHelper.class);
+    @Mock
+    private PropertiesConfigurationService configurationService=mock(PropertiesConfigurationService.class);
+
     private Utilisateur user;
 
     @BeforeEach
@@ -33,7 +53,10 @@ class LoginControlerTest {
     @Test
     void testConnectNonValide12() {
         user.setUsername("test");
-        assertThrows(IllegalArgumentException.class,()->user.getDTO() );
+        when(bindingResult.hasErrors()).thenReturn(false);
+        when(configurationService.getUrl()).thenReturn("http://localhost:8081/wsArtiste");
+        //when(restTemplateHelper.postForAuth(anyString(),anyString(), (HttpHeaders) anyList(),(HttpHeaders)anyObject()).thenReturn();
+        assertEquals("<401 SEE_OTHER See Other,Autre erreur non gérée (voir logs),[]>",connect.authenticate(user,bindingResult,model).toString());
     }
 
     @DisplayName("TC 1.3, Test de connexion avec un identifiant non valide")

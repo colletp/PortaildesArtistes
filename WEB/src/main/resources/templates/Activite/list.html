@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<div class="formbox90pc">
+<table>
+    <caption><H1>Activités</H1></caption>
+    <tr><th>Secteur</th><th>Activité</th><th>Description</th></tr>
+    <tr th:each="frm : ${form}">
+        <td>[[${frm.secteurId}]]</td>
+        <td>[[${frm.nomActivite}]]</td>
+        <td>[[${frm.description}]]</td>
+        <td id="boutonsList">
+            <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+            <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
+            <a th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
+        </td>
+    </tr>
+</table>
+</div>
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
