@@ -5,52 +5,60 @@
 <body>
 
 <fieldset th:fragment="CitoyenGet(fonction,citoyen)">
-    <legend>[[${fonction}]]</legend>
-    <span th:text="#{citoyen.nom}" >Nom</span>:[[*{citoyen.nom}]]<br/>
-    Prénom:[[*{citoyen.prenom}]]<br/>
-    Date de naissance:[[*{citoyen.dateNaissance}]]<br/>
-    Tel:[[*{citoyen.tel}]]<br/>
-    Gsm:[[*{citoyen.gsm}]]<br/>
-    Email:[[*{citoyen.mail}]]<br/>
-    No Reg Nat:[[*{citoyen.nrn}]]<br/>
-    Nationnalité:[[*{citoyen.nation}]]<br/>
+    <legend th:text="#{detailprofile}"></legend>
+    <span th:text="#{nom}"></span> : [[*{citoyen.nom}]]<br/>
+    <span th:text="#{prenom}"></span> : [[*{citoyen.prenom}]]<br/>
+    <span th:text="#{dn}"></span> : [[*{citoyen.dateNaissance}]]<br/>
+    <span th:text="#{tel}"></span> : [[*{citoyen.tel}]]<br/>
+    <span th:text="#{gsm}"></span> : [[*{citoyen.gsm}]]<br/>
+    <span th:text="#{email}"></span> : [[*{citoyen.mail}]]<br/>
+    <span th:text="#{regnat}"></span> : [[*{citoyen.nrn}]]<br/>
+    <span th:text="#{nat}"></span> : [[*{citoyen.nation}]]<br/>
 </fieldset>
 
 <fieldset th:fragment="CitoyenAdrGet(fonction,citoyen,adresse)">
-    <legend>[[${fonction}]]</legend>
-    <span th:text="#{citoyen.nom}" >Nom</span>:[[${citoyen.nom}]]<br/>
-    Prénom:[[${citoyen.prenom}]]<br/>
-    Date de naissance:[[${citoyen.dateNaissance}]]<br/>
-    Tel:[[${citoyen.tel}]]<br/>
-    Gsm:[[${citoyen.gsm}]]<br/>
-    Email:[[${citoyen.mail}]]<br/>
-    No Reg Nat:[[${citoyen.nrn}]]<br/>
-    Nationnalité:[[${citoyen.nation}]]<br/>
+    <legend th:text="#{detailprofile}"></legend>
+    <span th:text="#{nom}"></span> : [[${citoyen.nom}]]<br/>
+    <span th:text="#{prenom}"></span> : [[${citoyen.prenom}]]<br/>
+    <span th:text="#{dn}"></span> : [[${citoyen.dateNaissance}]]<br/>
+    <span th:text="#{tel}"></span> : [[${citoyen.tel}]]<br/>
+    <span th:text="#{gsm}"></span> : [[${citoyen.gsm}]]<br/>
+    <span th:text="#{email}"></span> : [[${citoyen.mail}]]<br/>
+    <span th:text="#{regnat}"></span> : [[${citoyen.nrn}]]<br/>
+    <span th:text="#{nat}"></span> : [[${citoyen.nation}]]<br/><br/>
 
     <fieldset th:replace="~{/fragments/adresse :: AdresseGet('Résidence',${adresse}) }"></fieldset>
 </fieldset>
 
 <fieldset th:fragment="CitoyenSummaryGet(fonction,citoyen)">
-    <legend>[[${fonction}]]</legend>
-    <span th:text="#{nom}" >Nom</span>:[[*{citoyen.nom}]]<br/>
-    Prénom:[[*{citoyen.prenom}]]<br/>
-    Tel:[[*{citoyen.tel}]]<br/>
-    Gsm:[[*{citoyen.gsm}]]<br/>
-    Email:[[*{citoyen.mail}]]<br/>
-    Nationnalité:[[*{citoyen.nation}]]<br/>
+    <legend th:text="#{detailprofile}"></legend>
+    <span th:text="#{nom}"></span> : [[*{citoyen.nom}]]<br/>
+    <span th:text="#{prenom}"></span> : [[*{citoyen.prenom}]]<br/>
+    <span th:text="#{tel}"></span> : [[*{citoyen.tel}]]<br/>
+    <span th:text="#{gsm}"></span> : [[*{citoyen.gsm}]]<br/>
+    <span th:text="#{email}"></span> : [[*{citoyen.mail}]]<br/>
+    <span th:text="#{nat}"></span> : [[*{citoyen.nation}]]<br/>
 </fieldset>
 
 <fieldset th:fragment="CitoyenPost(fonction,citoyen)" th:object="${citoyen}">
     <legend th:text="#{voscoordo}"></legend>
     <input th:type="hidden" th:field="*{id}" />
-    Nom:<input th:type="text" th:field="*{nom}" /><br/>
-    Prénom:<input th:type="text" th:field="*{prenom}" /><br/>
-    Date de naissance:<input th:type="text" th:field="*{dateNaissance}" /><br/>
-    Tel:<input th:type="text" th:field="*{tel}" /><br/>
-    Gsm:<input th:type="text" th:field="*{gsm}" /><br/>
-    Email:<input th:type="text" th:field="*{mail}" /><br/>
-    No Reg Nat:<input th:type="text" th:field="*{nrn}" /><br/>
-    Nationnalité:<input th:type="text" th:field="*{nation}" /><br/>
+    <label th:text="#{nom}"></label>
+    <input th:type="text" th:field="*{nom}" /><br/>
+    <label th:text="#{prenom}"></label>
+    <input th:type="text" th:field="*{prenom}" /><br/>
+    <label th:text="#{dn}"></label>
+    <input th:type="text" th:field="*{dateNaissance}" /><br/>
+    <label th:text="#{tel}"></label>
+    <input th:type="text" th:field="*{tel}" /><br/>
+    <label th:text="#{gsm}"></label>
+    <input th:type="text" th:field="*{gsm}" /><br/>
+    <label th:text="#{email}"></label>
+    <input th:type="text" th:field="*{mail}" /><br/>
+    <label th:text="#{regnat}"></label>
+    <input th:type="text" th:field="*{nrn}" /><br/>
+    <label th:text="#{nat}"></label>
+    <input th:type="text" th:field="*{nation}" /><br/>
     <input th:type="hidden" th:field="*{reside}" />
 </fieldset>
 
@@ -78,7 +86,7 @@
 </fieldset>
 
 <fieldset th:fragment="CitoyenAdrPut ( fonction , citoyen , adresse ) " >
-    <legend th:text="${fonction}"></legend>
+    <legend th:text="#{voscoordo}"></legend>
     <label th:text="#{nom}"></label>
     <input th:field="${form.citoyen.nom}" />
     <label th:text="#{prenom}"></label>
