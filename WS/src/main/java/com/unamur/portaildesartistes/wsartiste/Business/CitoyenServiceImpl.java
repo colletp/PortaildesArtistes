@@ -24,16 +24,13 @@ public class CitoyenServiceImpl implements IService<CitoyenDTO> {
     private DonneeAdresseImpl adrImpl;
 
     @Transactional
-    public List<CitoyenDTO> listCitoyen(){
+    public List<CitoyenDTO> list(){
         List<CitoyenDTO> citDTOList = citImpl.list();
         for( CitoyenDTO usr : citDTOList ){
             usr.setResideAdr( adrImpl.getById( usr.getReside() ) );
         }
         return citDTOList;
     }
-
-    @Transactional
-    public List<CitoyenDTO> list(){ return citImpl.list(); }
 
     @Transactional
     public CitoyenDTO getById( UUID uuid ){
@@ -49,6 +46,7 @@ public class CitoyenServiceImpl implements IService<CitoyenDTO> {
             adrImpl.update( cit.getResideAdr());
     }
 
+    @Transactional
     public UUID insert( CitoyenDTO cit ) {
         logger.error("Use insert( UtilisateurDTO ) instead...");
         throw new UnsupportedOperationException("Use insert( UtilisateurDTO ) instead...");

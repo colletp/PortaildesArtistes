@@ -31,6 +31,8 @@ public class FormulaireDTO extends DTO {
     // Constructeur
     // ******************
     public FormulaireDTO(){
+        lActivitesId=new ArrayList<>();
+
         cursusAc=new ArrayList<>();
         expPro=new ArrayList<>();
         ressources=new ArrayList<>();

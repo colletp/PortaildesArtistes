@@ -28,6 +28,9 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
     @Override
     public List<FormulaireDTO> list(){ return super.Exec(FormulaireSQLs.class).list(); }
+
+    public List<FormulaireDTO> listByLang(String lang){ return super.Exec(FormulaireSQLs.class).listByLang(lang); }
+
     @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
     @Override
@@ -60,6 +63,9 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     interface FormulaireSQLs {
         @SqlQuery("select * from formulaires")
         List<FormulaireDTO> list();
+
+        @SqlQuery("select * from formulaires WHERE langue=:lang ")
+        List<FormulaireDTO> listByLang(@Bind("lang") String lang);
 
         @SqlQuery("select * from formulaires where form_id = :form_id")
         FormulaireDTO getById(@Bind("form_id") UUID p_id);

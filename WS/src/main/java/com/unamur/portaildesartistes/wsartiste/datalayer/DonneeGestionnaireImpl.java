@@ -2,8 +2,10 @@ package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.GestionnaireDTO;
 import org.skife.jdbi.v2.StatementContext;
+import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -50,11 +52,16 @@ public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
         List<GestionnaireDTO> list();
 
         @SqlQuery("INSERT INTO gestionnaire (citoyen_id,matricule,bureau,travaille) VALUES (:citoyen_id,:matricule,:bureau,:travaille) RETURNING gest_id")
-        String insert(@BindBean GestionnaireDTO test);
+        String insert(@BindBean GestionnaireDTO item);
 
-        GestionnaireDTO getById(UUID id);
-        void update(GestionnaireDTO item);
-        void delete(UUID id);
+        @SqlQuery("select * from gestionnaire WHERE gest_id=:id ")
+        GestionnaireDTO getById( @Bind("id") UUID gest_id);
+
+        @SqlUpdate("UPDATE gestionnaire SET matricule=:matricule,bureau=:bureau WHERE gest_id=:id")
+        void update(@BindBean GestionnaireDTO item);
+
+        @SqlUpdate("DELETE FROM gestionnaire WHERE gest_id=:id")
+        void delete(@Bind("id") UUID id);
     }
 
     public static class GestionnaireMapper implements ResultSetMapper<GestionnaireDTO> {
@@ -63,7 +70,7 @@ public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
             gestDTO = new GestionnaireDTO();
             gestDTO.setId((UUID) r.getObject("gest_id"));
             gestDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
-            gestDTO.setTravailleId((UUID) r.getObject("travaille_id"));
+            gestDTO.setTravailleId((UUID) r.getObject("travaille"));
             gestDTO.setMatricule(r.getString("matricule"));
             gestDTO.setBureau(r.getString("bureau"));
             return gestDTO;

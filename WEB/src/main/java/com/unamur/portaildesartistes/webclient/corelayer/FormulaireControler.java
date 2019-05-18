@@ -5,12 +5,14 @@ import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.ServiceNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -34,18 +36,26 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         model.addAttribute("form",formForm);
         model.addAttribute("activites",formForm.getActivitesId() );
         String verb;
+        UUID citId;
         switch(method.toUpperCase()){
             case "PUT":
-                model.addAttribute("citoyen", citCtrl.getCitoyen( cookieValue , citCtrl.getMyId(cookieValue) ) );
+                citId = citCtrl.getMyId(cookieValue);
                 verb="put";
             break;
+            case "GET":
+                citId = UUID.fromString(formForm.getCitoyenId());
+                verb="get"; break;
             case "POST": case "":
-                model.addAttribute("citoyen", citCtrl.getCitoyen( cookieValue , UUID.fromString(formForm.getCitoyenId()) ) );
+                citId = UUID.fromString(formForm.getCitoyenId());
                 verb="post"; break;
-            default : verb=""; logger.error( "verbe REST non reconnu : "+method );
+            default :
+                citId=null;
+                verb=""; logger.error( "verbe REST non reconnu : "+method );
         }
+        model.addAttribute("citoyen", citCtrl.getCitoyen( cookieValue , citId ) );
         return "Formulaire/"+verb+".html";
     }
+
     private String loadForm(String cookieValue, FormulaireDTO formDTO, String method, Model model){
         Formulaire formForm = new Formulaire();
         formForm.setFromDTO(formDTO);
@@ -158,7 +168,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             return "Formulaire/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
-            return loadForm(cookieValue,formForm,method,model);
+            return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }
     }
 
@@ -168,21 +178,27 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         return super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model);
     }
 
+    public List<FormulaireDTO> listByLang( String cookieValue , String lang ){
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        try{
+            return restTemplateHelper.getForList(FormulaireDTO.class,configurationService.getUrl()+"/gestionFormulaire/lang/"+lang,headers );
+        }catch( ServiceNotFoundException e ){
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     @GetMapping(value = "/Formulaire/{id}")
     public String formDetail( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        loadForm(cookieValue, super.getObj(cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class) ,"",model);
+
+        loadForm(cookieValue, super.getObj(cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class) ,"GET",model);
         return "Formulaire/get.html";
-        //return super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"GET",model);
     }
 
-    public FormulaireDTO formGetById( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-                        ,@PathVariable("id") UUID itemId
-                        ){
+    public FormulaireDTO formGetById( String cookieValue, UUID itemId){
         return super.getObj( cookieValue,itemId,new FormulaireDTO(), FormulaireDTO.class );
     }
-
 
     @GetMapping(value = "Formulaire/suppr/{id}")
     public String formSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,

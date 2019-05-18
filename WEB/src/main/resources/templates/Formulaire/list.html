@@ -6,9 +6,12 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
+<div class="Msg">[[${Msg}]]</div>
+<div class="Err">[[${Err}]]</div>
+
 <div class="formbox90pc">
+<h1>Formulaires</h1>
 <table>
-    <caption><H1>Formulaires</H1></caption>
     <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.dateDemande}]]</td>

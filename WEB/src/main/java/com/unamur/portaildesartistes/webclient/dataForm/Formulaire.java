@@ -126,8 +126,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setVisa(objDTO.getVisa()?"1":"0");
 
         List<String> la = new ArrayList<>();
-        for( UUID uuid : objDTO.getActivitesId() )
-            la.add( uuid.toString() );
+        if( objDTO.getActivitesId()!=null )
+            for( UUID uuid : objDTO.getActivitesId() )
+                la.add( uuid.toString() );
         setActivitesId( la );
 
         setSecteurActivites( objDTO.getSecteurActivites() );

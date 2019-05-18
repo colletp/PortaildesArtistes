@@ -6,20 +6,66 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
+<div class="Msg">[[${Msg}]]</div>
+<div class="Err">[[${Err}]]</div>
+
 <div class="formbox800">
+<h1>Formulaires a traiter</h1>
 <table>
-    <caption><H1>Formulaires</H1></caption>
     <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.dateDemande}]]</td>
         <td>[[${frm.langue}]]</td>
         <td>[[${frm.carte}]]</td>
         <td>[[${frm.visa}]]</td>
-        <td id="boutonsList">
+        <td id="boutonsListForm">
             <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
             <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
             <a th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
         </td>
+    </tr>
+</table>
+<h1>Traitements</h1>
+<table>
+    <tr><th>Date Traitement</th><th>Nom du gestionnaire</th><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
+    <tr th:each="frm : ${trt}">
+        <td>[[${frm.dateTrt}]]</td>
+        <td>[[${frm.gest.citoyen.nom}]]</td>
+
+        <td>[[${frm.form.dateDemande}]]</td>
+        <td>[[${frm.form.langue}]]</td>
+        <td>[[${frm.form.carte}]]</td>
+        <td>[[${frm.form.visa}]]</td>
+
+        <td id="boutonsListTrt">
+            <a th:href="@{/Traitement/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+            <a th:href="@{/Traitement/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
+            <a th:href="@{/Traitement/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
+        </td>
+    </tr>
+</table>
+<h1>Traitements clôturés</h1>
+<table>
+    <tr><th>Date Traitement</th><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th>
+        <th>Appréciation</th>
+        <th>Réponse</th>
+        <th>Type document délivré</th>
+        <th>Nombre de prestations traitées</th>
+        <th>Date de la dernière prestation traitée</th>
+    </tr>
+    <tr th:each="frm : ${trtDone}">
+        <td>[[${frm.dateTrt}]]</td>
+
+        <td>[[${frm.form.dateDemande}]]</td>
+        <td>[[${frm.form.langue}]]</td>
+        <td>[[${frm.form.carte}]]</td>
+        <td>[[${frm.form.visa}]]</td>
+
+        <td>[[${frm.appreciation}]]</td>
+        <td>[[${frm.reponse}]]</td>
+        <td>[[${frm.typeDoc}]]</td>
+        <td></td>
+        <td></td>
     </tr>
 </table>
 </div>

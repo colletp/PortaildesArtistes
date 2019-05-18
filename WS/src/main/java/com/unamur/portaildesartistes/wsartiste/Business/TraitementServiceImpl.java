@@ -16,28 +16,41 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
     private static final Logger logger = LoggerFactory.getLogger(ActiviteServiceImpl.class);
     
     @Autowired
-    private DonneeTraitementImpl traitImpl;
+    private DonneeTraitementImpl trtImpl;
+    @Autowired
+    private GestionnaireServiceImpl gestServImpl;
+    @Autowired
+    private FormulaireServiceImpl formServImpl;
 
     @Transactional
-    public List<TraitementDTO> listActivite(){
-        return traitImpl.list();
+    public List<TraitementDTO> listByLang(String lang){
+        List<TraitementDTO> lTrtDTO = trtImpl.listByLang( lang );
+        for( TraitementDTO trtDTO : lTrtDTO) {
+            trtDTO.setGest(gestServImpl.getById(trtDTO.getGestId()));
+            trtDTO.setForm( formServImpl.getById( trtDTO.getFormId() ) );
+        }
+        return lTrtDTO;
     }
     @Transactional
     public List<TraitementDTO> list(){
-        return traitImpl.list();
+        List<TraitementDTO> lTrtDTO = trtImpl.list();
+        for( TraitementDTO trtDTO : lTrtDTO){
+            trtDTO.setGest( gestServImpl.getById( trtDTO.getGestId() ) );
+            trtDTO.setForm( formServImpl.getById( trtDTO.getFormId() ) );
+        }
+        return lTrtDTO;
     }
     @Transactional
     public TraitementDTO getById( UUID uuid ){
-        return traitImpl.getById(uuid);
+        TraitementDTO trtDTO = trtImpl.getById(uuid);
+        trtDTO.setGest( gestServImpl.getById( trtDTO.getGestId() ) );
+        trtDTO.setForm( formServImpl.getById( trtDTO.getFormId() ) );
+        return trtDTO;
    }
     @Transactional
-    public void update( TraitementDTO act ){ traitImpl.update(act); }
+    public void update( TraitementDTO act ){ trtImpl.update(act); }
     @Transactional
-    public UUID insert( TraitementDTO act ){ return traitImpl.insert(act); }
+    public UUID insert( TraitementDTO act ){ return trtImpl.insert(act); }
     @Transactional
-    public void delete( UUID uuid ){
-        traitImpl.delete(uuid);
-    }
-
-
+    public void delete( UUID uuid ){ trtImpl.delete(uuid); }
 }
