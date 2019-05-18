@@ -35,5 +35,5 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     public List<FormulaireDTO> list(){ return super.list(); }
 
     @GetMapping("/gestionFormulaire/lang/{lang}")
-    public List<FormulaireDTO> getLang( @PathVariable("lang") String lang ){ return ((FormulaireServiceImpl)srvImpl).listByLang(lang); }
+    public List<FormulaireDTO> getLang( @PathVariable("lang") String lang ){ return ((FormulaireServiceImpl)srvImpl).listByLangNoTrt(lang); }
 }

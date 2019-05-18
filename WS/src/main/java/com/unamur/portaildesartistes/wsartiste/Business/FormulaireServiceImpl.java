@@ -26,8 +26,8 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     public List<FormulaireDTO> list(){ return formImpl.list(); }
 
     @Transactional
-    public List<FormulaireDTO> listByLang(String lang){
-        List<FormulaireDTO> lFormDTO = formImpl.listByLang(lang);
+    public List<FormulaireDTO> listByLangNoTrt(String lang){
+        List<FormulaireDTO> lFormDTO = formImpl.listByLangNoTrt(lang);
         return lFormDTO;
     }
 

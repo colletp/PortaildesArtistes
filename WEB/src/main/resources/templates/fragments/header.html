@@ -53,7 +53,7 @@
 
 <!--        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea" th:text="#{commanditaire}"></a></div>
 -->
-        <div class=menu th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:href="@{/gestionnaire}" th:text="#{gestionnaire}"></a> &#9660;
+        <div class=menu th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:href="@{/Traitement}" th:text="#{gestionnaire}"></a> &#9660;
             <div class=ssmenu><a th:href="@{/Utilisateur/}" class="whitea"  th:text="#{utilisateurs}"></a></div>
             <div class=ssmenu><a th:href="@{/Formulaire/}" class="whitea"  th:text="#{formulaires}"></a></div>
         </div>

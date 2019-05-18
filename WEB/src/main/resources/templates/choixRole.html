@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
-<div th:replace="~{/fragments/header :: head}"></div>
-<div th:replace="~{/fragments/header :: nav(select=${460})}"></div>
+	<div th:replace="~{/fragments/header :: head}"></div>
+	<div th:replace="~{/fragments/header :: nav(select=${460})}"></div>
 
 
-<br/><br/>
-<div id="choixbox">
-	<div class="choixtxt"><a th:text="#{choixRole.artiste}" th:href="@{/artiste}">Je suis un artiste.</a></div>
-	<div class="choixtxt"><a th:text="#{choixRole.commanditaire}" th:href="@{/commanditaire}">Je suis un commanditaire.</a></div>
-	<div class="choixtxt"><a th:text="#{choixRole.gestionnaire}" th:href="@{/gestionnaire}">Je suis un gestionnaire.</a></div>
-</div>
-<div th:replace="~{/fragments/header :: multiscript}"></div>
+	<br/><br/>
+	<div id="choixbox">
+		<div class="choixtxt"><a th:text="#{choixRole.artiste}" th:href="@{/artiste}">Je suis un artiste.</a></div>
+		<div class="choixtxt"><a th:text="#{choixRole.commanditaire}" th:href="@{/commanditaire}">Je suis un commanditaire.</a></div>
+		<div class="choixtxt"><a th:text="#{choixRole.gestionnaire}" th:href="@{/Traitement}">Je suis un gestionnaire.</a></div>
+	</div>
+	<div th:replace="~{/fragments/header :: multiscript}"></div>
 </body>
 </html>

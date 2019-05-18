@@ -46,11 +46,11 @@
 
 <fieldset th:fragment="formArray(fonction,name,form)">
     <legend th:text="${fonction}"></legend>
-    <button type="submit" th:name="'addRow'+${name}+'Create'">Ajouter</button>
+    <button type="submit" th:name="'addRow'+${name}">Ajouter</button>
     <ul th:each="item,rowStat : ${form}" th:object="${form}">
         <li>
             <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
-            <button type="submit" th:name="'removeRow'+${name}+'Create'" th:value="${rowStat.index}">Supprimer</button>
+            <button type="submit" th:name="'removeRow'+${name}" th:value="${rowStat.index}">Supprimer</button>
         </li>
     </ul>
 </fieldset>
