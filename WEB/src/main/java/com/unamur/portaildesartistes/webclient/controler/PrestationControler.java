@@ -39,10 +39,10 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         UUID usrId = docCtrl.getMyId(cookieValue);
         //UUID formId =
 
-
         UUID docId = null; //TODO prendre ici l'identifiant du formulaire en fonction de l'utilisateur
 
         //String fragment = sectCtrl.listSecteurActiviteByDocument( cookieValue,docId , model );
+
         return "Prestation/put.html";
     }
 
