@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.wsartiste.Business;
 
-import com.unamur.portaildesartistes.DTO.DTO;
-import com.unamur.portaildesartistes.DTO.PrestationDTO;
+import com.unamur.portaildesartistes.DTO.*;
 
 import com.unamur.portaildesartistes.wsartiste.datalayer.*;
 import org.slf4j.Logger;
@@ -25,6 +24,12 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
     private DonneeActiviteImpl actImpl;
     @Autowired
     private DonneeDocArtisteImpl docImpl;
+    @Autowired
+    private DonneeCitoyenImpl cytImpl;
+    @Autowired
+    private DonneeReponseImpl repImpl;
+    @Autowired
+    private DonneeEntrepriseImpl entImpl;
 
     @Autowired
         private DonneePrestationImpl prestationImpl;
@@ -37,10 +42,22 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
             objList = prestationImpl.list();
 
             objList.forEach((objPrest) -> {
-                        objPrest.setSeDeroule(adrImpl.getById(objPrest.getSeDerouleId()));
-                        objPrest.setDocArtiste(docImpl.getById(objPrest.getDocArtisteId()));
                         objPrest.setActivite(actImpl.getById(objPrest.getActiviteId()));
-                        objPrest.setCommanditaire(comImpl.getById(objPrest.getCommanditaireId()));}
+                        objPrest.setSeDeroule(adrImpl.getById(objPrest.getSeDerouleId()));
+                        DocArtisteDTO objDocArtiste = docImpl.getById(objPrest.getDocArtisteId());
+                        if (objDocArtiste.getReponseId() != null) {
+                            ReponseDTO objReponse = repImpl.getById(objDocArtiste.getReponseId());
+                            objDocArtiste.setReponse(objReponse);
+                        }
+                            if (objDocArtiste.getCitoyenId() != null)
+                            objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyenId()));
+                        objPrest.setDocArtiste(objDocArtiste);
+                        CommanditaireDTO objCommanditaire = comImpl.getById(objPrest.getCommanditaireId());
+                        if (objCommanditaire.getCitoyenId() != null)
+                            objCommanditaire.setCitoyen(cytImpl.getById(objCommanditaire.getCitoyenId()));
+                        if (objCommanditaire.getEntrepriseId() != null)
+                            objCommanditaire.setEntreprise(entImpl.getById(objCommanditaire.getEntrepriseId()));
+                        objPrest.setCommanditaire(objCommanditaire);}
                         );
 
             return objList;
@@ -56,8 +73,13 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
 
             objList.forEach((objPrest) -> {
                 objPrest.setSeDeroule(adrImpl.getById(objPrest.getSeDerouleId()));
-                objPrest.setDocArtiste(docImpl.getById(objPrest.getDocArtisteId()));
                 objPrest.setActivite(actImpl.getById(objPrest.getActiviteId()));
+                DocArtisteDTO objDocArtiste = docImpl.getById(objPrest.getDocArtisteId());
+                if (objDocArtiste.getReponseId() != null)
+                    objDocArtiste.setReponse(repImpl.getById(objDocArtiste.getReponseId()));
+                if (objDocArtiste.getCitoyenId() != null)
+                    objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyenId()));
+                objPrest.setDocArtiste(objDocArtiste);
                 objPrest.setCommanditaire(comImpl.getById(objPrest.getCommanditaireId()));}
             );
 

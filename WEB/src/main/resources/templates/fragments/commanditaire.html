@@ -7,12 +7,13 @@
 <fieldset th:fragment="commanditaireGet(fonction,commanditaire)">
     <legend th:text="${fonction}">Commanditaire</legend>
 
-    <div th:if= "${ not commanditaire.EntrepriseId} == null">
-        <fieldset th:replace="~{/fragments/entreprise :: EntrepriseGetEnt(${'Entreprise'},${commanditaire.EnterpriseId}) }"></fieldset>
+
+    <div th:if= "${commanditaire.EntrepriseId} != null">
+        <fieldset th:replace="~{/fragments/entreprise :: EntrepriseGetEnt(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
     </div>
 
-    <div th:if= "${ not commanditaire.CitoyenId} == null">
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${commanditaire.CitoyenId}) }"></fieldset>
+    <div th:if= "${commanditaire.CitoyenId} != null">
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${commanditaire.Citoyen}) }"></fieldset>
     </div>
 
 </fieldset>
