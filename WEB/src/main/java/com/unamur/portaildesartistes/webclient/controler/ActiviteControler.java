@@ -24,8 +24,12 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     public String activiteModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        model.addAttribute("form", super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"POST",model) );
-        return "Activite/post.html";
+        try{
+            model.addAttribute("form", super.getObj(cookieValue,itemId,new ActiviteDTO(),ActiviteDTO.class,model) );
+            return "Activite/post.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @PostMapping(value = "/Activite")
@@ -46,24 +50,36 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     @GetMapping(value = "/Activite")
     public String activiteList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form",super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model));
-        return "Activite/list.html";
+        try{
+            model.addAttribute("form",super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model));
+            return "Activite/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Activite/{id}")
     public String activite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"GET",model));
-        return "Activite/get.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new ActiviteDTO(),ActiviteDTO.class,model));
+            return "Activite/get.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "Activite/suppr/{id}")
     public String activiteSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        super.delete(cookieValue, new ActiviteDTO() ,itemId,model);
-        return "Activite/list.html";
+        try{
+            super.delete(cookieValue, new ActiviteDTO() ,itemId,model);
+            return "Activite/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
 }

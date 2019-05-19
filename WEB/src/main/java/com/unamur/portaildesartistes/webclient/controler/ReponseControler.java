@@ -28,9 +28,12 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
     public String docArtModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                              @PathVariable("id") UUID itemId ,
                              Model model){
-
-        model.addAttribute("form",super.getForm(cookieValue,new ReponseDTO(),new Reponse(),itemId,ReponseDTO.class,"POST",model));
-        return "Reponse/post.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new ReponseDTO(),ReponseDTO.class,model));
+            return "Reponse/post.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @PostMapping(value = "/Reponse")
@@ -38,32 +41,47 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Reponse formRep
             ,Model model){
-
-            model.addAttribute("form",super.postForm(cookieValue, formRep.getDTO() ,method,model));
-            return "Response/"+(method.isEmpty()?"post":method)+".html";
+            try{
+                model.addAttribute("form",super.postForm(cookieValue, formRep.getDTO() ,method,model));
+                return "Response/"+(method.isEmpty()?"post":method)+".html";
+            }catch( Exception e ){
+                return "/login.html";
+            }
     }
 
     @GetMapping(value = "/Reponse")//initialisation du login
     public String docArtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form",super.list(cookieValue,new ReponseDTO(),ReponseDTO.class,model));
-        return "Reponse/list.html";
+        try{
+            model.addAttribute("form",super.list(cookieValue,new ReponseDTO(),ReponseDTO.class,model));
+            return "Reponse/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Reponse/{id}")//initialisation du login
     public String getReponse( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                         @PathVariable("id") UUID itemId ,
                         Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new ReponseDTO(),new Reponse(),itemId,ReponseDTO.class,"GET",model));
-        return "Reponse/get.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new ReponseDTO(),ReponseDTO.class,model));
+            return "Reponse/get.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "Reponse/suppr/{id}")
     public String docArtSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                              @PathVariable("id") UUID itemId,
                              Model model) {
-        super.delete(cookieValue,new ReponseDTO(),itemId,model);
-        return "Reponse/list.html";
+        try{
+            super.delete(cookieValue,new ReponseDTO(),itemId,model);
+            return "Reponse/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
 }

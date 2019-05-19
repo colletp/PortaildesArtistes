@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.DTO.SecteurDTO;
 
@@ -25,6 +26,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private List<String> activitesId;
 
     private Collection<SecteurDTO> lSecteurs;
+
+    private List<ActiviteDTO> lActToAddBySect;
 
     // ******************
     // Constructeur
@@ -62,6 +65,14 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 
     public void setSecteurActivites(Collection<SecteurDTO> ls){ lSecteurs=ls; }
     public Collection<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
+
+    public void setActToAddBySect( List<ActiviteDTO> lAct ){
+        lActToAddBySect = lAct;
+    }
+    public List<ActiviteDTO> getActToAddBySect(){
+        return lActToAddBySect;
+    }
+
     // ******************
     // Fonctions
     // ******************

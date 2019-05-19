@@ -48,7 +48,7 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 
-        @SqlUpdate("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
+        @SqlQuery("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
         String insert(@BindBean ReponseDTO test);
 
         ReponseDTO getById(UUID id);

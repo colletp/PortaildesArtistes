@@ -1,6 +1,8 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
+import com.unamur.portaildesartistes.webclient.dataForm.Activite;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,20 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
+
         return loadForm(cookieValue,formForm,"put",model);
     }
 
     public String loadForm(String cookieValue, Formulaire formForm, String method, Model model){
-        model.addAttribute("citoyen", citCtrl.getById( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(formForm.getCitoyenId()) , model ) );
-        formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
-        model.addAttribute("form",formForm);
-        model.addAttribute("activites",formForm.getActivitesId() );
-
-        return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
+        try{
+            model.addAttribute("citoyen", citCtrl.getById( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(formForm.getCitoyenId()) , model ) );
+            formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
+            model.addAttribute("form",formForm);
+            model.addAttribute("activites",formForm.getActivitesId() );
+            return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
 
     @PostMapping(value="/Formulaire", params={"addRowcursusAc"})
@@ -47,6 +53,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model
             ) {
+        if(formForm.getCursusAc()==null)formForm.setCursusAc(new ArrayList<>());
         formForm.getCursusAc().add( String.valueOf(formForm.getCursusAc().size()) );
 
         return loadForm(cookieValue,formForm,method,model);
@@ -56,7 +63,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("_method")final String method
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model
-            //,final BindingResult bindingResult
             ,final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRowcursusAc"));
         formForm.getCursusAc().remove(rowId.intValue());
@@ -70,6 +76,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,Model model
                                   //final SeedStarter seedStarter, final BindingResult bindingResult
     ) {
+        if(formForm.getExpPro()==null)formForm.setExpPro(new ArrayList<>());
         formForm.getExpPro().add( String.valueOf(formForm.getExpPro().size()) );
 
         return loadForm(cookieValue,formForm,method,model);
@@ -93,6 +100,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,Model model
                                   //final SeedStarter seedStarter, final BindingResult bindingResult
     ) {
+        if(formForm.getRessources()==null)formForm.setRessources(new ArrayList<>());
         formForm.getRessources().add( String.valueOf(formForm.getRessources().size()) );
 
         return loadForm(cookieValue,formForm,method,model);
@@ -106,6 +114,37 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRowressources"));
         formForm.getRessources().remove(rowId.intValue());
+
+        return loadForm(cookieValue,formForm,method,model);
+    }
+    @PostMapping(value="/Formulaire", params={"addRow"})
+    public String addRowSectAct(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            , @ModelAttribute("_method")final String method
+            , @ModelAttribute("form") final Formulaire formForm
+            , @ModelAttribute("addRow") final String add
+            , Model model){
+        if(formForm.getActToAddBySect()==null)formForm.setActToAddBySect(new ArrayList<>());
+
+        //for( ActiviteDTO acDTO : formForm.getActToAddBySect() ){
+        //}
+        //ActiviteDTO actDTO = new ActiviteDTO();
+        //actDTO.setNomActivite(  );
+        //formForm.getActToAddBySect().add( String.valueOf( formForm.getActToAddBySect().size() ) );
+        ActiviteDTO actDTO = new ActiviteDTO();
+        actDTO.setSecteurId( UUID.fromString(add) );
+        formForm.getActToAddBySect().add( actDTO );
+        return loadForm(cookieValue,formForm,method,model);
+    }
+    @PostMapping(value="/Formulaire", params={"removeRow"})
+    public String removeRowSectAct(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method")final String method
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,@ModelAttribute("removeRow") final String remove
+            ,Model model
+            ,final HttpServletRequest req) {
+        logger.error("sect:"+remove);
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        formForm.getActToAddBySect().remove(rowId.intValue());
 
         return loadForm(cookieValue,formForm,method,model);
     }
@@ -129,7 +168,12 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
         //model.addAttribute("form",super.getForm(cookieValue,new FormulaireDTO(),new Formulaire(),itemId,FormulaireDTO.class,"POST",model));
         //return "Formulaire/post.html";
-        return loadForm(cookieValue,new Formulaire( super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class,model ) ),"post",model);
+        try{
+            Formulaire f = new Formulaire( super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class,model ) );
+            return loadForm(cookieValue, f ,"post",model);
+        }catch(Exception e){
+            return "/login";
+        }
     }
 
     @PostMapping(value = "/Formulaire" , params={"submit"})
@@ -137,50 +181,57 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-
-        UUID formId = super.postForm(cookieValue,formForm,method,model);
-        if(formId!=null) {
-            model.addAttribute("Msg", "Données sauvées");
-            formForm.setId(formId.toString());
-            loadForm(cookieValue, formForm, method, model);
-            return "Formulaire/get.html";
-        }else{
-            return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
+        try{
+            UUID formId = super.postForm(cookieValue,formForm,method,model);
+            if(formId!=null) {
+                model.addAttribute("Msg", "Données sauvées");
+                formForm.setId(formId.toString());
+                loadForm(cookieValue, formForm, method, model);
+                return "Formulaire/get.html";
+            }else{
+                return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
+            }
+        }catch(Exception e){
+            return "/login";
         }
     }
 
     @GetMapping(value = "/Formulaire")
     public String formList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
-        model.addAttribute("form",super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model));
-        return "Formulaire/list.html";
+        try{
+            model.addAttribute("form",super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model));
+            return "Formulaire/list.html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
 
-    public List<FormulaireDTO> listATraiterByLang( String cookieValue , String lang , Model model ){
+    public List<FormulaireDTO> listATraiterByLang( String cookieValue , String lang , Model model )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(FormulaireDTO.class,configurationService.getUrl()+"/gestionFormulaire/aTraiter/lang/"+lang,headers );
-        }catch( ServiceNotFoundException e ){
+        }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
+            throw new Exception(e.getMessage());
         }
     }
-    public List<FormulaireDTO> listEnCoursByLang( String cookieValue , String lang, Model model ){
+    public List<FormulaireDTO> listEnCoursByLang( String cookieValue , String lang, Model model )throws  Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(FormulaireDTO.class,configurationService.getUrl()+"/gestionFormulaire/enCours/lang/"+lang,headers );
-        }catch( ServiceNotFoundException e ){
+        }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
+            throw new Exception(e.getMessage());
         }
     }
-    public List<FormulaireDTO> listFiniByLang( String cookieValue , String lang, Model model ){
+    public List<FormulaireDTO> listFiniByLang( String cookieValue , String lang, Model model )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(FormulaireDTO.class,configurationService.getUrl()+"/gestionFormulaire/fini/lang/"+lang,headers );
-        }catch( ServiceNotFoundException e ){
+        }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -188,12 +239,17 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String formDetail( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
+        try{
+            Formulaire f = new Formulaire(super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class , model));
+            loadForm( cookieValue, f ,"GET",model);
+            return "Formulaire/get.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
 
-        loadForm( cookieValue, new Formulaire(super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class , model)) ,"GET",model);
-        return "Formulaire/get.html";
     }
 
-    public FormulaireDTO formGetById( String cookieValue, UUID itemId , Model model){
+    public FormulaireDTO formGetById( String cookieValue, UUID itemId , Model model)throws Exception{
         return super.getObj( cookieValue,itemId,new FormulaireDTO(), FormulaireDTO.class, model );
     }
 
@@ -201,7 +257,11 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String formSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        super.delete(cookieValue,new FormulaireDTO(),itemId,model);
-        return "Formulaire/list.html";
+        try{
+            super.delete(cookieValue,new FormulaireDTO(),itemId,model);
+            return "Formulaire/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 }

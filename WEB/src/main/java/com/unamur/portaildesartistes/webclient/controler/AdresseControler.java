@@ -24,8 +24,12 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
     public String adresseModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"POST",model));
-        return "Adresse/post.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new AdresseDTO(),AdresseDTO.class,model));
+            return "Adresse/post.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @PostMapping(value = "/Adresse")
@@ -40,30 +44,44 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "/Adresse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            return "/login.html";
         }
     }
 
     @GetMapping(value = "/Adresse")
     public String adresseList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form",super.list(cookieValue,new AdresseDTO(),AdresseDTO.class,model));
-        return "Adresse/list.html";
+        try{
+            model.addAttribute("form",super.list(cookieValue,new AdresseDTO(),AdresseDTO.class,model));
+            return "Adresse/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Adresse/{id}")
     public String adresse( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"GET",model));
-        return "Adresse/get.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new AdresseDTO(),AdresseDTO.class,model));
+            return "Adresse/get.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "Adresse/suppr/{id}")
     public String adresseSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        super.delete(cookieValue, new AdresseDTO() ,itemId,model);
-        return "Adresse/list.html";
+        try{
+            super.delete(cookieValue, new AdresseDTO() ,itemId,model);
+            return "Adresse/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
 }
