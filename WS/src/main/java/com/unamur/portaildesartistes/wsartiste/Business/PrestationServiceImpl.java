@@ -45,11 +45,9 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
                         objPrest.setActivite(actImpl.getById(objPrest.getActiviteId()));
                         objPrest.setSeDeroule(adrImpl.getById(objPrest.getSeDerouleId()));
                         DocArtisteDTO objDocArtiste = docImpl.getById(objPrest.getDocArtisteId());
-                        if (objDocArtiste.getReponseId() != null) {
-                            ReponseDTO objReponse = repImpl.getById(objDocArtiste.getReponseId());
-                            objDocArtiste.setReponse(objReponse);
-                        }
-                            if (objDocArtiste.getCitoyenId() != null)
+                        if (objDocArtiste.getReponseId() != null)
+                            objDocArtiste.setReponse(repImpl.getById(objDocArtiste.getReponseId()));
+                        if (objDocArtiste.getCitoyenId() != null)
                             objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyenId()));
                         objPrest.setDocArtiste(objDocArtiste);
                         CommanditaireDTO objCommanditaire = comImpl.getById(objPrest.getCommanditaireId());
