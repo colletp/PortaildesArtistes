@@ -5,7 +5,7 @@
 <body>
 
 <fieldset th:fragment="AdresseGet(fonction,adresse)">
-    <legend th:text="#{maison.coordo}">Résidence</legend>
+    <legend th:text="#{maison.coordo}"></legend>
     <span th:text="#{maison.rue}"></span> : <span th:text="${adresse.rue}"></span><br/>
     <span th:text="#{maison.num}"></span> : <span th:text="${adresse.numero}"></span><br/>
     <span th:text="#{maison.boite}"></span> : <span th:text="${adresse.boite}"></span><br/>
