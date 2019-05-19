@@ -43,7 +43,10 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             ,Model model){
             try{
                 model.addAttribute("form",super.postForm(cookieValue, formRep.getDTO() ,method,model));
-                return "Response/"+(method.isEmpty()?"post":method)+".html";
+                return "Reponse/get.html";
+            }catch(IllegalArgumentException e){
+                model.addAttribute("Err",e.getMessage());
+                return "Reponse/"+(method.isEmpty()?"post":method)+".html";
             }catch( Exception e ){
                 return "/login.html";
             }

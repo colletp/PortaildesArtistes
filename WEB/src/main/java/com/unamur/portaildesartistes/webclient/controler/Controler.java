@@ -133,14 +133,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
 		return postForm(cookieValue,form,method,"",model);
     }
     protected UUID postForm( String cookieValue,final V form,final String method,String newUri, Model model )throws Exception{
-        T objDTO;
-        try{
-            objDTO = form.getDTO();
-			return postForm(cookieValue,objDTO,method,model);
-        }catch(IllegalArgumentException e){
-            model.addAttribute("Err", e.getMessage() );
-        }
-        return null;
+		return postForm(cookieValue, form.getDTO() ,method,model);
     }
     protected UUID postForm( String cookieValue,T objDTO,String method, Model model )throws Exception{
         return postForm( cookieValue,objDTO,method,"",model);
@@ -148,24 +141,18 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
     protected UUID postForm( String cookieValue,T objDTO,String method,String newUri, Model model )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
-        try{
-            switch(method.toUpperCase()){
-                case "PUT":
-                    objDTO.setId(restTemplateHelper.putForEntity( UUID.class, configurationService.getUrl()+"/"+( (! newUri.equals("") )?newUri:("gestion"+className+"/")) , objDTO , headers ) );
-                    break;
-                case "POST":
-                case "":
-                    restTemplateHelper.postForEntity( configurationService.getUrl()+"/"+((! newUri.equals(""))?newUri:("gestion"+className+"/")) , objDTO , headers );
-                    break;
-                default :
-                    model.addAttribute("Err", "Appel REST : "+method );
-            }
-            return objDTO.getId();
+        switch(method.toUpperCase()){
+            case "PUT":
+                objDTO.setId(restTemplateHelper.putForEntity( UUID.class, configurationService.getUrl()+"/"+( (! newUri.equals("") )?newUri:("gestion"+className+"/")) , objDTO , headers ) );
+                break;
+            case "POST":
+            case "":
+                restTemplateHelper.postForEntity( configurationService.getUrl()+"/"+((! newUri.equals(""))?newUri:("gestion"+className+"/")) , objDTO , headers );
+                break;
+            default :
+                model.addAttribute("Err", "Appel REST : "+method );
         }
-        catch(Exception e){
-            model.addAttribute("Err", e.getMessage() );
-            throw new Exception(e.getMessage());
-        }
+        return objDTO.getId();
     }
 
     protected List<T> list( String cookieValue,T objDTO, U clazz, Model model )throws Exception{
@@ -190,13 +177,12 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         } catch (ClassCastException e) {
             model.addAttribute("Err",e.getMessage());
         }
-        throw new Exception();
+        throw new Exception( (String) model.asMap().get("Err") );
     }
 
     protected void delete( String cookieValue,T objDTO,UUID itemId,Model model )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
-
         try {
             restTemplateHelper.delete(configurationService.getUrl() + "/gestion" + className + "/" + itemId, headers);
         }catch(Exception e){

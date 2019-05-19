@@ -80,7 +80,11 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             ,@ModelAttribute("form") final Traitement formTrt
             ,Model model){
         try{
-            model.addAttribute("form",super.postForm(cookieValue,formTrt.getDTO(),method,model));
+            super.postForm(cookieValue,formTrt.getDTO(),method,model);
+            model.addAttribute("form",formTrt);
+            return "Traitement/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "Traitement/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
             return "/login.html";

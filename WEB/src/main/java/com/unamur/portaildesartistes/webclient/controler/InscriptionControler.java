@@ -36,14 +36,14 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
         try{
-            UUID uuid = postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);
-            if(uuid!=null) {
-                model.addAttribute("Msg", "Inscription effectuée. Veuillez vous connecter");
-                return "login.html";
-            }else{
-                return "inscript.html";
-            }
+            postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);
+            model.addAttribute("Msg", "Inscription effectuée. Veuillez vous connecter");
+            return "login.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "inscript.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }

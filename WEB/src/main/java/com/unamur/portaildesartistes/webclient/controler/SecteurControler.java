@@ -69,11 +69,14 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     @PostMapping(value = "/Secteur")
     public String postSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("usrForm") final SecteurDTO sectForm
+            ,@ModelAttribute("usrForm") final Secteur sectForm
             ,Model model){
         try {
-            sectForm.setId(super.postForm(cookieValue, sectForm, method, model));
-            model.addAttribute("form",sectForm);
+            super.postForm(cookieValue, sectForm, method, model);
+            //model.addAttribute("form",sectForm);
+            return "Secteur/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "Secteur/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             model.addAttribute("form",sectForm);

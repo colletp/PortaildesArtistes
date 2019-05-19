@@ -39,11 +39,13 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
             ,Model model){
         try {
             actForm.setId( super.postForm(cookieValue, actForm, method, model).toString() );
-            model.addAttribute("form",actForm);
-            return "Activite/"+(method.isEmpty()?"post":method)+".html";
-        }catch(Exception e){
-            model.addAttribute("form",actForm);
+            //model.addAttribute("form",actForm);
             return "Activite/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Activite/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            return "/login.html";
         }
     }
 

@@ -92,14 +92,13 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         try{
             //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
             UtilisateurDTO usrDTO = usrForm.getDTO();
-            UUID uuid = super.postForm(cookieValue,usrDTO,method,model);
-            if(uuid!=null){
-                model.addAttribute("Msg","Le profil a été mis à jour" );
-                model.addAttribute("form", new UtilisateurInscript(usrDTO) );
-                return "Utilisateur/get.html";
-            }else{
-                return "Utilisateur/"+(method.isEmpty()?"post":method)+".html";
-            }
+            super.postForm(cookieValue,usrDTO,method,model);
+            model.addAttribute("Msg","Le profil a été mis à jour" );
+            model.addAttribute("form", new UtilisateurInscript(usrDTO) );
+            return "Utilisateur/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Utilisateur/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             return "/login";
         }

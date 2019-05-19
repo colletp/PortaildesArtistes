@@ -70,6 +70,9 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         PrestationDTO formDTO = formPrest.getDTO();
         try{
             model.addAttribute("form",super.postForm(cookieValue,formDTO,method,model) );
+            return "Prestation/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "Prestation/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
             return "/login.html";

@@ -91,6 +91,9 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             DocArtisteDTO docArtDTO = formDocArt.getDTO();
             docArtDTO.setCitoyenId( formCtrl.getMyId(cookieValue) );
             model.addAttribute("form", super.postForm(cookieValue,docArtDTO,method,model));
+            return "DocArtiste/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "DocArtiste/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             return "/login";
