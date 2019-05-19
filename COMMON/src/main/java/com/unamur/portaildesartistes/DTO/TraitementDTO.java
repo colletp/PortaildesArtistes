@@ -1,7 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class TraitementDTO extends DTO {
@@ -10,7 +10,7 @@ public class TraitementDTO extends DTO {
     // Champs/propriétés
     // ******************
 
-    private Timestamp dateTrt;
+    private Date dateTrt;
     private String appreciation;
     private UUID roleId;
     private UUID gestId;
@@ -23,6 +23,8 @@ public class TraitementDTO extends DTO {
     private FormulaireDTO form;
     private CitoyenDTO citoyenPrest;
 
+    private List<ReponseDTO> lReponse;
+
     // ******************
     // Constructeur
     // ******************
@@ -31,8 +33,8 @@ public class TraitementDTO extends DTO {
     // Setter/Getter
     // ******************
 
-    public Timestamp getDateTrt() { return dateTrt; }
-    public void setDateTrt(Timestamp p_date) { this.dateTrt = p_date; }
+    public Date getDateTrt() { return dateTrt; }
+    public void setDateTrt(Date p_date) { this.dateTrt = p_date; }
     public String getAppreciation() { return appreciation; }
     public void setAppreciation( String p_ap) { this.appreciation = p_ap; }
     public UUID getRoleId() { return roleId; }
@@ -54,6 +56,9 @@ public class TraitementDTO extends DTO {
     public void setForm( FormulaireDTO p_form) { this.form = p_form; }
     public CitoyenDTO getCitoyenPrest() { return citoyenPrest; }
     public void setCitoyenPrest( CitoyenDTO p_ut) { this.citoyenPrest = p_ut; }
+
+    public void setReponses(List<ReponseDTO> lRepDTO){ lReponse = lRepDTO; }
+    public List<ReponseDTO> getReponses(){ return lReponse; }
 
     // ******************
     // Fonctions

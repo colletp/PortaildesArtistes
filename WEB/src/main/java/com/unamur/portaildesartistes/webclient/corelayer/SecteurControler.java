@@ -38,7 +38,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     }*/
 
     public List<SecteurDTO> listSecteurActivite( String cookieValue){
-        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
@@ -48,7 +47,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         return new ArrayList<>();
     }
     public List<SecteurDTO> listSecteurActiviteByForm( String cookieValue, UUID formId){
-        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Form/"+formId.toString(),headers );
@@ -58,7 +56,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         return new ArrayList<>();
     }
     public List<SecteurDTO> listSecteurActiviteByDoc( String cookieValue, UUID docId){
-        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Doc/"+docId.toString(),headers );
@@ -80,7 +77,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     public String modifSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        logger.error("Secteur/modif : Authentication received! Cookie : "+cookieValue );
         return super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"POST",model);
     }
 
@@ -89,7 +85,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("usrForm") final SecteurDTO sectForm
             ,Model model){
-        logger.error("Secteur(post) "+method+" : Authentication received! Cookie : "+cookieValue );
+
         sectForm.setId(super.postForm(cookieValue,sectForm,method));
         model.addAttribute("form",sectForm);
         return "/Secteur/get.html";
@@ -98,7 +94,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     @GetMapping(value = "/Secteur")
     public String listSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        logger.error("Secteur List : Authentication received! Cookie : "+cookieValue );
+
         return super.list(cookieValue,new SecteurDTO(),SecteurDTO.class,model);
     }
 
@@ -106,7 +102,7 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     public String getSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
+
         return super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"GET",model);
     }
 

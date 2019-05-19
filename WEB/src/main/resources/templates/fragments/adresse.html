@@ -5,20 +5,28 @@
 <body>
 
 <fieldset th:fragment="AdresseGet(fonction,adresse)">
-    <legend th:text="${fonction}">Résidence</legend>
-    <label th:text="#{maison.rue}"></label>
-    <span th:text="*{adresse.rue}"></span><br/>
-    <label th:text="#{maison.num}"></label>
-    <span th:text="*{adresse.numero}"></span><br/>
-    <label th:text="#{maison.boite}"></label>
-    <span th:text="*{adresse.boite}"></span><br/>
-    <label th:text="#{maison.ville}"></label>
-    <span th:text="*{adresse.ville}"></span><br/>
+    <legend th:text="#{maison.coordo}">Résidence</legend>
+    <span th:text="#{maison.rue}"></span> : <span th:text="${adresse.rue}"></span><br/>
+    <span th:text="#{maison.num}"></span> : <span th:text="${adresse.numero}"></span><br/>
+    <span th:text="#{maison.boite}"></span> : <span th:text="${adresse.boite}"></span><br/>
+    <span th:text="#{maison.ville}"></span> : <span th:text="${adresse.ville}"></span><br/>
 </fieldset>
 
 <fieldset th:fragment="AdressePost(fonction,adresse)">
     <legend th:text="#{maison.coordo}"></legend>
     <input type="hidden" th:field="*{adresse.id}" />
+    <label th:text="#{maison.rue}"></label>
+    <input th:type="text" th:field="*{adresse.rue}" />
+    <label th:text="#{maison.num}"></label>
+    <input th:type="text" th:field="*{adresse.numero}" />
+    <label th:text="#{maison.boite}"></label>
+    <input th:type="text" th:field="*{adresse.boite}" />
+    <label th:text="#{maison.ville}"></label>
+    <input th:type="text" th:field="*{adresse.ville}" />
+</fieldset>
+
+<fieldset th:fragment="AdressePut(fonction,adresse)">
+    <legend th:text="#{maison.coordo}"></legend>
     <label th:text="#{maison.rue}"></label>
     <input th:type="text" th:field="*{adresse.rue}" />
     <label th:text="#{maison.num}"></label>

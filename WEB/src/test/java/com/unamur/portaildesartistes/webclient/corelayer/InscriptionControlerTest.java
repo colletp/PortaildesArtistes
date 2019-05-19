@@ -10,6 +10,12 @@ import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
 import org.apache.el.util.Validation;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,14 +23,26 @@ import java.util.Date;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class InscriptionControlerTest {
 
     private UtilisateurInscript usrInscr;
+    @InjectMocks
+    InscriptionControler inscriptionControler=new InscriptionControler();
+
+    @Mock
+    private BindingResult bindingResult=mock(BindingResult.class);
+    @Mock
+    private Model model=mock(Model.class);
+    //@Mock
+    private String method;
 
     @BeforeEach
     void setUp() {
         usrInscr=new UtilisateurInscript();
+
+        method=null;
 
         Utilisateur usr;
         Citoyen citoyen;
@@ -64,11 +82,14 @@ class InscriptionControlerTest {
         assertDoesNotThrow( ()->usrInscr.getDTO() );
     }
 
+    // à corriger
     @DisplayName("TC 2.3, Test d’inscription avec un identifiant existant")
     @Test
-    void testInscriptNonValide23() {
+    void testInscriptNonValide23() throws ParseException {
         usrInscr.getUtilisateur().setUsername("test1");
-        assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO());
+        when(bindingResult.hasErrors()).thenReturn(true);
+
+        assertEquals("inscript.html",String.valueOf(inscriptionControler.inscript(usrInscr,method,bindingResult,model)));
     }
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")

@@ -2,19 +2,14 @@ package com.unamur.portaildesartistes.wsartiste.datalayer;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import org.skife.jdbi.v2.unstable.BindIn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -27,20 +22,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     public List<FormulaireDTO> getByCitoyenId(UUID p_id){ return super.Exec(FormulaireSQLs.class).getByCitoyenId( p_id ); }
 
     @Override
-    public List<FormulaireDTO> list(){
-        return super.Exec(FormulaireSQLs.class).list();
-        /*try{
-            List<FormulaireDTO> l = super.Exec(FormulaireSQLs.class).list();
-            logger.error("list donnee OK"+l.size());
-            return l;
-        }catch(Exception e){
-            logger.error(e.getMessage());
-            for( StackTraceElement el : e.getStackTrace() )
-                logger.error( el.getLineNumber() +":"+el.toString() );
-            return new ArrayList<>();
-        }
-        */
-    }
+    public List<FormulaireDTO> list(){ return super.Exec(FormulaireSQLs.class).list(); }
+
+    //public List<FormulaireDTO> listByLang(String lang){ return super.Exec(FormulaireSQLs.class).listByLang(lang); }
+
+    public List<FormulaireDTO> listByLangNoTrt(String lang){ return super.Exec(FormulaireSQLs.class).listByLangNoTrt(lang); }
+
     @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
     @Override
@@ -73,6 +60,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     interface FormulaireSQLs {
         @SqlQuery("select * from formulaires")
         List<FormulaireDTO> list();
+
+        @SqlQuery("select * from formulaires WHERE langue=:lang ")
+        List<FormulaireDTO> listByLang(@Bind("lang") String lang);
+
+        @SqlQuery("select * from formulaires f WHERE f.langue=:lang AND NOT EXISTS (SELECT 1 FROM traitements t WHERE t.form_id=f.form_id) ")
+        List<FormulaireDTO> listByLangNoTrt(@Bind("lang") String lang);
 
         @SqlQuery("select * from formulaires where form_id = :form_id")
         FormulaireDTO getById(@Bind("form_id") UUID p_id);
@@ -132,16 +125,10 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setDateDemande((Timestamp) r.getObject("date_demande"));
             if(r.getArray("cursus_ac")!=null)
                 formulaireDTO.setCursusAc( Arrays.asList((String[]) r.getArray("cursus_ac").getArray()) );
-            //else
-            //    formulaireDTO.setCursusAc( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             if(r.getArray("ex_pro")!=null)
                 formulaireDTO.setExpPro( Arrays.asList((String[]) r.getArray("ex_pro").getArray()) );
-            //else
-            //    formulaireDTO.setExpPro( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             if(r.getArray("ressources")!=null)
                 formulaireDTO.setRessources( Arrays.asList((String[]) r.getArray("ressources").getArray()) );
-            //else
-            //    formulaireDTO.setRessources( Arrays.asList((String[]) new ArrayList<String>().toArray() ) );
             formulaireDTO.setLangue( r.getString("langue"));
             formulaireDTO.setCarte( r.getBoolean("carte"));
             formulaireDTO.setVisa( r.getBoolean("visa"));

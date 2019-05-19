@@ -40,10 +40,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // Setter/Getter
     // ******************
 
-    public String getCitoyenId() { return citoyenId; }
-    public void setCitoyenId( String p_id) { citoyenId = p_id; }
-    public String getDateDemande(){ return dateDemande;}
-    public void setDateDemande(String d){ dateDemande=d;}
+    public String getCitoyenId(){ return citoyenId; }
+    public void setCitoyenId(String p_id){ citoyenId = p_id; }
+    public String getDateDemande(){ return dateDemande; }
+    public void setDateDemande(String d){ dateDemande=d; }
     //public String getCursusAc(){ return cursusAc;}
     //public void setCursusAc(String ls){ cursusAc=ls;}
     //public String getExpPro(){ return expPro;}
@@ -72,11 +72,19 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // ******************
     // Fonctions
     // ******************
+    public Boolean notNullSameTime(String carte,String visa){
+        if (carte!="1"&&visa!="1"){
+            throw new IllegalArgumentException("Vous devez choisir au moins une carte ou un visa");
+        }
+        return true;
+    }
+
     public FormulaireDTO getDTO(){
         FormulaireDTO dto = new FormulaireDTO();
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );
 
+        notNullSameTime(carte,visa);
         dto.setVisa( getVisa()!=null?getVisa().equals("1"):false );
         dto.setCarte( getCarte()!=null?getCarte().equals("1"):false );
 
@@ -90,12 +98,12 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         dto.setExpPro( getExpPro() );
         dto.setCursusAc( getCursusAc() );
 
-        /*
         isNotEmpty(getDateDemande());
         dto.setDateDemande( Timestamp.from(convertDate(getDateDemande()).toInstant()) );
+
+        isNotEmpty(citoyenId);
         if( getCitoyenId()!=null && !getCitoyenId().isEmpty())
             dto.setCitoyenId(convertUUID(getCitoyenId()));
-        */
 
         List<UUID> activitesId = new ArrayList<>();
         for( String act : getActivitesId() ){
@@ -118,8 +126,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setVisa(objDTO.getVisa()?"1":"0");
 
         List<String> la = new ArrayList<>();
-        for( UUID uuid : objDTO.getActivitesId() )
-            la.add( uuid.toString() );
+        if( objDTO.getActivitesId()!=null )
+            for( UUID uuid : objDTO.getActivitesId() )
+                la.add( uuid.toString() );
         setActivitesId( la );
 
         setSecteurActivites( objDTO.getSecteurActivites() );

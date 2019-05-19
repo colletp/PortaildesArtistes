@@ -28,10 +28,11 @@ public class UtilisateurDTO extends DTO implements UserDetails {
     public String getPassword() { return password; }
     public void setPassword(String p_password) { this.password = p_password; }
     public List<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return new ArrayList<>(); //authorities;
     }
+        // }
     public void setAuthorities(List<? extends GrantedAuthority> auth ) {
-        authorities = auth;
+        //authorities = auth;
     }
 
     private CitoyenDTO citoyenDTO;

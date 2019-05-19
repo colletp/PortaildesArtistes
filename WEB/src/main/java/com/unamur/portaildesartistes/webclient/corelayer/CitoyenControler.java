@@ -1,17 +1,11 @@
 package com.unamur.portaildesartistes.webclient.corelayer;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Citoyen;
-import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
-import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.UUID;
 
 @Controller
@@ -77,15 +71,11 @@ public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO 
 
         return super.list(cookieValue,new UtilisateurDTO(),UtilisateurDTO.class,model);
     }
-
-    @GetMapping(value = "/Utilisateur/{id}")//initialisation du login
-    public String citoyen( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                           @PathVariable("id") UUID itemId ,
-                           Model model){
-        logger.error("citoyen : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new UtilisateurDTO(),itemId,UtilisateurDTO.class,"GET",model);
+*/
+    CitoyenDTO getCitoyen( String cookieValue , UUID itemId ){
+        return super.getObj(cookieValue, itemId , new CitoyenDTO(), CitoyenDTO.class);
     }
-
+/*
     @GetMapping(value = "Utilisateur/suppr/{id}")
     public String citoyenSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,

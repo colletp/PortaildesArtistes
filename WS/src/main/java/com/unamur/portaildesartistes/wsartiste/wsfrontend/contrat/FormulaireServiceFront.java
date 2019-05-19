@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
+import com.unamur.portaildesartistes.wsartiste.Business.FormulaireServiceImpl;
 import com.unamur.portaildesartistes.wsartiste.Business.UtilisateurServiceImpl;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl;
 import org.slf4j.Logger;
@@ -33,4 +34,6 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     @GetMapping("/gestionFormulaire/")
     public List<FormulaireDTO> list(){ return super.list(); }
 
+    @GetMapping("/gestionFormulaire/lang/{lang}")
+    public List<FormulaireDTO> getLang( @PathVariable("lang") String lang ){ return ((FormulaireServiceImpl)srvImpl).listByLangNoTrt(lang); }
 }

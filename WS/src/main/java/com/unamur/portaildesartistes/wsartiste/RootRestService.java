@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste;
 
     import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
+    import com.unamur.portaildesartistes.wsartiste.Business.UtilisateurServiceImpl;
     import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeUtilisateurImpl;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class RootRestService {
     private static final Logger logger = LoggerFactory.getLogger(RootRestService.class);
 
     @Autowired
-    DonneeUtilisateurImpl usrImpl;
+    UtilisateurServiceImpl usrServImpl;
 
     @GetMapping(value = "/")
     // Equivaut à l'ancienne nomenclature @RequestMapping(method=RequestMethod.GET, value = "/")
@@ -45,7 +46,7 @@ public class RootRestService {
     @PutMapping(value = "/inscript")
     public @ResponseBody ResponseEntity wsInscript( @RequestBody final UtilisateurDTO usrDTO){
         logger.error( usrDTO==null?"null":usrDTO.getUsername() );
-        UUID id = usrImpl.insert( usrDTO );
+        UUID id = usrServImpl.insert( usrDTO );
         return new ResponseEntity<>(" Statut de retour du service : " + HttpStatus.OK.name() + " / " + id.toString() , HttpStatus.OK);
     }
 

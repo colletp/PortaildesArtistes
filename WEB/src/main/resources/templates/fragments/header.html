@@ -45,14 +45,18 @@
         <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}" th:text="#{register}"></a></div>
         <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
-        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}"> &#9660;</a>
+        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}"></a> &#9660;
             <div class=ssmenu><a th:href="@{/Prestation}" class="whitea">Prestations</a></div>
             <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea" th:text="#{carte}"></a></div>
             <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea" th:text="#{visa}"></a></div>
         </div>
 
-        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea" th:text="#{commanditaire}"></a></div>
-        <div class=navtext th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:text="#{gestionnaire}"></a></div>
+<!--        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea" th:text="#{commanditaire}"></a></div>
+-->
+        <div class=menu th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:href="@{/Traitement}" th:text="#{gestionnaire}"></a> &#9660;
+            <div class=ssmenu><a th:href="@{/Utilisateur/}" class="whitea"  th:text="#{utilisateurs}"></a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/}" class="whitea"  th:text="#{formulaires}"></a></div>
+        </div>
 
         <div class=menu th:remove="${(select/4)%2!=1}? all : none"><span th:text="#{monprofil}"></span> &#9660;
             <div class=ssmenu><a th:href="@{/Utilisateur/modif/moi}" class="whitea"  th:text="#{infopers}"></a></div>

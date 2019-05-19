@@ -8,21 +8,7 @@
 <div class="Msg">[[${Msg}]]</div>
 <div class="Err">[[${Err}]]</div>
 <form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
-
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
-
-        Langue<select name="langue" id="langue">
-                <option value="FR">FR</option>
-                <option value="EN">EN</option>
-            </select><br/>
-        Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-        Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
-
-        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${form.secteurActivites}) }"></fieldset>
-
-        <input th:type="submit" name="submit" />
+    <fieldset th:replace="~{/fragments/form :: postForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

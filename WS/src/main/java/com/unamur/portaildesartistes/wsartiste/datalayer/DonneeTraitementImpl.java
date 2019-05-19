@@ -4,10 +4,7 @@ import com.unamur.portaildesartistes.DTO.TraitementDTO;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
@@ -25,8 +22,13 @@ import java.util.UUID;
 public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeTraitementImpl.class);
 
+    @Override
     public List<TraitementDTO> list(){
         return super.Exec(TraitementSQLs.class).list();
+    }
+
+    public List<TraitementDTO> listByLang(String lang){
+        return super.Exec(TraitementSQLs.class).listByLang( lang );
     }
 
     @Override
@@ -53,12 +55,20 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
         @SqlQuery("select * from traitements ")
         List<TraitementDTO> list();
 
-        @SqlUpdate("INSERT INTO traitements (date_trt,appreciation,roles_id,gest_id,form_id,citoyen_prest_id,type_role) VALUES (:date_trt,:appreciation,:roles_id,:gest_id,:form_id,:citoyen_prest_id,:type_role) RETURNING trt_id ")
+        @SqlQuery("select t.* from traitements t JOIN formulaires f ON t.form_id=f.form_id WHERE f.langue=:lang ")
+        List<TraitementDTO> listByLang( @Bind("lang") String lang);
+
+        @SqlQuery("INSERT INTO traitements (date_trt,appreciation,roles_id,gest_id,form_id,citoyen_prest_id,type_role) VALUES (:date_trt,:appreciation,:roles_id,:gest_id,:form_id,:citoyen_prest_id,:type_role) RETURNING trt_id ")
         String insert(@BindBean TraitementDTO test);
 
-        TraitementDTO getById(UUID id);
+        @SqlQuery("select * from traitements WHERE trt_id=:id ")
+        TraitementDTO getById(@Bind("id") UUID id);
+
+        @SqlUpdate("UPDATE traitements SET date_trt,appreciation,gest_id) VALUES (:date_trt,:appreciation,:gest_id) WHERE trt_id=:id ")
         void update(TraitementDTO trt);
-        void delete(UUID id);
+
+        @SqlUpdate("DELETE from traitements WHERE trt_id=:id ")
+        void delete(@Bind("id") UUID id);
     }
 
     public static class TraitementMapper implements ResultSetMapper<TraitementDTO> {

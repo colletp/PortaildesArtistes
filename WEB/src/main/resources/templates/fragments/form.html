@@ -4,13 +4,53 @@
 
 <body>
 
+<fieldset th:fragment="getForm(form,secteurs,citoyen)">
+    <legend>Demande de document d'artiste</legend>
+
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet('Citoyen',${citoyen},${citoyen.resideAdr}) }"></fieldset>
+
+    Date Demande:[[${form.dateDemande}]]<br/>
+
+    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
+
+    Langue :[[${form.langue}]]<br/>
+    Carte :[[${form.carte}]]<br/>
+    Visa :[[${form.visa}]]<br/>
+
+    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
+
+</fieldset>
+
+<fieldset th:fragment="postForm(form,secteurs,citoyen)" th:object="${form}">
+    <legend>Demande de document d'artiste</legend>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>
+    Date Demande:[[${form.dateDemande}]]<br/>
+    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
+    <input type="hidden" th:field="*{citoyenId}" />
+    Langue<select th:field="*{langue}">
+        <option value="FR">FR</option>
+        <option value="EN">EN</option>
+    </select><br/>
+    Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
+    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+
+    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
+
+    <input th:type="submit" />
+</fieldset>
+
 <fieldset th:fragment="formArray(fonction,name,form)">
     <legend th:text="${fonction}"></legend>
-    <button type="submit" th:name="'addRow'+${name}+'Create'">Ajouter</button>
+    <button type="submit" th:name="'addRow'+${name}">Ajouter</button>
     <ul th:each="item,rowStat : ${form}" th:object="${form}">
         <li>
             <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
-            <button type="submit" th:name="'removeRow'+${name}+'Create'" th:value="${rowStat.index}">Supprimer</button>
+            <button type="submit" th:name="'removeRow'+${name}" th:value="${rowStat.index}">Supprimer</button>
         </li>
     </ul>
 </fieldset>

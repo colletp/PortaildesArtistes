@@ -6,18 +6,14 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<div class="Msg">[[${Msg}]]</div>
-<div class="Err">[[${Err}]]</div>
-
 <div class="formbox90pc">
-<h1>Formulaires</h1>
 <table>
-    <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
+    <caption><H1>Activités</H1></caption>
+    <tr><th>Secteur</th><th>Activité</th><th>Description</th></tr>
     <tr th:each="frm : ${form}">
-        <td>[[${frm.dateDemande}]]</td>
-        <td>[[${frm.langue}]]</td>
-        <td>[[${frm.carte}]]</td>
-        <td>[[${frm.visa}]]</td>
+        <td>[[${frm.secteurId}]]</td>
+        <td>[[${frm.nomActivite}]]</td>
+        <td>[[${frm.description}]]</td>
         <td id="boutonsList">
             <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
             <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
