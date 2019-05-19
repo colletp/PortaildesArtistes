@@ -9,9 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClientException;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -38,13 +35,16 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
         {
             System.out.printf("Found %d fields!%n" , br.getErrorCount());
         }
-
-        UUID uuid = postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);
-        if(uuid!=null) {
+        try{
+            postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);
             model.addAttribute("Msg", "Inscription effectuée. Veuillez vous connecter");
             return "login.html";
-        }else{
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "inscript.html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
         }
     }
 }

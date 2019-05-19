@@ -37,7 +37,7 @@ public class RestTemplateHelper {
         this.objectMapper = objectMapper;
     }
 
-    public <T> T getForEntity(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables) {
+    public <T> T getForEntity(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables)throws Exception{
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, headers , uriVariables);
             JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
@@ -49,16 +49,16 @@ public class RestTemplateHelper {
                 logger.info("rest client exception", exception.getMessage());
             }
         }
-        return null;
+        throw new Exception();
     }
 
-    public <T> List<T> getForList(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables)throws ServiceNotFoundException {
+    public <T> List<T> getForList(Class<T> clazz, String url, HttpHeaders headers , Object... uriVariables)throws Exception {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, headers ,uriVariables);
             CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
             return readValue(response, collectionType);
-        } catch (HttpClientErrorException exception) {
-            switch( exception.getStatusCode().value() ){
+        } catch (HttpClientErrorException e) {
+            switch( e.getStatusCode().value() ){
                 case 404 :
                     logger.info("No data found {}", url);
                     throw new ServiceNotFoundException( "Session pas trouvée" );
@@ -67,47 +67,62 @@ public class RestTemplateHelper {
                     logger.info("no auth", url);
                     throw new AuthenticationServiceException( "Session pas trouvée" );
                 default:
-                    logger.info("rest client exception", exception.getMessage());
+                    logger.info("rest client exception", e.getMessage());
             }
+            throw new Exception(e.getMessage());
         }catch(HttpServerErrorException e){
             logger.error(e.getMessage() );
-
+            throw new Exception(e.getMessage());
         }catch(RestClientException e){
-
-        }catch(NullPointerException e){
-
+            logger.error(e.getMessage() );
+            throw new Exception(e.getMessage());
         }
-        return null;
     }
 
-    public <R> void postForEntity( String url, R body, HttpHeaders headers , Object... uriVariables) {
+    public <R> void postForEntity( String url, R body, HttpHeaders headers , Object... uriVariables)throws  Exception {
         HttpEntity<R> request = new HttpEntity<>(body);
-        restTemplate.postForEntity(url, request, String.class, headers , uriVariables);
+        try{
+            restTemplate.postForEntity(url, request, String.class, headers , uriVariables);
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
-    public <T, R> T postForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables) {
+    public <T, R> T postForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables)throws Exception {
         HttpEntity<R> request = new HttpEntity<>(body);
-        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class, headers , uriVariables);
-        JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
-        return readValue(response, javaType);
+        try{
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class, headers , uriVariables);
+            JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
+            return readValue(response, javaType);
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
-    public <T, R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables) {
-        return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
+    public <R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables)throws Exception {
+        try{
+            return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
 
-    public <T, R> T putForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables) {
+    public <T, R> T putForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables)throws Exception {
         HttpEntity<R> request = new HttpEntity<>(body);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class, headers , uriVariables);
-        JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
-        return readValue(response, javaType);
+        try{
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class, headers , uriVariables);
+            JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
+            return readValue(response, javaType);
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
-    public void delete(String url, HttpHeaders headers , Object... uriVariables) {
+    public void delete(String url, HttpHeaders headers , Object... uriVariables)throws Exception {
         try {
             restTemplate.delete(url, headers , uriVariables);
-        } catch (RestClientException exception) {
-            logger.info(exception.getMessage());
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
         }
     }
 

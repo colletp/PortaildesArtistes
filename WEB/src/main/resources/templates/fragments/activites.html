@@ -19,7 +19,7 @@
 
 <fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
@@ -27,8 +27,26 @@
                 <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
             </li>
         </ul>
+        <div th:replace="~{/fragments/activites :: formArray('sect',${form.actToAddBySect},${sec.id})}"></div>
     </fieldset>
 </fieldset>
+
+<div th:fragment="formArray(name,actToAdd,sectId)">
+    <button type="submit" th:name="'addRow'" th:value="${sectId}">Ajouter</button>
+    <ul th:each="item,rowStat : ${actToAdd}" th:object="${item}">
+        <li>
+            <input th:field="*{secteurId}" />
+            Activité:<input th:field="*{nomActivite}" /><br/>
+            <input th:field="*{description}" /><br/>
+            <!-- <input th:name="'secteurId'" th:value="${sectId}" th:id="${name}+'Sect'+${rowStat.index+1}" />
+            <input type="text" th:name="nom" th:id="${name}+'Nom'+${rowStat.index+1}" th:value="${item.nom}" />
+            Description:<textarea th:name="description'" th:id="${name}+'Desc'+${rowStat.index+1}" th:value="${item.description}" />
+            -->
+            <button type="submit" th:name="'removeRow'" th:value="${rowStat.index}">Supprimer</button>
+        </li>
+    </ul>
+</div>
+
 
 <fieldset th:fragment="activiteDocBySecteur(activitesId,activitesDocId,listSect)">
     <legend>Secteurs</legend>

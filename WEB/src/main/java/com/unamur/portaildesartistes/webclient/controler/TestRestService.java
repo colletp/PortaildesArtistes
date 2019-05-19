@@ -43,6 +43,9 @@ public class TestRestService {
             codeReponseServeur = e.getStatusCode().value();
             logger.error("Réponse du serveur: "+codeReponseServeur+" ==> Serveur indisponible, votre application ne fonctionnera pas correctement");
             reponseServerAvailable=configurationService.getPingServeurKo();
+        }catch( Exception e ){
+            logger.error("Réponse du serveur: ??? ==> Serveur indisponible, votre application ne fonctionnera pas correctement");
+            reponseServerAvailable=configurationService.getPingServeurKo();
         }
 
         model.addAttribute("urlServeur", configurationService.getUrl() );

@@ -228,9 +228,12 @@ public class LoginControler {
         //accept.add(MediaType.TEXT_XML);
         accept.add(MediaType.APPLICATION_JSON );
         headers.setAccept( accept );
-
-        restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
-        return "login.html";
+        try{
+            restTemplateHelper.getForEntity( String.class ,configurationService.getUrl()+"/logout", headers );
+            return "login.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
 }

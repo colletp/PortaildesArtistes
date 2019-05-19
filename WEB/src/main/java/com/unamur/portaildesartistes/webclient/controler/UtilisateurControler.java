@@ -33,46 +33,55 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
     public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form", new UtilisateurInscript( super.getObj(cookieValue, super.getMyId(cookieValue) , new UtilisateurDTO(), UtilisateurDTO.class, model) ) );
-        return "/Utilisateur/post.html";
+        try{
+            model.addAttribute("form", new UtilisateurInscript( super.getObj(cookieValue, super.getMyId(cookieValue) , new UtilisateurDTO(), UtilisateurDTO.class, model) ) );
+            return "/Utilisateur/post.html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
     @GetMapping(value = "/Utilisateur/modif/{id}")
     public String citoyenModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("id") UUID itemId
             ,Model model){
 
-        CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
-        UtilisateurInscript usrForm = new UtilisateurInscript();
-        usrForm.setUtilisateur( super.getForm( cookieValue,new UtilisateurDTO(),new Utilisateur(),itemId,UtilisateurDTO.class,"GET", model ) );
-        usrForm.setCitoyen(citDTO);
-        usrForm.setAdresse( citDTO.getResideAdr() );
-        model.addAttribute("form",usrForm);
-
-        return "/Utilisateur/post.html";
+        try{
+            CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
+            UtilisateurInscript usrForm = new UtilisateurInscript();
+            usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class, model ) );
+            usrForm.setCitoyen(citDTO);
+            usrForm.setAdresse( citDTO.getResideAdr() );
+            model.addAttribute("form",usrForm);
+            return "/Utilisateur/post.html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
 
     @GetMapping(value = "/Utilisateur")
     public String citoyenList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
+        try{
+            List<UtilisateurDTO> lUsrDTO = super.list(cookieValue, new UtilisateurDTO(), UtilisateurDTO.class, model );
+            List<UtilisateurInscript> lUsrForm = new ArrayList<>();
+            for( UtilisateurDTO usrDTO : lUsrDTO ){
+                CitoyenDTO citDTO = citControler.getById( cookieValue , usrDTO.getId(), model );
 
-        List<UtilisateurDTO> lUsrDTO = super.list(cookieValue, new UtilisateurDTO(), UtilisateurDTO.class, model );
-        List<UtilisateurInscript> lUsrForm = new ArrayList<>();
-        for( UtilisateurDTO usrDTO : lUsrDTO ){
-            CitoyenDTO citDTO = citControler.getById( cookieValue , usrDTO.getId(), model );
+                UtilisateurInscript usrForm= new UtilisateurInscript();
+                usrForm.setUtilisateur( usrDTO );
+                usrForm.setCitoyen(citDTO);
+                usrForm.setAdresse( citDTO.getResideAdr() );
+                //usrForm.setAdresse( adrControler.getObj( cookieValue,citDTO.getReside() ,new AdresseDTO(),AdresseDTO.class ) );
 
-            UtilisateurInscript usrForm= new UtilisateurInscript();
-            usrForm.setUtilisateur( usrDTO );
-            usrForm.setCitoyen(citDTO);
-            usrForm.setAdresse( citDTO.getResideAdr() );
-            //usrForm.setAdresse( adrControler.getObj( cookieValue,citDTO.getReside() ,new AdresseDTO(),AdresseDTO.class ) );
+                lUsrForm.add( usrForm );
 
-            lUsrForm.add( usrForm );
+            }
 
+            model.addAttribute("form", lUsrForm );
+            return "Utilisateur/list.html";
+        }catch(Exception e){
+            return "/login";
         }
-
-        model.addAttribute("form", lUsrForm );
-        return "Utilisateur/list.html";
-        //return "/login.html";
     }
 
     @PostMapping(value = "/Utilisateur")
@@ -80,15 +89,18 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final UtilisateurInscript usrForm
             ,Model model){
-        //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
-        UtilisateurDTO usrDTO = usrForm.getDTO();
-        UUID uuid = super.postForm(cookieValue,usrDTO,method,model);
-        if(uuid!=null){
+        try{
+            //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
+            UtilisateurDTO usrDTO = usrForm.getDTO();
+            super.postForm(cookieValue,usrDTO,method,model);
             model.addAttribute("Msg","Le profil a été mis à jour" );
             model.addAttribute("form", new UtilisateurInscript(usrDTO) );
             return "Utilisateur/get.html";
-        }else{
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "Utilisateur/"+(method.isEmpty()?"post":method)+".html";
+        }catch(Exception e){
+            return "/login";
         }
     }
 
@@ -96,22 +108,28 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyen( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-
-        CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
-        UtilisateurInscript usrForm = new UtilisateurInscript();
-        usrForm.setUtilisateur( super.getForm( cookieValue,new UtilisateurDTO(),new Utilisateur(),itemId,UtilisateurDTO.class,"GET",model ) );
-        usrForm.setCitoyen(citDTO);
-        usrForm.setAdresse( citDTO.getResideAdr() );
-        model.addAttribute("form",usrForm);
-
-        return "Utilisateur/get.html";
+        try{
+            CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
+            UtilisateurInscript usrForm = new UtilisateurInscript();
+            usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class,model ) );
+            usrForm.setCitoyen(citDTO);
+            usrForm.setAdresse( citDTO.getResideAdr() );
+            model.addAttribute("form",usrForm);
+            return "Utilisateur/get.html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
 
     @GetMapping(value = "Utilisateur/suppr/{id}")
     public String citoyenSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        super.delete(cookieValue,new UtilisateurDTO(),itemId,model);
-        return "Utilisateur/list.html";
+        try{
+            super.delete(cookieValue,new UtilisateurDTO(),itemId,model);
+            return "Utilisateur/list.html";
+        }catch(Exception e){
+            return "/login";
+        }
     }
 }

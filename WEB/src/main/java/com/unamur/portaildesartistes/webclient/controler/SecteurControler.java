@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.ServiceNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,34 +34,18 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
         return "/fragments/activites.html";
     }*/
 
-    public List<SecteurDTO> listSecteurActivite( String cookieValue , Model model){
+    public List<SecteurDTO> listSecteurActivite( String cookieValue , Model model)throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
-        try{
-            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
-        }catch( ServiceNotFoundException e ){
-            model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
-        }
+        return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
     }
-    public List<SecteurDTO> listSecteurActiviteByForm( String cookieValue, UUID formId,Model model){
+    public List<SecteurDTO> listSecteurActiviteByForm( String cookieValue, UUID formId,Model model)throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
-        try{
-            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Form/"+formId.toString(),headers );
-        }catch( ServiceNotFoundException e ){
-            model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
-        }
+        return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Form/"+formId.toString(),headers );
     }
-    public List<SecteurDTO> listSecteurActiviteByDoc( String cookieValue, UUID docId , Model model){
+    public List<SecteurDTO> listSecteurActiviteByDoc( String cookieValue, UUID docId , Model model)throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
-        try{
-            return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Doc/"+docId.toString(),headers );
-        }catch( ServiceNotFoundException e ){
-            model.addAttribute("Err",e.getMessage());
-            return new ArrayList<>();
-        }
+        return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/SecteurActivite/Doc/"+docId.toString(),headers );
     }
-
 
     @GetMapping(value = "/Secteur/creer")
     public String createSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -76,18 +58,25 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     public String modifSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"POST",model) );
-        return "Secteur/post.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new SecteurDTO(),SecteurDTO.class,model) );
+            return "Secteur/post.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @PostMapping(value = "/Secteur")
     public String postSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("usrForm") final SecteurDTO sectForm
+            ,@ModelAttribute("usrForm") final Secteur sectForm
             ,Model model){
         try {
-            sectForm.setId(super.postForm(cookieValue, sectForm, method, model));
-            model.addAttribute("form",sectForm);
+            super.postForm(cookieValue, sectForm, method, model);
+            //model.addAttribute("form",sectForm);
+            return "Secteur/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
             return "Secteur/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             model.addAttribute("form",sectForm);
@@ -98,24 +87,35 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     @GetMapping(value = "/Secteur")
     public String listSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        model.addAttribute("form",super.list(cookieValue,new SecteurDTO(),SecteurDTO.class,model));
-        return "Secteur/list.html";
+        try{
+            model.addAttribute("form",super.list(cookieValue,new SecteurDTO(),SecteurDTO.class,model));
+            return "Secteur/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Secteur/{id}")
     public String getSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        model.addAttribute("form",super.getForm(cookieValue,new SecteurDTO(),new Secteur(),itemId,SecteurDTO.class,"GET",model));
-        return "Secteur/get.html";
+        try{
+            model.addAttribute("form",super.getObj(cookieValue,itemId,new SecteurDTO(),SecteurDTO.class,model));
+            return "Secteur/get.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Secteur/suppr/{id}")
     public String supprSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        super.delete(cookieValue, new SecteurDTO() ,itemId,model);
-        return "Secteur/list.html";
+        try{
+            super.delete(cookieValue, new SecteurDTO() ,itemId,model);
+            return "Secteur/list.html";
+        }catch( Exception e ){
+            return "/login.html";
+        }
     }
-
 }
