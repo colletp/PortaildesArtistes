@@ -2,7 +2,6 @@ package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
-import com.unamur.portaildesartistes.webclient.dataForm.Activite;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.ServiceNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("form",formForm);
             model.addAttribute("activites",formForm.getActivitesId() );
-            return "Formulaire/get.html";
+            return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
@@ -151,6 +149,8 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,Model model){
         formForm.setVisa( typeDoc.equals("visa")?"1":"0" );
         formForm.setCarte( typeDoc.equals("carte")?"1":"0" );
+        if(formForm.getActivitesId()==null)
+            formForm.setActivitesId( new ArrayList<>() );
         return loadForm(cookieValue,formForm,"put",model);
     }
 

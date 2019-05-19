@@ -10,18 +10,13 @@
 <legend>Demande de document d'artiste</legend>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
     Date Demande:[[${form.dateDemande}]]<br/>
-
     <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-
     Langue :[[${form.langue}]]<br/>
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
-    <!-- <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset> -->
-
     <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
-
 </fieldset>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
