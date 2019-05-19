@@ -3,8 +3,10 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.DTO.ReponseDTO;
+import com.unamur.portaildesartistes.DTO.SecteurDTO;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +26,10 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
 
     private CitoyenDTO oCitoyen;
     private ReponseDTO oReponse;
+
+    private List<String> activitesId;
+
+    private Collection<SecteurDTO> lSecteurs;
 
     // ******************
     // Constructeur
@@ -59,6 +65,10 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public void setReponse(ReponseDTO oReponse) {
         this.oReponse = oReponse;
     }
+    public List<String> getActivitesId(){ return activitesId; }
+    public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
+    public void setSecteurActivites(Collection<SecteurDTO> ls){ lSecteurs=ls; }
+    public Collection<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
 
     public void setFromDTO(final DocArtisteDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );

@@ -25,13 +25,8 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
 
     @Override
     public ReponseDTO getById(UUID id) {
-        try {
             return super.Exec(ReponseSQLs.class).getById(id);
-        } catch(SQLException ex)
-        {
-            return null;
-        }
-    }
+     }
 
     @Override
     public UUID insert(ReponseDTO item){
@@ -53,11 +48,12 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 
-        @SqlUpdate("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
+        @SqlQuery("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
         String insert(@BindBean ReponseDTO test);
 
         @SqlQuery("select * from reponse WHERE reponse_id = :p_id ")
-        ReponseDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
+        ReponseDTO getById(@Bind("p_id")UUID p_id);
+
 
         void update(ReponseDTO rep);
 
