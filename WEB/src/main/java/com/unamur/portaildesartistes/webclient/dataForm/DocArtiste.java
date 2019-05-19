@@ -1,6 +1,8 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
+import com.unamur.portaildesartistes.DTO.ReponseDTO;
 import com.unamur.portaildesartistes.DTO.SecteurDTO;
 
 import java.text.ParseException;
@@ -21,6 +23,9 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     private String nomArtiste;
     private String datePeremption;
     private String typeDocArtiste;
+
+    private CitoyenDTO oCitoyen;
+    private ReponseDTO oReponse;
 
     private List<String> activitesId;
 
@@ -47,9 +52,21 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public String getTypeDocArtiste() { return typeDocArtiste; }
     public void setTypeDocArtiste(String p_type) { this.typeDocArtiste = p_type; }
 
+
+    public CitoyenDTO getCitoyen() {
+        return oCitoyen;
+    }
+    public void setCitoyen(CitoyenDTO oCitoyen) {
+        this.oCitoyen = oCitoyen;
+    }
+    public ReponseDTO getReponse() {
+        return oReponse;
+    }
+    public void setReponse(ReponseDTO oReponse) {
+        this.oReponse = oReponse;
+    }
     public List<String> getActivitesId(){ return activitesId; }
     public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
-
     public void setSecteurActivites(Collection<SecteurDTO> ls){ lSecteurs=ls; }
     public Collection<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
 
@@ -61,6 +78,9 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         setNomArtiste(objDTO.getNomArtiste());
         setDatePeremption(convertDate(objDTO.getDatePeremption()));
         setTypeDocArtiste(objDTO.getTypeDocArtiste());
+
+        setCitoyen(objDTO.getCitoyen());
+        setReponse(objDTO.getReponse());
     }
     // ******************
     // Fonctions
@@ -91,6 +111,13 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
 
         isNotEmpty(getReponseId());
         dto.setReponseId( convertUUID(getReponseId()));
+
+        isNotEmpty(getCitoyenId());
+        dto.setCitoyen(getCitoyen());
+
+        isNotEmpty(getReponseId());
+        dto.setReponse(getReponse());
+
         return dto;
     }
 

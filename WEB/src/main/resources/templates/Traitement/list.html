@@ -73,18 +73,7 @@
         <th>Document délivré</th>
         <th>Actions</th>
     </tr>
-    <tr th:each="frm : ${formFini}">
-        <td>[[${frm.dateTrt}]]</td>
 
-        <td>[[${frm.dateDemande}]]</td>
-        <td>[[${frm.langue}]]</td>
-        <td>[[${frm.carte}]]</td>
-        <td>[[${frm.visa}]]</td>
-
-        <td>[[${frm.reponse}]]</td>
-        <td>[[${frm.typeDoc}]]</td>
-        <td></td>
-    </tr>
 </table>
 
 <h1>Prestations par document d'artiste</h1>
@@ -98,22 +87,7 @@
         <th>Nombre de prestations en attente</th>
         <th>Actions</th>
     </tr>
-    <tr th:each="frm : ${DocArtPrest}">
-        <td>[[${frm.dateTrt}]]</td>
-        <td>[[${frm.form.dateReponse}]]</td>
-        <td>[[${frm.form.langue}]]</td>
 
-        <td>[[${frm.form.carte}]]</td>
-        <td>[[${frm.form.visa}]]</td>
-
-        <td>[[${frm.reponse}]]</td>
-        <td>[[${frm.typeDoc}]]</td>
-
-        <td></td>
-        <td class="boutonsList">
-            <a th:href="@{/Traitement/prest/{docArtId}(docArtId=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
-        </td>
-    </tr>
 </table>
 
 </div>

@@ -14,6 +14,7 @@ public class CommanditaireDTO extends DTO {
 
     private EntrepriseDTO entreprise;
     private CitoyenDTO citoyen;
+
     // ******************
     // Constructeur
     // ******************
@@ -29,7 +30,7 @@ public class CommanditaireDTO extends DTO {
 
     public EntrepriseDTO getEntreprise() { return entreprise; }
     public void setEntreprise( EntrepriseDTO p_id) { this.entreprise = p_id; }
-    public CitoyenDTO getCitoyen() { return citoyen; }
+     public CitoyenDTO getCitoyen() { return citoyen; }
     public void setCitoyen( CitoyenDTO p_id) { this.citoyen = p_id; }
 
     // ******************
