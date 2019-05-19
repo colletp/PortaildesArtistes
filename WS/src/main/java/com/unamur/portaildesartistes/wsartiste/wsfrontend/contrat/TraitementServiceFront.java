@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.TraitementDTO;
 import com.unamur.portaildesartistes.wsartiste.Business.CitoyenServiceImpl;
 import com.unamur.portaildesartistes.wsartiste.Business.GestionnaireServiceImpl;
 import com.unamur.portaildesartistes.wsartiste.Business.TraitementServiceImpl;
+import com.unamur.portaildesartistes.wsartiste.Business.UtilisateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,19 @@ public class TraitementServiceFront extends ServiceFront<TraitementDTO>{
     private static final Logger logger = LoggerFactory.getLogger(TraitementServiceFront.class);
 
     @Autowired
-    GestionnaireServiceImpl gestServImpl;
-
+    private GestionnaireServiceImpl gestServImpl;
     @Autowired
-    TraitementServiceImpl trtServImpl;
+    private UtilisateurServiceImpl usrServImpl;
+    @Autowired
+    private TraitementServiceImpl trtServImpl;
 
-    @PutMapping("/gestionTraitement")
-    public UUID creer( @RequestBody TraitementDTO objDTO ){ return super.create(objDTO); }
+    @PutMapping("/gestionTraitement/")
+    public UUID creer( @SessionAttribute("userName") String myUser
+            , @RequestBody TraitementDTO objDTO ){
+        objDTO.setGestId(  gestServImpl.getByCitoyenId( usrServImpl.getUuidByName(myUser) ).getId() );
+        return super.create(objDTO);
+    }
+
     @GetMapping("/gestionTraitement/{id}")
     public TraitementDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionTraitement")

@@ -21,6 +21,9 @@ import java.util.UUID;
 public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeDocArtisteImpl.class);
 
+    public List<DocArtisteDTO> listByLang(String lang){ return super.Exec(DocArtisteSQLs.class).listByLang(lang); }
+
+    @Override
     public List<DocArtisteDTO> list(){
         return super.Exec(DocArtisteSQLs.class).list();
     }
@@ -53,7 +56,17 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
         @SqlQuery("select * from doc_artiste ")
         List<DocArtisteDTO> list();
 
-        @SqlQuery("select * from doc_artiste WHERE citoyen_id=:citoyenId ")
+        @SqlQuery("SELECT * FROM doc_artiste d " +
+                "JOIN reponse r ON r.reponse_id=d.reponse_id " +
+                "JOIN traitements t ON t.trt_id = r.trt_id " +
+                "JOIN formulaires f ON f.form_id=t.form_id AND f.langue=:lang ")
+        List<DocArtisteDTO> listByLang(@Bind("lang") String lang);
+
+        //@SqlQuery("select * from doc_artiste WHERE citoyen_id=:citoyenId ")
+        @SqlQuery("SELECT * FROM doc_artiste d " +
+                "JOIN reponse r ON r.reponse_id=d.reponse_id " +
+                "JOIN traitements t ON t.trt_id = r.trt_id " +
+                "JOIN formulaires f ON f.form_id=t.form_id AND f.citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
         @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) RETURNING doc_artiste_id ")
@@ -62,10 +75,9 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
         @SqlQuery("select * from doc_artiste WHERE doc_artiste_id=:p_id ")
         DocArtisteDTO getById( @Bind("p_id") UUID p_id );
 
-        //pas d'update, une fois créé il ne doit plus être modifié
+        //pas d'update, une fois créé il ne doit plus être modifié ni supprimé
         //@SqlUpdate("UPDATE doc_artiste SET no_doc,nom_artiste,date_peremption WHERE doc_artiste_id=:id")
         void update(DocArtisteDTO doc);
-
         void delete(UUID id);
     }
 

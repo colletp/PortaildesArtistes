@@ -1,11 +1,10 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
     import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpHeaders;
-    import org.springframework.http.ResponseEntity;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;

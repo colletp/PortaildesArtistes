@@ -31,6 +31,8 @@ public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
         return super.Exec(GestionnaireSQLs.class).getById(id);
     }
 
+    public GestionnaireDTO getByCitoyenId(UUID id){ return super.Exec(GestionnaireSQLs.class).getByCitoyenId(id); }
+
     @Override
     public UUID insert(GestionnaireDTO item){
         return UUID.fromString(super.Exec(GestionnaireSQLs.class).insert(item));
@@ -56,6 +58,9 @@ public class DonneeGestionnaireImpl extends Donnee<GestionnaireDTO>{
 
         @SqlQuery("select * from gestionnaire WHERE gest_id=:id ")
         GestionnaireDTO getById( @Bind("id") UUID gest_id);
+
+        @SqlQuery("select * from gestionnaire WHERE citoyen_id=:id ")
+        GestionnaireDTO getByCitoyenId( @Bind("id") UUID cit_id);
 
         @SqlUpdate("UPDATE gestionnaire SET matricule=:matricule,bureau=:bureau WHERE gest_id=:id")
         void update(@BindBean GestionnaireDTO item);

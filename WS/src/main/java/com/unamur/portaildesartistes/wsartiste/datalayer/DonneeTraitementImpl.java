@@ -31,6 +31,8 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
         return super.Exec(TraitementSQLs.class).listByLang( lang );
     }
 
+    public List<TraitementDTO> listByForm(UUID formId){ return super.Exec(TraitementSQLs.class).listByFormId( formId ); }
+
     @Override
     public TraitementDTO getById(UUID id) {
         return super.Exec(TraitementSQLs.class).getById(id);
@@ -54,6 +56,9 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
     interface TraitementSQLs {
         @SqlQuery("select * from traitements ")
         List<TraitementDTO> list();
+
+        @SqlQuery("select t.* from traitements t WHERE t.form_id=:formId ")
+        List<TraitementDTO> listByFormId(@Bind("formId") UUID formId);
 
         @SqlQuery("select t.* from traitements t JOIN formulaires f ON t.form_id=f.form_id WHERE f.langue=:lang ")
         List<TraitementDTO> listByLang( @Bind("lang") String lang);

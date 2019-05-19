@@ -27,6 +27,8 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
     //public List<FormulaireDTO> listByLang(String lang){ return super.Exec(FormulaireSQLs.class).listByLang(lang); }
 
     public List<FormulaireDTO> listByLangNoTrt(String lang){ return super.Exec(FormulaireSQLs.class).listByLangNoTrt(lang); }
+    public List<FormulaireDTO> listByLangTrtNotDone(String lang){ return super.Exec(FormulaireSQLs.class).listByLangTrtNotDone(lang); }
+    public List<FormulaireDTO> listByLangTrtDone(String lang){ return super.Exec(FormulaireSQLs.class).listByLangTrtDone(lang); }
 
     @Override
     public FormulaireDTO getById(UUID p_id){ return super.Exec(FormulaireSQLs.class).getById( p_id ); }
@@ -66,6 +68,12 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
         @SqlQuery("select * from formulaires f WHERE f.langue=:lang AND NOT EXISTS (SELECT 1 FROM traitements t WHERE t.form_id=f.form_id) ")
         List<FormulaireDTO> listByLangNoTrt(@Bind("lang") String lang);
+
+        @SqlQuery("select * from formulaires f WHERE f.langue=:lang AND EXISTS ( SELECT 1 FROM traitements t WHERE t.form_id=f.form_id AND NOT EXISTS (SELECT 1 FROM reponse r WHERE r.trt_id=t.trt_id ) )  ")
+        List<FormulaireDTO> listByLangTrtNotDone(@Bind("lang") String lang);
+
+        @SqlQuery("select * from formulaires f WHERE f.langue=:lang AND EXISTS ( SELECT 1 FROM traitements t JOIN reponse r ON r.trt_id=t.trt_id WHERE t.form_id=f.form_id ) ")
+        List<FormulaireDTO> listByLangTrtDone(@Bind("lang") String lang);
 
         @SqlQuery("select * from formulaires where form_id = :form_id")
         FormulaireDTO getById(@Bind("form_id") UUID p_id);

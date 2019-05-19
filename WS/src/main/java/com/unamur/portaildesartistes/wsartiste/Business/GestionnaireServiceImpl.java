@@ -41,6 +41,8 @@ public class GestionnaireServiceImpl implements IService<GestionnaireDTO> {
         gestDTO.setCitoyen( citServImpl.getById(gestDTO.getCitoyenId()) );
         return gestDTO;
     }
+    @Transactional
+    public GestionnaireDTO getByCitoyenId( UUID uuid ){ return gestImpl.getByCitoyenId(uuid); }
 
     @Transactional
     public void update( GestionnaireDTO gest ){

@@ -8,18 +8,12 @@
 
 <fieldset class="formbox800">
 <legend>Traitement d'une demande</legend>
-    <span th:text="#{citoyen.nom}" >Mon nom</span>
-    Date Demande:[[${form.dateDemande}]]<br/>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>:[[${form.gest.citoyen.nom}]]
+    Date Demande:[[${form.form.dateDemande}]]<br/>
+    Date Traitement:[[${form.dateTrt}]]<br/>
+    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form.form},${form.form.secteurActivites},${citoyen}) }"></fieldset>
+    Appréciation:[[${form.appreciation}]]<br/>
 
-    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-
-    Langue :[[${form.langue}]]<br/>
-    Carte :[[${form.carte}]]<br/>
-    Visa :[[${form.visa}]]<br/>
-
-    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
 
 </fieldset>
 

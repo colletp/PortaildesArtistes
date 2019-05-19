@@ -15,15 +15,13 @@ public class Formulaire extends DataForm<FormulaireDTO> {
 
     private String citoyenId;
     private String dateDemande;
-    //private String cursusAc;
-    //private String expPro;
-    //private String ressources;
     private List<String> cursusAc;
     private List<String> expPro;
     private List<String> ressources;
     private String langue;
     private String carte;
     private String visa;
+
     private List<String> activitesId;
 
     private Collection<SecteurDTO> lSecteurs;
@@ -32,9 +30,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // Constructeur
     // ******************
     public Formulaire(){
-        cursusAc = new ArrayList<>();
-        expPro = new ArrayList<>();
-        ressources = new ArrayList<>();
+    }
+
+    public Formulaire(FormulaireDTO formDTO){
+        super(formDTO);
     }
     // ******************
     // Setter/Getter
@@ -44,18 +43,12 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setCitoyenId(String p_id){ citoyenId = p_id; }
     public String getDateDemande(){ return dateDemande; }
     public void setDateDemande(String d){ dateDemande=d; }
-    //public String getCursusAc(){ return cursusAc;}
-    //public void setCursusAc(String ls){ cursusAc=ls;}
-    //public String getExpPro(){ return expPro;}
-    //public void setExpPro(String ls){ expPro=ls;}
-    //public String getRessources(){ return ressources;}
-    //public void setRessources(String ls){ ressources=ls;}
     public List<String> getCursusAc(){ return cursusAc;}
-    public void setCursusAc(List<String> ls){for(String s : ls)cursusAc.add(s);}
+    public void setCursusAc(List<String> ls){if(cursusAc==null)cursusAc = new ArrayList<>();for(String s : ls)cursusAc.add(s);}
     public List<String> getExpPro(){ return expPro;}
-    public void setExpPro(List<String> ls){for(String s : ls)expPro.add(s);}
+    public void setExpPro(List<String> ls){if(expPro==null)expPro = new ArrayList<>();for(String s : ls)expPro.add(s);}
     public List<String> getRessources(){ return ressources;}
-    public void setRessources(List<String> ls){for(String s : ls)ressources.add(s);}
+    public void setRessources(List<String> ls){if(ressources==null)ressources = new ArrayList<>();for(String s : ls)ressources.add(s);}
 
     public String getLangue(){ return langue;}
     public void setLangue(String s){ langue=s;}

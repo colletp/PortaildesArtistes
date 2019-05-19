@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Activite;
@@ -24,38 +24,46 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     public String activiteModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        Activite actForm = new Activite();
-        return super.getForm(cookieValue,new ActiviteDTO(),actForm,itemId,ActiviteDTO.class,"POST",model);
-
+        model.addAttribute("form", super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"POST",model) );
+        return "Activite/post.html";
     }
 
     @PostMapping(value = "/Activite")
     public String activitePost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final Activite form
+            ,@ModelAttribute("form") final Activite actForm
             ,Model model){
-        super.postForm(cookieValue,form,method);
-        return "/Activite/get.html";
+        try {
+            actForm.setId( super.postForm(cookieValue, actForm, method, model).toString() );
+            model.addAttribute("form",actForm);
+            return "Activite/"+(method.isEmpty()?"post":method)+".html";
+        }catch(Exception e){
+            model.addAttribute("form",actForm);
+            return "Activite/get.html";
+        }
     }
 
     @GetMapping(value = "/Activite")
     public String activiteList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        return super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model);
+        model.addAttribute("form",super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model));
+        return "Activite/list.html";
     }
 
     @GetMapping(value = "/Activite/{id}")
     public String activite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        return super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"GET",model);
+        model.addAttribute("form",super.getForm(cookieValue,new ActiviteDTO(),new Activite(),itemId,ActiviteDTO.class,"GET",model));
+        return "Activite/get.html";
     }
 
     @GetMapping(value = "Activite/suppr/{id}")
     public String activiteSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        return super.delete(cookieValue, new ActiviteDTO() ,itemId,model);
+        super.delete(cookieValue, new ActiviteDTO() ,itemId,model);
+        return "Activite/list.html";
     }
 
 }

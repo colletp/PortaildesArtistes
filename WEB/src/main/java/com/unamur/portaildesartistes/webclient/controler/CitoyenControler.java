@@ -1,10 +1,11 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Citoyen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import java.util.UUID;
 
@@ -72,8 +73,8 @@ public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO 
         return super.list(cookieValue,new UtilisateurDTO(),UtilisateurDTO.class,model);
     }
 */
-    CitoyenDTO getCitoyen( String cookieValue , UUID itemId ){
-        return super.getObj(cookieValue, itemId , new CitoyenDTO(), CitoyenDTO.class);
+    CitoyenDTO getById(String cookieValue , UUID itemId, Model model ){
+        return super.getObj(cookieValue, itemId , new CitoyenDTO(), CitoyenDTO.class,model);
     }
 /*
     @GetMapping(value = "Utilisateur/suppr/{id}")

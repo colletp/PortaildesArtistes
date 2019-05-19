@@ -16,21 +16,23 @@ public class DocArtisteServiceImpl implements IService<DocArtisteDTO> {
     private static final Logger logger = LoggerFactory.getLogger(DocArtisteServiceImpl.class);
 
     @Autowired
-    private DonneeDocArtisteImpl artisteImpl;
+    private DonneeDocArtisteImpl docArtImpl;
 
     @Transactional
-    public List<DocArtisteDTO> list(){ return artisteImpl.list(); }
+    public List<DocArtisteDTO> listByLang(String lang){ return docArtImpl.listByLang(lang); }
+    @Transactional
+    public List<DocArtisteDTO> list(){ return docArtImpl.list(); }
     @Transactional
     public DocArtisteDTO getById( UUID uuid ){
-        return artisteImpl.getById(uuid);
+        return docArtImpl.getById(uuid);
     }
     @Transactional
-    public void update( DocArtisteDTO act ){ artisteImpl.update(act); }
+    public void update( DocArtisteDTO act ){ docArtImpl.update(act); }
     @Transactional
-    public UUID insert( DocArtisteDTO act ){ return artisteImpl.insert(act); }
+    public UUID insert( DocArtisteDTO act ){ return docArtImpl.insert(act); }
     @Transactional
     public void delete( UUID uuid ){
-        artisteImpl.delete(uuid);
+        docArtImpl.delete(uuid);
     }
 
 }

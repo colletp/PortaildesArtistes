@@ -10,20 +10,15 @@
 <form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="post">
     <input type="hidden" th:field="*{id}" />
 
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
+    <span th:text="#{citoyen.nom}" >Mon nom</span>:[[${form.gest.citoyen.nom}]]
+    Date Demande:[[${form.form.dateDemande}]]<br/>
+    Date Traitement:[[${form.dateTrt}]]<br/>
+    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form.form},${form.form.secteurActivites},${citoyen}) }"></fieldset>
+    Appréciation:<textarea rows="10" cols="100" th:field="${form.appreciation}"></textarea><br/>
 
-    Langue<select name="langue" id="langue">
-    <option value="FR">FR</option>
-    <option value="EN">EN</option>
-</select><br/>
-    Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
-
-    <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
-
-    <input th:type="submit" />
+    <input th:type="submit" value="Decmande complément d'information" />
+    <input th:type="submit" value="Enregistrer commentaire" />
+    <input th:type="submit" value="Décision finale (Réponse au citoyen)" />
 </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

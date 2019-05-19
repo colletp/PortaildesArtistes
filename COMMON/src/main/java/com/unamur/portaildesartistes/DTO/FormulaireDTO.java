@@ -23,9 +23,9 @@ public class FormulaireDTO extends DTO {
     private Boolean visa;
 
     private List<UUID> lActivitesId;
-    //private List<ActiviteDTO> lActivites;
     private Collection<SecteurDTO> lSecteurs;
 
+    private List<TraitementDTO> lTrt;
 
     // ******************
     // Constructeur
@@ -67,6 +67,9 @@ public class FormulaireDTO extends DTO {
     public List<UUID> getActivitesId(){return lActivitesId;}
     public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
     public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
+
+    public void setTrt(List<TraitementDTO> l){lTrt=l;}
+    public List<TraitementDTO> getTrt(){return lTrt;}
 
     // ******************
     // Fonctions
