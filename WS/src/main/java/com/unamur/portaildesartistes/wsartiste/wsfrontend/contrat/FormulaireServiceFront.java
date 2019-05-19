@@ -17,13 +17,14 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     private static final Logger logger = LoggerFactory.getLogger(FormulaireServiceFront.class);
 
     @Autowired
-    private UtilisateurServiceImpl utilisateurServiceImpl;
+    private UtilisateurServiceImpl usrServImpl;
 
     @PutMapping("/gestionFormulaire/")
     public UUID creer( @SessionAttribute("userName") String myUser
             , @RequestBody FormulaireDTO objDTO ){
-        objDTO.setCitoyenId( utilisateurServiceImpl.getUuidByName(myUser) );
-        return super.create(objDTO); }
+        objDTO.setCitoyenId( usrServImpl.getUuidByName(myUser) );
+        return super.create(objDTO);
+    }
     @GetMapping("/gestionFormulaire/{id}")
     public FormulaireDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionFormulaire/")
@@ -34,6 +35,16 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     @GetMapping("/gestionFormulaire/")
     public List<FormulaireDTO> list(){ return super.list(); }
 
-    @GetMapping("/gestionFormulaire/lang/{lang}")
-    public List<FormulaireDTO> getLang( @PathVariable("lang") String lang ){ return ((FormulaireServiceImpl)srvImpl).listByLangNoTrt(lang); }
+    @GetMapping("/gestionFormulaire/aTraiter/lang/{lang}")
+    public List<FormulaireDTO> getATraiterByLang( @PathVariable("lang") String lang ){
+        return ((FormulaireServiceImpl)srvImpl).listByLangNoTrt(lang);
+    }
+    @GetMapping("/gestionFormulaire/enCours/lang/{lang}")
+    public List<FormulaireDTO> getEnCoursByLang( @PathVariable("lang") String lang ){
+        return ((FormulaireServiceImpl)srvImpl).listByLangTrtNotDone(lang);
+    }
+    @GetMapping("/gestionFormulaire/fini/lang/{lang}")
+    public List<FormulaireDTO> getFiniByLang( @PathVariable("lang") String lang ){
+        return ((FormulaireServiceImpl)srvImpl).listByLangTrtDone(lang);
+    }
 }

@@ -23,6 +23,15 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
     private FormulaireServiceImpl formServImpl;
 
     @Transactional
+    public List<TraitementDTO> listByForm(UUID formId){
+        List<TraitementDTO> lTrtDTO = trtImpl.listByForm( formId );
+        for( TraitementDTO trtDTO : lTrtDTO) {
+            trtDTO.setGest(gestServImpl.getById(trtDTO.getGestId()));
+        }
+        return lTrtDTO;
+    }
+
+    @Transactional
     public List<TraitementDTO> listByLang(String lang){
         List<TraitementDTO> lTrtDTO = trtImpl.listByLang( lang );
         for( TraitementDTO trtDTO : lTrtDTO) {

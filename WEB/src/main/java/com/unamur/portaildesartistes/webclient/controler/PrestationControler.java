@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Prestation;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -52,49 +51,42 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
                              @PathVariable("id") String itemId ,
                              @ModelAttribute("form") final Prestation formPrest,
                              Model model){
-        logger.error("Prestation/modif : Authentication received! Cookie : "+cookieValue );
-        model.addAttribute("form",formPrest==null?new Prestation():formPrest);
-        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"POST",model);
+        model.addAttribute("form",super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"POST",model));
+        return "Prestation/post.html";
     }
 
     @PostMapping(value = "/Prestation")
-    public UUID prestPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String prestPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Prestation formPrest
             ,Model model){
-        logger.error("Form(post) "+method+" : Authentication received! Cookie : "+cookieValue );
-        try {
-            PrestationDTO formDTO = formPrest.getDTO();
-            return super.postForm(cookieValue,formDTO,method);
-        }catch(IllegalArgumentException e){
-            model.addAttribute("Err",e.getMessage());
-            model.addAttribute("form",formPrest);
-            throw e;
-        }
 
+        PrestationDTO formDTO = formPrest.getDTO();
+        model.addAttribute("form",super.postForm(cookieValue,formDTO,method,model) );
+        return "Prestation/"+(method.isEmpty()?"post":method)+".html";
     }
 
     @GetMapping(value = "/Prestation")
     public String prestList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        logger.error("Form List : Authentication received! Cookie : "+cookieValue );
-
-        return super.list(cookieValue,new PrestationDTO(),PrestationDTO.class,model);
+        model.addAttribute("form",super.list(cookieValue,new PrestationDTO(),PrestationDTO.class,model));
+        return "Prestation/list.html";
     }
 
     @GetMapping(value = "/Prestation/{id}")
     public String Form( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                         @PathVariable("id") String itemId ,
                         Model model){
-        logger.error("Form : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"GET",model);
+        model.addAttribute("form",super.getForm(cookieValue,new PrestationDTO(),new Prestation(),UUID.fromString(itemId),PrestationDTO.class,"GET",model));
+        return "Prestation/get.html";
     }
 
     @GetMapping(value = "Prestation/suppr/{id}")
     public String prestSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                              @PathVariable("id") String itemId,
                              Model model) {
-        return super.delete(cookieValue,new PrestationDTO(),UUID.fromString(itemId),model);
+        super.delete(cookieValue,new PrestationDTO(),UUID.fromString(itemId),model);
+        return "Prestation/list.html";
     }
 
 }

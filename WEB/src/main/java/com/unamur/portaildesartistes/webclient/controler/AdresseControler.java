@@ -1,4 +1,4 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Adresse;
@@ -17,7 +17,6 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
     @GetMapping(value = "/Adresse/creer")
     public String adresseCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-
         return "adresse/put.html";
     }
 
@@ -25,8 +24,8 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
     public String adresseModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
-        logger.error("adresse/modif : Authentication received! Cookie : "+cookieValue );
-        return super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"POST",model);
+        model.addAttribute("form",super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"POST",model));
+        return "Adresse/post.html";
     }
 
     @PostMapping(value = "/Adresse")
@@ -36,32 +35,35 @@ public class AdresseControler extends Controler<AdresseDTO, Class< AdresseDTO > 
             ,Model model){
         model.addAttribute("form",adrForm);
         try {
-            adrForm.setId(super.postForm(cookieValue, adrForm, method).toString());
+            adrForm.setId(super.postForm(cookieValue, adrForm, method,model).toString());
             return "/Adresse/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
-            return "/Adresse/"+method+".html";
+            return "/Adresse/"+(method.isEmpty()?"post":method)+".html";
         }
     }
 
     @GetMapping(value = "/Adresse")
     public String adresseList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        return super.list(cookieValue,new AdresseDTO(),AdresseDTO.class,model);
+        model.addAttribute("form",super.list(cookieValue,new AdresseDTO(),AdresseDTO.class,model));
+        return "Adresse/list.html";
     }
 
     @GetMapping(value = "/Adresse/{id}")
     public String adresse( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
-        return super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"GET",model);
+        model.addAttribute("form",super.getForm(cookieValue,new AdresseDTO(),new Adresse(),itemId,AdresseDTO.class,"GET",model));
+        return "Adresse/get.html";
     }
 
     @GetMapping(value = "Adresse/suppr/{id}")
     public String adresseSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
-        return super.delete(cookieValue, new AdresseDTO() ,itemId,model);
+        super.delete(cookieValue, new AdresseDTO() ,itemId,model);
+        return "Adresse/list.html";
     }
 
 }

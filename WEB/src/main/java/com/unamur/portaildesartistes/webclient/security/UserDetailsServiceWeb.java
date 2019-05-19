@@ -2,7 +2,7 @@ package com.unamur.portaildesartistes.webclient.security;
 
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
-import com.unamur.portaildesartistes.webclient.corelayer.PropertiesConfigurationService;
+import com.unamur.portaildesartistes.webclient.controler.PropertiesConfigurationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,26 +1,17 @@
-package com.unamur.portaildesartistes.webclient.corelayer;
+package com.unamur.portaildesartistes.webclient.controler;
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.unamur.portaildesartistes.DTO.AdresseDTO;
-import com.unamur.portaildesartistes.DTO.CitoyenDTO;
-import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Adresse;
 import com.unamur.portaildesartistes.webclient.dataForm.Citoyen;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
-import org.apache.el.util.Validation;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

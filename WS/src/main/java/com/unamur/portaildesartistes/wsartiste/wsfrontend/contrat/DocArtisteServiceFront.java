@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
+import com.unamur.portaildesartistes.wsartiste.Business.DocArtisteServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -24,4 +25,6 @@ public class DocArtisteServiceFront extends ServiceFront<DocArtisteDTO>{
     @GetMapping("/gestionDocArtiste")
     public List<DocArtisteDTO> list(){ return super.list(); }
 
+    @GetMapping("/gestionDocArtiste/lang/{lang}")
+    public List<DocArtisteDTO> listByLang(@PathVariable("lang") String lang){ return ((DocArtisteServiceImpl)srvImpl).listByLang(lang); }
 }

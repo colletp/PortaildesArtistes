@@ -15,9 +15,16 @@ import java.util.regex.Pattern;
 
 
 public abstract class DataForm<T extends DTO> implements Serializable {
-    public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.corelayer.LoginControler.class);
+    public static final Logger logger = LoggerFactory.getLogger(com.unamur.portaildesartistes.webclient.controler.LoginControler.class);
 
     private String id;
+
+    // ******************
+    // Constructor
+    // ******************
+    public DataForm(){}
+    public DataForm(T formDTO){ this.setFromDTO(formDTO); }
+
     // ******************
     // Setter/Getter
     // ******************

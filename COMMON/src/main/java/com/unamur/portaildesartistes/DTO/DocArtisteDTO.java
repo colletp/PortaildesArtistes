@@ -1,9 +1,7 @@
 package com.unamur.portaildesartistes.DTO;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class DocArtisteDTO extends DTO {
 
@@ -21,12 +19,21 @@ public class DocArtisteDTO extends DTO {
     private CitoyenDTO citoyen;
     private ReponseDTO reponse;
 
-    private List<ActiviteDTO> lActivites;
+    //private List<ActiviteDTO> lActivites;
     private List<PrestationDTO> lPrest;
+
+    private List<UUID> lActivitesId;
+    private Collection<SecteurDTO> lSecteurs;
 
     // ******************
     // Constructeur
     // ******************
+
+    public DocArtisteDTO(){
+        lPrest = new ArrayList<>();
+        lActivitesId = new ArrayList<>();
+        lSecteurs = new ArrayList<>();
+    }
 
     // ******************
     // Setter/Getter
@@ -50,10 +57,16 @@ public class DocArtisteDTO extends DTO {
     public ReponseDTO getReponse() { return reponse; }
     public void setReponse( ReponseDTO p_re) { this.reponse = p_re; }
 
-    public void setActivites(List<ActiviteDTO> l){this.lActivites=l;}
-    public List<ActiviteDTO> getActivites(){return this.lActivites;}
+    //public void setActivites(List<ActiviteDTO> l){this.lActivites=l;}
+    //public List<ActiviteDTO> getActivites(){return this.lActivites;}
+
     public void setPrestations(List<PrestationDTO> l){this.lPrest=l;}
     public List<PrestationDTO> getPrestations(){return this.lPrest;}
+
+    public void setActivitesId(List<UUID> l){lActivitesId=l;}
+    public List<UUID> getActivitesId(){return lActivitesId;}
+    public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
+    public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
 
     // ******************
     // Fonctions

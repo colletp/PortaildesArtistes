@@ -7,23 +7,44 @@
 
 <div class="Msg">[[${Msg}]]</div>
 <div class="Err">[[${Err}]]</div>
-<form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
 
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',${form.ressources})}"></div>
+<form class="formbox800" th:action="@{/Reponse}" th:name="form" th:method="put">
+    <fieldset>
+        <legend>Réponse</legend>
+        <input type="radio" name="typeReponse" value="0" onclick="$('repPos').style.visibility='hidden';" />Négative<br/>
+        <input type="radio" name="typeReponse" value="1" onclick="$('repPos').style.visibility='visible';" />Positive<br/>
+        Message personnalisé au citoyen :
+        <textarea name="body" cols="100" rows="10"></textarea>
 
-        Langue<select name="langue" id="langue">
-                <option value="FR">FR</option>
-                <option value="EN">EN</option>
-            </select><br/>
-        Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-        Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+        <fieldset id="respPos" style="visibility:hidden">
+            <legend>Carte d'artiste</legend>
+            <button type="submit" th:name="'addRowCarte'">Générer une carte d'artiste</button>
+            <ul th:each="item,rowStat : ${form}" th:object="${form}">
+                <li>
+                    Fragment créer carte artiste
 
-        <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${form.secteurActivites}) }"></fieldset>
+                    <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
+                    <button type="submit" th:name="'removeRowCarte'" th:value="${rowStat.index}">Supprimer</button>
+                </li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>Visa d'artiste</legend>
+            <button type="submit" th:name="'addRowVisa'">Générer un visa d'artiste</button>
+            <ul th:each="item,rowStat : ${form}" th:object="${form}">
+                <li>
+                    Fragment créer visa artiste
 
-        <input th:type="submit" name="submit" />
-    </form>
+                    <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />
+                    <button type="submit" th:name="'removeRowVisa'" th:value="${rowStat.index}">Supprimer</button>
+                </li>
+            </ul>
+        </fieldset>
+
+        <input th:type="submit" name="saveDraft" value="Enregistrer" />
+        <input th:type="submit" name="submit" value="Répondre au citoyen" />
+    </fieldset>
+</form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
