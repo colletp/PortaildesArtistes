@@ -6,21 +6,15 @@
 
 <fieldset th:fragment="getForm(form,secteurs,citoyen)">
     <legend>Demande de document d'artiste</legend>
-
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet('Citoyen',${citoyen},${citoyen.resideAdr}) }"></fieldset>
-
     Date Demande:[[${form.dateDemande}]]<br/>
-
     <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-
     Langue :[[${form.langue}]]<br/>
     Carte :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
-
     <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
-
 </fieldset>
 
 <fieldset th:fragment="postForm(form,secteurs,citoyen)" th:object="${form}">
