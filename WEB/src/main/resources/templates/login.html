@@ -6,8 +6,8 @@
     <div th:replace="~{/fragments/header :: head}"></div>
     <div th:replace="~{/fragments/header :: nav(select=${9})}"></div>
 
-    <div class="Msg">[[${Msg}]]</div>
-    <div class="Err">[[${Err}]]</div>
+    <div th:replace="~{/fragments/header :: erreurs}"></div>
+
     <form class="formbox600" th:action="@{/login}" th:name="form" th:method="post"><br>
             <legend th:text="#{askConnection}"></legend>
             <label th:text="#{username}"></label>
