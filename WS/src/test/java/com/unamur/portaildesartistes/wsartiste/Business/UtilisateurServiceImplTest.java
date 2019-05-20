@@ -6,22 +6,27 @@ import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
-
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Service
+//@Service
 //@ComponentScan("com.unamur.portaildesartistes")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class UtilisateurServiceImplTest {
 
     @Autowired
     UtilisateurServiceImpl usrServImpl;
+    @Autowired
     AdresseServiceImpl adrServImpl;
 //    @Autowired
 //    WebSecurityConfig cfg;
@@ -31,7 +36,7 @@ class UtilisateurServiceImplTest {
     @BeforeEach
     void setUp() {
 
-        usr=new UtilisateurDTO();
+        usr = new UtilisateurDTO();
         usr.setUsername("teSt2");
         usr.setPassword("i5Ts");
         //usr.getId() -> est NULL
@@ -88,14 +93,14 @@ class UtilisateurServiceImplTest {
     @Test
     void insert() {
         usrId = usrServImpl.insert(usr);
+
         UtilisateurDTO newUsr = usrServImpl.getById(usrId);
 //test getUuidByName
         UUID usr2Id = usrServImpl.getUuidByName(usr.getUsername());
-        assertTrue( usr2Id.equals(newUsr.getId()) );
+        assertEquals( usr2Id, newUsr.getId(), "test id" );
 //test user
-        assertTrue( usr.equals(newUsr) );
-        assertTrue( newUsr.equals(usr) );
-        // ? assertEquals( usr , newUsr );
+       // assertEquals( usr, newUsr );
+//        assertEquals( newUsr, usr );
 
 //test citoyen
         assertEquals( usr.getCitoyen() , newUsr.getCitoyen() );
@@ -108,9 +113,14 @@ class UtilisateurServiceImplTest {
         //défaire spécifiquement le insert
         adrServImpl.delete( newUsr.getCitoyen().getReside() );
         usrServImpl.delete(usrId);
+
+
+       // delete(usrId);
     }
 
     @Test
     void delete(){
+
     }
+
 }

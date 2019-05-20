@@ -42,7 +42,7 @@ public class Utilisateur extends DataForm<UtilisateurDTO> {
         }
         if(score==intArray.length)
             throw new IllegalArgumentException("Mots de passe trop faible");
-        if(toValidate.length()>12)
+        if(toValidate.length()>25)
             throw new IllegalArgumentException("Mots de passe trop long");
         return true;
 
