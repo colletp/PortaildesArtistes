@@ -5,16 +5,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class UtilisateurDTO extends DTO implements UserDetails {
     private String login;
     private String password;
 
-    private List<? extends GrantedAuthority> authorities = new ArrayList<>();
+    private List<RoleDTO> authorities;
 
     private String sess;
 
@@ -27,13 +25,10 @@ public class UtilisateurDTO extends DTO implements UserDetails {
     public void setUsername(String p_login) { this.login = p_login; }
     public String getPassword() { return password; }
     public void setPassword(String p_password) { this.password = p_password; }
-    public List<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>(); //authorities;
+    public List<RoleDTO> getAuthorities() {
+        return authorities;
     }
-        // }
-    public void setAuthorities(List<? extends GrantedAuthority> auth ) {
-        //authorities = auth;
-    }
+    public void setAuthorities(List<RoleDTO> auth ){ if(authorities==null)authorities = new ArrayList<>(); authorities = auth; }
 
     private CitoyenDTO citoyenDTO;
     public void setCitoyen(CitoyenDTO citoyenDTO) { this.citoyenDTO = citoyenDTO; }

@@ -98,12 +98,14 @@ public class RestTemplateHelper {
             throw new Exception(e.getMessage());
         }
     }
-    public <R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables)throws Exception {
-        try{
+    public <R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables)
+            //throws Exception
+    {
+        //try{
             return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
-        }catch(Exception e){
-            throw new Exception(e.getMessage());
-        }
+        //}catch(Exception e){
+        //    throw new Exception(e.getMessage());
+        //}
     }
 
 
@@ -133,10 +135,10 @@ public class RestTemplateHelper {
             try {
                 result = objectMapper.readValue(response.getBody(), javaType);
             } catch (IOException e) {
-                logger.info(e.getMessage());
+                logger.error(e.getMessage());
             }
         } else {
-            logger.info("No data found {}", response.getStatusCode());
+            logger.warn("No data found {}", response.getStatusCode());
         }
         return result;
     }

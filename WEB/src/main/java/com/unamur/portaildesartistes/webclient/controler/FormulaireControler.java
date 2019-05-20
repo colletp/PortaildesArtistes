@@ -196,6 +196,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("form",super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model));
             return "Formulaire/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -237,6 +238,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             loadForm( cookieValue, f ,"GET",model);
             return "Formulaire/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
 
@@ -254,6 +256,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             super.delete(cookieValue,new FormulaireDTO(),itemId,model);
             return "Formulaire/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }

@@ -65,13 +65,60 @@
 <h1>Formulaires traités</h1>
 <table>
     <tr><th>Date Demande</th>
-        <th>Date de la réponse</th>
         <th>Langue</th>
         <th>Carte</th>
         <th>Visa</th>
-        <th>Réponse</th>
-        <th>Document délivré</th>
+        <th>Traitement</th>
         <th>Actions</th>
+    </tr>
+    <tr th:each="frm : ${formFini}">
+        <td>[[${frm.dateDemande}]]</td>
+        <td>[[${frm.langue}]]</td>
+        <td>[[${frm.carte}]]</td>
+        <td>[[${frm.visa}]]</td>
+        <td><table>
+            <tr><th>Date Traitement</th>
+                <th>Nom du gestionnaire</th>
+                <th>Appréciation</th>
+                <th>Réponse</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each="trtItem : ${frm.trt}">
+                <td>[[${trtItem.dateTrt}]]</td>
+                <td>[[${trtItem.gest.citoyen.nom}]]</td>
+                <td>[[${trtItem.appreciation}]]</td>
+                <td><table>
+                    <tr><th>Date Réponse</th>
+                        <th>Document</th>
+                    </tr>
+                    <tr th:each="trtItem : ${frm.trt}">
+                        <td>[[${trtItem.dateReponse}]]</td>
+                        <td><table>
+                            <tr><th>Type de document</th>
+                                <th>N° de document</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr th:each="trtItem : ${frm.trt}">
+                                <td>[[${trtItem.typeDoc}]]</td>
+                                <td>[[${trtItem.noDoc}]]</td>
+                                <td class="boutonsList">
+                                    <a th:href="@{/Traitement/{id}(id=${trtItem.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                    </tr>
+                </table></td>
+                <td class="boutonsList">
+                    <a th:href="@{/Traitement/{id}(id=${trtItem.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+                </td>
+
+            </tr>
+        </table>
+        <td class="boutonsList">
+            <a th:href="@{/Traitement/form/{formId}(formId=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+        </td>
+        </td>
     </tr>
 
 </table>

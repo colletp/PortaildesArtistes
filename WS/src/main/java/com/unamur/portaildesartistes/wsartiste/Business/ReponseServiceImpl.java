@@ -19,6 +19,8 @@ public class ReponseServiceImpl implements IService<ReponseDTO>{
     private DonneeReponseImpl repImpl;
 
     @Transactional
+    public List<ReponseDTO>getByTrt(UUID trtId){ return repImpl.listByTrt(trtId); }
+    @Transactional
     public List<ReponseDTO> listReponse(){
         return repImpl.list();
     }

@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import com.unamur.portaildesartistes.webclient.dataForm.Traitement;
+import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -24,9 +27,10 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     private FormulaireControler formCtrl;
     @Autowired
     private DocArtisteControler docArtCtrl;
-
     @Autowired
     private CitoyenControler citCtrl;
+    @Autowired
+    private UtilisateurControler usrCtrl;
 
     @GetMapping(value = "/Traitement/form/{id}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -96,10 +100,18 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             ,Model model){
 
         try {
-            model.addAttribute("formATrt", formCtrl.listATraiterByLang(cookieValue ,"FR",model) );
-            model.addAttribute("formEnCours", formCtrl.listEnCoursByLang(cookieValue ,"FR",model) );
-            model.addAttribute("formFini",formCtrl.listFiniByLang(cookieValue ,"FR",model) );
-            model.addAttribute("DocArtPrest",docArtCtrl.listByLang(cookieValue,"FR",model) );
+            UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
+            //logger.error( moi.getAuthorities().toString() );
+
+            List<String> lLang = new ArrayList<>();
+            for(RoleDTO r : moi.getAuthorities() ){
+                lLang.add(r.getLang());
+            }
+
+            model.addAttribute("formATrt", formCtrl.listATraiterByLang(cookieValue ,"EN",model) );
+            model.addAttribute("formEnCours", formCtrl.listEnCoursByLang(cookieValue ,"EN",model) );
+            model.addAttribute("formFini",formCtrl.listFiniByLang(cookieValue ,"EN",model) );
+            model.addAttribute("DocArtPrest",docArtCtrl.listByLang(cookieValue,"EN",model) );
             return "Traitement/list.html";
         }catch(Exception e){
             model.addAttribute("Err" , e.getMessage() );

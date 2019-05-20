@@ -8,7 +8,7 @@ public class RoleDTO extends DTO implements GrantedAuthority {
 
     private String nomRole;
     private String lang;
-    private FormulaireDTO.Lang langue;
+    //private FormulaireDTO.Lang langue;
 
     public String getNomRole() {
         return nomRole;

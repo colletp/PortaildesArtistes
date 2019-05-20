@@ -30,6 +30,12 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     @Autowired
     AdresseControler adrControler;
 
+    public UtilisateurDTO getMoi(String cookieValue,Model model)throws Exception{
+        UUID myId = getMyId(cookieValue);
+        UtilisateurDTO moi = super.getObj(cookieValue, myId ,new UtilisateurDTO(),UtilisateurDTO.class,model);
+        return moi;
+    }
+
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
     public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){

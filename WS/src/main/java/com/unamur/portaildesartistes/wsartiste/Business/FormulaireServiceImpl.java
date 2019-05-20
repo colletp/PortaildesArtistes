@@ -23,6 +23,10 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     private SecteurServiceImpl sectServImpl;
     @Autowired
     private TraitementServiceImpl trtServImpl;
+    @Autowired
+    private ReponseServiceImpl repServImpl;
+    @Autowired
+    private DocArtisteServiceImpl docArtServImpl;
 
     @Transactional
     public List<FormulaireDTO> list(){ return formImpl.list(); }
@@ -44,6 +48,15 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     @Transactional
     public List<FormulaireDTO> listByLangTrtDone(String lang){
         List<FormulaireDTO> lFormDTO = formImpl.listByLangTrtDone(lang);
+        for( FormulaireDTO formDTO : lFormDTO ) {
+            formDTO.setTrt(trtServImpl.listByForm(formDTO.getId()));
+            for( TraitementDTO trtDTO : formDTO.getTrt() ){
+                trtDTO.setReponses( repServImpl.getByTrt( trtDTO.getId() ) );
+                for( ReponseDTO repDTO : trtDTO.getReponses() ){
+                    repDTO.setDocArt( docArtServImpl.getByReponse( repDTO.getId() ) );
+                }
+            }
+        }
         return lFormDTO;
     }
 
