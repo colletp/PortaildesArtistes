@@ -2,6 +2,7 @@ package com.unamur.portaildesartistes.wsartiste.Business;
 
 import com.unamur.portaildesartistes.DTO.TraitementDTO;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeTraitementImpl;
+import com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat.UtilisateurServiceFront;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
     private GestionnaireServiceImpl gestServImpl;
     @Autowired
     private FormulaireServiceImpl formServImpl;
+    @Autowired
+    private UtilisateurServiceFront usrServFront;
 
     @Transactional
     public List<TraitementDTO> listByForm(UUID formId){
@@ -57,9 +60,9 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
         return trtDTO;
    }
     @Transactional
-    public void update( TraitementDTO act ){ trtImpl.update(act); }
+    public void update( TraitementDTO trtDTO ){ trtImpl.update(trtDTO); }
     @Transactional
-    public UUID insert( TraitementDTO act ){ return trtImpl.insert(act); }
+    public UUID insert( TraitementDTO trtDTO ){ return trtImpl.insert(trtDTO); }
     @Transactional
     public void delete( UUID uuid ){ trtImpl.delete(uuid); }
 }

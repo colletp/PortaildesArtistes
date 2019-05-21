@@ -18,9 +18,8 @@
         <td>[[${frm.carte}]]</td>
         <td>[[${frm.visa}]]</td>
         <td class="boutonsList">
-            <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
-            <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
-            <a th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
+            <!--<a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>-->
+            <a th:href="@{/Traitement/form/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{creerTrt.form}" th:title="#{creerTrt.form}"  /></a>
         </td>
     </tr>
 </table>
@@ -55,7 +54,7 @@
             </tr>
         </table>
         <td class="boutonsList">
-            <a th:href="@{/Traitement/form/{formId}(formId=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+            <a th:href="@{/Traitement/form/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{creerTrt.form}" th:title="#{creerTrt.form}"  /></a>
         </td>
         </td>
     </tr>
@@ -90,18 +89,18 @@
                     <tr><th>Date Réponse</th>
                         <th>Document</th>
                     </tr>
-                    <tr th:each="trtItem : ${frm.trt}">
-                        <td>[[${trtItem.dateReponse}]]</td>
+                    <tr th:each="repItem : ${trtItem.reponses}">
+                        <td>[[${repItem.dateReponse}]]</td>
                         <td><table>
                             <tr><th>Type de document</th>
                                 <th>N° de document</th>
                                 <th>Action</th>
                             </tr>
-                            <tr th:each="trtItem : ${frm.trt}">
-                                <td>[[${trtItem.typeDoc}]]</td>
-                                <td>[[${trtItem.noDoc}]]</td>
+                            <tr th:each="docArtItem : ${repItem.docArt}">
+                                <td>[[${docArtItem.typeDocArtiste}]]</td>
+                                <td>[[${docArtItem.noDoc}]]</td>
                                 <td class="boutonsList">
-                                    <a th:href="@{/Traitement/{id}(id=${trtItem.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+                                    <a th:href="@{/Traitement/{id}(id=${docArtItem.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
                                 </td>
                             </tr>
                         </table>
@@ -118,20 +117,6 @@
             <a th:href="@{/Traitement/form/{formId}(formId=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
         </td>
         </td>
-    </tr>
-
-</table>
-
-<h1>Prestations par document d'artiste</h1>
-<table>
-    <tr><th>Date dernier traitement</th>
-        <th>Date d'octroi du document</th>
-        <th>Langue</th>
-        <th>Type de document</th>
-        <th>N° Document</th>
-        <th>Date de la dernière prestation traitée</th>
-        <th>Nombre de prestations en attente</th>
-        <th>Actions</th>
     </tr>
 
 </table>

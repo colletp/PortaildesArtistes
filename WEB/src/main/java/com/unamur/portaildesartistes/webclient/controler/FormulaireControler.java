@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
@@ -35,7 +36,8 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     public String loadForm(String cookieValue, Formulaire formForm, String method, Model model){
         try{
-            model.addAttribute("citoyen", citCtrl.getById( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(formForm.getCitoyenId()) , model ) );
+            CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
+            model.addAttribute("citoyen",citDTO);
             formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("form",formForm);
             model.addAttribute("activites",formForm.getActivitesId() );
@@ -172,10 +174,16 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         try{
-            UUID formId = super.postForm(cookieValue,formForm,method,model);
+            FormulaireDTO formDTO = formForm.getDTO();
+
+            CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
+            formDTO.setCitoyen(citDTO);
+
+            UUID formId = super.postForm(cookieValue,formDTO,method,model);
             if(formId!=null) {
                 model.addAttribute("Msg", "Données sauvées");
-                formForm.setId(formId.toString());
+                formDTO=super.getObj(cookieValue,formId,formDTO,FormulaireDTO.class,model );
+                formForm.setFromDTO(formDTO);
                 loadForm(cookieValue, formForm, method, model);
                 return "Formulaire/get.html";
             }else{
@@ -183,6 +191,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             }
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",formForm);
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             return "/login";

@@ -14,6 +14,7 @@
     Date Demande:[[${form.form.dateDemande}]]<br/>
     Date Traitement:[[${form.dateTrt}]]<br/>
     <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form.form},${form.form.secteurActivites},${citoyen}) }"></fieldset>
+
     Appréciation:<textarea rows="10" cols="100" th:field="${form.appreciation}"></textarea><br/>
 
     <input th:type="submit" value="Decmande complément d'information" />

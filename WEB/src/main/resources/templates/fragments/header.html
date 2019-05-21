@@ -55,7 +55,9 @@
 -->
         <div class=menu th:remove="${(select/256)%2!=1}? all : none"><a class="whitea" th:href="@{/Traitement}" th:text="#{gestionnaire}"></a> &#9660;
             <div class=ssmenu><a th:href="@{/Utilisateur/}" class="whitea"  th:text="#{utilisateurs}"></a></div>
-            <div class=ssmenu><a th:href="@{/Traitement/}" class="whitea"  th:text="#{formulaires}"></a></div>
+            <div class=ssmenu><a th:href="@{/Traitement/form/lang/FR}" class="whitea"  th:text="#{formulaires.fr}"></a></div>
+            <div class=ssmenu><a th:href="@{/Traitement/form/lang/EN}" class="whitea"  th:text="#{formulaires.en}"></a></div>
+            <div class=ssmenu><a th:href="@{/Traitement/prest}" class="whitea"  th:text="#{prestations}"></a></div>
             <div class=ssmenu><a th:href="@{/Prestation/}" class="whitea"  th:text="#{prestations}"></a></div>
         </div>
 

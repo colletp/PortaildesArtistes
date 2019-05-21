@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeAdresseImpl;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeCitoyenImpl;
+import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeGestionnaireImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class CitoyenServiceImpl implements IService<CitoyenDTO> {
     private DonneeCitoyenImpl citImpl;
     @Autowired
     private DonneeAdresseImpl adrImpl;
+    @Autowired
+    private DonneeGestionnaireImpl gestImpl;
 
     @Transactional
     public List<CitoyenDTO> list(){
@@ -36,6 +39,7 @@ public class CitoyenServiceImpl implements IService<CitoyenDTO> {
     public CitoyenDTO getById( UUID uuid ){
         CitoyenDTO cit= citImpl.getById(uuid);
         cit.setResideAdr( adrImpl.getById( cit.getReside() ) );
+        cit.setGest( gestImpl.getByCitoyenId(uuid) );
         return cit;
     }
 

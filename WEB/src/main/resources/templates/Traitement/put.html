@@ -4,18 +4,17 @@
 <body>
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
-
 <div th:replace="~{/fragments/header :: erreurs}"></div>
-
-<form class="formbox800" th:action="@{/Traitement}" th:name="trt" th:object="${trt}" th:method="put">
-    <input type="hidden" name="typeTrt" value="form" />
-
+<form class="formbox800" th:action="@{/Traitement}" th:name="form" th:method="put">
+    <input type="hidden" name="typeTrt" th:value="${typeTrt}" />
+    <input type="hidden" name="formId" th:value="${formId}" />
     <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
 
-    Appréciation<textarea field="${trt.appreciation}" rows="10" cols="100"></textarea><br/>
-    <input th:type="submit" name="ComplInfo" value="Demande complément d'information" />
-    <input th:type="submit" name="Comm" value="Enregistrer commentaire" />
-    <input th:type="submit" name="Deci" value="Décision finale (Réponse au citoyen)" />
+    <!-- Message au citoyen (envoi d'un message)<textarea field="${trt.msgCitoyen}" rows="10" cols="100"></textarea><br/> -->
+    Appréciation (en interne)<textarea th:field="${trt.appreciation}" rows="10" cols="100"></textarea><br/>
+    <input th:type="submit" name="submit" value="Demande complément d'information" />
+    <input th:type="submit" name="submit" value="Enregistrer commentaire" />
+    <input th:type="submit" name="submit" value="Décision finale (Réponse au citoyen)" />
 </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -26,14 +26,12 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     }
 
     @Autowired
-    CitoyenControler citControler;
+    CitoyenControler citCtrl;
     @Autowired
-    AdresseControler adrControler;
+    AdresseControler adrsCtrl;
 
     public UtilisateurDTO getMoi(String cookieValue,Model model)throws Exception{
-        UUID myId = getMyId(cookieValue);
-        UtilisateurDTO moi = super.getObj(cookieValue, myId ,new UtilisateurDTO(),UtilisateurDTO.class,model);
-        return moi;
+        return super.getObj(cookieValue, getMyId(cookieValue) ,new UtilisateurDTO(),UtilisateurDTO.class,model);
     }
 
     @GetMapping(value = "/Utilisateur/modif/moi")//initialisation du login
@@ -52,7 +50,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,Model model){
 
         try{
-            CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
+            CitoyenDTO citDTO = citCtrl.getObj( cookieValue , itemId, new CitoyenDTO(),CitoyenDTO.class, model );
             UtilisateurInscript usrForm = new UtilisateurInscript();
             usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class, model ) );
             usrForm.setCitoyen(citDTO);
@@ -71,7 +69,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             List<UtilisateurDTO> lUsrDTO = super.list(cookieValue, new UtilisateurDTO(), UtilisateurDTO.class, model );
             List<UtilisateurInscript> lUsrForm = new ArrayList<>();
             for( UtilisateurDTO usrDTO : lUsrDTO ){
-                CitoyenDTO citDTO = citControler.getById( cookieValue , usrDTO.getId(), model );
+                CitoyenDTO citDTO = citCtrl.getObj( cookieValue , usrDTO.getId(), new CitoyenDTO(),CitoyenDTO.class, model );
 
                 UtilisateurInscript usrForm= new UtilisateurInscript();
                 usrForm.setUtilisateur( usrDTO );
@@ -115,7 +113,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
-            CitoyenDTO citDTO = citControler.getById( cookieValue , itemId, model );
+            CitoyenDTO citDTO = citCtrl.getObj( cookieValue , itemId, new CitoyenDTO(),CitoyenDTO.class, model );
             UtilisateurInscript usrForm = new UtilisateurInscript();
             usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class,model ) );
             usrForm.setCitoyen(citDTO);
