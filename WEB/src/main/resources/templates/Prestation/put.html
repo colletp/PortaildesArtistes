@@ -15,19 +15,19 @@
         </thead>
         <tr>
             <td>Date prestation : </td>
-            <td><input type="date" th:value="${datePrest}" id="date-started" /></td>
+            <td><input type="date" th:value="${form.datePrest}" id="date-started" /></td>
         </tr>
         <tr>
             <td>Durée : </td>
-            <td><input type="text" th:value="${duree}" /></td>
+            <td><input type="text" th:value="${form.duree}" /></td>
         </tr>
         <tr>
             <td>Montant : </td>
-            <td><input type="text" th:value="${#numbers.formatDecimal(montant, 1, 2)}" /></td>
+            <td><input type="text" th:value="${#numbers.formatDecimal(form.montant, 1, 2)}" /></td>
         </tr>
         <tr>
             <td>Etat : </td>
-            <td><input type="text" name="etat" id="etat"></td>
+            <td><input type="text" name="etat" id="etat" th:value="${form.etat}"></td>
         </tr>
 
         <!--<tr>-->
