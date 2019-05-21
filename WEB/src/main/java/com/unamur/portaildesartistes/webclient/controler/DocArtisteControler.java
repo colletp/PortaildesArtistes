@@ -32,6 +32,8 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
     private CitoyenControler citCtrl;
     @Autowired
     private SecteurControler sectCtrl;
+    @Autowired
+    private UtilisateurControler usrCtrl;
 
     public String loadDoc(String cookieValue, DocArtisteDTO docArtDTO, String method, Model model){
         DocArtiste docArtForm = new DocArtiste();
@@ -40,16 +42,17 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
     }
     private String loadDoc(String cookieValue, DocArtiste docArtForm, String method, Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("citoyen",citCtrl.getObj( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(docArtForm.getCitoyenId()), new CitoyenDTO(),CitoyenDTO.class, model ) );
             docArtForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("docArt",docArtForm);
             model.addAttribute("activites",docArtForm.getActivitesId() );
             return "DocArtiste/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage() );
             return "/login";
         }
     }
-
 
     @GetMapping(value = "/DocArtiste/creer/{id}")
     public String docArtCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -57,6 +60,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             ,@ModelAttribute("form") final DocArtiste formDocArt
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,itemId, model);
             List<UUID> lActIdDTO = formDTO.getActivitesId();
             Collection<SecteurDTO> lSectDTO = formDTO.getSecteurActivites();
@@ -65,6 +69,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             model.addAttribute("secteurs", lSectDTO );
             return "DocArtiste/put.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -75,9 +80,11 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
                              @ModelAttribute("form") final DocArtiste formDocArt,
                              Model model){
         try {
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form", super.getObj(cookieValue, itemId, new DocArtisteDTO(), DocArtisteDTO.class, model));
             return "DocArtiste/post.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -88,6 +95,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             ,@ModelAttribute("form") final DocArtiste formDocArt
             ,Model model){
         try {
+            usrCtrl.setRoles(cookieValue, model);
             DocArtisteDTO docArtDTO = formDocArt.getDTO();
             docArtDTO.setCitoyenId( formCtrl.getMyId(cookieValue) );
             model.addAttribute("form", super.postForm(cookieValue,docArtDTO,method,model));
@@ -104,9 +112,11 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
     public String docArtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new DocArtisteDTO(),DocArtisteDTO.class,model));
             return "DocArtiste/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -125,9 +135,11 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
                         @PathVariable("id") UUID itemId ,
                         Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new DocArtisteDTO(),DocArtisteDTO.class,model));
             return "DocArtiste/get.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -141,11 +153,12 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
                              @PathVariable("id") UUID itemId,
                              Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue,new DocArtisteDTO(),itemId,model);
             return "docArtiste/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
-
 }

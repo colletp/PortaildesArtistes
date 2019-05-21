@@ -144,7 +144,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
         dto.setDocArtiste(getDocArtiste());
 
-        dto.setEtat( getEtat().isEmpty()?"Nouveau":getEtat() );
+        dto.setEtat( getEtat().isEmpty()?"Nouvelle":getEtat() );
 
         isNotEmpty( getMontant() );
         //convertDouble(getMontant());

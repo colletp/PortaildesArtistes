@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.CitoyenDTO;
+import com.unamur.portaildesartistes.DTO.RoleDTO;
 import com.unamur.portaildesartistes.DTO.UtilisateurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Utilisateur;
 import com.unamur.portaildesartistes.webclient.dataForm.UtilisateurInscript;
@@ -19,10 +20,32 @@ import java.util.UUID;
 public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO >, Utilisateur > {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurControler.class);
 
+    void setRoles(String cookieValue, Model model)throws Exception{
+        model.addAttribute("GestFormFR", testRole(cookieValue, "Gestionnaire de formulaire FR", model));
+        model.addAttribute("GestFormEN", testRole(cookieValue, "Gestionnaire de formulaire EN", model));
+        model.addAttribute("GestPers",   testRole(cookieValue, "Gestionnaire du personnel ", model));
+        model.addAttribute("GestPrest",  testRole(cookieValue, "Gestionnaire de pretations ", model));
+    }
+
+    private Boolean testRole(String cookieValue, String role, Model model)throws Exception {
+        for (RoleDTO r : getMoi(cookieValue, model).getAuthorities()){
+            logger.error( r.getAuthority() );
+            if( r.getAuthority().equals(role) )
+                return true;
+        }
+        return false;
+    }
+
     @GetMapping(value = "/Utilisateur/creer")
     public String citoyenCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-        return "Utilisateur/put.html";
+        try{
+            setRoles(cookieValue, model);
+            return "Utilisateur/put.html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
     }
 
     @Autowired
@@ -38,9 +61,12 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyenModifMoi( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            setRoles(cookieValue, model);
+
             model.addAttribute("form", new UtilisateurInscript( super.getObj(cookieValue, super.getMyId(cookieValue) , new UtilisateurDTO(), UtilisateurDTO.class, model) ) );
             return "/Utilisateur/post.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -50,6 +76,8 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,Model model){
 
         try{
+            setRoles(cookieValue, model);
+
             CitoyenDTO citDTO = citCtrl.getObj( cookieValue , itemId, new CitoyenDTO(),CitoyenDTO.class, model );
             UtilisateurInscript usrForm = new UtilisateurInscript();
             usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class, model ) );
@@ -58,6 +86,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             model.addAttribute("form",usrForm);
             return "/Utilisateur/post.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -66,6 +95,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
     public String citoyenList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
         try{
+            setRoles(cookieValue, model);
             List<UtilisateurDTO> lUsrDTO = super.list(cookieValue, new UtilisateurDTO(), UtilisateurDTO.class, model );
             List<UtilisateurInscript> lUsrForm = new ArrayList<>();
             for( UtilisateurDTO usrDTO : lUsrDTO ){
@@ -75,15 +105,14 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
                 usrForm.setUtilisateur( usrDTO );
                 usrForm.setCitoyen(citDTO);
                 usrForm.setAdresse( citDTO.getResideAdr() );
-                //usrForm.setAdresse( adrControler.getObj( cookieValue,citDTO.getReside() ,new AdresseDTO(),AdresseDTO.class ) );
 
                 lUsrForm.add( usrForm );
-
             }
 
             model.addAttribute("form", lUsrForm );
             return "Utilisateur/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -94,6 +123,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             ,@ModelAttribute("form") final UtilisateurInscript usrForm
             ,Model model){
         try{
+            setRoles(cookieValue, model);
             //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
             UtilisateurDTO usrDTO = usrForm.getDTO();
             super.postForm(cookieValue,usrDTO,method,model);
@@ -104,6 +134,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             model.addAttribute("Err",e.getMessage());
             return "Utilisateur/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -113,6 +144,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
+            setRoles(cookieValue, model);
             CitoyenDTO citDTO = citCtrl.getObj( cookieValue , itemId, new CitoyenDTO(),CitoyenDTO.class, model );
             UtilisateurInscript usrForm = new UtilisateurInscript();
             usrForm.setUtilisateur( super.getObj( cookieValue,itemId,new UtilisateurDTO(),UtilisateurDTO.class,model ) );
@@ -121,6 +153,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             model.addAttribute("form",usrForm);
             return "Utilisateur/get.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -130,9 +163,11 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         try{
+            setRoles(cookieValue, model);
             super.delete(cookieValue,new UtilisateurDTO(),itemId,model);
             return "Utilisateur/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }

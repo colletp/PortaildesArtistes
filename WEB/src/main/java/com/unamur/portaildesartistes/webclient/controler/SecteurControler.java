@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.SecteurDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Secteur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import java.util.UUID;
 @Controller
 public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO > , Secteur> {
     private static final Logger logger = LoggerFactory.getLogger(SecteurControler.class);
+
+    @Autowired
+    UtilisateurControler usrCtrl;
 
     //@GetMapping(value = "/Secteur/Activite")
     /*public String listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -50,7 +54,12 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     @GetMapping(value = "/Secteur/creer")
     public String createSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
-
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "Secteur/put.html";
     }
 
@@ -59,9 +68,11 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new SecteurDTO(),SecteurDTO.class,model) );
             return "Secteur/post.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -72,15 +83,17 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
             ,@ModelAttribute("usrForm") final Secteur sectForm
             ,Model model){
         try {
+            usrCtrl.setRoles(cookieValue, model);
             super.postForm(cookieValue, sectForm, method, model);
-            //model.addAttribute("form",sectForm);
+            model.addAttribute("form",sectForm);
             return "Secteur/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",sectForm);
             return "Secteur/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
-            model.addAttribute("form",sectForm);
-            return "Secteur/get.html";
+            model.addAttribute("Err",e.getMessage());
+            return "login.html";
         }
     }
 
@@ -88,9 +101,11 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     public String listSecteur( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new SecteurDTO(),SecteurDTO.class,model));
             return "Secteur/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -100,9 +115,11 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new SecteurDTO(),SecteurDTO.class,model));
             return "Secteur/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -112,9 +129,11 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue, new SecteurDTO() ,itemId,model);
             return "Secteur/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }

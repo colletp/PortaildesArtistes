@@ -74,7 +74,7 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
                 "JOIN formulaires f ON f.form_id=t.form_id AND f.citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyen_id,:reponse_id,:no_doc,:nom_artiste,:date_peremption,:type_doc_artiste) RETURNING doc_artiste_id ")
+        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyenId,:reponseId,:noDoc,:nomArtiste,:datePeremption,:typeDocArtiste) RETURNING doc_artiste_id ")
         String insert(@BindBean DocArtisteDTO test);
 
         @SqlQuery("select * from doc_artiste WHERE doc_artiste_id=:p_id ")

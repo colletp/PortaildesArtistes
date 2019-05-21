@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Activite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,18 @@ import java.util.UUID;
 public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class< ActiviteDTO > , Activite> {
     private static final Logger logger = LoggerFactory.getLogger(ActiviteControler.class);
 
+    @Autowired
+    UtilisateurControler usrCtrl;
+
     @GetMapping(value = "/Activite/creer")
     public String activiteCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "activite/put.html";
     }
 
@@ -25,9 +35,11 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form", super.getObj(cookieValue,itemId,new ActiviteDTO(),ActiviteDTO.class,model) );
             return "Activite/post.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -38,6 +50,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
             ,@ModelAttribute("form") final Activite actForm
             ,Model model){
         try {
+            usrCtrl.setRoles(cookieValue, model);
             actForm.setId( super.postForm(cookieValue, actForm, method, model).toString() );
             //model.addAttribute("form",actForm);
             return "Activite/get.html";
@@ -45,6 +58,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
             model.addAttribute("Err",e.getMessage());
             return "Activite/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -53,9 +67,11 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     public String activiteList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new ActiviteDTO(),ActiviteDTO.class,model));
             return "Activite/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -65,9 +81,11 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new ActiviteDTO(),ActiviteDTO.class,model));
             return "Activite/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -77,9 +95,11 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue, new ActiviteDTO() ,itemId,model);
             return "Activite/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
