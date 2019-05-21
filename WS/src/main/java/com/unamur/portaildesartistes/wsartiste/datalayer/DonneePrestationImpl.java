@@ -87,7 +87,7 @@ public class DonneePrestationImpl extends Donnee<PrestationDTO>{
         @SqlQuery("select * from prestations WHERE se_deroule_id=:p_id ")
         List<PrestationDTO> getByPlaceId(@Bind("p_id") UUID p_id);
 
-        @SqlQuery("INSERT INTO prestations (date_prest,duree,montant,etat,commanditaire_id,doc_artiste_id,activite_id,se_deroule_id) VALUES (:date_prest,:duree,:montant,:etat,:commanditaire_id,:doc_artiste_id,:activite_id,:se_deroule_id) RETURNING prest_id ")
+        @SqlQuery("INSERT INTO prestations (date_prest,duree,montant,etat,commanditaire_id,doc_artiste_id,activite_id,se_deroule_id) VALUES (:datePrest,:duree,:montant,:etat,:commanditaireId,:docArtisteId,:activiteId,:seDerouleId) RETURNING prest_id ")
         String insert(@BindBean PrestationDTO test);
 
         PrestationDTO getById(UUID id);

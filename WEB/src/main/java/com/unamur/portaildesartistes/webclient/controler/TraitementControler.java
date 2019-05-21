@@ -49,7 +49,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             model.addAttribute("trt",formTrt);
             return "Traitement/put.html";
         }catch( Exception e ){
-            return "/login.html";
+            return "login.html";
         }
     }
 
@@ -81,15 +81,20 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         try{
             usrCtrl.setRoles( cookieValue, model );
             UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
-            GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, moi.getCitoyen().getGest().getId() ,new GestionnaireDTO(),GestionnaireDTO.class,model );
-            gestDTO.setCitoyen( citCtrl.getObj( cookieValue , moi.getId(), new CitoyenDTO(),CitoyenDTO.class, model ) );
-            gestDTO.getCitoyen().setResideAdr( adrsCtrl.getObj(cookieValue,gestDTO.getCitoyen().getReside(),new AdresseDTO(),AdresseDTO.class,model ) );
+            logger.error( moi.getCitoyen().getGest().getMatricule() );
+            //GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, moi.getCitoyen().getGest().getId() ,new GestionnaireDTO(),GestionnaireDTO.class,model );
+            //si je suis un gestionnaire
+            formTrt.setGestId( moi.getCitoyen().getGest().getId().toString() );
 
-            formTrt.setGestId( gestDTO.getId().toString() );
+            //enregistrement du traitement avec l'ID du gestionnaire
             UUID trtId = super.postForm(cookieValue,formTrt.getDTO(),method,model);
+
+            //retrouver les éléments insérés en DB (date du traitement, ...)
             formTrt.setFromDTO( super.getObj( cookieValue,trtId, formTrt.getDTO(),TraitementDTO.class,model ) );
 
-            FormulaireDTO formDTO = formCtrl.formGetById(cookieValue, UUID.fromString( formId ), model);
+            FormulaireDTO formDTO = formCtrl.formGetById(
+                    cookieValue, UUID.fromString( formId ), model);
+
             formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
 
             model.addAttribute("_method",method);
@@ -97,9 +102,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             model.addAttribute("formId",formId);
             model.addAttribute("trt",formTrt);
 
-            model.addAttribute("Err",submit);
             model.addAttribute("Msg",submit);
-
             return "Traitement/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("_method",method);
