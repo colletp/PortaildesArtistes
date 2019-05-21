@@ -98,6 +98,9 @@ public class Citoyen extends DataForm<CitoyenDTO> {
     }
     Boolean isMajor(Date dateNaissance){
         //Controle si le citoyen à plus de 18 ans
+        if(dateNaissance==null){
+            throw new IllegalArgumentException("Date absente");
+        }
         Long resultat = new Date().getTime() - dateNaissance.getTime();
         logger.error( Long.toString(resultat/1000/60/60/24/365 ) );
         if(resultat< (18*365*24*60*60*1000) )
