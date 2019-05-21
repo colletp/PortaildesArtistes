@@ -21,6 +21,9 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
     private DonneeActiviteImpl actImpl;
 
     @Transactional
+    public List<ActiviteDTO> getByFormId( UUID formId ){ return actImpl.getByFormId(formId); }
+
+    @Transactional
     public List<ActiviteDTO> list(){
         return actImpl.list();
     }

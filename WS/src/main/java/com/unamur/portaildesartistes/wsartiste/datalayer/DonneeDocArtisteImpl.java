@@ -21,6 +21,7 @@ import java.util.UUID;
 public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeDocArtisteImpl.class);
 
+    public List<DocArtisteDTO> getByReponse(UUID repId){ return super.Exec(DocArtisteSQLs.class).getByReponse(repId); }
     public List<DocArtisteDTO> listByLang(String lang){ return super.Exec(DocArtisteSQLs.class).listByLang(lang); }
 
     @Override
@@ -53,6 +54,10 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
 
     @RegisterMapper(DocArtisteMapper.class)
     interface DocArtisteSQLs {
+
+        @SqlQuery("select * from doc_artiste WHERE reponse_id=:reponse_id ")
+        List<DocArtisteDTO> getByReponse(@Bind("reponse_id") UUID repId );
+
         @SqlQuery("select * from doc_artiste ")
         List<DocArtisteDTO> list();
 

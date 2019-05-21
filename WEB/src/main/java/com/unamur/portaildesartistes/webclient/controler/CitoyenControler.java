@@ -13,7 +13,4 @@ import java.util.UUID;
 public class CitoyenControler extends Controler< CitoyenDTO , Class< CitoyenDTO >, Citoyen> {
     private static final Logger logger = LoggerFactory.getLogger(CitoyenControler.class);
 
-    CitoyenDTO getById(String cookieValue , UUID itemId, Model model )throws Exception{
-        return super.getObj(cookieValue, itemId , new CitoyenDTO(), CitoyenDTO.class,model);
-    }
 }

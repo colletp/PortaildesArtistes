@@ -5,8 +5,8 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<div class="Msg">[[${Msg}]]</div>
-<div class="Err">[[${Err}]]</div>
+<div th:replace="~{/fragments/header :: erreurs}"></div>
+
 <form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="post">
     <input type="hidden" th:field="*{id}" />
 
@@ -14,6 +14,7 @@
     Date Demande:[[${form.form.dateDemande}]]<br/>
     Date Traitement:[[${form.dateTrt}]]<br/>
     <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form.form},${form.form.secteurActivites},${citoyen}) }"></fieldset>
+
     Appréciation:<textarea rows="10" cols="100" th:field="${form.appreciation}"></textarea><br/>
 
     <input th:type="submit" value="Decmande complément d'information" />

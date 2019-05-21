@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.ActiviteDTO;
+import com.unamur.portaildesartistes.DTO.CitoyenDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
 import org.slf4j.Logger;
@@ -35,16 +36,21 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     public String loadForm(String cookieValue, Formulaire formForm, String method, Model model){
         try{
-            model.addAttribute("citoyen", citCtrl.getById( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(formForm.getCitoyenId()) , model ) );
+            //citoyen ayant complété le formulaire
+            CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
+            model.addAttribute("citoyen",citDTO);
+            //tous les secteurs et activités existants
             formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("form",formForm);
+            //activité ayant été cochées par le citoyen
             model.addAttribute("activites",formForm.getActivitesId() );
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
-            return "/login";
+            model.addAttribute("Err",e.getMessage());
+            return "login.html";
         }
     }
 
@@ -119,12 +125,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             , @ModelAttribute("addRow") final String add
             , Model model){
         if(formForm.getActToAddBySect()==null)formForm.setActToAddBySect(new ArrayList<>());
-
-        //for( ActiviteDTO acDTO : formForm.getActToAddBySect() ){
-        //}
-        //ActiviteDTO actDTO = new ActiviteDTO();
-        //actDTO.setNomActivite(  );
-        //formForm.getActToAddBySect().add( String.valueOf( formForm.getActToAddBySect().size() ) );
         ActiviteDTO actDTO = new ActiviteDTO();
         actDTO.setSecteurId( UUID.fromString(add) );
         formForm.getActToAddBySect().add( actDTO );
@@ -172,10 +172,16 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         try{
-            UUID formId = super.postForm(cookieValue,formForm,method,model);
+            FormulaireDTO formDTO = formForm.getDTO();
+
+            CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
+            formDTO.setCitoyen(citDTO);
+
+            UUID formId = super.postForm(cookieValue,formDTO,method,model);
             if(formId!=null) {
                 model.addAttribute("Msg", "Données sauvées");
-                formForm.setId(formId.toString());
+                formDTO=super.getObj(cookieValue,formId,formDTO,FormulaireDTO.class,model );
+                formForm.setFromDTO(formDTO);
                 loadForm(cookieValue, formForm, method, model);
                 return "Formulaire/get.html";
             }else{
@@ -183,6 +189,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             }
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
+            model.addAttribute("form",formForm);
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
             return "/login";
@@ -196,6 +203,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("form",super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model));
             return "Formulaire/list.html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -237,6 +245,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             loadForm( cookieValue, f ,"GET",model);
             return "Formulaire/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
 
@@ -254,6 +263,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             super.delete(cookieValue,new FormulaireDTO(),itemId,model);
             return "Formulaire/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }

@@ -2,16 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
+
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:method="post">
-    <input type="hidden" th:field="${form.id}" />
-    <fieldset th:replace="~{/fragments/form :: postForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
+<div class="formbox800">
 
-</form>
+<h1>Prestations par document d'artiste</h1>
+<table>
+    <tr><th>Date dernier traitement</th>
+        <th>Date d'octroi du document</th>
+        <th>Langue</th>
+        <th>Type de document</th>
+        <th>N° Document</th>
+        <th>Date de la dernière prestation traitée</th>
+        <th>Nombre de prestations en attente</th>
+        <th>Actions</th>
+    </tr>
+
+</table>
+
+</div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

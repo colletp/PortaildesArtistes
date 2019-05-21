@@ -16,13 +16,20 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     private static final Logger logger = LoggerFactory.getLogger(FormulaireServiceImpl.class);
 
     @Autowired
-    private DonneeActiviteImpl actImpl;
+    private ActiviteServiceImpl actServImpl;
     @Autowired
     private DonneeFormulaireImpl formImpl;
     @Autowired
     private SecteurServiceImpl sectServImpl;
     @Autowired
     private TraitementServiceImpl trtServImpl;
+    @Autowired
+    private ReponseServiceImpl repServImpl;
+    @Autowired
+    private DocArtisteServiceImpl docArtServImpl;
+
+    @Autowired
+    private CitoyenServiceImpl citServImpl;
 
     @Transactional
     public List<FormulaireDTO> list(){ return formImpl.list(); }
@@ -44,6 +51,15 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
     @Transactional
     public List<FormulaireDTO> listByLangTrtDone(String lang){
         List<FormulaireDTO> lFormDTO = formImpl.listByLangTrtDone(lang);
+        for( FormulaireDTO formDTO : lFormDTO ) {
+            formDTO.setTrt(trtServImpl.listByForm(formDTO.getId()));
+            for( TraitementDTO trtDTO : formDTO.getTrt() ){
+                trtDTO.setReponses( repServImpl.getByTrt( trtDTO.getId() ) );
+                for( ReponseDTO repDTO : trtDTO.getReponses() ){
+                    repDTO.setDocArt( docArtServImpl.getByReponse( repDTO.getId() ) );
+                }
+            }
+        }
         return lFormDTO;
     }
 
@@ -52,11 +68,13 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
         FormulaireDTO form= formImpl.getById(uuid);
         form.setSecteurActivites( sectServImpl.listSecteurActiviteByFormId( uuid ) );
 
-        List<ActiviteDTO> lAct = actImpl.getByFormId( form.getId() );
+        List<ActiviteDTO> lAct = actServImpl.getByFormId( form.getId() );
         List<UUID> lActId = new ArrayList<>();
         for( ActiviteDTO act : lAct )
             lActId.add(act.getId());
         form.setActivitesId(lActId);
+
+        form.setCitoyen( citServImpl.getById( form.getCitoyenId() ) );
 
         return form;
     }

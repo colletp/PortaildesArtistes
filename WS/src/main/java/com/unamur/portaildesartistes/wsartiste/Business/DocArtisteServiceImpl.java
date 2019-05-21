@@ -19,6 +19,8 @@ public class DocArtisteServiceImpl implements IService<DocArtisteDTO> {
     private DonneeDocArtisteImpl docArtImpl;
 
     @Transactional
+    public List<DocArtisteDTO> getByReponse(UUID repId){ return docArtImpl.getByReponse(repId); }
+    @Transactional
     public List<DocArtisteDTO> listByLang(String lang){ return docArtImpl.listByLang(lang); }
     @Transactional
     public List<DocArtisteDTO> list(){ return docArtImpl.list(); }

@@ -77,10 +77,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // Fonctions
     // ******************
     public Boolean notNullSameTime(String carte,String visa){
-        if (carte!="1"&&visa!="1"){
-            throw new IllegalArgumentException("Vous devez choisir au moins une carte ou un visa");
+        if ( ( getCarte()!=null&&getCarte().equals("1") ) || (getVisa()!=null && getVisa().equals("1") ) ){
+            return true;
         }
-        return true;
+        throw new IllegalArgumentException("Vous devez choisir au moins une carte ou un visa");
     }
 
     public FormulaireDTO getDTO(){
@@ -88,7 +88,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         if( getId()!=null && !getId().isEmpty())
             dto.setId( convertUUID(getId()) );
 
-        notNullSameTime(carte,visa);
+        notNullSameTime(getCarte(),getVisa());
         dto.setVisa( getVisa()!=null?getVisa().equals("1"):false );
         dto.setCarte( getCarte()!=null?getCarte().equals("1"):false );
 
@@ -102,10 +102,10 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         dto.setExpPro( getExpPro() );
         dto.setCursusAc( getCursusAc() );
 
-        isNotEmpty(getDateDemande());
-        dto.setDateDemande( Timestamp.from(convertDate(getDateDemande()).toInstant()) );
+        //isNotEmpty(getDateDemande());
+        dto.setDateDemande( convertDate(getDateDemande()) );
 
-        isNotEmpty(citoyenId);
+        //isNotEmpty(citoyenId);//complété par le citoyen courant lors de l'insertion
         if( getCitoyenId()!=null && !getCitoyenId().isEmpty())
             dto.setCitoyenId(convertUUID(getCitoyenId()));
 

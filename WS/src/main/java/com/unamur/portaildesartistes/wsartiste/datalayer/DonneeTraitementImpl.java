@@ -63,7 +63,7 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
         @SqlQuery("select t.* from traitements t JOIN formulaires f ON t.form_id=f.form_id WHERE f.langue=:lang ")
         List<TraitementDTO> listByLang( @Bind("lang") String lang);
 
-        @SqlQuery("INSERT INTO traitements (date_trt,appreciation,roles_id,gest_id,form_id,citoyen_prest_id,type_role) VALUES (:date_trt,:appreciation,:roles_id,:gest_id,:form_id,:citoyen_prest_id,:type_role) RETURNING trt_id ")
+        @SqlQuery("INSERT INTO traitements (appreciation,gest_id,form_id,citoyen_prest_id) VALUES (:appreciation,:gestId,:formId,:citoyenPrest) RETURNING trt_id ")
         String insert(@BindBean TraitementDTO test);
 
         @SqlQuery("select * from traitements WHERE trt_id=:id ")
@@ -84,11 +84,11 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
 
             trtDTO.setDateTrt( r.getTimestamp("date_trt"));
             trtDTO.setAppreciation( r.getString("appreciation"));
-            trtDTO.setRoleId( (UUID) r.getObject("roles_id"));
+            //trtDTO.setRoleId( (UUID) r.getObject("roles_id"));
             trtDTO.setGestId( (UUID) r.getObject("gest_id"));
             trtDTO.setFormId( (UUID) r.getObject("form_id"));
             trtDTO.setCitoyenPrestId( (UUID) r.getObject("citoyen_prest_id"));
-            trtDTO.setTypeRole( r.getString("type_role"));
+            //trtDTO.setTypeRole( r.getString("type_role"));
             return trtDTO;
         }
     }

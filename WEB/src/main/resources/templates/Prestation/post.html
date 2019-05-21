@@ -5,8 +5,8 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<div class="Msg">[[${Msg}]]</div>
-<div class="Err">[[${Err}]]</div>
+<div th:replace="~{/fragments/header :: erreurs}"></div>
+
 <form class="formbox400" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="post">
     <input type="hidden" th:field="${form.id}" />
     <table>

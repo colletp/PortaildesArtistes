@@ -40,7 +40,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
     }
     private String loadDoc(String cookieValue, DocArtiste docArtForm, String method, Model model){
         try{
-            model.addAttribute("citoyen", citCtrl.getById( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(docArtForm.getCitoyenId()) , model ) );
+            model.addAttribute("citoyen",citCtrl.getObj( cookieValue , method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString(docArtForm.getCitoyenId()), new CitoyenDTO(),CitoyenDTO.class, model ) );
             docArtForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("docArt",docArtForm);
             model.addAttribute("activites",docArtForm.getActivitesId() );

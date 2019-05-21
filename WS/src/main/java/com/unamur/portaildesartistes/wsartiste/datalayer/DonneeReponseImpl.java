@@ -18,6 +18,10 @@ import java.util.UUID;
 public class DonneeReponseImpl extends Donnee<ReponseDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DonneeReponseImpl.class);
 
+    public List<ReponseDTO> listByTrt(UUID trtId){
+        return super.Exec(ReponseSQLs.class).listByTrt(trtId);
+    }
+
     @Override
     public List<ReponseDTO> list(){
         return super.Exec(ReponseSQLs.class).list();
@@ -45,6 +49,10 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
 
     @RegisterMapper(ReponseMapper.class)
     interface ReponseSQLs {
+
+        @SqlQuery("select * from reponse WHERE trt_id=:p_id ")
+        List<ReponseDTO> listByTrt(@Bind("p_id") UUID trtId);
+
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 

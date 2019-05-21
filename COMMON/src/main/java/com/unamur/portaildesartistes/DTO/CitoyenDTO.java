@@ -24,7 +24,7 @@ public class CitoyenDTO extends DTO {
     private List<RoleDTO> roles;
     private List<DocArtisteDTO> docs;
     private List<FormulaireDTO> forms;
-
+    private GestionnaireDTO gestDTO;
     // ******************
     // Constructeur
     // ******************
@@ -64,6 +64,9 @@ public class CitoyenDTO extends DTO {
 
     public List<FormulaireDTO> getFormulaires() { return forms; }
     public void setFormulaires(List<FormulaireDTO> p_forms) { this.forms = p_forms; }
+
+    public GestionnaireDTO getGest(){ return gestDTO; }
+    public void setGest(GestionnaireDTO gest){ gestDTO = gest; }
 
     // ******************
     // Fonctions

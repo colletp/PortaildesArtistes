@@ -1,10 +1,6 @@
 package com.unamur.portaildesartistes.DTO;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class FormulaireDTO extends DTO {
 
@@ -13,7 +9,7 @@ public class FormulaireDTO extends DTO {
     // ******************
 
     private UUID citoyenId;
-    private Timestamp dateDemande;
+    private Date dateDemande;
     private List<String> cursusAc;
     private List<String> expPro;
     private List<String> ressources;
@@ -27,6 +23,7 @@ public class FormulaireDTO extends DTO {
 
     private List<TraitementDTO> lTrt;
 
+    private CitoyenDTO citDTO;
     // ******************
     // Constructeur
     // ******************
@@ -43,13 +40,13 @@ public class FormulaireDTO extends DTO {
 
     public UUID getCitoyenId() { return citoyenId; }
     public void setCitoyenId( UUID p_id) { citoyenId = p_id; }
-    public Timestamp getDateDemande(){ return dateDemande;}
-    public void setDateDemande(Timestamp d){ dateDemande=d;}
-    public List<String> getCursusAc(){ return cursusAc;}
+    public Date getDateDemande(){ return dateDemande;}
+    public void setDateDemande(Date d){ dateDemande=d;}
+    public List<String> getCursusAc(){ return cursusAc==null?new ArrayList<>():cursusAc;}
     public void setCursusAc(List<String> ls){ cursusAc=ls;}
-    public List<String> getExpPro(){ return expPro;}
+    public List<String> getExpPro(){ return expPro==null?new ArrayList<>():expPro;}
     public void setExpPro(List<String> ls){ expPro=ls;}
-    public List<String> getRessources(){ return ressources;}
+    public List<String> getRessources(){ return ressources==null?new ArrayList<>():ressources;}
     public void setRessources(List<String> ls){ ressources=ls;}
     public String getLangue(){
         return langue.toString();
@@ -65,11 +62,13 @@ public class FormulaireDTO extends DTO {
 
     public void setActivitesId(List<UUID> l){lActivitesId=l;}
     public List<UUID> getActivitesId(){return lActivitesId;}
+
     public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
     public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
-
     public void setTrt(List<TraitementDTO> l){lTrt=l;}
     public List<TraitementDTO> getTrt(){return lTrt;}
+    public CitoyenDTO getCitoyen() { return citDTO; }
+    public void setCitoyen( CitoyenDTO cit) { citDTO=cit; }
 
     // ******************
     // Fonctions

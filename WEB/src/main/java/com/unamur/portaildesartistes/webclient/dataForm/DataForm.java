@@ -161,6 +161,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
 
 
     protected Date convertDate( String toValidate ) {
+        if(toValidate==null || toValidate.isEmpty())return null;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         dateFormat.setLenient(false);
@@ -205,7 +206,8 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     }
 
     protected UUID convertUUID( String toValidate ){
-		return UUID.fromString(toValidate);
+		if(toValidate==null || toValidate.isEmpty())return null;
+        return UUID.fromString(toValidate);
     }
     protected Integer convertInt( String toValidate ){
 		return Integer.valueOf(toValidate);

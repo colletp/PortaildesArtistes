@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -24,100 +26,158 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     private FormulaireControler formCtrl;
     @Autowired
     private DocArtisteControler docArtCtrl;
-
     @Autowired
     private CitoyenControler citCtrl;
+    @Autowired
+    private GestionnaireControler gestCtrl;
+    @Autowired
+    private UtilisateurControler usrCtrl;
+    @Autowired
+    private AdresseControler adrsCtrl;
 
-    @GetMapping(value = "/Traitement/form/{id}")
+    @GetMapping(value = "/Traitement/form/{formId}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@PathVariable("id") UUID formId
+            ,@PathVariable("formId") String formId
             ,@ModelAttribute("trt") final Traitement formTrt
             ,Model model){
         try{
-            FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,formId , model);
+            FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
             formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
+            model.addAttribute("typeTrt","Form");
+            model.addAttribute("formId",formId.toString());
             model.addAttribute("trt",formTrt);
-            return "Traitement/putForm.html";
+            return "Traitement/put.html";
         }catch( Exception e ){
             return "/login.html";
         }
     }
 
-    @GetMapping(value = "/Traitement/prest/{id}")
+    @GetMapping(value = "/Traitement/prest/{docArtId}")
     public String trtCreateByDocArtiste( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@PathVariable("id") UUID docArtId
+            ,@PathVariable("docArtId") UUID docArtId
             ,@ModelAttribute("trt") final Traitement formTrt
             ,Model model){
         try{
             DocArtisteDTO docArtDTO = docArtCtrl.getObj( cookieValue,docArtId, new DocArtisteDTO(), DocArtisteDTO.class ,model );
             docArtCtrl.loadDoc(cookieValue, docArtDTO ,"GET",model);
+            model.addAttribute("typeTrt","Prest");
             model.addAttribute("trt",formTrt);
-            return "Traitement/putPrest.html";
+            return "Traitement/put.html";
         }catch( Exception e ){
             return "/login.html";
         }
     }
 
-    /*
-    @GetMapping(value = "/Traitement/modif/{id}")
-    public String trtModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
-                             @PathVariable("id") UUID itemId ,
-                             @ModelAttribute("form") final Traitement formTrt,
-                             Model model){
-
-        TraitementDTO trtDTO = getObj(cookieValue,itemId,new TraitementDTO(),TraitementDTO.class);
-        CitoyenDTO citDTO = citCtrl.getCitoyen( cookieValue,trtDTO.getForm().getCitoyenId() );
-        model.addAttribute("form", trtDTO );
-        model.addAttribute("citoyen", citDTO );
-
-        return "Traitement/post.html";
-    }
-    */
-
-    @PostMapping(value = "/Traitement")
+    @PostMapping(value = "/Traitement", params={"submit"})
     public String trtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Traitement formTrt
+            ,@ModelAttribute("typeTrt") final String typeTrt
+            ,@ModelAttribute("submit") final String submit
+            ,@ModelAttribute("formId") final String formId
             ,Model model){
         try{
-            super.postForm(cookieValue,formTrt.getDTO(),method,model);
-            model.addAttribute("form",formTrt);
+            UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
+            logger.error( moi.getCitoyen().getGest().getMatricule() );
+            //GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, moi.getCitoyen().getGest().getId() ,new GestionnaireDTO(),GestionnaireDTO.class,model );
+            //si je suis un gestionnaire
+            formTrt.setGestId( moi.getCitoyen().getGest().getId().toString() );
+
+            //enregistrement du traitement avec l'ID du gestionnaire
+            UUID trtId = super.postForm(cookieValue,formTrt.getDTO(),method,model);
+
+            //retrouver les éléments insérés en DB (date du traitement, ...)
+            formTrt.setFromDTO( super.getObj( cookieValue,trtId, formTrt.getDTO(),TraitementDTO.class,model ) );
+
+            FormulaireDTO formDTO = formCtrl.formGetById(
+                    cookieValue, UUID.fromString( formId ), model);
+
+            formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
+
+            model.addAttribute("_method",method);
+            model.addAttribute("typeTrt",typeTrt);
+            model.addAttribute("formId",formId);
+            model.addAttribute("trt",formTrt);
+
+            model.addAttribute("Msg",submit);
             return "Traitement/get.html";
         }catch(IllegalArgumentException e){
+            model.addAttribute("_method",method);
+            model.addAttribute("typeTrt",typeTrt);
+            model.addAttribute("formId",formId);
+            model.addAttribute("trt",formTrt);
+
             model.addAttribute("Err",e.getMessage());
             return "Traitement/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
+            logger.error(e.getMessage());
+            e.printStackTrace();
             return "/login.html";
         }
     }
 
-    @GetMapping(value = "/Traitement")
-    public String trtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    @GetMapping(value = "/Traitement/form/lang/{lang}")
+    public String trtListForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@PathVariable("lang") String lang
             ,Model model){
 
         try {
-            model.addAttribute("formATrt", formCtrl.listATraiterByLang(cookieValue ,"FR",model) );
-            model.addAttribute("formEnCours", formCtrl.listEnCoursByLang(cookieValue ,"FR",model) );
-            model.addAttribute("formFini",formCtrl.listFiniByLang(cookieValue ,"FR",model) );
-            model.addAttribute("DocArtPrest",docArtCtrl.listByLang(cookieValue,"FR",model) );
-            return "Traitement/list.html";
+            UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
+            List<String> lLang = new ArrayList<>();
+            for(RoleDTO r : moi.getAuthorities() ){
+                lLang.add(r.getLang());
+                if(r.getLang().equals(lang)){}
+                else{
+                    model.addAttribute("Err","Langue non disponible pour ce gestionnaire");
+                    return "choixTraitement.html";
+                }
+            }
+            model.addAttribute("formATrt", formCtrl.listATraiterByLang(cookieValue ,lang,model) );
+            model.addAttribute("formEnCours", formCtrl.listEnCoursByLang(cookieValue ,lang,model) );
+            model.addAttribute("formFini",formCtrl.listFiniByLang(cookieValue ,lang,model) );
+            return "Traitement/listForm.html";
         }catch(Exception e){
             model.addAttribute("Err" , e.getMessage() );
-            return "/login.html";
+            return "login.html";
+        }
+    }
+    @GetMapping(value = "/Traitement")
+    public String trtChoix( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,Model model){
+        return "choixTraitement.html";
+    }
+
+    @GetMapping(value = "/Traitement/prest")
+    public String trtListPrest( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,Model model){
+
+        try {
+            UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
+            List<String> lLang = new ArrayList<>();
+            for(RoleDTO r : moi.getAuthorities() ){
+                lLang.add(r.getLang());
+            }
+
+            //model.addAttribute("DocArtPrest",docArtCtrl.listByLang(cookieValue,lang,model) );
+            return "Traitement/listForm.html";
+        }catch(Exception e){
+            model.addAttribute("Err" , e.getMessage() );
+            return "login.html";
         }
     }
 
-    @GetMapping(value = "/Traitement/{id}")
+    @GetMapping(value = "/Traitement/{trtId}")
     public String Form( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                        @PathVariable("id") UUID itemId ,
+                        @PathVariable("trtId") UUID trtId ,
                         Model model){
         try{
-            TraitementDTO trtDTO = getObj(cookieValue,itemId,new TraitementDTO(),TraitementDTO.class,model);
+            TraitementDTO trtDTO = getObj(cookieValue,trtId,new TraitementDTO(),TraitementDTO.class,model);
             model.addAttribute("form", trtDTO );
-            model.addAttribute("citoyen", citCtrl.getById( cookieValue,trtDTO.getForm().getCitoyenId() ,model ) );
+            model.addAttribute("citoyen",citCtrl.getObj( cookieValue , trtDTO.getForm().getCitoyenId(), new CitoyenDTO(),CitoyenDTO.class, model ) );
             return "Traitement/get.html";
         }catch( Exception e ){
-            return "/login.html";
+            model.addAttribute("Err" , e.getMessage() );
+            return "login.html";
         }
     }
 
@@ -129,7 +189,8 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             super.delete(cookieValue,new TraitementDTO(),itemId,model);
             return "Traitement.list.html";
         }catch( Exception e ){
-            return "/login.html";
+            model.addAttribute("Err" , e.getMessage() );
+            return "login.html";
         }
     }
 }
