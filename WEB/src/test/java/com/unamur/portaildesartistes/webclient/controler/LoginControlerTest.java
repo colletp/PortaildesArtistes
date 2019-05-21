@@ -8,10 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,11 +34,14 @@ class LoginControlerTest {
     private RestTemplateHelper restTemplateHelper=mock(RestTemplateHelper.class);
     @Mock
     private PropertiesConfigurationService configurationService=mock(PropertiesConfigurationService.class);
+    @Mock
+    private ResponseEntity<String> responseEntity=mock(ResponseEntity.class);
 
     private Utilisateur user;
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.initMocks(this);
         connect=new LoginControler();
         user=new Utilisateur();
         user.setUsername("test1");
@@ -51,7 +60,17 @@ class LoginControlerTest {
     void testConnectNonValide12() {
         user.setUsername("test");
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(configurationService.getUrl()).thenReturn("http://localhost:8081/wsArtiste");
+        MultiValueMap<String,String> mock=mock(MultiValueMap.class);
+        HttpHeaders mock1=mock(HttpHeaders.class);
+        responseEntity=mock(ResponseEntity.class);
+        try {
+            when(restTemplateHelper.postForAuth("http://localhost:8081/wsArtiste/Authentification",mock,mock1)).thenReturn(responseEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        when(responseEntity.getStatusCodeValue()).thenReturn(200);
+
+        //when(configurationService.getUrl()).thenReturn("http://localhost:8081/wsArtiste");
         //when(restTemplateHelper.postForAuth(anyString(),anyString(), (HttpHeaders) anyList(),(HttpHeaders)anyObject()).thenReturn();
         assertEquals("<401 SEE_OTHER See Other,Autre erreur non gérée (voir logs),[]>",connect.authenticate(user,bindingResult,model).toString());
     }

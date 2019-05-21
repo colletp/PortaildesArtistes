@@ -73,14 +73,17 @@ class InscriptionControlerTest {
         assertDoesNotThrow( ()->usrInscr.getDTO() );
     }
 
-    // à corriger
+    // à verifier
     @DisplayName("TC 2.3, Test d’inscription avec un identifiant existant")
     @Test
     void testInscriptNonValide23() throws ParseException {
         usrInscr.getUtilisateur().setUsername("test1");
-        when(bindingResult.hasErrors()).thenReturn(true);
-
-        assertEquals("inscript.html",String.valueOf(inscriptionControler.inscript(usrInscr,method,bindingResult,model)));
+        try {
+            when(inscriptionControler.postForm("",usrInscr.getDTO(),"PUT","inscript",model)).thenReturn(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals("/login.html",inscriptionControler.inscript(usrInscr,method,bindingResult,model));
     }
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")
