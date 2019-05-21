@@ -7,19 +7,19 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox400" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="post">
+<form class="formbox800" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="post">
     <input type="hidden" th:field="${form.id}" />
     <table>
         <tr>
             <td>Date prestation : </td>
-            <td><input type="date" th:field="${form.datePrest}" id="date-started" /></td>
+            <td><input type="date" th:field="${form.datePrest}" /></td>
         </tr>
         <tr>
-            <td>Durée : </td>
+            <td>Durée(heure) : </td>
             <td><input type="text" th:field="${form.duree}" /></td>
         </tr>
         <tr>
-            <td>Montant : </td>
+            <td>Montant(€) : </td>
             <td><input type="text" th:field="${form.montant}" /></td>
         </tr>
         <tr>
@@ -35,21 +35,25 @@
             </select></td>
         </tr>
 
-        <!--<tr>-->
-            <!--<td><fieldset th:replace="~{/fragments/commanditaire :: commenditaireFormById(${form.ocommanditaire}) }"></fieldset></td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td><fieldset th:replace="~{/fragments/docartiste :: docAcrtisteFormById(${form.odocArtiste} ) }"></fieldset></td>-->
-        <!--</tr>-->
+        <tr>
+        <td><fieldset th:replace="~{/fragments/adresse :: AdressePost('Adresse de la prestation',${form.SeDeroule}) }"></fieldset></td>
+        </tr>
+
         <tr>
             <td><fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form},${form.secteurActivites})}"></fieldset></td>
         </tr>
-        <!--<tr>-->
-            <!--<td><fieldset th:replace="~{/fragments/adresse :: adresseFormById(${form}) }"></fieldset></td>-->
-        <!--</tr>-->
+
+        <tr>
+            <td><fieldset th:replace="~{/fragments/commanditaire :: commmanditairePost( 'Coordonnée du commanditaire', ${form.Commanditaire} ) }"></fieldset></td>
+        </tr>
+
+        <tr>
+            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePost 'Document artiste', ${form.DocArtiste},true) }"></fieldset></td>
+        </tr>
+
     </table>
 
-    <input th:type="submit" />
+    <input th:type="submit" name="submit" />
 
 </form>
 

@@ -19,10 +19,51 @@
     <div th:if= "${detailVisible} == true">
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
     </div>
+</fieldset>
 
+<fieldset th:fragment="docArtistePost(fonction,docArtiste,detailVisible)">
+    <legend th:text="${fonction}">Document Artiste</legend>
 
+    <div th:if= "${docArtiste} != null">
+        <span th:text="#{docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
+        <span th:text="#{docArtiste.NomArtiste}" >Nom</span>:[[${docArtiste.NomArtiste}]]<br/>
+        <span th:text="#{docArtiste.DatePeremption}" >Date peremption</span>:[[${docArtiste.DatePeremption}]]<br/>
+        <span th:text="#{docArtiste.TypeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
+
+        <div th:if= "${detailVisible} == true">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
+        </div>
+    <div th:if= "${detailVisible} == true">
+        <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
+    </div>
+    </div>
+    <div th:if= "${docArtiste} == null ">
+        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+    </div>
+</fieldset>
+
+<fieldset th:fragment="docArtistePut(fonction,docArtiste,detailVisible)">
+    <legend th:text="${fonction}">Document Artiste</legend>
+
+    <div th:if= "${docArtiste} != null">
+        <span th:text="#{docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
+        <span th:text="#{docArtiste.NomArtiste}" >Nom</span>:[[${docArtiste.NomArtiste}]]<br/>
+        <span th:text="#{docArtiste.DatePeremption}" >Date peremption</span>:[[${docArtiste.DatePeremption}]]<br/>
+        <span th:text="#{docArtiste.TypeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
+
+        <div th:if= "${detailVisible} == true">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
+        </div>
+    <div th:if= "${detailVisible} == true">
+        <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
+    </div>
+    </div>
+    <div th:if= "${docArtiste} == null ">
+        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+    </div>
 
 </fieldset>
+
 
 </body>
 

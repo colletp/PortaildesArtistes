@@ -1,7 +1,6 @@
 package com.unamur.portaildesartistes.DTO;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class PrestationDTO extends DTO {
 
@@ -23,9 +22,16 @@ public class PrestationDTO extends DTO {
     private ActiviteDTO activite;
     private AdresseDTO seDeroule;
 
+    private List<UUID> lActivitesId;
+    private Collection<SecteurDTO> lSecteurs;
+
+
     // ******************
     // Constructeur
     // ******************
+    public PrestationDTO() {
+        lActivitesId = new ArrayList<>();
+    }
 
     // ******************
     // Setter/Getter
@@ -57,6 +63,11 @@ public class PrestationDTO extends DTO {
     public void setActivite( ActiviteDTO p_obj) { this.activite = p_obj; }
     public AdresseDTO getSeDeroule() { return seDeroule; }
     public void setSeDeroule( AdresseDTO p_obj) { this.seDeroule = p_obj; }
+
+    public void setActivitesId(List<UUID> l){lActivitesId=l;}
+    public List<UUID> getActivitesId(){return lActivitesId;}
+    public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
+    public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
 
     // ******************
     // Fonctions

@@ -1,16 +1,11 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
-import com.unamur.portaildesartistes.DTO.PrestationDTO;
-import com.unamur.portaildesartistes.DTO.AdresseDTO;
-import com.unamur.portaildesartistes.DTO.ActiviteDTO;
-import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
-import com.unamur.portaildesartistes.DTO.CommanditaireDTO;
+import com.unamur.portaildesartistes.DTO.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class Prestation extends DataForm<PrestationDTO> {
 
@@ -40,6 +35,10 @@ public class Prestation extends DataForm<PrestationDTO> {
     private DocArtisteDTO oDocArtiste;
     private AdresseDTO oAdresse;
 
+    private Collection<SecteurDTO> lSecteurs;
+
+    private List<String> lstActiviteID;
+    private List<ActiviteDTO> lActToAddBySect;
 
     // ******************
     // Constructeur
@@ -77,6 +76,19 @@ public class Prestation extends DataForm<PrestationDTO> {
     public CommanditaireDTO getCommanditaire() { return oCommanditaire; }
     public void setCommanditaire( CommanditaireDTO oCommanditaire) { this.oCommanditaire = oCommanditaire; }
 
+    public List<String> getActivitesId(){ return lstActiviteID; }
+    public void setActivitesId(List<String> lAct ){ lstActiviteID=lAct; }
+
+    public void setSecteurActivites(Collection<SecteurDTO> ls){ lSecteurs=ls; }
+    public Collection<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
+
+    public void setActToAddBySect( List<ActiviteDTO> lAct ){
+        lActToAddBySect = lAct;
+    }
+    public List<ActiviteDTO> getActToAddBySect(){
+        return lActToAddBySect;
+    }
+
     public void setFromDTO(final PrestationDTO objDTO){
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setDatePrest(objDTO.getDatePrest());
@@ -92,6 +104,13 @@ public class Prestation extends DataForm<PrestationDTO> {
         setDocArtiste(objDTO.getDocArtiste());
         setActivite(objDTO.getActivite());
         setSeDeroule(objDTO.getSeDeroule());
+
+        List<String> la = new ArrayList<>();
+        if( objDTO.getActivitesId()!=null )
+            for( UUID uuid : objDTO.getActivitesId() )
+                la.add( uuid.toString() );
+        setActivitesId( la );
+
     }
     // ******************
     // Fonctions
@@ -148,6 +167,12 @@ public class Prestation extends DataForm<PrestationDTO> {
         dto.setCommanditaireId( getCommanditaireId());
 
         dto.setCommanditaire( getCommanditaire() );
+
+        List<UUID> activitesId = new ArrayList<>();
+        for( String act : getActivitesId() ){
+            logger.error(act);
+            activitesId.add( UUID.fromString(act) );
+        }
 
         return dto;
     }

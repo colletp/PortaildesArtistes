@@ -1,5 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
+import com.unamur.portaildesartistes.DTO.ActiviteDTO;
+import com.unamur.portaildesartistes.DTO.AdresseDTO;
 import com.unamur.portaildesartistes.DTO.PrestationDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Prestation;
 import org.slf4j.Logger;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 // Date de la prestation (si plusieurs jours compléter plusieurs lignes)
@@ -28,25 +32,76 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     @Autowired
     private SecteurControler sectCtrl;
 
+    @Autowired
+    private AdresseControler adrCtrl;
+
     @GetMapping(value = "/Prestation/creer")
     public String prestCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Prestation formPrest
-            ,Model model){
+            ,Model model) {
 
-        model.addAttribute("form",formPrest);
-        model.addAttribute("activites",new ArrayList<String>());
+        return loadForm(cookieValue, formPrest, "put", model);
+    }
 
+    public String loadForm(String cookieValue, Prestation prestForm, String method, Model model){
         try{
-            UUID usrId = docCtrl.getMyId(cookieValue);
-            //UUID formId =
-            UUID docId = null; //TODO prendre ici l'identifiant du formulaire en fonction de l'utilisateur
 
-            //String fragment = sectCtrl.listSecteurActiviteByDocument( cookieValue,docId , model );
-            return "Prestation/put.html";
+            // Initialise une liste d'activités possible
+            // Activités
+            //tous les secteurs et activités existants
+            prestForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
+            model.addAttribute("activites",prestForm.getActiviteId() );
+
+            /*
+            private UUID commanditaireId;
+            private UUID docArtisteId;
+            private UUID seDerouleId;
+            */
+
+            // Met la date à la date du jour
+            prestForm.setDatePrest(new Date());
+            // valeur par défaut pour la durée
+            prestForm.setDuree(0);
+            // valeur par défaut pour le montant
+            prestForm.setMontant(0.0);
+            // valeur par défaut pour etat => Nouveau
+            prestForm.setEtat("Nouveau");
+            model.addAttribute("form",prestForm);
+
+            return "Prestation/" +(method.isEmpty()?"post":method)+".html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Prestation/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
             return "/login.html";
         }
     }
+
+    @PostMapping(value="/Prestation", params={"addRow"})
+    public String addRowSectAct(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            , @ModelAttribute("_method")final String method
+            , @ModelAttribute("form") final Prestation prestForm
+            , @ModelAttribute("addRow") final String add
+            , Model model){
+        if(prestForm.getActToAddBySect()==null)prestForm.setActToAddBySect(new ArrayList<>());
+        ActiviteDTO actDTO = new ActiviteDTO();
+        actDTO.setSecteurId( UUID.fromString(add) );
+        prestForm.getActToAddBySect().add( actDTO );
+        return loadForm(cookieValue,prestForm,method,model);
+    }
+
+    @PostMapping(value="/Prestation", params={"removeRow"})
+    public String removeRowSectAct(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method")final String method
+            ,@ModelAttribute("form") final Prestation prestForm
+            ,@ModelAttribute("removeRow") final String remove
+            ,Model model
+            ,final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        prestForm.getActToAddBySect().remove(rowId.intValue());
+        return loadForm(cookieValue,prestForm,method,model);
+    }
+
 
     @GetMapping(value = "/Prestation/modif/{id}")
     public String prestModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
@@ -58,6 +113,30 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
             return "Prestation/post.html";
         }catch( Exception e ){
             return "/login.html";
+        }
+    }
+
+
+    @PostMapping(value = "/Prestation" , params={"submit"})
+    public String formPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("form") final Prestation prestForm
+            ,Model model){
+        try{
+            UUID formId = super.postForm(cookieValue,prestForm,method,model);
+            if(formId!=null) {
+                model.addAttribute("Msg", "Données sauvées");
+                prestForm.setId(formId.toString());
+                loadForm(cookieValue, prestForm, method, model);
+                return "Prestation/get.html";
+            }else{
+                return "Prestation/"+(method.isEmpty()?"post":method)+".html";
+            }
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Prestation/"+(method.isEmpty()?"post":method)+".html";
+        }catch(Exception e){
+            return "/login";
         }
     }
 
