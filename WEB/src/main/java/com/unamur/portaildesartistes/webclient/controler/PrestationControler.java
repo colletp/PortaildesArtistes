@@ -24,12 +24,13 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
     @Autowired
     private DocArtisteControler docCtrl;
-
     @Autowired
     private SecteurControler sectCtrl;
+    @Autowired
+    private UtilisateurControler usrCtrl;
 
     @GetMapping(value = "/Prestation/creer")
-    public String prestCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String prestCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Prestation formPrest
             ,Model model){
 
@@ -37,13 +38,12 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         model.addAttribute("activites",new ArrayList<String>());
 
         try{
+            usrCtrl.setRoles(cookieValue, model);
             UUID usrId = docCtrl.getMyId(cookieValue);
-            //UUID formId =
             UUID docId = null; //TODO prendre ici l'identifiant du formulaire en fonction de l'utilisateur
-
-            //String fragment = sectCtrl.listSecteurActiviteByDocument( cookieValue,docId , model );
             return "Prestation/put.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -57,6 +57,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
             model.addAttribute("form",super.getObj(cookieValue,UUID.fromString(itemId),new PrestationDTO(),PrestationDTO.class,model));
             return "Prestation/post.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -69,12 +70,14 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
         PrestationDTO formDTO = formPrest.getDTO();
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.postForm(cookieValue,formDTO,method,model) );
             return "Prestation/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "Prestation/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -83,9 +86,11 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
     public String prestList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new PrestationDTO(),PrestationDTO.class,model));
             return "Prestation/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -95,9 +100,11 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
                         @PathVariable("id") String itemId ,
                         Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,UUID.fromString(itemId),new PrestationDTO(),PrestationDTO.class,model));
             return "Prestation/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -107,11 +114,12 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
                              @PathVariable("id") String itemId,
                              Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue,new PrestationDTO(),UUID.fromString(itemId),model);
             return "Prestation/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
-
 }

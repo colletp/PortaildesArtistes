@@ -25,17 +25,20 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     private SecteurControler sectCtrl;
     @Autowired
     private CitoyenControler citCtrl;
+    @Autowired
+    private UtilisateurControler usrCtrl;
 
     @GetMapping(value = "/Formulaire/creer")
     public String formCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
-
         return loadForm(cookieValue,formForm,"put",model);
     }
 
     public String loadForm(String cookieValue, Formulaire formForm, String method, Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
+
             CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
             model.addAttribute("citoyen",citDTO);
             formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
@@ -46,6 +49,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("Err",e.getMessage());
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -160,12 +164,15 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String formModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
+        Formulaire f;
         try{
-            Formulaire f = new Formulaire( super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class,model ) );
-            return loadForm(cookieValue, f ,"post",model);
+            usrCtrl.setRoles(cookieValue, model);
+            f = new Formulaire( super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class,model ) );
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
+        return loadForm(cookieValue, f ,"post",model);
     }
 
     @PostMapping(value = "/Formulaire" , params={"submit"})
@@ -174,6 +181,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             ,@ModelAttribute("form") final Formulaire formForm
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             FormulaireDTO formDTO = formForm.getDTO();
 
             CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
@@ -194,6 +202,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             model.addAttribute("form",formForm);
             return "Formulaire/"+(method.isEmpty()?"post":method)+".html";
         }catch(Exception e){
+            model.addAttribute("Err",e.getMessage());
             return "/login";
         }
     }
@@ -202,6 +211,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
     public String formList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
                                 ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new FormulaireDTO(),FormulaireDTO.class,model));
             return "Formulaire/list.html";
         }catch(Exception e){
@@ -243,6 +253,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             Formulaire f = new Formulaire(super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class , model));
             loadForm( cookieValue, f ,"GET",model);
             return "Formulaire/get.html";
@@ -262,6 +273,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue,new FormulaireDTO(),itemId,model);
             return "Formulaire/list.html";
         }catch( Exception e ){

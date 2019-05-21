@@ -81,45 +81,6 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
         throw new Exception();
     }
 
-    /*protected V getForm(String cookieValue, T objDTO, V objForm, UUID itemId, U clazz, String method, Model model ){
-        switch( method.toUpperCase() ){
-            case "":
-            case "POST":
-            case "GET":
-                try{
-                    objForm.setFromDTO( getObj(cookieValue,itemId,objDTO,clazz, model ) );
-                    return objForm;
-                }
-                catch(Exception e){
-                    model.addAttribute("Err", e.getMessage() );
-                }
-            default:
-                return null;
-        }
-    }*/
-
-    //Complete les données d'un formulaire qui sera affiché
-    /*protected String getForm(String cookieValue, T objDTO, V objForm, UUID itemId, U clazz, String method, Model model){
-        String className = objDTO.getClass().getSimpleName().substring(0,objDTO.getClass().getSimpleName().length()-3);
-        switch( method.toUpperCase() ){
-            case "PUT":
-                break;
-            case "POST":
-            case "GET":
-                try{
-                    objForm.setFromDTO( getObj(cookieValue,itemId,objDTO,clazz) );
-                }
-                catch(Exception e){
-                    model.addAttribute("Err", e.getMessage() );
-                    return "/error.html";
-                }
-                break;
-            default:
-        }
-        model.addAttribute("form", objForm );
-        return className+"/"+method.toUpperCase()+".html";
-    }*/
-
     protected UUID getMyId( String cookieValue )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         try {

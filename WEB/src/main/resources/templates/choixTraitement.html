@@ -10,10 +10,10 @@
 	<br/><br/>
 
 	<div id="choixbox">
-		<div class="choixtxt"><a th:text="#{gestionnaire.choixTrtPrest}" th:href="@{/Traitement/prest}">Traiter les prestations.</a></div>
-		<div class="choixtxt"><a th:text="#{gestionnaire.choixTrtForm.fr}" th:href="@{/Traitement/form/lang/FR}">Traites les forms FR.</a></div>
-		<div class="choixtxt"><a th:text="#{gestionnaire.choixTrtForm.en}" th:href="@{/Traitement/form/lang/EN}">Traites les forms EN.</a></div>
-		<div class="choixtxt"><a th:text="#{gestionnaire.listeutil}" th:href="@{/Utilisateur}">Gérer le personnel.</a></div>
+		<div th:if="${GestPrest}" class="choixtxt"><a th:text="#{gestionnaire.choixTrtPrest}" th:href="@{/Traitement/prest}">Traiter les prestations.</a></div>
+		<div th:if="${GestFormFR}" class="choixtxt"><a th:text="#{gestionnaire.choixTrtForm.fr}" th:href="@{/Traitement/form/lang/FR}">Traites les forms FR.</a></div>
+		<div th:if="${GestFormEN}" class="choixtxt"><a th:text="#{gestionnaire.choixTrtForm.en}" th:href="@{/Traitement/form/lang/EN}">Traites les forms EN.</a></div>
+		<div th:if="${GestPers}" class="choixtxt"><a th:text="#{gestionnaire.listeutil}" th:href="@{/Utilisateur}">Gérer le personnel.</a></div>
 	</div>
 	<div th:replace="~{/fragments/header :: multiscript}"></div>
 </body>

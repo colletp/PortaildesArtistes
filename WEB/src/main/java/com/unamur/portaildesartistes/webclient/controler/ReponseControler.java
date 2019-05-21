@@ -4,6 +4,7 @@ import com.unamur.portaildesartistes.DTO.ReponseDTO;
 import com.unamur.portaildesartistes.webclient.dataForm.Reponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,23 @@ import java.util.UUID;
 public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >, Reponse> {
     private static final Logger logger = LoggerFactory.getLogger(ReponseControler.class);
 
+    @Autowired
+    UtilisateurControler usrCtrl;
+
     @GetMapping(value = "/Reponse/creer/{id}")
     public String docArtCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("id") UUID itemId
             ,@ModelAttribute("form") final Reponse formRep
             ,Model model){
 
-        model.addAttribute("form",formRep);
-        return "Reponse/put.html";
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("form",formRep);
+            return "Reponse/put.html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
     }
 
     @GetMapping(value = "/Reponse/modif/{id}")
@@ -29,9 +39,11 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
                              @PathVariable("id") UUID itemId ,
                              Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new ReponseDTO(),ReponseDTO.class,model));
             return "Reponse/post.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -42,12 +54,14 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             ,@ModelAttribute("form") final Reponse formRep
             ,Model model){
             try{
+                usrCtrl.setRoles(cookieValue, model);
                 model.addAttribute("form",super.postForm(cookieValue, formRep.getDTO() ,method,model));
                 return "Reponse/get.html";
             }catch(IllegalArgumentException e){
                 model.addAttribute("Err",e.getMessage());
                 return "Reponse/"+(method.isEmpty()?"post":method)+".html";
             }catch( Exception e ){
+                model.addAttribute("Err",e.getMessage());
                 return "/login.html";
             }
     }
@@ -56,9 +70,11 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
     public String docArtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.list(cookieValue,new ReponseDTO(),ReponseDTO.class,model));
             return "Reponse/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -68,9 +84,11 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
                         @PathVariable("id") UUID itemId ,
                         Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,itemId,new ReponseDTO(),ReponseDTO.class,model));
             return "Reponse/get.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }
@@ -80,9 +98,11 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
                              @PathVariable("id") UUID itemId,
                              Model model) {
         try{
+            usrCtrl.setRoles(cookieValue, model);
             super.delete(cookieValue,new ReponseDTO(),itemId,model);
             return "Reponse/list.html";
         }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
     }

@@ -33,28 +33,63 @@ public class LoginControler {
     }
 
     @Autowired
-    private RestTemplateHelper restTemplateHelper;
+    UtilisateurControler usrCtrl;
 
+    @Autowired
+    private RestTemplateHelper restTemplateHelper;
     @Autowired
     private PropertiesConfigurationService configurationService ;
 
     @GetMapping(value="/accueil")
-    public String acceuilhtml(Model model) {return "accueil.html";}
+    public String acceuilhtml(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,Model model) {
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
+        return "accueil.html";
+    }
 
     @GetMapping(value="/home")
-    public String homehtml(Model model) {
+    public String homehtml(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,Model model) {
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "home.html";
     }
+
     @GetMapping(value="/ChangePassword")
-    public String changePasswordhtml(Model model) {
+    public String changePasswordhtml(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,Model model) {
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "Changepassword.html";
     }
     @GetMapping(value="/choixRole")
-    public String choixRolehtml(Model model) {
+    public String choixRolehtml(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,Model model) {
+        try {
+            usrCtrl.setRoles( cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "choixRole.html";
     }
     @GetMapping(value="/artiste")
-    public String artistehtml(Model model) {
+    public String artistehtml(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,Model model) {
+        try {
+            usrCtrl.setRoles(cookieValue, model);
+        }catch (Exception e){
+            model.addAttribute("Err",e.getMessage() );
+            return "login.html";
+        }
         return "artiste.html";
     }
 
@@ -110,7 +145,6 @@ public class LoginControler {
         }
         model.addAttribute("Msg",Message);
         model.addAttribute("Err",Erreur);
-        logger.error("lang:"+lang);
         return "login.html";
     }
 
