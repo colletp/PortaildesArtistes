@@ -18,11 +18,14 @@
         <td>[[${frm.langue}]]</td>
         <td>[[${frm.carte}]]</td>
         <td>[[${frm.visa}]]</td>
+        <td>[[${! frm.aTraiter}]]</td>
         <td id="boutonsList">
             <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
             <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
-            <a th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
+            <!-- <a th:href="@{/Formulaire/suppr/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a> -->
+            <a th:href="@{/Formulaire/invalidate/{id}(id=${frm.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{invalider}" th:title="#{invalider}"  /></a>
         </td>
+    </tr>
 </table>
 </div>
     <div th:replace="~{/fragments/header :: multiscript}"></div>

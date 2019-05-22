@@ -20,24 +20,6 @@ public class SecteurControler extends Controler<SecteurDTO , Class< SecteurDTO >
     @Autowired
     UtilisateurControler usrCtrl;
 
-    //@GetMapping(value = "/Secteur/Activite")
-    /*public String listSecteurActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,Model model){
-        logger.error("Secteur : Authentication received! Cookie : "+cookieValue );
-        HttpHeaders headers = initHeadersRest(cookieValue);
-        List<SecteurDTO> lSectDTO;
-        try{
-            lSectDTO=restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );
-            model.addAttribute("secteurs", lSectDTO );
-        }catch( IllegalArgumentException e ){
-            model.addAttribute("Err", e.getMessage() );
-        //}catch( ParseException e ){
-        }catch( ServiceNotFoundException e ){
-            model.addAttribute("Err", e.getMessage() );
-        }
-        return "/fragments/activites.html";
-    }*/
-
     public List<SecteurDTO> listSecteurActivite( String cookieValue , Model model)throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         return restTemplateHelper.getForList(SecteurDTO.class,configurationService.getUrl()+"/gestionSecteur/Activite",headers );

@@ -27,6 +27,10 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     public void update(ActiviteDTO item) {
         super.Exec(ActiviteSQLs.class).update(item);
     }
+
+    public void deleteByForm(UUID id) {
+        super.Exec(ActiviteSQLs.class).deleteByForm(id);
+    }
     public void delete(UUID id) {
         super.Exec(ActiviteSQLs.class).delete(id);
     }
@@ -47,7 +51,7 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     public List<ActiviteDTO> getBySectDocId(UUID p_docId,UUID p_sectId){ return super.Exec(ActiviteSQLs.class).getBySectDocId(p_docId,p_sectId); }
     public List<ActiviteDTO> getBySectFormId(UUID p_formId,UUID p_sectId){ return super.Exec(ActiviteSQLs.class).getBySectFormId(p_formId,p_sectId); }
 
-    @RegisterMapper(SecteurMapper.class)
+    @RegisterMapper(ActiviteMapper.class)
     interface ActiviteSQLs {
         @SqlQuery("select * from activite ")
         List<ActiviteDTO> list();
@@ -67,22 +71,26 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
         @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId AND a.secteur_id=:sectId ")
         List<ActiviteDTO> getBySectFormId(@Bind("formId")UUID formId,@Bind("sectId")UUID sectId);
 
-        @SqlQuery("INSERT INTO activite (nom_activite,secteur_id) VALUES (:nomActivite,:idSecteur) RETURNING activite_id ")
+        @SqlQuery("INSERT INTO activite (nom_activite,secteur_id,description) VALUES (:nomActivite,:idSecteur,:description) RETURNING activite_id ")
         String insert(@BindBean ActiviteDTO test);
 
-        @SqlUpdate("UPDATE activite SET nom_activite=:nomActivite WHERE activite_id=:id ")
+        @SqlUpdate("UPDATE activite SET nom_activite=:nomActivite,description=:description WHERE activite_id=:id ")
         void update(@BindBean ActiviteDTO act);
 
+		@SqlUpdate("DELETE FROM activite WHERE activite_id=:id ")
         void delete(UUID id);
+		@SqlUpdate("DELETE FROM activite a WHERE activite_id IN (SELECT activite_id FROM form_activite fa WHERE fa.form_id=:id) ")
+        void deleteByForm(UUID id);
     }
 
-    public static class SecteurMapper implements ResultSetMapper<ActiviteDTO> {
+    public static class ActiviteMapper implements ResultSetMapper<ActiviteDTO> {
         ActiviteDTO activiteDTO;
         public ActiviteDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
             activiteDTO = new ActiviteDTO();
             activiteDTO.setId((UUID) r.getObject("activite_id"));
             activiteDTO.setSecteurId((UUID) r.getObject("secteur_id"));
             activiteDTO.setNomActivite(r.getString("nom_activite"));
+            activiteDTO.setDescription(r.getString("description"));
             return activiteDTO;
         }
     }

@@ -30,10 +30,21 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
 
     @Autowired
     private CitoyenServiceImpl citServImpl;
+    @Autowired
+    private UtilisateurServiceImpl usrServImpl;
+
+    @Autowired
+    private GestionnaireServiceImpl gestServImpl;
 
     @Transactional
+    public List<FormulaireDTO> getByCitoyenId(UUID citId){ return formImpl.getByCitoyenId(citId); }
+    @Transactional
     public List<FormulaireDTO> list(){ return formImpl.list(); }
-
+    @Transactional
+    public List<FormulaireDTO> listByCitoyenNotValid(UUID citId){
+        List<FormulaireDTO> lFormDTO = formImpl.listByCitoyenNotValid(citId);
+        return lFormDTO;
+    }
     @Transactional
     public List<FormulaireDTO> listByLangNoTrt(String lang){
         List<FormulaireDTO> lFormDTO = formImpl.listByLangNoTrt(lang);
@@ -47,7 +58,6 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
             formDTO.setTrt( trtServImpl.listByForm( formDTO.getId() ) );
         return lFormDTO;
     }
-
     @Transactional
     public List<FormulaireDTO> listByLangTrtDone(String lang){
         List<FormulaireDTO> lFormDTO = formImpl.listByLangTrtDone(lang);
@@ -68,11 +78,11 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
         FormulaireDTO form= formImpl.getById(uuid);
         form.setSecteurActivites( sectServImpl.listSecteurActiviteByFormId( uuid ) );
 
-        List<ActiviteDTO> lAct = actServImpl.getByFormId( form.getId() );
+        /*List<ActiviteDTO> lAct = actServImpl.getByFormId( form.getId() );
         List<UUID> lActId = new ArrayList<>();
         for( ActiviteDTO act : lAct )
             lActId.add(act.getId());
-        form.setActivitesId(lActId);
+        form.setActivitesId(lActId);*/
 
         form.setCitoyen( citServImpl.getById( form.getCitoyenId() ) );
 
@@ -83,11 +93,48 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
         formImpl.update(form);
     }
     @Transactional
+    public Integer invalidate( UUID formId, UUID myUserId ){
+
+        GestionnaireDTO gestDTO = gestServImpl.getByCitoyenId(myUserId);
+		UtilisateurDTO usrDTO = usrServImpl.getById(myUserId);
+
+		FormulaireDTO formDTO = formImpl.getById( formId );
+
+		String err=null;
+		if(gestDTO!=null){
+			//permet au gestionnaire d'invalider un formulaire (renvoi au citoyen pour modification)
+			for( RoleDTO role : usrDTO.getAuthorities() ){
+				//uniquement si il peut traiter la langue du formulaire
+				if( role.getAuthority().equals( "Gestionnaire de formulaires "+formDTO.getLangue() ) ){
+                   for( TraitementDTO trtDTO : formDTO.getTrt() ) {
+                       for (ReponseDTO repDTO : trtDTO.getReponses() )
+                           //tant qu'il n'y a pas eu de document créé pour le formulaire
+                           if (repDTO.getDocArt().size() > 0)
+                               return -100;
+                               //throw new Exception("Le formulaire ne peut plus être invalidé, au moins un document a déjà été émis.");
+                       formImpl.invalidate(formId);
+                       return 1;
+                   }
+				}
+			}
+			err="Vous n'êtes pas un gestionnaire pouvant gérer un formulaire "+formDTO.getLangue();
+		}
+		//permet au citoyen de revoir sa copie si il n'y a pas encore eu de traitement sur son formulaire
+		if( myUserId.equals( formDTO.getCitoyenId() ) && (formDTO.getTrt()==null || formDTO.getTrt().size()==0) ){
+			formImpl.invalidate(formId);
+			return 1;
+		}
+		else
+			return err==null?-101:-102;
+		    //throw new Exception( err==null?"Ceci n'est pas votre formulaire":err );
+    }
+
+    @Transactional
     public UUID insert( FormulaireDTO form ){
         return formImpl.insert(form);
     }
     @Transactional
     public void delete( UUID uuid ){
-        formImpl.delete(uuid);
+		formImpl.delete(uuid);
     }
 }

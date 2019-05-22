@@ -19,9 +19,9 @@
     <div th:if= "${detailVisible} == true">
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
     </div>
-
-
-
+	<div class="boutonsList">
+		<a th:href="@{/DocArtiste/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+	</div>
 </fieldset>
 
 </body>

@@ -19,7 +19,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     UtilisateurControler usrCtrl;
 
     @GetMapping(value = "/Activite/creer")
-    public String activiteCreate( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String creerActiviteForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try {
             usrCtrl.setRoles(cookieValue, model);
@@ -31,7 +31,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     }
 
     @GetMapping(value = "/Activite/modif/{id}")
-    public String activiteModif( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
+    public String modifActiviteForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue,
                                 @PathVariable("id") UUID itemId ,
                                 Model model){
         try{
@@ -45,7 +45,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     }
 
     @PostMapping(value = "/Activite")
-    public String activitePost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String postActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("form") final Activite actForm
             ,Model model){
@@ -64,7 +64,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     }
 
     @GetMapping(value = "/Activite")
-    public String activiteList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+    public String listActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
             usrCtrl.setRoles(cookieValue, model);
@@ -77,7 +77,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     }
 
     @GetMapping(value = "/Activite/{id}")
-    public String activite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
+    public String getActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                            @PathVariable("id") UUID itemId ,
                            Model model){
         try{
@@ -91,7 +91,7 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
     }
 
     @GetMapping(value = "Activite/suppr/{id}")
-    public String activiteSuppr( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
+    public String supprActivite( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                                 @PathVariable("id") UUID itemId,
                                 Model model) {
         try{

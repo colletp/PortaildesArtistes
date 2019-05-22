@@ -8,8 +8,8 @@
 
 <div class="formbox90pc">
 <table>
-    <caption><H1 th:text="#{activite}"></H1></caption>
-    <tr><th th:text="#{secteur}"></th><th th:text="#{activite}"></th><th>Description</th><th></th></tr>
+    <caption><H1>Activités</H1></caption>
+    <tr><th>Secteur</th><th>Activité</th><th>Description</th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.secteurId}]]</td>
         <td>[[${frm.nomActivite}]]</td>

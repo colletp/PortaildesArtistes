@@ -299,7 +299,6 @@ button{
 
 table{
     width: 95%;
-    border-collapse: collapse;
 }
 
 tr{height: 60px;}
@@ -315,8 +314,7 @@ tr:nth-of-type(even) {
     text-align: right;
 }
 
-td, th{  padding: 15px;
-    border-left: 1px solid #b3b3b3;}
+td{  padding: 15px;}
 
 td img{ width: 32px;}
 

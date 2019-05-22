@@ -11,16 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class TraitementControler extends Controler<TraitementDTO, Class< TraitementDTO >, Traitement> {
     private static final Logger logger = LoggerFactory.getLogger(TraitementControler.class);
-
-    @Autowired
-    RestTemplateHelper restTemplateHelper;
 
     @Autowired
     private FormulaireControler formCtrl;
@@ -91,12 +86,34 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             FormulaireDTO formDTO = formCtrl.formGetById( cookieValue, UUID.fromString( formTrt.getFormId() ) , model);
             formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
 
-            model.addAttribute("_method",method);
-            model.addAttribute("typeTrt",typeTrt);
-            model.addAttribute("trt",formTrt);
-
-            model.addAttribute("Msg",submit);
-            return "Traitement/get.html";
+			model.addAttribute("Msg",submit);
+            switch(submit){
+				case "renvoyerForm":
+					//traitement remettant le formulaire consultable par le citoyen
+					switch( formCtrl.invalidate( cookieValue, UUID.fromString( formTrt.getFormId() ) , model) ){
+                        case 1: model.addAttribute("Msg","Formulaire invalidé");
+                            break;
+                        case -100: model.addAttribute("Err","Le formulaire ne peut plus être invalidé, au moins un document a déjà été émis.");
+                            break;
+                        case -101: model.addAttribute("Err","Ceci n'est pas votre formulaire");
+                            break;
+                        case -102: model.addAttribute("Err","Vous n'êtes pas un gestionnaire pouvant gérer un formulaire");
+                            break;
+                        default:
+                            model.addAttribute("Err","Erreur inconue");
+                    }
+                    return "Traitement/list.html";
+				case "envoiReponse":
+					//redirection vers création réponse
+					model.addAttribute("trtId",trtId);
+					return "Reponse/put.html";
+				case "sauvCommentaire"://rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
+				default:
+					model.addAttribute("_method",method);
+					model.addAttribute("typeTrt",typeTrt);
+					model.addAttribute("trt",formTrt);
+			}
+			return "Traitement/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("_method",method);
             model.addAttribute("typeTrt",typeTrt);

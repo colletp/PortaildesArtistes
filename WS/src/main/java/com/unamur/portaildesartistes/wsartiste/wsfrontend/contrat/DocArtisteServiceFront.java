@@ -2,8 +2,10 @@ package com.unamur.portaildesartistes.wsartiste.wsfrontend.contrat;
 
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.wsartiste.Business.DocArtisteServiceImpl;
+import com.unamur.portaildesartistes.wsartiste.Business.UtilisateurServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +15,14 @@ import java.util.UUID;
 public class DocArtisteServiceFront extends ServiceFront<DocArtisteDTO>{
     private static final Logger logger = LoggerFactory.getLogger(DocArtisteServiceFront.class);
 
+    @Autowired
+    UtilisateurServiceImpl usrServImpl;
+
+    @GetMapping("/gestionDocArtiste/myDocs")
+    public List<DocArtisteDTO> myDocs( @SessionAttribute("userName") String myUser ){
+		return ((DocArtisteServiceImpl)srvImpl).getByCitoyenId( usrServImpl.getUuidByName(myUser) );
+    }
+	
     @PutMapping("/gestionDocArtiste")
     public UUID creer( @RequestBody DocArtisteDTO objDTO ){ return super.create(objDTO); }
     @GetMapping("/gestionDocArtiste/{id}")

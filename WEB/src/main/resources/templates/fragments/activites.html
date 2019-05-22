@@ -51,7 +51,6 @@
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
-                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
                 <span th:text="*{nomActivite}" th:alt="*{description}" ></span><button type="submit" th:name="'removeAct'" th:value="*{id}">Supprimer</button>
             </li>
         </ul>
