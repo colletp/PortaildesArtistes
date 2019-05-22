@@ -4,7 +4,6 @@ import com.unamur.portaildesartistes.DTO.ActiviteDTO;
 import com.unamur.portaildesartistes.DTO.FormulaireDTO;
 import com.unamur.portaildesartistes.DTO.SecteurDTO;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 
@@ -22,8 +21,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String langue;
     private String carte;
     private String visa;
+	private String aTraiter;
 
-    private List<String> activitesId;
+    //private List<String> activitesId;
 
     private Collection<SecteurDTO> lSecteurs;
 
@@ -59,9 +59,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setCarte(String b){ carte=b;}
     public String getVisa(){ return visa;}
     public void setVisa(String b){ visa=b;}
+    public String getATraiter(){ return aTraiter;}
+    public void setATraiter(String b){ aTraiter=b;}
 
-    public List<String> getActivitesId(){ return activitesId; }
-    public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
+    //public List<String> getActivitesId(){ return activitesId; }
+    //public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
 
     public void setSecteurActivites(Collection<SecteurDTO> ls){ lSecteurs=ls; }
     public Collection<SecteurDTO> getSecteurActivites(){ return lSecteurs; }
@@ -91,6 +93,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         notNullSameTime(getCarte(),getVisa());
         dto.setVisa( getVisa()!=null?getVisa().equals("1"):false );
         dto.setCarte( getCarte()!=null?getCarte().equals("1"):false );
+        dto.setATraiter( getATraiter()!=null?getATraiter().equals("1"):false );
 
         isNotEmpty( getLangue() );
         if(!langue.equals("FR")&&!langue.equals("EN")){
@@ -109,12 +112,12 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         if( getCitoyenId()!=null && !getCitoyenId().isEmpty())
             dto.setCitoyenId(convertUUID(getCitoyenId()));
 
-        List<UUID> activitesId = new ArrayList<>();
+        /*List<UUID> activitesId = new ArrayList<>();
         for( String act : getActivitesId() ){
             logger.error(act);
             activitesId.add( UUID.fromString(act) );
         }
-        dto.setActivitesId(activitesId);
+        dto.setActivitesId(activitesId);*/
         return dto;
     }
 
@@ -128,12 +131,14 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setLangue(objDTO.getLangue());
         setCarte(objDTO.getCarte()?"1":"0");
         setVisa(objDTO.getVisa()?"1":"0");
+        setATraiter(objDTO.getATraiter()?"1":"0");
 
-        List<String> la = new ArrayList<>();
+        /*List<String> la = new ArrayList<>();
         if( objDTO.getActivitesId()!=null )
             for( UUID uuid : objDTO.getActivitesId() )
                 la.add( uuid.toString() );
         setActivitesId( la );
+        */
 
         setSecteurActivites( objDTO.getSecteurActivites() );
     }

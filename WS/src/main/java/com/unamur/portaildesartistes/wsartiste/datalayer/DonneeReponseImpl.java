@@ -56,7 +56,7 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 
-        @SqlQuery("INSERT INTO Reponse (trt_id,citoyen_id,date_reponse) VALUES (:trtId,:citoyenId,:dateReponse) RETURNING reponse_id ")
+        @SqlQuery("INSERT INTO Reponse (trt_id,date_reponse,reponse) VALUES (:trtId,:citoyenId,:dateReponse,:reponse) RETURNING reponse_id ")
         String insert(@BindBean ReponseDTO test);
 
         @SqlQuery("select * from reponse WHERE reponse_id = :p_id ")
@@ -74,8 +74,8 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
             repDTO = new ReponseDTO();
             repDTO.setId((UUID) r.getObject("reponse_id"));
             repDTO.setTrtId((UUID) r.getObject("trt_id"));
-            repDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
-            repDTO.setDateReponse( r.getTimestamp("date_reponse"));
+            repDTO.setDateReponse( r.getDate("date_reponse"));
+            repDTO.setReponse( r.getString("reponse"));
 
             return repDTO;
         }

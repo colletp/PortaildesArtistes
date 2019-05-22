@@ -35,6 +35,17 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     @GetMapping("/gestionFormulaire/")
     public List<FormulaireDTO> list(){ return super.list(); }
 
+	
+    @GetMapping("/gestionFormulaire/myForms")
+    public List<FormulaireDTO> myForms( @SessionAttribute("userName") String myUser ){
+		return ((FormulaireServiceImpl)srvImpl).getByCitoyenId( usrServImpl.getUuidByName(myUser) );
+    }
+
+    @GetMapping("/gestionFormulaire/invalidate/{formId}")
+    public Integer invalidate( @PathVariable("formId") UUID formId , @SessionAttribute("userName") String myUser ){
+		return ((FormulaireServiceImpl)srvImpl).invalidate( formId, usrServImpl.getUuidByName(myUser) );
+	}
+	
     @GetMapping("/gestionFormulaire/aTraiter/lang/{lang}")
     public List<FormulaireDTO> getATraiterByLang( @PathVariable("lang") String lang ){
         return ((FormulaireServiceImpl)srvImpl).listByLangNoTrt(lang);

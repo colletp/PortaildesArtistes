@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
@@ -106,9 +105,9 @@ class PrestationServiceImplTest {
         trt.setGestId(gestId);
         trt.setFormId(formId);
         trtId=trtServ.insert(trt);
-        rep.setCitoyenId(userId);
+        //rep.setCitoyenId(userId);
         try {
-            rep.setDateReponse(Timestamp.from(sdf.parse("21/05/2019").toInstant()));
+            rep.setDateReponse( sdf.parse("21/05/2019") );
         }catch(ParseException e){}
         rep.setTrtId(trtId);
         repId=repServ.insert(rep);

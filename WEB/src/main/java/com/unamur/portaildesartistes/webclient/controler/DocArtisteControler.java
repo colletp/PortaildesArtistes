@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.*;
+import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import com.unamur.portaildesartistes.webclient.dataForm.DocArtiste;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ import java.util.UUID;
 @Controller
 public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArtisteDTO >, DocArtiste> {
     private static final Logger logger = LoggerFactory.getLogger(DocArtisteControler.class);
+
+    @Autowired
+    private RestTemplateHelper restTemplateHelper;
 
     @Autowired
     private FormulaireControler formCtrl;
@@ -62,10 +66,10 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
         try{
             usrCtrl.setRoles(cookieValue, model);
             FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,itemId, model);
-            List<UUID> lActIdDTO = formDTO.getActivitesId();
+            //List<UUID> lActIdDTO = formDTO.getActivitesId();
             Collection<SecteurDTO> lSectDTO = formDTO.getSecteurActivites();
             model.addAttribute("form",formDocArt);
-            model.addAttribute("activites", lActIdDTO );
+            //model.addAttribute("activites", lActIdDTO );
             model.addAttribute("secteurs", lSectDTO );
             return "DocArtiste/put.html";
         }catch( Exception e ){
@@ -108,6 +112,21 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
         }
     }
 
+    @GetMapping(value = "/DocArtiste/my")
+	public String listMyDocs( String cookieValue , Model model ){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+
+			HttpHeaders headers = initHeadersRest(cookieValue);
+            model.addAttribute("form",restTemplateHelper.getForList(DocArtisteDTO.class,configurationService.getUrl()+"/gestionDocArtiste/myDocs",headers ) );
+			return "DocArtiste/list.html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "login.html";
+        }
+    }
+
+	
     @GetMapping(value = "/DocArtiste")
     public String docArtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
@@ -120,7 +139,8 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             return "/login";
         }
     }
-    public List<DocArtisteDTO> listByLang( String cookieValue , String lang, Model model )throws Exception{
+    /*
+	public List<DocArtisteDTO> listByLang( String cookieValue , String lang, Model model )throws Exception{
         HttpHeaders headers = initHeadersRest(cookieValue);
         try{
             return restTemplateHelper.getForList(DocArtisteDTO.class,configurationService.getUrl()+"/gestionDocArtiste/lang/"+lang,headers );
@@ -129,6 +149,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             return new ArrayList<>();
         }
     }
+	*/
 
     @GetMapping(value = "/DocArtiste/{id}")
     public String docArtGetById( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,

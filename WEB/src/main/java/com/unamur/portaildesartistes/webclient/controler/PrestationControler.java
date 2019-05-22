@@ -117,6 +117,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
                              @ModelAttribute("form") final Prestation formPrest,
                              Model model){
         try{
+            usrCtrl.setRoles(cookieValue, model);
             model.addAttribute("form",super.getObj(cookieValue,UUID.fromString(itemId),new PrestationDTO(),PrestationDTO.class,model));
             return "Prestation/post.html";
         }catch( Exception e ){

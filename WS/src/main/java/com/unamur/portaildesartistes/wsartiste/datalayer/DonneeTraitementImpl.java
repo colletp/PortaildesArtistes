@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
+import java.util.Date;
 
 @Repository
 public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
@@ -82,7 +82,7 @@ public class DonneeTraitementImpl extends Donnee<TraitementDTO>{
             trtDTO = new TraitementDTO();
             trtDTO.setId((UUID) r.getObject("trt_id"));
 
-            trtDTO.setDateTrt( r.getTimestamp("date_trt"));
+            trtDTO.setDateTrt( r.getDate("date_trt"));
             trtDTO.setAppreciation( r.getString("appreciation"));
             //trtDTO.setRoleId( (UUID) r.getObject("roles_id"));
             trtDTO.setGestId( (UUID) r.getObject("gest_id"));
