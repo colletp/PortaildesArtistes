@@ -35,6 +35,13 @@
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
+    <select name="secteur">
+        <option th:value="${sect.id}" th:each="sect : ${secteurs}">[[${sect.nomSecteur}]]</option>
+    </select>
+    Activité<input name="actLib" />
+    Description<textarea name="actDesc" cols="100" rows="10"></textarea>
+    <input th:type="submit" name="submit" value="Ajouter l'activité"/><br/>
+
     <input th:type="submit" name="submit" />
 </fieldset>
 
