@@ -20,7 +20,7 @@ import java.util.UUID;
 public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.Class< UtilisateurDTO >, Utilisateur > {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurControler.class);
 
-    void setRoles(String cookieValue, Model model)throws Exception{
+    public void setRoles(String cookieValue, Model model)throws Exception{
         model.addAttribute("GestFormFR", testRole(cookieValue, "Gestionnaire de formulaire FR", model));
         model.addAttribute("GestFormEN", testRole(cookieValue, "Gestionnaire de formulaire EN", model));
         model.addAttribute("GestPers",   testRole(cookieValue, "Gestionnaire du personnel ", model));
@@ -29,7 +29,6 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
 
     private Boolean testRole(String cookieValue, String role, Model model)throws Exception {
         for (RoleDTO r : getMoi(cookieValue, model).getAuthorities()){
-            logger.error( r.getAuthority() );
             if( r.getAuthority().equals(role) )
                 return true;
         }

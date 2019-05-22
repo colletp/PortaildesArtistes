@@ -29,11 +29,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     @Autowired
     private CitoyenControler citCtrl;
     @Autowired
-    private GestionnaireControler gestCtrl;
-    @Autowired
     private UtilisateurControler usrCtrl;
-    @Autowired
-    private AdresseControler adrsCtrl;
 
     @GetMapping(value = "/Traitement/form/{formId}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -44,9 +40,10 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             usrCtrl.setRoles( cookieValue, model );
             FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
             formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
-            model.addAttribute("typeTrt","Form");
-            model.addAttribute("formId",formId.toString());
+            //model.addAttribute("formId",formId.toString());
+            formTrt.setFormId( formId );
             model.addAttribute("trt",formTrt);
+            model.addAttribute("typeTrt","Form");
             return "Traitement/put.html";
         }catch( Exception e ){
             return "login.html";
@@ -73,33 +70,29 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     @PostMapping(value = "/Traitement", params={"submit"})
     public String trtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final Traitement formTrt
             ,@ModelAttribute("typeTrt") final String typeTrt
+            ,@ModelAttribute("trt") final Traitement formTrt
             ,@ModelAttribute("submit") final String submit
-            ,@ModelAttribute("formId") final String formId
+            //,@ModelAttribute("formId") final String formId
             ,Model model){
         try{
             usrCtrl.setRoles( cookieValue, model );
+
             UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
-            logger.error( moi.getCitoyen().getGest().getMatricule() );
             //GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, moi.getCitoyen().getGest().getId() ,new GestionnaireDTO(),GestionnaireDTO.class,model );
             //si je suis un gestionnaire
-            formTrt.setGestId( moi.getCitoyen().getGest().getId().toString() );
-
+            if(moi.getCitoyen().getGest()==null)throw new IllegalArgumentException("Opération illégale, il faut être gestionnaire");
+            formTrt.setGestId(moi.getCitoyen().getGest().getId().toString());
             //enregistrement du traitement avec l'ID du gestionnaire
-            UUID trtId = super.postForm(cookieValue,formTrt.getDTO(),method,model);
-
+            UUID trtId = super.postForm(cookieValue, formTrt.getDTO(), method, model);
             //retrouver les éléments insérés en DB (date du traitement, ...)
             formTrt.setFromDTO( super.getObj( cookieValue,trtId, formTrt.getDTO(),TraitementDTO.class,model ) );
 
-            FormulaireDTO formDTO = formCtrl.formGetById(
-                    cookieValue, UUID.fromString( formId ), model);
-
+            FormulaireDTO formDTO = formCtrl.formGetById( cookieValue, UUID.fromString( formTrt.getFormId() ) , model);
             formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
 
             model.addAttribute("_method",method);
             model.addAttribute("typeTrt",typeTrt);
-            model.addAttribute("formId",formId);
             model.addAttribute("trt",formTrt);
 
             model.addAttribute("Msg",submit);
@@ -107,7 +100,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         }catch(IllegalArgumentException e){
             model.addAttribute("_method",method);
             model.addAttribute("typeTrt",typeTrt);
-            model.addAttribute("formId",formId);
             model.addAttribute("trt",formTrt);
 
             model.addAttribute("Err",e.getMessage());
@@ -115,7 +107,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         }catch( Exception e ){
             logger.error(e.getMessage());
             e.printStackTrace();
-            return "/login.html";
+            return "login.html";
         }
     }
 
@@ -128,13 +120,10 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             usrCtrl.setRoles( cookieValue, model );
             UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
 
-            List<String> lLang = new ArrayList<>();
             Boolean bLangOk=false;
             for(RoleDTO r : moi.getAuthorities() ){
-                lLang.add(r.getLang());
-                if(r.getLang().equals(lang)){
+                if(r.getLang().equals(lang))
                     bLangOk=true;
-                }
             }
             if( !bLangOk ) {
                 model.addAttribute("Err", "Langue non disponible pour ce gestionnaire");
@@ -169,11 +158,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 
         try {
             usrCtrl.setRoles( cookieValue, model );
-            UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
-            List<String> lLang = new ArrayList<>();
-            for(RoleDTO r : moi.getAuthorities() ){
-                lLang.add(r.getLang());
-            }
 
             //model.addAttribute("DocArtPrest",docArtCtrl.listByLang(cookieValue,lang,model) );
             return "Traitement/listForm.html";
@@ -190,7 +174,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         try{
             usrCtrl.setRoles( cookieValue, model );
             TraitementDTO trtDTO = getObj(cookieValue,trtId,new TraitementDTO(),TraitementDTO.class,model);
-            model.addAttribute("form", trtDTO );
+            model.addAttribute("trt", trtDTO );
             model.addAttribute("citoyen",citCtrl.getObj( cookieValue , trtDTO.getForm().getCitoyenId(), new CitoyenDTO(),CitoyenDTO.class, model ) );
             return "Traitement/get.html";
         }catch( Exception e ){
