@@ -21,17 +21,17 @@
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
-    Date : [[${form.dateDemande}]]<br/>
-    <div class="visaInputs" th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
-    <div class="visaInputs" th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>
-    <div class="visaInputs" th:replace="~{/fragments/form :: formArray(#{autreress},'ressources',*{ressources})}"></div>
+    Date Demande:[[${form.dateDemande}]]<br/>
+    <div th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray(#{autreress},'ressources',*{ressources})}"></div>
     <input type="hidden" th:field="*{citoyenId}" />
     <span th:text="#{langue}"></span> : <select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
     </select><br/>
     <span th:text="#{carte}"></span> : <input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa : input type="checkbox" th:field="*{visa}" value="1" onclick="$(.visaInputs).style.visibility=($(#visa)=='1'?'visible':'hidden');" /><br/>
+    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 

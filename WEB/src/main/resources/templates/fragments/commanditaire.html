@@ -9,14 +9,44 @@
 
 
     <div th:if= "${commanditaire.EntrepriseId} != null">
-        <fieldset th:replace="~{/fragments/entreprise :: EntrepriseGetEnt(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
+        <fieldset th:replace="~{/fragments/entreprise :: EntreprisePost(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
     </div>
-
     <div th:if= "${commanditaire.CitoyenId} != null">
         <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${commanditaire.Citoyen}) }"></fieldset>
     </div>
-
 </fieldset>
+
+
+<fieldset th:fragment="commanditairePost(fonction,commanditaire)">
+    <legend th:text="${fonction}">Commanditaire</legend>
+    <div th:if= "${commanditaire} != null">
+        <div th:if= "${commanditaire.EntrepriseId} != null">
+            <fieldset th:replace="~{/fragments/entreprise :: EntreprisePost(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
+        </div>
+        <div th:if= "${commanditaire.CitoyenId} != null">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenPost(${'Citoyen'},${commanditaire.Citoyen}) }"></fieldset>
+        </div>
+    </div>
+    <div th:if= "${commanditaire} == null ">
+        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+    </div>
+</fieldset>
+
+<fieldset th:fragment="commanditairePut(fonction,commanditaire)">
+    <legend th:text="${fonction}">Commanditaire</legend>
+    <div th:if= "${commanditaire} != null">
+        <div th:if= "${commanditaire.EntrepriseId} != null">
+            <fieldset th:replace="~{/fragments/entreprise :: EntreprisePut(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
+        </div>
+        <div th:if= "${commanditaire.CitoyenId} != null">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenPut(${'Citoyen'},${commanditaire.Citoyen}) }"></fieldset>
+        </div>
+    </div>
+    <div th:if= "${commanditaire} == null  ">
+        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+    </div>
+</fieldset>
+
 
 </body>
 

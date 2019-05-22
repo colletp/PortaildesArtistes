@@ -113,7 +113,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 					model.addAttribute("typeTrt",typeTrt);
 					model.addAttribute("trt",formTrt);
 			}
-			return "Traitement/get.html";
+            return "Traitement/get.html";
         }catch(IllegalArgumentException e){
             model.addAttribute("_method",method);
             model.addAttribute("typeTrt",typeTrt);

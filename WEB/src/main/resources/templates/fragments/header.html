@@ -25,7 +25,7 @@
 
 
 <!-- éléments de la barre de navigation
-000000000001 1    Accueil
+000000000001 1    Accueil / Home
 000000000010 2    Menu
 000000000100 4    Mon profil
 000000001000 8    Langue
@@ -45,12 +45,12 @@
         <div class=navtext th:remove="${(select/16)%2!=1}? all : none"><a class="whitea" th:href="@{/inscript}" th:text="#{register}"></a></div>
         <div class=navtext th:remove="${(select/32)%2!=1}? all : none"><a class="whitea" th:href="@{/login}" th:text="#{connecter}"></a></div>
 
-        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}">Mon cockpit</a> &#9660;
-            <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea" th:text="#{carteart}"></a>Carte d'artiste</div>
-            <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea" th:text="#{visaart}"></a>Visa d'artiste</div>
-            <div class=ssmenu><a th:href="@{/Formulaire/my}" class="whitea" th:text="#{myForms}"></a>Mes demandes</div>
-            <div class=ssmenu><a th:href="@{/DocArtiste/my}" class="whitea" th:text="#{myDocs}"></a>Mes documents</div>
-            <div class=ssmenu><a th:href="@{/Prestation}" class="whitea" th:text="#{prestations}">Prestations</a></div>
+        <div class=menu th:remove="${(select/64)%2!=1}? all : none"><a class="whitea" th:href="@{/artiste}" th:text="#{artiste}"></a> &#9660;
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/carte}" class="whitea" th:text="#{carteart}"></a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/creer/visa}" class="whitea" th:text="#{visaart}"></a></div>
+            <div class=ssmenu><a th:href="@{/Formulaire/my}" class="whitea" th:text="#{myForms}"></a></div>
+            <div class=ssmenu><a th:href="@{/DocArtiste/my}" class="whitea" th:text="#{myDocs}"></a></div>
+            <div class=ssmenu><a th:href="@{/Prestation}" class="whitea" th:text="#{prestations}"></a></div>
         </div>
 
 <!--        <div class=navtext th:remove="${(select/128)%2!=1}? all : none"><a class="whitea" th:text="#{commanditaire}"></a></div>
