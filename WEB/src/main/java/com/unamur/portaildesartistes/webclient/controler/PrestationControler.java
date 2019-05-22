@@ -1,8 +1,6 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
-import com.unamur.portaildesartistes.DTO.ActiviteDTO;
-import com.unamur.portaildesartistes.DTO.AdresseDTO;
-import com.unamur.portaildesartistes.DTO.PrestationDTO;
+import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.webclient.dataForm.Prestation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +52,6 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
             prestForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             model.addAttribute("activites",prestForm.getActiviteId() );
 
-            /*
-            private UUID commanditaireId;
-            private UUID docArtisteId;
-            private UUID seDerouleId;
-            */
-
             // Met la date à la date du jour
             prestForm.setDatePrest(new Date());
             // valeur par défaut pour la durée
@@ -68,16 +60,25 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
             prestForm.setMontant(0.0);
             // valeur par défaut pour etat => Nouveau
             prestForm.setEtat("Nouveau");
+
+            prestForm.setDocArtiste(new DocArtisteDTO());
+
+            prestForm.setSeDeroule(new AdresseDTO());
+
+            prestForm.setCommanditaire(new CommanditaireDTO());
+
             model.addAttribute("form",prestForm);
+
 
             return "Prestation/" +(method.isEmpty()?"post":method)+".html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "Prestation/"+(method.isEmpty()?"post":method)+".html";
+/*
             usrCtrl.setRoles(cookieValue, model);
             UUID usrId = docCtrl.getMyId(cookieValue);
             UUID docId = null; //TODO prendre ici l'identifiant du formulaire en fonction de l'utilisateur
-            return "Prestation/put.html";
+            return "Prestation/put.html"; */
         }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
             return "/login.html";

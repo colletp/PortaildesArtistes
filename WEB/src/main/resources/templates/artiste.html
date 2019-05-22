@@ -3,13 +3,14 @@
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
 	<div th:replace="~{/fragments/header :: head}"></div>
-    <div th:replace="~{/fragments/header :: nav(select=${462})}"></div>
+    <div th:replace="~{/fragments/header :: nav(select=${78})}"></div>
 
 	<br/><br/><br/>
 	<div id="choixbox">
-		<div class="choixtxt"><a th:href="@{/Prestation}">Gérer mes prestations</a></div>
-		<div class="choixtxt"><a th:href="@{/Formulaire/creer/visa}">Demander un visa artiste</a></div>
-		<div class="choixtxt"><a th:href="@{/Formulaire/creer/carte}">Demander une carte artiste</a></div>
+		<div class="choixtxt"><a th:href="@{/Prestation}" th:text="#{artiste.gerepresta}"></a></div>
+		<div class="choixtxt"><a th:href="@{/Formulaire/creer/visa}" th:text="#{artiste.demandevisa}"></a></div>
+		<div class="choixtxt"><a th:href="@{/Formulaire/creer/carte}" th:text="#{artiste.demandecarte}"></a></div>
 	</div>
+	<div th:replace="~{/fragments/header :: multiscript}"></div>
 </body>
 </html>

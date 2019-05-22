@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@ComponentScan("com.unamur.portaildesartistes.config")
+@ComponentScan("com.unamur.portaildesartistes")
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     private static final Logger logger = LoggerFactory.getLogger(WebMvcConfiguration.class);
 

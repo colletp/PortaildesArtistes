@@ -15,11 +15,11 @@ public class Traitement extends DataForm<TraitementDTO> {
 
     private String dateTrt;
     private String appreciation;
-    private String roleId;
+    //private String roleId;
     private String gestId;
     private String formId;
     private String citoyenPrestId;
-    private String typeRole;
+    //private String typeRole;
 
     // ******************
     // Constructeur
