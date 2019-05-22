@@ -10,9 +10,9 @@
 
 
 <div class="formbox90pc">
-<h1 th:text="#{formulaires}"></h1>
+<h1 th:text="#{listeform}"></h1>
 <table>
-    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th></tr>
+    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th><th></th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.dateDemande}]]</td>
         <td>[[${frm.langue}]]</td>
