@@ -7,10 +7,10 @@
 <fieldset th:fragment="docArtisteGet(fonction,docArtiste,detailVisible)">
     <legend th:text="${fonction}">Document Artiste</legend>
 
-   <span th:text="#{docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
-   <span th:text="#{docArtiste.NomArtiste}" >Nom</span>:[[${docArtiste.NomArtiste}]]<br/>
-   <span th:text="#{docArtiste.DatePeremption}" >Date peremption</span>:[[${docArtiste.DatePeremption}]]<br/>
-   <span th:text="#{docArtiste.TypeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
+   <span th:text="#{num}"></span>:[[${docArtiste.NoDoc}]]<br/>
+   <span th:text="#{nom}"></span>:[[${docArtiste.NomArtiste}]]<br/>
+   <span th:text="#{dtperemption}"></span>:[[${docArtiste.DatePeremption}]]<br/>
+   <span th:text="#{typedoc}"></span>:[[${docArtiste.typeDocArtiste}]]<br/>
 
     <div th:if= "${detailVisible} == true">
         <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>

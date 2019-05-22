@@ -9,7 +9,7 @@
 <div class="formbox90pc">
 <table class=".table-cellule">
     <caption><H1>Liste des prestations</H1></caption>
-    <thead class=".table-header">
+ <!--   <thead class=".table-header">
         <tr>
             <th>Date         </th>
             <th>Durée        </th>
@@ -19,6 +19,7 @@
             <th>Actions      </th>
         </tr>
     </thead>
+    -->
     <tbody>
     <tr th:each="prest : ${form}" class="" >
         <td th:text="${#dates.format(prest.datePrest, 'dd-MMM-yyyy')}" th:alt="${prest.datePrest}"></td>
@@ -44,6 +45,7 @@
     </tbody>
 </table>
 </div>
+<div th:replace="~{/fragments/header :: multiscript}"></div>
 
 </body>
 </html>
