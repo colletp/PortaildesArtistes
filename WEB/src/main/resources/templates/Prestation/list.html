@@ -8,20 +8,22 @@
 
 <div class="formbox90pc">
 <table class=".table-cellule">
-    <caption><H1>Liste des prestations</H1></caption>
- <!--   <thead class=".table-header">
+    <caption><H1 th:text="#{listepresta}"></H1></caption>
+    <tbody>
         <tr>
             <th>Date         </th>
-            <th>Durée        </th>
-            <th>Montant      </th>
-            <th>Statut       </th>
-            <th>Etat         </th>
-            <th>Actions      </th>
+            <th th:text="#{duree}">      </th>
+            <th th:text="#{montant}">      </th>
+            <th th:text="#{statut}">       </th>
+            <th th:text="#{adresse}">         </th>
+            <th th:text="#{activite}">         </th>
+            <th>Document         </th>
+            <th th:text="#{detail}">         </th>
+            <th></th>
         </tr>
-    </thead>
-    -->
-    <tbody>
+
     <tr th:each="prest : ${form}" class="" >
+
         <td th:text="${#dates.format(prest.datePrest, 'dd-MMM-yyyy')}" th:alt="${prest.datePrest}"></td>
         <td th:text="${prest.duree}" th:alt="${prest.duree}"></td>
         <td th:text="${#numbers.formatDecimal(prest.montant, 0, 'COMMA', 2, 'POINT')}" th:alt="${prest.montant}"></td>
