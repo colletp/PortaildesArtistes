@@ -7,7 +7,7 @@
 <fieldset th:fragment="AdresseGet(fonction,adresse)">
     <legend th:text="#{maison.coordo}"></legend>
     <span th:text="#{maison.rue}"></span> : <span th:text="${adresse.rue}"></span><br/>
-    <span th:text="#{num}"></span> : <span th:text="${num}"></span><br/>
+    <span th:text="#{maison.num}"></span> : <span th:text="${adresse.numero}"></span><br/>
     <span th:text="#{maison.boite}"></span> : <span th:text="${adresse.boite}"></span><br/>
     <span th:text="#{maison.ville}"></span> : <span th:text="${adresse.ville}"></span><br/>
 </fieldset>
@@ -17,7 +17,7 @@
     <input type="hidden" th:field="*{adresse.id}" />
     <label th:text="#{maison.rue}"></label>
     <input th:type="text" th:field="*{adresse.rue}" />
-    <label th:text="#{num}"></label>
+    <label th:text="#{maison.num}"></label>
     <input th:type="text" th:field="*{adresse.numero}" />
     <label th:text="#{maison.boite}"></label>
     <input th:type="text" th:field="*{adresse.boite}" />
@@ -29,7 +29,7 @@
     <legend th:text="#{maison.coordo}"></legend>
     <label th:text="#{maison.rue}"></label>
     <input th:type="text" th:field="*{adresse.rue}" />
-    <label th:text="#{num}"></label>
+    <label th:text="#{maison.num}"></label>
     <input th:type="text" th:field="*{adresse.numero}" />
     <label th:text="#{maison.boite}"></label>
     <input th:type="text" th:field="*{adresse.boite}" />

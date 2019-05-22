@@ -22,25 +22,25 @@
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
     Date Demande:[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
+    <div class="visaInputs" th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
+    <div class="visaInputs" th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
+    <div class="visaInputs" th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
     <input type="hidden" th:field="*{citoyenId}" />
     Langue<select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
     </select><br/>
     Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+    Visa<input type="checkbox" th:field="*{visa}" value="1" onclick="$(.visaInputs).style.visibility=($(#visa)=='1'?'visible':'hidden');" /><br/>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
-    <select name="secteur">
+    <select name="secteurId" id="secteurId">
         <option th:value="${sect.id}" th:each="sect : ${secteurs}">[[${sect.nomSecteur}]]</option>
     </select>
     Activité<input name="actLib" />
     Description<textarea name="actDesc" cols="100" rows="10"></textarea>
-    <input th:type="submit" name="submit" value="Ajouter l'activité"/><br/>
+    <input th:type="submit" name="addAct" value="Ajouter l'activité"/><br/>
 
     <input th:type="submit" name="submit" />
 </fieldset>

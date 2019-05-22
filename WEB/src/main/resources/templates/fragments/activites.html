@@ -17,21 +17,7 @@
     Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
-    <legend>Secteurs</legend>
-    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
-        <legend th:text="*{nomSecteur}">Secteur</legend>
-        <ul th:each="act : *{activites}"  th:object="${act}">
-            <li>
-                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
-                <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
-            </li>
-        </ul>
-        <div th:replace="~{/fragments/activites :: formArray('sect',${form.actToAddBySect},${sec.id})}"></div>
-    </fieldset>
-</fieldset>
-
-<fieldset th:fragment="activiteFormBySecteur2(activitesId,listSect)">
+<fieldset th:fragment="activiteFormCheckBySecteur(activitesId,listSect)">
     <legend>Secteurs</legend>
     <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
@@ -51,7 +37,6 @@
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
-                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
                 <span th:text="*{nomActivite}" th:alt="*{description}" ></span><button type="submit" th:name="'removeAct'" th:value="*{id}">Supprimer</button>
             </li>
         </ul>

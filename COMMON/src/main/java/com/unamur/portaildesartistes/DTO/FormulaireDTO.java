@@ -17,8 +17,9 @@ public class FormulaireDTO extends DTO {
     private Lang langue;
     private Boolean carte;
     private Boolean visa;
+	private Boolean aTrairer;
 
-    private List<UUID> lActivitesId;
+    //private List<UUID> lActivitesId;
     private Collection<SecteurDTO> lSecteurs;
 
     private List<TraitementDTO> lTrt;
@@ -28,7 +29,7 @@ public class FormulaireDTO extends DTO {
     // Constructeur
     // ******************
     public FormulaireDTO(){
-        lActivitesId=new ArrayList<>();
+        //lActivitesId=new ArrayList<>();
 
         cursusAc=new ArrayList<>();
         expPro=new ArrayList<>();
@@ -59,12 +60,15 @@ public class FormulaireDTO extends DTO {
     public void setCarte(Boolean b){ carte=b;}
     public Boolean getVisa(){ return visa;}
     public void setVisa(Boolean b){ visa=b;}
+    public Boolean getATraiter(){ return aTrairer;}
+    public void setATraiter(Boolean b){ aTrairer=b;}
 
-    public void setActivitesId(List<UUID> l){lActivitesId=l;}
-    public List<UUID> getActivitesId(){return lActivitesId;}
+    //public void setActivitesId(List<UUID> l){lActivitesId=l;}
+    //public List<UUID> getActivitesId(){return lActivitesId;}
 
     public void setSecteurActivites(Collection<SecteurDTO> ls){lSecteurs=ls;}
     public Collection<SecteurDTO> getSecteurActivites(){return lSecteurs;}
+
     public void setTrt(List<TraitementDTO> l){lTrt=l;}
     public List<TraitementDTO> getTrt(){return lTrt;}
     public CitoyenDTO getCitoyen() { return citDTO; }
