@@ -6,14 +6,14 @@
 
 <fieldset th:fragment="getForm(form,secteurs,citoyen)">
     <legend>Demande de document d'artiste</legend>
-    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet('Citoyen',${citoyen},${citoyen.resideAdr}) }"></fieldset>
-    Date Demande:[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-    Langue :[[${form.langue}]]<br/>
-    Carte :[[${form.carte}]]<br/>
-    Visa :[[${form.visa}]]<br/>
+    <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(#{citoyen},${citoyen},${citoyen.resideAdr}) }"></fieldset>
+    Date : [[${form.dateDemande}]]<br/>
+    <div th:replace="~{/fragments/form :: getArray(#{cursaca},${form.cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: getArray(#{expro},${form.expPro})}"></div>
+    <div th:replace="~{/fragments/form :: getArray(#{autreress},${form.ressources})}"></div>
+    <span th:text="#{langue}"></span> : [[${form.langue}]]<br/>
+    <span th:text="#{carte}"></span> : [[${form.carte}]]<br/>
+    Visa : [[${form.visa}]]<br/>
     <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form},${secteurs}) }"></fieldset>
 </fieldset>
 
@@ -21,25 +21,25 @@
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
-    Date Demande:[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: formArray('Cursus Académique','cursusAc',*{cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Expérience professionnelle','expPro',*{expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray('Autres ressources','ressources',*{ressources})}"></div>
+    Date : [[${form.dateDemande}]]<br/>
+    <div th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
+    <div th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>
+    <div th:replace="~{/fragments/form :: formArray(#{autreress},'ressources',*{ressources})}"></div>
     <input type="hidden" th:field="*{citoyenId}" />
-    Langue<select th:field="*{langue}">
+    <span th:text="#{langue}"></span> : <select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
     </select><br/>
-    Carte<input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+    <span th:text="#{carte}"></span> : <input type="checkbox" th:field="*{carte}" value="1" /><br/>
+    Visa : <input type="checkbox" th:field="*{visa}" value="1" /><br/>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
     <select name="secteur">
         <option th:value="${sect.id}" th:each="sect : ${secteurs}">[[${sect.nomSecteur}]]</option>
     </select>
-    Activité<input name="actLib" />
-    Description<textarea name="actDesc" cols="100" rows="10"></textarea>
+    <span th:text="#{activite}"></span> : <input name="actLib" />
+    Description : <textarea name="actDesc" cols="100" rows="10"></textarea>
     <input th:type="submit" name="submit" value="Ajouter l'activité"/><br/>
 
     <input th:type="submit" name="submit" />
@@ -47,7 +47,7 @@
 
 <fieldset th:fragment="formArray(fonction,name,form)">
     <legend th:text="${fonction}"></legend>
-    <button type="submit" th:name="'addRow'+${name}">Ajouter</button>
+    <button type="submit" th:name="'addRow'+${name}" th:text="#{ajouter}"></button>
     <ul th:each="item,rowStat : ${form}" th:object="${form}">
         <li>
             <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />

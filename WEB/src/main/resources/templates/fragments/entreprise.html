@@ -5,16 +5,16 @@
 <body>
 
 <fieldset th:fragment="EntrepriseGetEnt(fonction,entreprise)">
-    <legend th:text="${}">Entreprise</legend>
-    Numéro d'entreprise:<span th:text="*{entreprise.bce}"></span><br/>
-    Dénomination:<span th:text="*{entreprise.denomination}"></span><br/>
-    Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
+    <legend th:text="#{entreprise}"></legend>
+    <span th:text="#{numentre}"></span> : <span th:text="*{entreprise.bce}"></span><br/>
+    <span th:text="#{denomi}"></span> : <span th:text="*{entreprise.denomination}"></span><br/>
+    <span th:text="#{statut}"></span> : <span th:text="*{entreprise.statutLegal}"></span><br/>
 </fieldset>
 
 <fieldset th:fragment="EntrepriseGet(fonction,entreprise,adresse,citoyen)">
-    <legend th:text="${}">Entreprise</legend>
-    Numéro d'entreprise:<span th:text="*{entreprise.bce}"></span><br/>
-    Dénomination:<span th:text="*{entreprise.denomination}"></span><br/>
+    <legend th:text="#{entreprise}"></legend>
+    <span th:text="#{numentre}"></span> : <span th:text="*{entreprise.bce}"></span><br/>
+    <span th:text="#{denomi}"></span> : <span th:text="*{entreprise.denomination}"></span><br/>
     Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
 
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet('',${}) }"></fieldset>
@@ -24,10 +24,10 @@
 </fieldset>
 
 <fieldset th:fragment="EntreprisPost(fonction,entreprise,adresse,citoyen)">
-    <legend th:text="${}">Entreprise</legend>
-    Numéro d'entreprise:<span th:text="*{entreprise.bce}"></span><br/>
-    Dénomination:<span th:text="*{entreprise.denomination}"></span><br/>
-    Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
+    <legend th:text="#{entreprise}"></legend>
+    <span th:text="#{numentre}"></span> : <span th:text="*{entreprise.bce}"></span><br/>
+    <span th:text="#{denomi}"></span> : <span th:text="*{entreprise.denomination}"></span><br/>
+    <span th:text="#{statut}"></span> : <span th:text="*{entreprise.statutLegal}"></span><br/>
 
     <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${adresse}) }"></fieldset>
 

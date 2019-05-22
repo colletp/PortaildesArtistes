@@ -6,19 +6,19 @@
 
 <fieldset th:fragment="activiteGet(fonction,act)">
     <legend>[[${fonction}]]</legend>
-    Nom:[[${act.nomActivite}]]<br/>
-    Desription:[[${act.description}]]<br/>
+    <span th:text="#{nom}"></span> : [[${act.nomActivite}]]<br/>
+    Desription : [[${act.description}]]<br/>
 </fieldset>
 
 <fieldset th:fragment="activiteModif(fonction,act)">
     <legend>[[${fonction}]]</legend>
     <input type="hidden" th:field="*{act.id}" />
-    Nom:<input type="text" th:field="*{act.nomActivite}" /><br/>
-    Descrption:<textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
+    <span th:text="#{nom}"></span> : <input type="text" th:field="*{act.nomActivite}" /><br/>
+    Descrption : <textarea th:type="text" th:field="*{act.description}" ></textarea><br/>
 </fieldset>
 
 <fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
-    <legend>Secteurs</legend>
+    <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
@@ -32,9 +32,9 @@
 </fieldset>
 
 <fieldset th:fragment="activiteFormBySecteur2(activitesId,listSect)">
-    <legend>Secteurs</legend>
+    <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
-        <legend th:text="*{nomSecteur}">Secteur</legend>
+        <legend th:text="*{nomSecteur}"></legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
                 <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
@@ -46,7 +46,7 @@
 </fieldset>
 
 <fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
-    <legend>Secteurs</legend>
+    <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
@@ -64,7 +64,7 @@
     <ul th:each="item,rowStat : ${actToAdd}" th:object="${item}">
         <li>
             <input th:field="*{secteurId}" />
-            Activité:<input th:field="*{nomActivite}" /><br/>
+            <span th:text="#{activite}"></span> : <input th:field="*{nomActivite}" /><br/>
             <input th:field="*{description}" /><br/>
             <!-- <input th:name="'secteurId'" th:value="${sectId}" th:id="${name}+'Sect'+${rowStat.index+1}" />
             <input type="text" th:name="nom" th:id="${name}+'Nom'+${rowStat.index+1}" th:value="${item.nom}" />
@@ -77,7 +77,7 @@
 
 
 <fieldset th:fragment="activiteDocBySecteur(activitesId,activitesDocId,listSect)">
-    <legend>Secteurs</legend>
+    <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
@@ -90,7 +90,7 @@
 </fieldset>
 
 <fieldset th:fragment="activiteShowBySecteur(activitesId,listSect)">
-    <legend>Secteurs</legend>
+    <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec : ${listSect}" th:object="${sec}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}" th:object="${act}">
