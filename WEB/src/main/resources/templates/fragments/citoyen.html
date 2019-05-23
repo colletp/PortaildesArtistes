@@ -20,7 +20,7 @@
     <legend th:text="#{detailprofile}"></legend>
     <span th:text="#{nom}"></span> : <span th:text="${citoyen.nom}"></span><br/>
     <span th:text="#{prenom}"></span> : <span th:text="${citoyen.prenom}"></span><br/>
-    <span th:text="#{dn}"></span> : <span th:text="${citoyen.dateNaissance}"></span><br/>
+    <span th:text="#{dn}"></span> : <span th:text="${#dates.format(citoyen.dateNaissance, 'dd-MM-yyyy')}" ></span><br/>
     <span th:text="#{tel}"></span> : <span th:text="${citoyen.tel}"></span><br/>
     <span th:text="#{gsm}"></span> : <span th:text="${citoyen.gsm}"></span><br/>
     <span th:text="#{email}"></span> : <span th:text="${citoyen.mail}"></span><br/>
