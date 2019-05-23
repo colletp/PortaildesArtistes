@@ -69,7 +69,7 @@ public class GestionnaireControler extends Controler<GestionnaireDTO , Class<Ges
             ,Model model){
         try{
             usrCtrl.setRoles(cookieValue, model);
-            model.addAttribute("form",super.list(cookieValue,new GestionnaireDTO(),GestionnaireDTO.class,model));
+            model.addAttribute("gest",super.list(cookieValue,new GestionnaireDTO(),GestionnaireDTO.class,model));
             return "Gestionnaire/list.html";
         }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
@@ -83,7 +83,7 @@ public class GestionnaireControler extends Controler<GestionnaireDTO , Class<Ges
                            Model model){
         try{
             usrCtrl.setRoles(cookieValue, model);
-            model.addAttribute("form",super.getObj(cookieValue,itemId,new GestionnaireDTO(),GestionnaireDTO.class,model));
+            model.addAttribute("gest",super.getObj(cookieValue,itemId,new GestionnaireDTO(),GestionnaireDTO.class,model));
             return "Gestionnaire/get.html";
         }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());

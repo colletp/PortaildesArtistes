@@ -3,14 +3,17 @@ package com.unamur.portaildesartistes.webclient.controler;
 import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
+import com.unamur.portaildesartistes.webclient.dataForm.Gestionnaire;
 import com.unamur.portaildesartistes.webclient.dataForm.Traitement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -25,6 +28,8 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     private CitoyenControler citCtrl;
     @Autowired
     private UtilisateurControler usrCtrl;
+    @Autowired
+    private GestionnaireControler gestCtrl;
 
     @GetMapping(value = "/Traitement/form/{formId}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -43,6 +48,18 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             model.addAttribute("formId",formId.toString());
             model.addAttribute("typeTrt","Form");
             model.addAttribute("trt",trt);
+
+
+            List<TraitementDTO> lTrt;
+            HttpHeaders headers = initHeadersRest(cookieValue);
+            try{
+                lTrt = restTemplateHelper.getForList(TraitementDTO.class,configurationService.getUrl()+"/gestionTraitement/form/"+formId,headers );
+            }catch( Exception e ){
+                model.addAttribute("Err",e.getMessage());
+                throw new Exception(e.getMessage());
+            }
+
+            model.addAttribute("lTrt",lTrt);
             return "Traitement/put.html";
         }catch( Exception e ){
             return "login.html";
@@ -87,8 +104,8 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             //retrouver les éléments insérés en DB (date du traitement, ...)
             formTrt.setFromDTO( super.getObj( cookieValue,trtId, formTrt.getDTO(),TraitementDTO.class,model ) );
 
-            FormulaireDTO formDTO = formCtrl.formGetById( cookieValue, UUID.fromString( formTrt.getFormId() ) , model);
-            formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
+            //FormulaireDTO formDTO = formCtrl.formGetById( cookieValue, UUID.fromString( formTrt.getFormId() ) , model);
+            //formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
 
 			model.addAttribute("Msg",submit);
             switch(submit){
@@ -179,13 +196,27 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 
     @GetMapping(value = "/Traitement/{trtId}")
     public String Form( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                        @PathVariable("trtId") UUID trtId ,
+                        @PathVariable("trtId") String trtId,
+                        @ModelAttribute("form") final Formulaire formForm,
+                        @ModelAttribute("trt") final Traitement trt,
                         Model model){
         try{
             usrCtrl.setRoles( cookieValue, model );
-            TraitementDTO trtDTO = getObj(cookieValue,trtId,new TraitementDTO(),TraitementDTO.class,model);
-            model.addAttribute("trt", trtDTO );
-            model.addAttribute("citoyen",citCtrl.getObj( cookieValue , trtDTO.getForm().getCitoyenId(), new CitoyenDTO(),CitoyenDTO.class, model ) );
+
+            TraitementDTO t = super.getObj( cookieValue, UUID.fromString(trtId) ,new TraitementDTO(),TraitementDTO.class , model);
+            FormulaireDTO f = formCtrl.getObj( cookieValue, t.getFormId() ,new FormulaireDTO(),FormulaireDTO.class , model);
+            formForm.setFromDTO( f );
+            formCtrl.loadForm( cookieValue, formForm ,"GET",model);
+            trt.setFromDTO(t);
+            //FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
+            //formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
+            model.addAttribute("typeTrt","Form");
+            model.addAttribute("trt",trt);
+
+            GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, UUID.fromString(trt.getGestId()), new GestionnaireDTO(),GestionnaireDTO.class , model);
+            model.addAttribute("gestNom",gestDTO.getCitoyen().getNom());
+            model.addAttribute("gestId",gestDTO.getId());
+            //model.addAttribute("citoyen",citCtrl.getObj( cookieValue , trtDTO.getForm().getCitoyenId(), new CitoyenDTO(),CitoyenDTO.class, model ) );
             return "Traitement/get.html";
         }catch( Exception e ){
             model.addAttribute("Err" , e.getMessage() );

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+
+    <div th:replace="~{/fragments/header :: head}"></div>
+    <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+   <!--  <tr><th th:text="#{username}">Nom d'utilisateur</th><th>Action</th></tr> -->
+
+    <div class="formbox90pc">
+        <table>
+            <caption><H1 th:text="#{listeutil}"></H1></caption>
+            <tr th:each="usr : ${form}">
+                <td>[[${usr.utilisateur.username}]]</td>
+                <td>[[${usr.citoyen.nom}]]</td>
+                <td>[[${usr.citoyen.mail}]]</td>
+                <td>[[${usr.adresse.ville}]]</td>
+                <td id="boutonsList">
+                    <a th:href="@{/Utilisateur/{id}(id=${usr.utilisateur.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
+                    <a th:href="@{/Utilisateur/modif/{id}(id=${usr.utilisateur.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>
+                    <a th:href="@{/Utilisateur/suppr/{id}(id=${usr.utilisateur.id})}"><img th:src="@{/img/bt_del.png}" th:alt="#{supprimer}" th:title="#{supprimer}"  /></a>
+                </td>
+            </tr>
+    </table>
+    </div>
+
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

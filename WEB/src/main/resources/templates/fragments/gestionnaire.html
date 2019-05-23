@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="get(gest)">
+    <legend th:text="#{detailprofile}"></legend>
+    <span th:text="#{matricule}"></span> : [[${gest.matricule}]]<br/>
+    <span th:text="#{bureau}"></span> : [[${gest.bureau}]]<br/>
+</fieldset>
+
+<fieldset th:fragment="getAdr(gest)">
+    <legend th:text="#{detailprofile}"></legend>
+    <span th:text="#{matricule}"></span> : <span th:text="${gest.matricule}"></span><br/>
+    <span th:text="#{bureau}"></span> : <span th:text="${gest.bureau}"></span><br/>
+    <fieldset th:replace="~{/fragments/adresse :: AdresseGet('Travaille',${gest.travaille}) }"></fieldset>
+</fieldset>
+
+</body>
+
+</html>

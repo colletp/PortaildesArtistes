@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${2})}"></div>
+
+<div th:replace="~{/fragments/header :: erreurs}"></div>
+
+<form class="formbox600" th:action="@{/Utilisateur/{id}(id=${form.utilisateur.id})}" th:name="form" th:object="${form}" th:method="post">
+
+    <div>
+        <input type="hidden" th:field="*{utilisateur.id}" />
+
+        <fieldset><legend th:text="#{compteinfo}"></legend>
+            <label th:text="#{username}"></label><input type="text" th:field="*{utilisateur.username}" />
+            <label th:text="#{password}"></label><input th:type="password" th:field="*{utilisateur.password}" />
+        </fieldset>
+
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrPost('Citoyen',citoyen,adresse)}"></fieldset>
+
+        <br/><br/>
+        <input th:type="submit" />
+    </div>
+</form>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

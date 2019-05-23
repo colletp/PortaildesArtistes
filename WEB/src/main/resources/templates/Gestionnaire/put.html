@@ -2,22 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head th:replace="~{/fragments/header :: meta}"></head>
 <body>
+
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
-<div th:replace="~{/fragments/header :: erreurs}"></div>
-<fieldset class="formbox800">
-    <legend>Traitement</legend>
 
-    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
+<form class="formbox600" th:action="@{/Utilisateur}" th:name="form" th:object="${form}" th:method="put">
 
-    <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
-    Date Demande:[[${form.dateDemande}]]<br/>
-    Date Traitement:[[${trt.dateTrt}]]<br/>
-    Appréciation:[[${trt.appreciation}]]<br/>
+        Login:<input type="text" th:field="*{utilisateur.username}" /><br/>
+        Password:<input th:type="password" th:field="*{utilisateur.password}" /><br/>
 
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenPostAdr('Citoyen',citoyen,adresse)}"></fieldset>
 
-</fieldset>
-
+        <input th:type="submit" />
+    </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

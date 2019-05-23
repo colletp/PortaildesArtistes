@@ -42,5 +42,7 @@ public class TraitementServiceFront extends ServiceFront<TraitementDTO>{
 
     @GetMapping("/gestionTraitement/lang/{lang}")
     public List<TraitementDTO> listByLang( @PathVariable("lang") String lang ){ return trtServImpl.listByLang( lang ); }
+    @GetMapping("/gestionTraitement/form/{formId}")
+    public List<TraitementDTO> listByForm( @PathVariable("formId") UUID formId ){ return trtServImpl.listByForm( formId ); }
 
 }

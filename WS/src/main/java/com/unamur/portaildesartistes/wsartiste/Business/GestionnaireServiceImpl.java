@@ -23,6 +23,8 @@ public class GestionnaireServiceImpl implements IService<GestionnaireDTO> {
 
     @Autowired
     private CitoyenServiceImpl citServImpl;
+    @Autowired
+    private AdresseServiceImpl adrsServImpl;
 
     @Transactional
     public List<GestionnaireDTO> listGestionnaire(){
@@ -39,6 +41,7 @@ public class GestionnaireServiceImpl implements IService<GestionnaireDTO> {
     public GestionnaireDTO getById( UUID uuid ){
         GestionnaireDTO gestDTO = gestImpl.getById(uuid);
         gestDTO.setCitoyen( citServImpl.getById(gestDTO.getCitoyenId()) );
+        gestDTO.setTravaille( adrsServImpl.getById(gestDTO.getTravailleId() ) );
         return gestDTO;
     }
     @Transactional

@@ -5,12 +5,17 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 <div th:replace="~{/fragments/header :: erreurs}"></div>
-<form class="formbox800" th:action="@{/Traitement}" th:name="form" th:method="put">
+<form class="formbox800" th:action="@{/Traitement}" th:name="trt" th:method="put">
     <input type="hidden" name="typeTrt" th:value="${typeTrt}" />
     <input type="hidden" name="formId" th:value="${formId}" />
 
     <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
 
+    <div th:each="curTrt : ${lTrt}" th:object="${curTrt}">
+        <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+*{gest.id}" >[[*{gest.citoyen.nom}]]</a> le [[*{dateTrt}]]<br/>
+        Appréciation:[[*{appreciation}]]<hr/>
+
+    </div>
     <!-- Message au citoyen (envoi d'un message)<textarea field="${trt.msgCitoyen}" rows="10" cols="100"></textarea><br/> -->
     Appréciation (en interne)<textarea th:field="${trt.appreciation}" rows="10" cols="100"></textarea><br/>
     <button th:type="submit" name="submit" value="renvoyerForm" th:text="#{renvoyerForm}">Demande complément d'information</button>
