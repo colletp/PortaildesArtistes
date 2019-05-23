@@ -93,7 +93,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         if ( ( getCarte()!=null&&getCarte().equals("1") ) || (getVisa()!=null && getVisa().equals("1") ) ){
             return true;
         }
-        throw new IllegalArgumentException("Vous devez choisir au moins une carte ou un visa");
+        throw new IllegalArgumentException("carteouvisa");
     }
 
     public FormulaireDTO getDTO(){

@@ -79,7 +79,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
         //Contrôle de la validité de la valeur reprise dans le NRN
 
         if(toValidate.length()!=11)
-            throw new IllegalArgumentException("Numéro de registre national incorrect");
+            throw new IllegalArgumentException("regnatincorrect");
         long nrn=Long.parseLong( toValidate );
         long val=nrn/100;
          SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -93,18 +93,18 @@ public class Citoyen extends DataForm<CitoyenDTO> {
             val+=2000000000;
         long valControle = 97 - (val % 97);
         if(valControle!=(nrn%100))
-            throw new IllegalArgumentException("Numéro de registre national incorrect");
+            throw new IllegalArgumentException("regnatincorrect");
         return true;
     }
     Boolean isMajor(Date dateNaissance){
         //Controle si le citoyen à plus de 18 ans
         if(dateNaissance==null){
-            throw new IllegalArgumentException("Date absente");
+            throw new IllegalArgumentException("dateabsente");
         }
         Long resultat = new Date().getTime() - dateNaissance.getTime();
         logger.error( Long.toString(resultat/1000/60/60/24/365 ) );
         if(resultat< (18*365*24*60*60*1000) )
-            throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
+            throw new IllegalArgumentException("citoyentropetit");
         return true;
     }
 
@@ -113,7 +113,7 @@ public class Citoyen extends DataForm<CitoyenDTO> {
             Pattern patternTel = Pattern.compile("[0-9]+/?[0-9]+$");
             Matcher testTel = patternTel.matcher(toValidate);
             if (!testTel.matches())
-                throw new IllegalArgumentException("N° de tel ou de GSM non valide");
+                throw new IllegalArgumentException("mauvaistel");
         }
         return true;
     }
