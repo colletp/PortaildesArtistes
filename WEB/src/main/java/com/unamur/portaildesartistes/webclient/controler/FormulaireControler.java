@@ -80,7 +80,6 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             CitoyenDTO citDTO = citCtrl.getObj(cookieValue,method.toUpperCase().equals("PUT")?citCtrl.getMyId(cookieValue):UUID.fromString( formForm.getCitoyenId() ),new CitoyenDTO(),CitoyenDTO.class,model );
             model.addAttribute("citoyen",citDTO);
             //formForm.setCitoyenId( citDTO.getId().toString() );
-
             //tous les secteurs et activités existants
             //formForm.setSecteurActivites( sectCtrl.listSecteurActivite( cookieValue , model ) );
             if( formForm.getId()==null ){
@@ -89,7 +88,7 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
             }
             else{
                 //formulaire complété avec la liste des secteurs et activités le concernant
-                formForm.setSecteurActivites(sectCtrl.listSecteurActiviteByForm(cookieValue, UUID.fromString(formForm.getId()) , model));
+                formForm.setSecteurActivites( sectCtrl.listSecteurActiviteByForm(cookieValue, UUID.fromString(formForm.getId()) , model) );
             }
             //model.addAttribute("form",formForm);
             //activité ayant été cochées par le citoyen

@@ -28,17 +28,21 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 
     @GetMapping(value = "/Traitement/form/{formId}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
-            ,@PathVariable("formId") String formId
-            ,@ModelAttribute("trt") final Traitement formTrt
+            ,@PathVariable("formId") final String formId
+            ,@ModelAttribute("form") final Formulaire formForm
+            ,@ModelAttribute("trt") final Traitement trt
             ,Model model){
         try{
             usrCtrl.setRoles( cookieValue, model );
-            FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
-            formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
-            //model.addAttribute("formId",formId.toString());
-            formTrt.setFormId( formId );
-            model.addAttribute("trt",formTrt);
+
+            FormulaireDTO f = formCtrl.getObj( cookieValue, UUID.fromString(formId) ,new FormulaireDTO(),FormulaireDTO.class , model);
+            formForm.setFromDTO( f );
+            formCtrl.loadForm( cookieValue, formForm ,"GET",model);
+            //FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
+            //formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
+            model.addAttribute("formId",formId.toString());
             model.addAttribute("typeTrt","Form");
+            model.addAttribute("trt",trt);
             return "Traitement/put.html";
         }catch( Exception e ){
             return "login.html";
@@ -91,7 +95,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 				case "renvoyerForm":
 					//traitement remettant le formulaire consultable par le citoyen
 					formCtrl.invalidateForm( cookieValue, formTrt.getFormId() ,model );
-					return "Traitement/list.html";
+					return "Traitement/listForm.html";
 				case "envoiReponse":
 					//redirection vers création réponse
 					model.addAttribute("trtId",trtId);
@@ -132,7 +136,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
                     bLangOk=true;
             }
             if( !bLangOk ) {
-                model.addAttribute("Err", "Langue non disponible pour ce gestionnaire");
+                model.addAttribute("Err", "errLangDispo");
                 return "choixTraitement.html";
             }
 
@@ -196,7 +200,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         try{
             usrCtrl.setRoles( cookieValue, model );
             super.delete(cookieValue,new TraitementDTO(),itemId,model);
-            return "Traitement/list.html";
+            return "Traitement/listForm.html";
         }catch( Exception e ){
             model.addAttribute("Err" , e.getMessage() );
             return "login.html";

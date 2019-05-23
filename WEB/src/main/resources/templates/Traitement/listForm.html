@@ -14,9 +14,9 @@
     <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
     <tr th:each="frm : ${formATrt}">
         <td>[[${frm.dateDemande}]]</td>
-        <td>[[${frm.langue}]]</td>
-        <td>[[${frm.carte}]]</td>
-        <td>[[${frm.visa}]]</td>
+        <td><img th:src="@{'/img/flag-'+${frm.langue}+'.png'}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.carte}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.carte}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.visa}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.visa}" /></td>
         <td class="boutonsList">
             <!--<a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>-->
             <a th:href="@{/Traitement/form/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{creerTrt.form}" th:title="#{creerTrt.form}"  /></a>
@@ -35,9 +35,9 @@
     </tr>
     <tr th:each="frm : ${formEnCours}">
         <td>[[${frm.dateDemande}]]</td>
-        <td>[[${frm.langue}]]</td>
-        <td>[[${frm.carte}]]</td>
-        <td>[[${frm.visa}]]</td>
+        <td><img th:src="@{'/img/flag-'+${frm.langue}+'.png'}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.carte}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.carte}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.visa}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.visa}" /></td>
         <td><table>
             <tr><th>Date Traitement</th>
                 <th>Nom du gestionnaire</th>
@@ -71,9 +71,9 @@
     </tr>
     <tr th:each="frm : ${formFini}">
         <td>[[${frm.dateDemande}]]</td>
-        <td>[[${frm.langue}]]</td>
-        <td>[[${frm.carte}]]</td>
-        <td>[[${frm.visa}]]</td>
+        <td><img th:src="@{'/img/flag-'+${frm.langue}+'.png'}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.carte}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.carte}" /></td>
+        <td><img th:src="@{/img/vrai.png}" th:if="${frm.visa}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.visa}" /></td>
         <td><table>
             <tr><th>Date Traitement</th>
                 <th>Nom du gestionnaire</th>
