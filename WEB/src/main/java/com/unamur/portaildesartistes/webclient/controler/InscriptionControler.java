@@ -44,6 +44,10 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
             model.addAttribute("Err",e.getMessage());
             return "inscript.html";
         }catch( Exception e ){
+            if(e.getMessage().equals("inscript_ok")){
+                model.addAttribute("Msg", "inscript_ok");
+                return "login.html";
+            }
             logger.error(e.getMessage());
             model.addAttribute("Err", e.getMessage() );
             return "inscript.html";
