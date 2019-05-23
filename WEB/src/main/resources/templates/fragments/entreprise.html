@@ -33,6 +33,18 @@
 
 </fieldset>
 
+
+<fieldset th:fragment="EntreprisPut(fonction,entreprise)">
+    <legend th:text="#{entreprise}"></legend>
+    <span th:text="#{numentre}"></span> : <span th:text="${entreprise.bce != null}? ${entreprise.bce} : ' '" ></span><br/>
+    <span th:text="#{denomi}"></span> : <span th:text="${entreprise.denomination != null} ? ${entreprise.denomination} : ' '"></span><br/>
+    <span th:text="#{statut}"></span> : <span th:text="${entreprise.statutLegal != null} ?  ${entreprise.statutLegal} : ' '"></span><br/>
+
+    <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${entreprise.siegeId}) }"></fieldset>
+
+</fieldset>
+
+
 </body>
 
 </html>

@@ -35,16 +35,16 @@
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${form.secteurActivites})}"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur2(${form},${form.secteurActivites})}"></fieldset></td>
         </tr>
 
         <tr>
             <td><fieldset th:replace="~{/fragments/commanditaire :: commanditairePut( 'Coordonnée du commanditaire', ${form.Commanditaire} ) }"></fieldset></td>
         </tr>
 
-        <tr>
-            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.DocArtiste}, true) }"></fieldset></td>
-        </tr>
+        <!--<tr>-->
+            <!--<td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.DocArtiste}, true) }"></fieldset></td>-->
+        <!--</tr>-->
 
 
     </table>

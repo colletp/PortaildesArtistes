@@ -29,13 +29,13 @@
     <legend th:text="${fonction}"></legend>
     <div th:if= "${adresse} != null">
         <label th:text="#{maison.rue}"></label>
-        <input th:type="text" th:field="*{adresse.Rue}" />
+        <input th:type="text" th:text="${adresse.rue != null}? ${adresse.rue} : ' '" />
         <label th:text="#{num}"></label>
-        <input th:type="text" th:field="*{adresse.Numero}" />
+        <input th:type="text" th:text="${adresse.numero != null}? ${adresse.numero} : ' '" />
         <label th:text="#{maison.boite}"></label>
-        <input th:type="text" th:field="*{adresse.Boite}" />
+        <input th:type="text" th:text="${adresse.boite != null}? ${adresse.boite} : ' '" />
         <label th:text="#{maison.ville}"></label>
-        <input th:type="text" th:field="*{adresse.Ville}" />
+        <input th:type="text" th:text="${adresse.ville != null}? ${adresse.ville} : ' '" />
     </div>
     <div th:if= "${adresse} == null">
         <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>

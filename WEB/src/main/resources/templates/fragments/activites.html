@@ -31,18 +31,39 @@
     </fieldset>
 </fieldset>
 
-<fieldset th:fragment="activiteFormBySecteur2(activitesId,listSect)">
-    <legend>Secteurs</legend>
-    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
-        <legend th:text="*{nomSecteur}">Secteur</legend>
-        <ul th:each="act : *{activites}"  th:object="${act}">
-            <li>
-                <input type="checkbox" th:field="${form.activitesId}" th:value="*{id}" />
-                <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
-            </li>
-        </ul>
-        <div th:replace="~{/fragments/activites :: formArray('sect',${form.actToAddBySect},${sec.id})}"></div>
-    </fieldset>
+<fieldset th:fragment="activiteFormBySecteur2(form,listSect)">
+
+    <table>
+        <tr>
+            <td>
+                <select>
+                    <option th:each="secteur : ${listSect}"
+                            th:value="${secteur.Id}"
+                            th:utext="${secteur.NomSecteur}">
+                    </option>
+                </select>
+            </td>
+
+            <!--<td>-->
+                <!--<select>-->
+                    <!--<option th:each="act : *{activites}"-->
+                            <!--th:value="${id}"-->
+                            <!--th:utext="${nomActivite}">-->
+                    <!--</option>-->
+                <!--</select>-->
+            <!--</td>-->
+        </tr>
+    </table>
+
+    <!--<ul th:each="act : *{activites}"  th:object="${act}">-->
+    <!--<li>-->
+    <!--<span th:text="*{nomActivite}" th:alt="*{description}" ></span><button type="submit" th:name="'removeAct'" th:value="*{id}">Supprimer</button>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--<li>-->
+    <!--<button type="submit" th:name="'NewAct'" th:value="*{id}">Nouvelle activité</button>-->
+    <!--</li>-->
+
 </fieldset>
 
 <fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">

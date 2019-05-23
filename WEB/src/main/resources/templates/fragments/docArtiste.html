@@ -46,7 +46,7 @@
     <legend th:text="${fonction}">Document Artiste</legend>
 
     <div th:if= "${docArtiste} != null">
-        <span th:text="#{docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
+        <span th:text="${docArtiste.NoDoc}" >Numéro</span>:[[${docArtiste.NoDoc}]]<br/>
         <span th:text="#{docArtiste.NomArtiste}" >Nom</span>:[[${docArtiste.NomArtiste}]]<br/>
         <span th:text="#{docArtiste.DatePeremption}" >Date peremption</span>:[[${docArtiste.DatePeremption}]]<br/>
         <span th:text="#{docArtiste.TypeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
