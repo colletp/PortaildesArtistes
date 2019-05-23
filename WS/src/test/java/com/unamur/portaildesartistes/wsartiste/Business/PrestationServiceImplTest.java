@@ -125,7 +125,6 @@ class PrestationServiceImplTest {
             //traitement spécial si ça plante?
         }
 
-
         prestation=new PrestationDTO();
 
         ActiviteDTO activite=new ActiviteDTO();
@@ -146,13 +145,11 @@ class PrestationServiceImplTest {
 
         prestation.setCommanditaire(commanditaire);
 
-
         prestation.setDocArtiste(docArtiste);
         try {
             docArtiste.setDatePeremption(sdf.parse("30/06/2019"));
         }catch(ParseException e){}
         docArtiste.setTypeDocArtiste("Carte artiste");
-
 
         try {
             docArtId=docArtServ.insert(docArtiste);
@@ -180,6 +177,10 @@ class PrestationServiceImplTest {
         try {
             docArtServ.delete(docArtId);
             userServ.delete(userId);
+            repServ.delete(repId);
+            trtServ.delete(trtId);
+            gestServ.delete(gestId);
+            formServ.delete(formId);
         }catch(Exception e){
             //traitement spécial si ça plante?
         }
@@ -201,7 +202,7 @@ class PrestationServiceImplTest {
     void update() {
     }
 
-    @DisplayName("Test sur l'insertion d'une prestation")
+    @DisplayName("Test sur l'insertion d'une prestation dans la db")
     @Test
     void insert() {
         try {
@@ -209,6 +210,7 @@ class PrestationServiceImplTest {
         }catch(Exception e){
             //traitement spécial si ça plante?
         }
+        System.out.println("prest = "+prestId);
         PrestationDTO newPrest = prestationService.getById(prestId);
 
         try {

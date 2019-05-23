@@ -67,16 +67,18 @@ class UtilisateurServiceImplTest {
 
     }
 
-    @Test
-    void listCitoyen() {
-    }
-
+    @DisplayName("Test sur la récupération d'une liste d'utilisateur de la BD")
     @Test
     void list() {
+        assertDoesNotThrow(()->usrServImpl.list());
     }
 
+    @DisplayName("Test sur la récupération de l'utilisateur de la BD avec un UUID")
     @Test
     void getById() {
+        UUID user=usrServImpl.getUuidByName("nico");
+        assertDoesNotThrow(()->usrServImpl.getById(user));
+
     }
 
     @DisplayName("Test sur la récupération de l'UUID de la BD d'un utilisateur avec un nom")
@@ -86,8 +88,8 @@ class UtilisateurServiceImplTest {
         assertDoesNotThrow(()->usrServImpl.getUuidByName("nico"));
     }
 
-    @DisplayName("Test sur l'update en base de donnée")
-    @Disabled
+    @DisplayName("Test sur l'update de la base de donnée")
+    //@Disabled
     @Test
     void update(){
         try {
@@ -125,24 +127,24 @@ class UtilisateurServiceImplTest {
 
         //test getUuidByName
         UUID usr2Id = usrServImpl.getUuidByName(usr.getUsername());
-        assertTrue( usr2Id.equals(newUsr.getId()) );
+        assertTrue( usr2Id.equals(newUsr.getId()),"test comparaison de l'id utilisateur" );
 
         //test user
         assertAll(
-                ()->assertEquals( usr.getPassword() , newUsr.getPassword() ),
-                ()->assertEquals( usr.getUsername() , newUsr.getUsername() )
+                ()->assertEquals( usr.getPassword() , newUsr.getPassword(),"test comparaison de password" ),
+                ()->assertEquals( usr.getUsername() , newUsr.getUsername(),"test comparaison du username" )
         );
 
 //test citoyen
         assertAll(
-                ()->assertEquals( usr.getCitoyen().getGsm() , newUsr.getCitoyen().getGsm() ),
-                ()->assertEquals( usr.getCitoyen().getTel() , newUsr.getCitoyen().getTel() ),
-                ()->assertEquals( usr.getCitoyen().getNrn() , newUsr.getCitoyen().getNrn() ),
-                ()->assertEquals( usr.getCitoyen().getMail() , newUsr.getCitoyen().getMail()) ,
-                ()->assertEquals( usr.getCitoyen().getNation() , newUsr.getCitoyen().getNation()),
-                ()->assertEquals( usr.getCitoyen().getNom() , newUsr.getCitoyen().getNom() ),
-                ()->assertEquals( usr.getCitoyen().getPrenom() , newUsr.getCitoyen().getPrenom() ),
-                ()->assertEquals( usr.getCitoyen().getDateNaissance() , newUsr.getCitoyen().getDateNaissance() )
+                ()->assertEquals( usr.getCitoyen().getGsm() , newUsr.getCitoyen().getGsm(),"test comparaison du gsm" ),
+                ()->assertEquals( usr.getCitoyen().getTel() , newUsr.getCitoyen().getTel(),"test comparaison du téléphone" ),
+                ()->assertEquals( usr.getCitoyen().getNrn() , newUsr.getCitoyen().getNrn(),"test comparaison du NRN" ),
+                ()->assertEquals( usr.getCitoyen().getMail() , newUsr.getCitoyen().getMail(),"test comparaison du mail") ,
+                ()->assertEquals( usr.getCitoyen().getNation() , newUsr.getCitoyen().getNation(),"test comparaison de la nationnalité"),
+                ()->assertEquals( usr.getCitoyen().getNom() , newUsr.getCitoyen().getNom(),"test comparaison du nom"),
+                ()->assertEquals( usr.getCitoyen().getPrenom() , newUsr.getCitoyen().getPrenom(),"test comparaison du prénom"),
+                ()->assertEquals( usr.getCitoyen().getDateNaissance() , newUsr.getCitoyen().getDateNaissance(),"test comparaison de la date de naissance")
         );
 //test adresse
 
