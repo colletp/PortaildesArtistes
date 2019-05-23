@@ -51,7 +51,7 @@ public class RootRestService {
     public String wsInscript( @RequestBody final UtilisateurDTO usrDTO)throws Exception{
         try {
             UUID id = usrServImpl.insert(usrDTO);
-            return "OK";
+            return "inscript_ok";
         }catch(Exception e){
             return e.getMessage();
         }

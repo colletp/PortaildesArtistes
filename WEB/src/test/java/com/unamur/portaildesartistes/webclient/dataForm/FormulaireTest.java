@@ -33,6 +33,7 @@ class FormulaireTest {
         formulaire.setLangue("FR");
         formulaire.setCarte("1");
         formulaire.setVisa(null);
+        formulaire.setNomArtiste("Nico");
         List <String> tab=new ArrayList<>();
         tab.add("98a95e7d-8231-4115-8ed9-612de5590d88");
         //formulaire.setActivitesId(tab);
@@ -61,8 +62,9 @@ class FormulaireTest {
                 ()->assertEquals(form.getCarte(),true),
                 ()->assertEquals(form.getVisa(),false),
                 ()->assertEquals(form.getDateDemande(),formulaire.convertDate(formulaire.getDateDemande()) ),
-                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId()))
-                //()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString())
+                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
+                //()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString()),
+                ()->assertEquals(form.getNomArtiste(),formulaire.getNomArtiste())
         );
     }
 
@@ -86,8 +88,31 @@ class FormulaireTest {
                 ()->assertEquals(form.getCarte(),false),
                 ()->assertEquals(form.getVisa(),true),
                 ()->assertEquals(form.getDateDemande(), formulaire.convertDate(formulaire.getDateDemande()) ),
-                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId()))
-                //()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString())
+                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
+                //()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString()),
+                ()->assertEquals(form.getNomArtiste(),formulaire.getNomArtiste())
+        );
+    }
+    @DisplayName("TC , Test de création formulaire avec un nom d'artiste absent")
+    @Test
+    void testCreationDocArtisteValide() {
+        formulaire.setNomArtiste("");
+        try {
+            form = formulaire.getDTO();
+        }catch (IllegalArgumentException  e) {
+            e.printStackTrace();
+        }
+        assertAll(
+                ()->assertEquals(form.getCursusAc(),formulaire.getCursusAc()),
+                ()->assertEquals(form.getExpPro(),formulaire.getExpPro()),
+                ()->assertEquals(form.getRessources(),formulaire.getRessources()),
+                ()->assertEquals(form.getLangue(),formulaire.getLangue()),
+                ()->assertEquals(form.getCarte(),false),
+                ()->assertEquals(form.getVisa(),true),
+                ()->assertEquals(form.getDateDemande(), formulaire.convertDate(formulaire.getDateDemande()) ),
+                ()->assertEquals(form.getCitoyenId(),formulaire.convertUUID(formulaire.getCitoyenId())),
+                //()->assertEquals(form.getActivitesId().toString(),formulaire.getActivitesId().toString()),
+                ()->assertEquals(form.getNomArtiste(),formulaire.getNomArtiste())
         );
     }
 

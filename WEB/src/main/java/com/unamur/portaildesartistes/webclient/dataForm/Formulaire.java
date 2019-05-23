@@ -22,6 +22,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     private String carte;
     private String visa;
 	private String aTraiter;
+    private String nomArtiste;
 
     //private List<String> activitesId;
 
@@ -69,6 +70,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public void setVisa(String b){ visa=b;}
     public String getATraiter(){ return aTraiter;}
     public void setATraiter(String b){ aTraiter=b;}
+    public String getNomArtiste() { return nomArtiste; }
+    public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
 
     //public List<String> getActivitesId(){ return activitesId; }
     //public void setActivitesId(List<String> lAct ){ activitesId=lAct; }
@@ -120,6 +123,9 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         if( getCitoyenId()!=null && !getCitoyenId().isEmpty())
             dto.setCitoyenId(convertUUID(getCitoyenId()));
 
+        hasLengthMin(getNomArtiste(),2);
+        dto.setNomArtiste(getNomArtiste());
+
         /*List<UUID> activitesId = new ArrayList<>();
         for( String act : getActivitesId() ){
             logger.error(act);
@@ -142,6 +148,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setCarte(objDTO.getCarte()?"1":"0");
         setVisa(objDTO.getVisa()?"1":"0");
         setATraiter(objDTO.getATraiter()?"1":"0");
+        setNomArtiste(objDTO.getNomArtiste());
 
         /*List<String> la = new ArrayList<>();
         if( objDTO.getActivitesId()!=null )

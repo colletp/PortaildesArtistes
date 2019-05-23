@@ -26,6 +26,7 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
 
         try{
             usrCtrl.setRoles(cookieValue, model);
+
             model.addAttribute("form",formRep);
             return "Reponse/put.html";
         }catch( Exception e ){

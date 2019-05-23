@@ -7,6 +7,7 @@
 <fieldset th:fragment="getForm(form,secteurs,citoyen)">
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(#{citoyen},${citoyen},${citoyen.resideAdr}) }"></fieldset>
+    <span th:text="#{nom}"></span>:[[${form.nomArtiste}]]<br/>
     Date : [[${form.dateDemande}]]<br/>
     <div th:replace="~{/fragments/form :: getArray(#{cursaca},${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray(#{expro},${form.expPro})}"></div>
@@ -21,6 +22,7 @@
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
+    <span th:text="#{nom}"></span>:[[*{nomArtiste}]]<br/>
     Date Demande:[[${form.dateDemande}]]<br/>
     <div th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>

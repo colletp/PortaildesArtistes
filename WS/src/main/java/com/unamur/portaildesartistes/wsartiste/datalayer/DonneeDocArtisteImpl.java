@@ -74,14 +74,13 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
                 "JOIN formulaires f ON f.form_id=t.form_id AND f.citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,nom_artiste,date_peremption,type_doc_artiste) VALUES (:citoyenId,:reponseId,:noDoc,:nomArtiste,:datePeremption,:typeDocArtiste) RETURNING doc_artiste_id ")
+        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,date_peremption,type_doc_artiste) VALUES (:citoyenId,:reponseId,:noDoc,:datePeremption,:typeDocArtiste) RETURNING doc_artiste_id ")
         String insert(@BindBean DocArtisteDTO test);
 
         @SqlQuery("select * from doc_artiste WHERE doc_artiste_id=:p_id ")
         DocArtisteDTO getById( @Bind("p_id") UUID p_id );
 
         //pas d'update, une fois créé il ne doit plus être modifié ni supprimé
-        //@SqlUpdate("UPDATE doc_artiste SET no_doc,nom_artiste,date_peremption WHERE doc_artiste_id=:id")
         void update(DocArtisteDTO doc);
         void delete(UUID id);
     }
@@ -94,7 +93,6 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
             docArtisteDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             docArtisteDTO.setReponseId((UUID) r.getObject("reponse_id"));
             docArtisteDTO.setNoDoc(r.getString("no_doc"));
-            docArtisteDTO.setNomArtiste(r.getString("nom_artiste"));
             docArtisteDTO.setDatePeremption(r.getDate("date_peremption"));
             docArtisteDTO.setTypeDocArtiste(r.getString("type_doc_artiste"));
             return docArtisteDTO;

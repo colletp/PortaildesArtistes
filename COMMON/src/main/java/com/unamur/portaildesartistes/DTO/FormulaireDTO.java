@@ -18,6 +18,7 @@ public class FormulaireDTO extends DTO {
     private Boolean carte;
     private Boolean visa;
 	private Boolean aTrairer;
+    private String nomArtiste;
 
     //private List<UUID> lActivitesId;
     private Collection<SecteurDTO> lSecteurs;
@@ -62,6 +63,8 @@ public class FormulaireDTO extends DTO {
     public void setVisa(Boolean b){ visa=b;}
     public Boolean getATraiter(){ return aTrairer;}
     public void setATraiter(Boolean b){ aTrairer=b;}
+    public String getNomArtiste() { return nomArtiste; }
+    public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
 
     //public void setActivitesId(List<UUID> l){lActivitesId=l;}
     //public List<UUID> getActivitesId(){return lActivitesId;}

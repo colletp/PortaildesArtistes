@@ -51,7 +51,7 @@ public class Adresse extends DataForm<AdresseDTO> {
         Pattern patternNumRue = Pattern.compile("[0-9]+[A-Z]?$");
         Matcher testNumRue = patternNumRue.matcher(toValidate);
         if (!testNumRue.matches())
-            throw new IllegalArgumentException("Numéro de rue non valide");
+            throw new IllegalArgumentException("illegalRue");
         return true;
     }
 

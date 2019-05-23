@@ -20,7 +20,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     private String citoyenId;
     private String reponseId;
     private String noDoc;
-    private String nomArtiste;
     private String datePeremption;
     private String typeDocArtiste;
 
@@ -45,8 +44,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public void setReponseId( String p_id) { this.reponseId = p_id; }
     public String getNoDoc() { isNotEmpty(noDoc);return noDoc; }
     public void setNoDoc(String p_noDoc) { this.noDoc = p_noDoc; }
-    public String getNomArtiste() { return nomArtiste; }
-    public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
     public String getDatePeremption() { return datePeremption; }
     public void setDatePeremption(String p_date) { this.datePeremption = p_date; }
     public String getTypeDocArtiste() { return typeDocArtiste; }
@@ -75,7 +72,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         setCitoyenId(objDTO.getCitoyenId().toString());
         setReponseId(objDTO.getReponseId().toString());
         setNoDoc(objDTO.getNoDoc());
-        setNomArtiste(objDTO.getNomArtiste());
         setDatePeremption(convertDate(objDTO.getDatePeremption()));
         setTypeDocArtiste(objDTO.getTypeDocArtiste());
 
@@ -102,9 +98,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
             throw new IllegalArgumentException("Carte artiste ou Visa artiste");
         }
         dto.setTypeDocArtiste(getTypeDocArtiste());
-
-        //hasLengthMin(getNomArtiste(),2);
-        dto.setNomArtiste(getNomArtiste());
 
         hasLengthMin(getNoDoc(),2);
         dto.setNoDoc(getNoDoc());

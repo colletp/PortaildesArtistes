@@ -133,7 +133,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             return "Traitement/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
             logger.error(e.getMessage());
-            e.printStackTrace();
             return "login.html";
         }
     }
