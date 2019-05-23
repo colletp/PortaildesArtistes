@@ -21,8 +21,7 @@
 <fieldset th:fragment="postForm(form,secteurs,citoyen)" th:object="${form}">
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
-    <span th:text="#{citoyen.nom}" >Mon nom</span>
-    <span th:text="#{nom}"></span>:[[*{nomArtiste}]]<br/>
+    <span th:text="#{nomArtiste}"></span>:<input th:field="*{nomArtiste}" /><br/>
     Date Demande:[[${form.dateDemande}]]<br/>
     <input type="hidden" th:field="*{citoyenId}" />
     <span th:text="#{langue}"></span> : <select th:field="*{langue}">

@@ -19,7 +19,7 @@
 
 <fieldset th:fragment="activiteFormSecteur(activitesId,listSect)">
     <legend th:text="#{secteur}"></legend>
-    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
@@ -33,7 +33,7 @@
 
 <fieldset th:fragment="activiteFormBySecteur2(activitesId,listSect)">
     <legend>Secteurs</legend>
-    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
@@ -47,7 +47,7 @@
 
 <fieldset th:fragment="activiteFormBySecteur(activitesId,listSect)">
     <legend th:text="#{secteur}"></legend>
-    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec,statSec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}">
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li>
