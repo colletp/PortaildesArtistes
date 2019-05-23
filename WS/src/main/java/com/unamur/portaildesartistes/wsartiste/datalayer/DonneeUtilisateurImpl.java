@@ -67,9 +67,9 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
         return null;
     }
 
-    public UUID insert(UtilisateurDTO usr){ return citoyenImpl.insert( usr ); }
+    public UUID insert(UtilisateurDTO usr)throws Exception{ return citoyenImpl.insert( usr ); }
 
-    public void update(UtilisateurDTO usr){
+    public void update(UtilisateurDTO usr)throws Exception{
         try{
             super.Exec(UtilisateurSQLs.class).update(usr);
         }catch(UnableToExecuteStatementException e){
@@ -85,7 +85,7 @@ public class DonneeUtilisateurImpl extends Donnee<UtilisateurDTO> implements Use
         }
     }
 
-    public void delete(UUID uuid){
+    public void delete(UUID uuid)throws Exception{
         try{
             super.Exec(UtilisateurSQLs.class).delete(uuid);
         }

@@ -47,11 +47,19 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     public String getDateDemande(){ return dateDemande; }
     public void setDateDemande(String d){ dateDemande=d; }
     public List<String> getCursusAc(){ return cursusAc;}
-    public void setCursusAc(List<String> ls){if(cursusAc==null)cursusAc = new ArrayList<>();for(String s : ls)cursusAc.add(s);}
+    public void setCursusAc(List<String> ls){
+        //if(cursusAc==null)cursusAc = new ArrayList<>();for(String s : ls)cursusAc.add(s);
+        cursusAc = ls;}
     public List<String> getExpPro(){ return expPro;}
-    public void setExpPro(List<String> ls){if(expPro==null)expPro = new ArrayList<>();for(String s : ls)expPro.add(s);}
+    public void setExpPro(List<String> ls){
+        //if(expPro==null)expPro = new ArrayList<>();for(String s : ls)expPro.add(s);
+        expPro=ls;
+    }
     public List<String> getRessources(){ return ressources;}
-    public void setRessources(List<String> ls){if(ressources==null)ressources = new ArrayList<>();for(String s : ls)ressources.add(s);}
+    public void setRessources(List<String> ls){
+        if(ressources==null)ressources = new ArrayList<>();for(String s : ls)ressources.add(s);
+        ressources=ls;
+    }
 
     public String getLangue(){ return langue;}
     public void setLangue(String s){ langue=s;}
@@ -125,9 +133,11 @@ public class Formulaire extends DataForm<FormulaireDTO> {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setCitoyenId(objDTO.getCitoyenId()==null?"":objDTO.getCitoyenId().toString());
         setDateDemande(convertDateTime(objDTO.getDateDemande()));
+
         setCursusAc(objDTO.getCursusAc()==null?Arrays.asList():objDTO.getCursusAc());
         setExpPro(objDTO.getExpPro()==null?Arrays.asList():objDTO.getExpPro());
         setRessources(objDTO.getRessources()==null?Arrays.asList():objDTO.getRessources());
+
         setLangue(objDTO.getLangue());
         setCarte(objDTO.getCarte()?"1":"0");
         setVisa(objDTO.getVisa()?"1":"0");

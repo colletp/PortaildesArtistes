@@ -38,8 +38,8 @@
     <select name="secteurId" id="secteurId">
         <option th:value="${sect.id}" th:each="sect : ${secteurs}">[[${sect.nomSecteur}]]</option>
     </select>
-    <span th:text="#{activite}"></span> : <input name="actLib" />
-    Description<textarea name="actDesc" cols="100" rows="10"></textarea>
+    <span th:text="#{activite}"></span> : <input name="nomActivite" />
+    Description<textarea name="description" cols="100" rows="10"></textarea>
     <input th:type="submit" name="addAct" value="Ajouter l'activité"/><br/>
 
     <input th:type="submit" name="submit" />
@@ -47,7 +47,7 @@
 
 <fieldset th:fragment="formArray(fonction,name,form)">
     <legend th:text="${fonction}"></legend>
-    <button type="submit" th:name="'addRow'+${name}" th:text="#{ajouter}"></button>
+    <button type="submit" th:name="'addRow'" th:value="${name}" th:text="#{ajouter}"></button>
     <ul th:each="item,rowStat : ${form}" th:object="${form}">
         <li>
             <input type="text" th:name="${name}" th:id="${name}+${rowStat.index+1}" th:value="${item}" />

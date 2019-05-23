@@ -60,9 +60,9 @@ public class TraitementServiceImpl implements IService<TraitementDTO> {
         return trtDTO;
    }
     @Transactional
-    public void update( TraitementDTO trtDTO ){ trtImpl.update(trtDTO); }
+    public void update( TraitementDTO trtDTO )throws Exception{ trtImpl.update(trtDTO); }
     @Transactional
-    public UUID insert( TraitementDTO trtDTO ){ return trtImpl.insert(trtDTO); }
+    public UUID insert( TraitementDTO trtDTO )throws Exception{ return trtImpl.insert(trtDTO); }
     @Transactional
-    public void delete( UUID uuid ){ trtImpl.delete(uuid); }
+    public void delete( UUID uuid )throws Exception{ trtImpl.delete(uuid); }
 }

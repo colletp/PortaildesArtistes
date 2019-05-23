@@ -32,6 +32,10 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
         return actImpl.list();
     }
     @Transactional
+    public List<ActiviteDTO> listByForm(UUID formId){
+        return actImpl.listByForm(formId);
+    }
+    @Transactional
     public ActiviteDTO getById( UUID uuid ){
         return actImpl.getById(uuid);
     }
@@ -41,18 +45,21 @@ public class ActiviteServiceImpl implements IService<ActiviteDTO> {
     }
     @Transactional
     public UUID insert( ActiviteDTO actDTO ){
+        //UUID actId = actImpl.insert(actDTO);
+        //return actId;
         throw new UnsupportedOperationException("Use instead insert( ActiviteDTO actDTO, UUID formId )");
     }
     @Transactional
-    public UUID insert( ActiviteDTO actDTO, UUID formId ){
+    public UUID insert( ActiviteDTO actDTO, UUID formId )throws Exception{
         UUID actId = actImpl.insert(actDTO);
         formImpl.insertFormAct(actId,formId);
         return actId;
     }
 
     @Transactional
-    public void delete( UUID uuid ){ 
-		actImpl.delete(uuid); 
+    public void delete( UUID actId ){
+        formImpl.deleteAct(actId);
+		actImpl.delete(actId);
 	}
     @Transactional
     public void deleteByForm( UUID uuid ){

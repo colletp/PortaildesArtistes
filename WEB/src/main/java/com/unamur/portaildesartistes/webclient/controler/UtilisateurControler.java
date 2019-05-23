@@ -24,7 +24,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         model.addAttribute("GestFormFR", testRole(cookieValue, "Gestionnaire de formulaire FR", model));
         model.addAttribute("GestFormEN", testRole(cookieValue, "Gestionnaire de formulaire EN", model));
         model.addAttribute("GestPers",   testRole(cookieValue, "Gestionnaire du personnel ", model));
-        model.addAttribute("GestPrest",  testRole(cookieValue, "Gestionnaire de pretations ", model));
+        model.addAttribute("GestPrest",  testRole(cookieValue, "Gestionnaire de pretation ", model));
     }
 
     private Boolean testRole(String cookieValue, String role, Model model)throws Exception {

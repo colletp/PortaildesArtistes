@@ -32,7 +32,7 @@ public abstract class Donnee<T extends DTO> {
 
     public abstract List<T> list();
     public abstract T getById(UUID id);
-    public abstract UUID insert(T item);
-    public abstract void update(T item);
-    public abstract void delete(UUID id);
+    public abstract UUID insert(T item)throws Exception;
+    public abstract void update(T item)throws Exception;
+    public abstract void delete(UUID id)throws Exception;
 }

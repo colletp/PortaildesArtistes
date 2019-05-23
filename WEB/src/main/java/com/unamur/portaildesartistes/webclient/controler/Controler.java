@@ -111,7 +111,7 @@ public abstract class Controler<T extends DTO , U extends java.lang.Class<T> , V
                 restTemplateHelper.postForEntity( configurationService.getUrl()+"/"+((! newUri.equals(""))?newUri:("gestion"+className+"/")) , objDTO , headers );
                 break;
             default :
-                model.addAttribute("Err", "Appel REST : "+method );
+                model.addAttribute("Err", "restCall:"+method );
         }
         return objDTO.getId();
     }

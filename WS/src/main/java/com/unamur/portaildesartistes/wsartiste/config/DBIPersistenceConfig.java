@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +29,10 @@ import java.util.TimeZone;
 //Configuration for JDBI and related persistence.
 @Service
 public class DBIPersistenceConfig {
+    private static final Logger logger = LoggerFactory.getLogger(DBIPersistenceConfig.class);
 
     @Autowired
     private DataSource dataSource;
-
-    private static final Logger logger = LoggerFactory.getLogger(DBIPersistenceConfig.class);
 
     @Bean
     public com.fasterxml.jackson.databind.Module jodaModule() {

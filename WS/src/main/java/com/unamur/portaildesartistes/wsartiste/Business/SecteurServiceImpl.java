@@ -39,16 +39,14 @@ public class SecteurServiceImpl implements IService<SecteurDTO> {
         return sectImpl.getById(uuid);
     }
     @Transactional
-    public void update( SecteurDTO sect ){ sectImpl.update(sect);}
+    public void update( SecteurDTO sect )throws Exception{ sectImpl.update(sect);}
     @Transactional
-    public UUID insert( SecteurDTO sect ){ return sectImpl.insert(sect); }
+    public UUID insert( SecteurDTO sect )throws Exception{ return sectImpl.insert(sect); }
     @Transactional
-    public void delete( UUID uuid ){
-        sectImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ sectImpl.delete(uuid); }
     @Transactional
     public List<SecteurDTO> listSecteurActiviteByFormId(UUID formId){
-        List<SecteurDTO> lSectDTO = sectImpl.getByFormId(formId);
+        List<SecteurDTO> lSectDTO = sectImpl.list();//getByFormId(formId);
         for( SecteurDTO sectDTO : lSectDTO){
             sectDTO.setActivites( actImpl.getBySectFormId( formId,sectDTO.getId() ) );
         }

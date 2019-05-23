@@ -11,10 +11,10 @@ public abstract class ServiceFront<T extends DTO> {
     @Autowired
     protected IService<T> srvImpl;
 
-    protected UUID create( T objDTO ){ return srvImpl.insert(objDTO); }
+    protected UUID create( T objDTO )throws Exception{ return srvImpl.insert(objDTO); }
     protected T read( UUID id ){ return srvImpl.getById(id); }
-    protected void update( T objDTO ){ srvImpl.update(objDTO); }
-    protected void delete( UUID id ){ srvImpl.delete(id); }
+    protected void update( T objDTO )throws Exception{ srvImpl.update(objDTO); }
+    protected void delete( UUID id )throws Exception{ srvImpl.delete(id); }
 
     protected List<T> list(){ return srvImpl.list(); }
 

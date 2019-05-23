@@ -24,13 +24,13 @@ public class DocArtisteServiceFront extends ServiceFront<DocArtisteDTO>{
     }
 	
     @PutMapping("/gestionDocArtiste")
-    public UUID creer( @RequestBody DocArtisteDTO objDTO ){ return super.create(objDTO); }
+    public UUID creer( @RequestBody DocArtisteDTO objDTO )throws Exception{ return super.create(objDTO); }
     @GetMapping("/gestionDocArtiste/{id}")
     public DocArtisteDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionDocArtiste")
-    public void modif( @RequestBody DocArtisteDTO objDTO ){ super.update(objDTO); }
+    public void modif( @RequestBody DocArtisteDTO objDTO )throws Exception{ super.update(objDTO); }
     @DeleteMapping("/gestionDocArtiste/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+    public void suppr( @PathVariable("id") UUID id )throws Exception{ super.delete(id); }
 
     @GetMapping("/gestionDocArtiste")
     public List<DocArtisteDTO> list(){ return super.list(); }

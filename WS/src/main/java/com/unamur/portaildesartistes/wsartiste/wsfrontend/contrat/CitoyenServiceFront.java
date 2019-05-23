@@ -15,13 +15,13 @@ public class CitoyenServiceFront extends ServiceFront<CitoyenDTO> {
     private static final Logger logger = LoggerFactory.getLogger(CitoyenServiceFront.class);
 
     @PutMapping("/gestionCitoyen")
-    public UUID creer( @RequestBody CitoyenDTO objDTO ){ return super.create(objDTO); }
+    public UUID creer( @RequestBody CitoyenDTO objDTO )throws Exception{ return super.create(objDTO); }
     @GetMapping("/gestionCitoyen/{id}")
     public CitoyenDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionCitoyen")
-    public void modif( @RequestBody CitoyenDTO objDTO ){ super.update(objDTO); }
+    public void modif( @RequestBody CitoyenDTO objDTO )throws Exception{ super.update(objDTO); }
     @DeleteMapping("/gestionCitoyen/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+    public void suppr( @PathVariable("id") UUID id )throws Exception{ super.delete(id); }
 
     @GetMapping("/gestionCitoyen")
     public List<CitoyenDTO> list(){ return super.list(); }

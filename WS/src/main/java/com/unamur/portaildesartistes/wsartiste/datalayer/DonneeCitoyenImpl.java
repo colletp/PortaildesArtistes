@@ -10,8 +10,10 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.ConstraintViolationException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -41,27 +43,46 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
 
     @Override
-    public void update(CitoyenDTO item) {
-        throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
-    }
+    public void update(CitoyenDTO item) { throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead"); }
 
     @Override
     public void delete(UUID id) {
         throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead");
     }
 
-    public UUID insert(UtilisateurDTO item){
+    public UUID insert(UtilisateurDTO item)throws Exception{
         try {
             UUID reside =  adrImpl.insert( item.getCitoyen().getResideAdr() );
             item.getCitoyen().setReside( reside );
             return UUID.fromString( super.Exec(UtilisateurSQLs.class).insert( item , item.getCitoyen() ) );
         }
         catch(SQLException e){
-            System.err.println( e.getCause().getMessage() );
-            System.err.println( e.getMessage() );
-            System.err.println( e.getClass() );
-            return null;
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getMessage() );
+            logger.error( e.getClass().toString() );
+            logger.error( e.getClass().getName() );
+            logger.error( e.getClass().getCanonicalName() );
         }
+        catch(ConstraintViolationException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getCause().getLocalizedMessage() );
+            logger.error( e.getClass().toString() );
+        }
+        catch(DataAccessException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getCause().getLocalizedMessage() );
+            logger.error( e.getClass().toString() );
+        }
+        catch(UnableToExecuteStatementException e){
+            logger.error( e.getCause().getMessage() );
+            logger.error( e.getCause().getLocalizedMessage() );
+            logger.error( e.getClass().toString() );
+            //logger.error( e.getClass().getName() );
+            //logger.error( e.getClass().getCanonicalName() );
+            e.getCause().getMessage().contains("citoyen_login_key");
+            throw new Exception("citoyen_login_key");
+        }
+        return null;
     }
     public void update(UtilisateurDTO item){
         adrImpl.update( item.getCitoyen().getResideAdr() );

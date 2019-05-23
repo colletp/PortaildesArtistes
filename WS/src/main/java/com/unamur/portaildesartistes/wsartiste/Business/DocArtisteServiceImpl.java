@@ -35,12 +35,10 @@ public class DocArtisteServiceImpl implements IService<DocArtisteDTO> {
         return docArtImpl.getById(uuid);
     }
     @Transactional
-    public void update( DocArtisteDTO act ){ docArtImpl.update(act); }
+    public void update( DocArtisteDTO act )throws Exception{ docArtImpl.update(act); }
     @Transactional
-    public UUID insert( DocArtisteDTO act ){ return docArtImpl.insert(act); }
+    public UUID insert( DocArtisteDTO act )throws Exception{ return docArtImpl.insert(act); }
     @Transactional
-    public void delete( UUID uuid ){
-        docArtImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ docArtImpl.delete(uuid); }
 
 }

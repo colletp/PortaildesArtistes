@@ -57,7 +57,7 @@ public class CitoyenServiceImpl implements IService<CitoyenDTO> {
     }
 
     @Transactional
-    public UUID insert( UtilisateurDTO usr ){
+    public UUID insert( UtilisateurDTO usr )throws Exception{
         UUID adr=null;
         if( usr.getCitoyen().getResideAdr()!=null )
             adr=adrImpl.insert(usr.getCitoyen().getResideAdr());

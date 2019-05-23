@@ -33,12 +33,10 @@ public class ReponseServiceImpl implements IService<ReponseDTO>{
         return repImpl.getById(uuid);
     }
     @Transactional
-    public void update( ReponseDTO rep ){ repImpl.update(rep); }
+    public void update( ReponseDTO rep )throws Exception{ repImpl.update(rep); }
     @Transactional
-    public UUID insert(ReponseDTO rep ){ return repImpl.insert(rep); }
+    public UUID insert(ReponseDTO rep )throws Exception{ return repImpl.insert(rep); }
     @Transactional
-    public void delete( UUID uuid ){
-        repImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ repImpl.delete(uuid); }
 
 }

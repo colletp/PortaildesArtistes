@@ -29,10 +29,10 @@ public class AdresseServiceImpl implements IService<AdresseDTO> {
         return adrImpl.getById(uuid);
     }
     @Transactional
-    public void update( AdresseDTO act ){ adrImpl.update(act); }
+    public void update( AdresseDTO act )throws Exception{ adrImpl.update(act); }
     @Transactional
-    public UUID insert( AdresseDTO act ){ return adrImpl.insert(act); }
+    public UUID insert( AdresseDTO act )throws Exception{ return adrImpl.insert(act); }
     @Transactional
-    public void delete( UUID uuid ){ adrImpl.delete(uuid); }
+    public void delete( UUID uuid )throws Exception{ adrImpl.delete(uuid); }
 
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:replace="~{/fragments/header :: meta}"></head>
+<body>
+<div th:replace="~{/fragments/header :: head}"></div>
+<div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
+
+<div th:replace="~{/fragments/header :: erreurs}"></div>
+
+<form class="formbox800" th:action="@{/DocArtiste}" th:name="form" th:object="${form}" th:method="put">
+    <fieldset th:replace="~{/fragments/doc :: postDoc(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

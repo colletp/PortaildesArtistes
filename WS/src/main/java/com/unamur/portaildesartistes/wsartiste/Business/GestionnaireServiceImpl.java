@@ -45,13 +45,10 @@ public class GestionnaireServiceImpl implements IService<GestionnaireDTO> {
     public GestionnaireDTO getByCitoyenId( UUID uuid ){ return gestImpl.getByCitoyenId(uuid); }
 
     @Transactional
-    public void update( GestionnaireDTO gest ){
-        gestImpl.update(gest);
-    }
-
+    public void update( GestionnaireDTO gest )throws Exception{ gestImpl.update(gest); }
 
     @Transactional
-    public UUID insert( GestionnaireDTO gest ) {
+    public UUID insert( GestionnaireDTO gest )throws Exception{
         if( gest.getCitoyenId()==null )
             throw new IllegalArgumentException("Insertion d'un Gestionnaire sans citoyen");
         if( gest.getTravailleId()==null )
@@ -60,8 +57,6 @@ public class GestionnaireServiceImpl implements IService<GestionnaireDTO> {
     }
 
     @Transactional
-    public void delete( UUID uuid ){
-        gestImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ gestImpl.delete(uuid); }
 
 }

@@ -51,7 +51,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
     }
 
     @Transactional
-    public void update( UtilisateurDTO usr ){
+    public void update( UtilisateurDTO usr )throws Exception{
         if( !usr.getPassword().isEmpty() ) {
             usr.setPassword(WebSecurityConfig.encoder().encode(usr.getPassword()));
             usrImpl.update(usr);
@@ -62,18 +62,15 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
     }
 
     @Transactional
-    public UUID insert( UtilisateurDTO usr ){
+    public UUID insert( UtilisateurDTO usr )throws Exception{
         usr.setPassword( WebSecurityConfig.encoder().encode(usr.getPassword()) );
-        if( usr.getCitoyen()!=null ){
+        if( usr.getCitoyen()!=null )
             return citServImpl.insert(usr);
-        }
         else
             throw new IllegalArgumentException("Insertion d'un utilisateur sans citoyen");
     }
 
     @Transactional
-    public void delete( UUID uuid ){
-        usrImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ usrImpl.delete(uuid); }
 
 }

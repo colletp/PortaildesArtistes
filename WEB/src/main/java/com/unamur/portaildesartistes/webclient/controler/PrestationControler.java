@@ -135,7 +135,7 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
         try{
             UUID formId = super.postForm(cookieValue,prestForm,method,model);
             if(formId!=null) {
-                model.addAttribute("Msg", "Données sauvées");
+                model.addAttribute("Msg", "dataSaved");
                 prestForm.setId(formId.toString());
                 loadForm(cookieValue, prestForm, method, model);
                 return "Prestation/get.html";

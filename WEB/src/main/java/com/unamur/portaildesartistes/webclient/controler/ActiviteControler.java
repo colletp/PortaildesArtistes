@@ -5,6 +5,7 @@ import com.unamur.portaildesartistes.webclient.dataForm.Activite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,11 @@ public class ActiviteControler extends Controler< ActiviteDTO , java.lang.Class<
 
     @Autowired
     UtilisateurControler usrCtrl;
+
+    UUID insertActForm(String cookieValue,Activite actForm,UUID formId,Model model)throws Exception{
+        HttpHeaders headers = initHeadersRest(cookieValue);
+        return restTemplateHelper.putForEntity( UUID.class,configurationService.getUrl()+"/gestionActivite/"+formId,actForm,headers );
+    }
 
     @GetMapping(value = "/Activite/creer")
     public String creerActiviteForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue

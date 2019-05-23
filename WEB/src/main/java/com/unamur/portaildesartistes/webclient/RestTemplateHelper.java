@@ -99,24 +99,21 @@ public class RestTemplateHelper {
         }
     }
     public <R>  ResponseEntity<String> postForAuth(String url, R body, HttpHeaders headers , Object... uriVariables)
-            //throws Exception
     {
-        //try{
-            return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
-        //}catch(Exception e){
-        //    throw new Exception(e.getMessage());
-        //}
+        return restTemplate.postForEntity(url, new HttpEntity<>(body , headers) , String.class, uriVariables);
     }
-
 
     public <T, R> T putForEntity(Class<T> clazz, String url, R body, HttpHeaders headers , Object... uriVariables)throws Exception {
         HttpEntity<R> request = new HttpEntity<>(body);
+        ResponseEntity<String> response=null;
         try{
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class, headers , uriVariables);
+            response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class, headers , uriVariables);
             JavaType javaType = objectMapper.getTypeFactory().constructType(clazz);
             return readValue(response, javaType);
         }catch(Exception e){
-            throw new Exception(e.getMessage());
+            if(response!=null)
+                throw new Exception( response.getBody() );
+            throw e;
         }
     }
 
@@ -128,7 +125,7 @@ public class RestTemplateHelper {
         }
     }
 
-    private <T> T readValue(ResponseEntity<String> response, JavaType javaType) {
+    private <T> T readValue(ResponseEntity<String> response, JavaType javaType)throws Exception {
         T result = null;
         if (response.getStatusCode() == HttpStatus.OK ||
                 response.getStatusCode() == HttpStatus.CREATED) {
@@ -136,6 +133,7 @@ public class RestTemplateHelper {
                 result = objectMapper.readValue(response.getBody(), javaType);
             } catch (IOException e) {
                 logger.error(e.getMessage());
+                throw new Exception( e.getMessage() );
             }
         } else {
             logger.warn("No data found {}", response.getStatusCode());

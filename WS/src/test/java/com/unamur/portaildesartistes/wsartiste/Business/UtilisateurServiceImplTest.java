@@ -86,9 +86,12 @@ class UtilisateurServiceImplTest {
     @DisplayName("Test sur l'update en base de donnée")
     @Disabled
     @Test
-    void update() {
-        usrId = usrServImpl.insert(usr);
-
+    void update(){
+        try {
+            usrId = usrServImpl.insert(usr);
+        }catch(Exception e){
+            //traitement spécial si l'insert plante?
+        }
         usr.setPassword("test");
         CitoyenDTO citoyen = new CitoyenDTO();
         usr.setCitoyen(citoyen);
@@ -110,7 +113,11 @@ class UtilisateurServiceImplTest {
         adresse.setNumero("16");
         adresse.setVille("Bouge");
 
-        usrServImpl.update(usr);
+        try {
+            usrServImpl.update(usr);
+        }catch(Exception e){
+            //traitement spécial si ça plante?
+        }
         UtilisateurDTO newUsr = usrServImpl.getById(usrId);
 
         //test getUuidByName
@@ -140,14 +147,22 @@ class UtilisateurServiceImplTest {
 
         assertEquals(newUsr.getId(), newUsr.getCitoyen().getId());
 
-        usrServImpl.delete(usrId);
+        try {
+            usrServImpl.delete(usrId);
+        }catch(Exception e){
+            //traitement spécial si ça plante?
+        }
 
     }
 
     @DisplayName("Test sur l'insertion en base de donnée")
     @Test
     void insert() {
-        usrId = usrServImpl.insert(usr);
+        try {
+            usrId = usrServImpl.insert(usr);
+        }catch(Exception e){
+            //traitement spécial si ça plante?
+        }
 
         UtilisateurDTO newUsr = usrServImpl.getById(usrId);
 
@@ -182,9 +197,11 @@ class UtilisateurServiceImplTest {
 
         assertEquals(newUsr.getId(), newUsr.getCitoyen().getId());
 
-        usrServImpl.delete(usrId);
-
-
+        try {
+            usrServImpl.delete(usrId);
+        }catch(Exception e){
+            //traitement spécial si ça plante?
+        }
         // delete(usrId);
     }
 
@@ -203,8 +220,12 @@ class UtilisateurServiceImplTest {
 
     @Test
     void testDeleteUser() {
-        usrServImpl.insert(usr);
-        usrServImpl.delete(usr.getId());
+        try {
+            usrServImpl.insert(usr);
+            usrServImpl.delete(usr.getId());
+        }catch(Exception e){
+            //traitement spécial si ça plante?
+        }
         assertThrows(NullPointerException.class,()->usrServImpl.getById(usr.getId()));
     }
 

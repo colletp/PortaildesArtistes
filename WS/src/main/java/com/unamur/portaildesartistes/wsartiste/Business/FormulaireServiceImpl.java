@@ -89,11 +89,9 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
         return form;
     }
     @Transactional
-    public void update( FormulaireDTO form ){
-        formImpl.update(form);
-    }
+    public void update( FormulaireDTO form )throws Exception{ formImpl.update(form); }
     @Transactional
-    public Integer invalidate( UUID formId, UUID myUserId ){
+    public void invalidate( UUID formId, UUID myUserId )throws Exception{
 
         GestionnaireDTO gestDTO = gestServImpl.getByCitoyenId(myUserId);
 		UtilisateurDTO usrDTO = usrServImpl.getById(myUserId);
@@ -105,36 +103,41 @@ public class FormulaireServiceImpl implements IService<FormulaireDTO> {
 			//permet au gestionnaire d'invalider un formulaire (renvoi au citoyen pour modification)
 			for( RoleDTO role : usrDTO.getAuthorities() ){
 				//uniquement si il peut traiter la langue du formulaire
-				if( role.getAuthority().equals( "Gestionnaire de formulaires "+formDTO.getLangue() ) ){
-                   for( TraitementDTO trtDTO : formDTO.getTrt() ) {
-                       for (ReponseDTO repDTO : trtDTO.getReponses() )
-                           //tant qu'il n'y a pas eu de document créé pour le formulaire
-                           if (repDTO.getDocArt().size() > 0)
-                               return -100;
-                               //throw new Exception("Le formulaire ne peut plus être invalidé, au moins un document a déjà été émis.");
-                       formImpl.invalidate(formId);
-                       return 1;
-                   }
+				if( role.getAuthority().equals( "Gestionnaire de formulaire "+formDTO.getLangue() ) ){
+                    if(formDTO.getTrt()!=null) {
+                        for (TraitementDTO trtDTO : formDTO.getTrt()) {
+                            if(trtDTO.getReponses()!=null) {
+                                for (ReponseDTO repDTO : trtDTO.getReponses())
+                                    //si i y a eu un document créé pour le formulaire -> erreur
+                                    if (repDTO.getDocArt()!=null && repDTO.getDocArt().size() > 0)
+                                        throw new Exception("formInvalidateGestTrt");
+                            }
+                        }
+                    }
+                    formImpl.invalidate(formId);
+                    return;
 				}
 			}
-			err="Vous n'êtes pas un gestionnaire pouvant gérer un formulaire "+formDTO.getLangue();
+			//err="Vous n'êtes pas un gestionnaire pouvant gérer un formulaire "+formDTO.getLangue();
+            err="formGestLang";
 		}
 		//permet au citoyen de revoir sa copie si il n'y a pas encore eu de traitement sur son formulaire
-		if( myUserId.equals( formDTO.getCitoyenId() ) && (formDTO.getTrt()==null || formDTO.getTrt().size()==0) ){
-			formImpl.invalidate(formId);
-			return 1;
+        //if( myUserId.equals( formDTO.getCitoyenId() ) && (formDTO.getTrt()==null || formDTO.getTrt().size()==0) ){
+        if( myUserId.equals( formDTO.getCitoyenId() )){
+            if(formDTO.getTrt()==null || formDTO.getTrt().size()==0) {
+                formImpl.invalidate(formId);
+                return;
+            }else{
+                throw new Exception( err==null?"formInvalidateCitTrt":err );
+            }
 		}
 		else
-			return err==null?-101:-102;
+			throw new Exception( err==null?"formInvalidateCit":err );
 		    //throw new Exception( err==null?"Ceci n'est pas votre formulaire":err );
     }
 
     @Transactional
-    public UUID insert( FormulaireDTO form ){
-        return formImpl.insert(form);
-    }
+    public UUID insert( FormulaireDTO form )throws Exception{ return formImpl.insert(form); }
     @Transactional
-    public void delete( UUID uuid ){
-		formImpl.delete(uuid);
-    }
+    public void delete( UUID uuid )throws Exception{ formImpl.delete(uuid); }
 }

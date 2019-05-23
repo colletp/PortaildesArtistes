@@ -90,19 +90,8 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             switch(submit){
 				case "renvoyerForm":
 					//traitement remettant le formulaire consultable par le citoyen
-					switch( formCtrl.invalidate( cookieValue, UUID.fromString( formTrt.getFormId() ) , model) ){
-                        case 1: model.addAttribute("Msg","Formulaire invalidé");
-                            break;
-                        case -100: model.addAttribute("Err","Le formulaire ne peut plus être invalidé, au moins un document a déjà été émis.");
-                            break;
-                        case -101: model.addAttribute("Err","Ceci n'est pas votre formulaire");
-                            break;
-                        case -102: model.addAttribute("Err","Vous n'êtes pas un gestionnaire pouvant gérer un formulaire");
-                            break;
-                        default:
-                            model.addAttribute("Err","Erreur inconue");
-                    }
-                    return "Traitement/list.html";
+					formCtrl.invalidateForm( cookieValue, formTrt.getFormId() ,model );
+					return "Traitement/list.html";
 				case "envoiReponse":
 					//redirection vers création réponse
 					model.addAttribute("trtId",trtId);
@@ -139,7 +128,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 
             Boolean bLangOk=false;
             for(RoleDTO r : moi.getAuthorities() ){
-                if(r.getLang().equals(lang))
+                if(r.getLang()!=null && r.getLang().equals(lang))
                     bLangOk=true;
             }
             if( !bLangOk ) {

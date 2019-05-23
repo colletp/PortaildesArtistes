@@ -14,13 +14,13 @@ public class SecteurServiceFront extends ServiceFront<SecteurDTO> {
     private static final Logger logger = LoggerFactory.getLogger(SecteurServiceFront.class);
 
     @PutMapping("/gestionSecteur")
-    public UUID creer( @RequestBody SecteurDTO objDTO ){ return super.create(objDTO); }
+    public UUID creer( @RequestBody SecteurDTO objDTO )throws Exception{ return super.create(objDTO); }
     @GetMapping("/gestionSecteur/{id}")
     public SecteurDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionSecteur")
-    public void modif( @RequestBody SecteurDTO objDTO ){ super.update(objDTO); }
+    public void modif( @RequestBody SecteurDTO objDTO )throws Exception{ super.update(objDTO); }
     @DeleteMapping("/gestionSecteur/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+    public void suppr( @PathVariable("id") UUID id )throws Exception{ super.delete(id); }
 
     @GetMapping("/gestionSecteur")
     public List<SecteurDTO> list(){ return super.list(); }
@@ -29,7 +29,10 @@ public class SecteurServiceFront extends ServiceFront<SecteurDTO> {
     public List<SecteurDTO> listSecteurActivite(){ return ((SecteurServiceImpl)srvImpl).listSecteurActivite(); }
 
     @GetMapping("/gestionSecteur/SecteurActivite/Form/{formId}")
-    public List<SecteurDTO> listSecteurActiviteByForm(@PathVariable("formId")UUID formId){ return ((SecteurServiceImpl)srvImpl).listSecteurActiviteByFormId( formId ); }
+    public List<SecteurDTO> listSecteurActiviteByForm(
+            @PathVariable("formId")UUID formId){
+        return ((SecteurServiceImpl)srvImpl).listSecteurActiviteByFormId( formId );
+    }
     @GetMapping("/gestionSecteur/SecteurActivite/Doc/{docId}")
     public List<SecteurDTO> listSecteurActiviteByDoc(@PathVariable("docId")UUID docId){ return ((SecteurServiceImpl)srvImpl).listSecteurActiviteByDocId( docId ); }
 }

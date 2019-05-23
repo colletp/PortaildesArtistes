@@ -101,18 +101,18 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
         }
 
         @Transactional
-        public void update( PrestationDTO act ){
+        public void update( PrestationDTO act )throws Exception{
             //TODO
             prestationImpl.update(act);
         }
 
         @Transactional
-        public UUID insert( PrestationDTO act ){
+        public UUID insert( PrestationDTO act )throws Exception{
             // TODO
             return prestationImpl.insert(act);
         }
         @Transactional
-        public void delete( UUID uuid ){
+        public void delete( UUID uuid )throws Exception{
 
             prestationImpl.delete(uuid);
         }

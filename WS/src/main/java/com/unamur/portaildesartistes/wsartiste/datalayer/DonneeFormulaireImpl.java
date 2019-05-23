@@ -66,6 +66,9 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         actImpl.deleteByForm(id);
 		super.Exec(FormulaireSQLs.class).delete(id);
     }
+    public void deleteAct(UUID actId){
+        super.Exec(FormulaireActiviteSQLs.class).deleteAct(actId);
+    }
 
     @RegisterMapper(FormulaireMapper.class)
     interface FormulaireSQLs {
@@ -116,8 +119,10 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
 
         //void update(FormulaireDTO form);
 
-		@SqlUpdate("DELETE FROM form_activite WHERE form_activite_id=:id ")
-        void delete(UUID id);
+        @SqlUpdate("DELETE FROM form_activite WHERE form_activite_id=:id ")
+        void delete(@Bind("id") UUID id);
+        @SqlUpdate("DELETE FROM form_activite WHERE activite_id=:actId ")
+        void deleteAct(@Bind("actId")UUID actId);
 
         @SqlUpdate("DELETE FROM form_activite WHERE form_id=:formId")
         void deleteByForm(@Bind("formId") UUID formId);

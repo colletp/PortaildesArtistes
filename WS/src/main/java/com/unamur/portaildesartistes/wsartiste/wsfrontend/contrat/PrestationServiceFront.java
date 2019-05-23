@@ -13,7 +13,7 @@ public class PrestationServiceFront extends ServiceFront<PrestationDTO> {
     private static final Logger logger = LoggerFactory.getLogger(PrestationServiceFront.class);
 
     @PutMapping("/gestionPrestation")
-    public UUID creer(@SessionAttribute("userName") String myUser, @RequestBody PrestationDTO objDTO) {
+    public UUID creer(@SessionAttribute("userName") String myUser, @RequestBody PrestationDTO objDTO)throws Exception{
         return super.create(objDTO);
     }
 
@@ -23,12 +23,12 @@ public class PrestationServiceFront extends ServiceFront<PrestationDTO> {
     }
 
     @PostMapping("/gestionPrestation")
-    public void modif(@RequestBody PrestationDTO objDTO) {
+    public void modif(@RequestBody PrestationDTO objDTO)throws Exception {
         super.update(objDTO);
     }
 
     @DeleteMapping("/gestionPrestation/{id}")
-    public void suppr(@PathVariable("id") UUID id) {
+    public void suppr(@PathVariable("id") UUID id)throws Exception {
         super.delete(id);
     }
 

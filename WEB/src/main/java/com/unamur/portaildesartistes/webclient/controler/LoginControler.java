@@ -135,10 +135,10 @@ public class LoginControler {
         switch (Err){
             case "401":
             case "403":
-                Erreur="Utilisateur ou mot de passe incorrect";
+                Erreur="badLogin";
                 break;
             case "404":
-                Erreur="Service Rest introuvable";
+                Erreur="restNotFound";
                 break;
             default:
                 Erreur="";

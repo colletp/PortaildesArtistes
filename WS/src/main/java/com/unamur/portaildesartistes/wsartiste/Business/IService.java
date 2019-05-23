@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface IService<T extends DTO> {
     List<T> list();
     T getById(UUID uuid);
-    UUID insert(T item);
-    void update(T item);
-    void delete(UUID uuid);
+    UUID insert(T item)throws Exception;
+    void update(T item)throws Exception;
+    void delete(UUID uuid)throws Exception;
 }

@@ -26,7 +26,7 @@ public class TraitementServiceFront extends ServiceFront<TraitementDTO>{
 
     @PutMapping("/gestionTraitement/")
     public UUID creer( @SessionAttribute("userName") String myUser
-            , @RequestBody TraitementDTO objDTO ){
+            , @RequestBody TraitementDTO objDTO )throws Exception{
         objDTO.setGestId(  gestServImpl.getByCitoyenId( usrServImpl.getUuidByName(myUser) ).getId() );
         return super.create(objDTO);
     }
@@ -34,9 +34,9 @@ public class TraitementServiceFront extends ServiceFront<TraitementDTO>{
     @GetMapping("/gestionTraitement/{id}")
     public TraitementDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionTraitement")
-    public void modif( @RequestBody TraitementDTO objDTO ){ super.update(objDTO); }
+    public void modif( @RequestBody TraitementDTO objDTO )throws Exception{ super.update(objDTO); }
     @DeleteMapping("/gestionTraitement/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+    public void suppr( @PathVariable("id") UUID id )throws Exception{ super.delete(id); }
     @GetMapping("/gestionTraitement")
     public List<TraitementDTO> list(){ return super.list(); }
 

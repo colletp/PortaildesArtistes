@@ -21,16 +21,16 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
 
     @PutMapping("/gestionFormulaire/")
     public UUID creer( @SessionAttribute("userName") String myUser
-            , @RequestBody FormulaireDTO objDTO ){
+            , @RequestBody FormulaireDTO objDTO )throws Exception{
         objDTO.setCitoyenId( usrServImpl.getUuidByName(myUser) );
         return super.create(objDTO);
     }
     @GetMapping("/gestionFormulaire/{id}")
     public FormulaireDTO getById( @PathVariable("id") UUID uuid ){ return super.read(uuid); }
     @PostMapping("/gestionFormulaire/")
-    public void modif( @RequestBody FormulaireDTO objDTO ){ super.update(objDTO); }
+    public void modif( @RequestBody FormulaireDTO objDTO )throws Exception{ super.update(objDTO); }
     @DeleteMapping("/gestionFormulaire/{id}")
-    public void suppr( @PathVariable("id") UUID id ){ super.delete(id); }
+    public void suppr( @PathVariable("id") UUID id )throws Exception{ super.delete(id); }
 
     @GetMapping("/gestionFormulaire/")
     public List<FormulaireDTO> list(){ return super.list(); }
@@ -42,8 +42,9 @@ public class FormulaireServiceFront extends ServiceFront<FormulaireDTO>{
     }
 
     @GetMapping("/gestionFormulaire/invalidate/{formId}")
-    public Integer invalidate( @PathVariable("formId") UUID formId , @SessionAttribute("userName") String myUser ){
-		return ((FormulaireServiceImpl)srvImpl).invalidate( formId, usrServImpl.getUuidByName(myUser) );
+    public String invalidate( @PathVariable("formId") UUID formId , @SessionAttribute("userName") String myUser )throws Exception{
+		((FormulaireServiceImpl)srvImpl).invalidate( formId, usrServImpl.getUuidByName(myUser) );
+		return "true";
 	}
 	
     @GetMapping("/gestionFormulaire/aTraiter/lang/{lang}")

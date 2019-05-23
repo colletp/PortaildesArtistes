@@ -14,7 +14,7 @@ public class AdresseServiceFront extends ServiceFront<AdresseDTO> {
     private static final Logger logger = LoggerFactory.getLogger(AdresseServiceFront.class);
 
     @PutMapping("/gestionAdresse")
-    public UUID creer(@RequestBody AdresseDTO objDTO) {
+    public UUID creer(@RequestBody AdresseDTO objDTO)throws Exception {
         return super.create(objDTO);
     }
 
@@ -24,12 +24,12 @@ public class AdresseServiceFront extends ServiceFront<AdresseDTO> {
     }
 
     @PostMapping("/gestionAdresse")
-    public void modif(@RequestBody AdresseDTO objDTO) {
+    public void modif(@RequestBody AdresseDTO objDTO)throws Exception {
         super.update(objDTO);
     }
 
     @DeleteMapping("/gestionAdresse/{id}")
-    public void suppr(@PathVariable("id") UUID id) {
+    public void suppr(@PathVariable("id") UUID id)throws Exception {
         super.delete(id);
     }
 

@@ -21,9 +21,11 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     public List<ActiviteDTO> list(){
         return super.Exec(ActiviteSQLs.class).list();
     }
-    public UUID insert(ActiviteDTO item){
-        return UUID.fromString(super.Exec(ActiviteSQLs.class).insert(item));
+    public List<ActiviteDTO> listByForm(UUID formId){
+        return super.Exec(ActiviteSQLs.class).listByForm(formId);
     }
+
+    public UUID insert(ActiviteDTO item){ return UUID.fromString(super.Exec(ActiviteSQLs.class).insert(item)); }
     public void update(ActiviteDTO item) {
         super.Exec(ActiviteSQLs.class).update(item);
     }
@@ -31,9 +33,7 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     public void deleteByForm(UUID id) {
         super.Exec(ActiviteSQLs.class).deleteByForm(id);
     }
-    public void delete(UUID id) {
-        super.Exec(ActiviteSQLs.class).delete(id);
-    }
+    public void delete(UUID id){ super.Exec(ActiviteSQLs.class).delete(id); }
     public ActiviteDTO getById(UUID p_id){
         return super.Exec(ActiviteSQLs.class).getById(p_id);
     }
@@ -55,6 +55,8 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
     interface ActiviteSQLs {
         @SqlQuery("select * from activite ")
         List<ActiviteDTO> list();
+        @SqlQuery("select * from activite WHERE form_id=:formId ")
+        List<ActiviteDTO> listByForm(@Bind("formId") UUID formId);
 
         @SqlQuery("select * from activite a WHERE a.activite_id = :p_id ")
         ActiviteDTO getById(@Bind("p_id")UUID p_id);
@@ -71,16 +73,16 @@ public class DonneeActiviteImpl extends Donnee<ActiviteDTO>{
         @SqlQuery("select * from activite a JOIN form_activite fa ON a.activite_id = fa.activite_id WHERE fa.form_id=:formId AND a.secteur_id=:sectId ")
         List<ActiviteDTO> getBySectFormId(@Bind("formId")UUID formId,@Bind("sectId")UUID sectId);
 
-        @SqlQuery("INSERT INTO activite (nom_activite,secteur_id,description) VALUES (:nomActivite,:idSecteur,:description) RETURNING activite_id ")
+        @SqlQuery("INSERT INTO activite (nom_activite,secteur_id,description) VALUES (:nomActivite,:secteurId,:description) RETURNING activite_id ")
         String insert(@BindBean ActiviteDTO test);
 
         @SqlUpdate("UPDATE activite SET nom_activite=:nomActivite,description=:description WHERE activite_id=:id ")
         void update(@BindBean ActiviteDTO act);
 
-		@SqlUpdate("DELETE FROM activite WHERE activite_id=:id ")
-        void delete(UUID id);
-		@SqlUpdate("DELETE FROM activite a WHERE activite_id IN (SELECT activite_id FROM form_activite fa WHERE fa.form_id=:id) ")
-        void deleteByForm(UUID id);
+		@SqlUpdate("DELETE FROM activite a WHERE a.activite_id=:id ")
+        void delete(@Bind("id")UUID id);
+		@SqlUpdate("DELETE FROM activite a WHERE a.activite_id IN (SELECT activite_id FROM form_activite fa WHERE fa.form_id=:id) ")
+        void deleteByForm(@Bind("id")UUID id);
     }
 
     public static class ActiviteMapper implements ResultSetMapper<ActiviteDTO> {
