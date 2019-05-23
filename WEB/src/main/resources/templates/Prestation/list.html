@@ -24,7 +24,7 @@
 
     <tr th:each="prest : ${form}" class="" >
 
-        <td th:text="${#dates.format(prest.datePrest, 'dd-MMM-yyyy')}" th:alt="${prest.datePrest}"></td>
+        <td th:text="${#dates.format(prest.datePrest, 'dd-MM-yyyy')}" th:alt="${prest.datePrest}"></td>
         <td th:text="${prest.duree}" th:alt="${prest.duree}"></td>
         <td th:text="${#numbers.formatDecimal(prest.montant, 0, 'COMMA', 2, 'POINT')}" th:alt="${prest.montant}"></td>
         <td th:text="${prest.etat}" th:alt="${prest.etat}"></td>
