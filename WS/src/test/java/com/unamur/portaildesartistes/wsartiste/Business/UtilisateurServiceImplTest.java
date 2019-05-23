@@ -89,7 +89,7 @@ class UtilisateurServiceImplTest {
     }
 
     @DisplayName("Test sur l'update de la base de donnée")
-    //@Disabled
+    @Disabled
     @Test
     void update(){
         try {

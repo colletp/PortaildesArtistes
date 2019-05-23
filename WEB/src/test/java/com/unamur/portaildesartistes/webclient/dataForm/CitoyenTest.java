@@ -170,6 +170,13 @@ class CitoyenTest {
         assertThrows(IllegalArgumentException.class,()->citoyen.getDTO());
     }
 
+    @DisplayName("TC 2.28, Test sur la date de naissance, date invalide")
+    @Test
+    void testInscriptNonValide228b() {
+        citoyen.setDateNaissance("22/05/2018");
+        assertThrows(IllegalArgumentException.class,()->citoyen.getDTO());
+    }
+
     @DisplayName("TC 2.30, Test sur le numéro de téléphone, valeur absente")
     @Test
     void testInscriptValide230() {

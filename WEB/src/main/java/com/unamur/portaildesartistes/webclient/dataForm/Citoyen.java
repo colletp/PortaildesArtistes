@@ -102,8 +102,9 @@ public class Citoyen extends DataForm<CitoyenDTO> {
             throw new IllegalArgumentException("Date absente");
         }
         Long resultat = new Date().getTime() - dateNaissance.getTime();
+        Long majeur=Long.parseLong("567648000000");
         logger.error( Long.toString(resultat/1000/60/60/24/365 ) );
-        if(resultat< (18*365*24*60*60*1000) )
+        if(resultat< majeur )
             throw new IllegalArgumentException("Citoyen n'est pas majeur ou n'est pas encore né");
         return true;
     }
