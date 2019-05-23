@@ -88,7 +88,7 @@ class UtilisateurTest {
     @DisplayName("TC 2.7, Test d’inscription avec un mots de passe trop long")
     @Test
     void testInscriptNonValide27() {
-        user.setPassword("12354768reffffffffffsssefeaaatfz00ss0");
+        user.setPassword("1235476800ss0abcdefghijklm");
         assertThrows(IllegalArgumentException.class,()->user.getDTO());
     }
 
