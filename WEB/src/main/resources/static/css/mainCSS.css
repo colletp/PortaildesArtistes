@@ -190,6 +190,7 @@ a:link, a:visited{
 
 
 #choixbox{
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -238,6 +239,16 @@ a:link, a:visited{
 
 .choixtxt:nth-child(3) a {color: rgb(0,0,160);}
 
+
+.choixtxt:nth-child(4){
+    margin-left: 50px;
+    color: white;
+    border:3px solid rgb(95,48,60);
+    background-color: rgb(141,71,88);
+    align-self: center;
+}
+
+.choixtxt:nth-child(4) a {color: white;}
 
 fieldset {
     padding-bottom: 15px;
