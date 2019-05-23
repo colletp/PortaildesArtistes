@@ -110,7 +110,7 @@ class InscriptionControlerTest {
     @DisplayName("TC 2.7, Test d’inscription avec un mots de passe trop long")
     @Test
     void testInscriptNonValide27() {
-        usrInscr.getUtilisateur().setPassword("1235476800ss0");
+        usrInscr.getUtilisateur().setPassword("12354fzzzzzzfzzzzzzzqqqqqqzcd76800ss0");
         assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO() );
     }
 

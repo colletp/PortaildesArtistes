@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
@@ -99,9 +100,18 @@ class PrestationServiceImplTest {
             rep=new ReponseDTO();
             trt=new TraitementDTO();
             form=new FormulaireDTO();
+            form.setCitoyenId(citId);
+            form.setLangue("FR");
+            form.setCarte(true);
+            try {
+                form.setDateDemande(Timestamp.from(sdf.parse("19/05/2019").toInstant()));
+            }catch(ParseException e){}
+            form.setVisa(false);
             formId=formServ.insert(form);
             gest=new GestionnaireDTO();
-            gestId=gestServ.insert(gest);
+            UtilisateurServiceImpl gestionnaire=new UtilisateurServiceImpl();
+            gestId=gestionnaire.getUuidByName("nico");
+            gestServ.getByCitoyenId(gestId);
             trt.setGestId(gestId);
             trt.setFormId(formId);
             trtId=trtServ.insert(trt);
@@ -114,7 +124,6 @@ class PrestationServiceImplTest {
         }catch(Exception e){
             //traitement spécial si ça plante?
         }
-
 
         prestation=new PrestationDTO();
 
@@ -136,13 +145,11 @@ class PrestationServiceImplTest {
 
         prestation.setCommanditaire(commanditaire);
 
-
         prestation.setDocArtiste(docArtiste);
         try {
             docArtiste.setDatePeremption(sdf.parse("30/06/2019"));
         }catch(ParseException e){}
         docArtiste.setTypeDocArtiste("Carte artiste");
-
 
         try {
             docArtId=docArtServ.insert(docArtiste);
@@ -170,6 +177,10 @@ class PrestationServiceImplTest {
         try {
             docArtServ.delete(docArtId);
             userServ.delete(userId);
+            repServ.delete(repId);
+            trtServ.delete(trtId);
+            gestServ.delete(gestId);
+            formServ.delete(formId);
         }catch(Exception e){
             //traitement spécial si ça plante?
         }
@@ -191,7 +202,7 @@ class PrestationServiceImplTest {
     void update() {
     }
 
-    @DisplayName("Test sur l'insertion d'une prestation")
+    @DisplayName("Test sur l'insertion d'une prestation dans la db")
     @Test
     void insert() {
         try {
@@ -199,6 +210,7 @@ class PrestationServiceImplTest {
         }catch(Exception e){
             //traitement spécial si ça plante?
         }
+        System.out.println("prest = "+prestId);
         PrestationDTO newPrest = prestationService.getById(prestId);
 
         try {
