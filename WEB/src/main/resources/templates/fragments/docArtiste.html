@@ -19,7 +19,7 @@
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
     </div>
     <div class="boutonsList">
-        <a th:href="@{/DocArtiste/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+        <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
     </div>
 </fieldset>
 
@@ -42,7 +42,7 @@
         <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
     </div>
     <div class="boutonsList">
-        <a th:href="@{/DocArtiste/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+        <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
     </div>
 </fieldset>
 

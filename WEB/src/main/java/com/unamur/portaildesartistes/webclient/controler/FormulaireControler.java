@@ -324,11 +324,12 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
 
     @GetMapping(value = "/Formulaire/{id}")
     public String formDetail( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
-                           @PathVariable("id") UUID itemId ,
-                           Model model){
+                           @PathVariable("id") final UUID itemId ,
+                           final Model model){
         try{
-            usrCtrl.setRoles(cookieValue, model);
+            //usrCtrl.setRoles(cookieValue, model);
             Formulaire f = new Formulaire(super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class , model));
+            model.addAttribute("form",f);
             loadForm( cookieValue, f ,"GET",model);
             return "Formulaire/get.html";
         }catch( Exception e ){

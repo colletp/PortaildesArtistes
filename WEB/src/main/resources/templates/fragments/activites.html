@@ -77,7 +77,7 @@
 
 <fieldset th:fragment="activiteDocBySecteur(activitesId,activitesDocId,listSect)">
     <legend th:text="#{secteur}"></legend>
-    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}" >
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}"  th:object="${act}">
             <li th:if="${#arrays.contains(form.activitesDocId, ''+act.id)}"  >
@@ -90,7 +90,7 @@
 
 <fieldset th:fragment="activiteShowBySecteur(activitesId,listSect)">
     <legend th:text="#{secteur}"></legend>
-    <fieldset th:each="sec : ${listSect}" th:object="${sec}">
+    <fieldset th:each="sec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}" >
         <legend th:text="*{nomSecteur}">Secteur</legend>
         <ul th:each="act : *{activites}" th:object="${act}">
             <li>
