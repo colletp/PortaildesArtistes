@@ -79,8 +79,11 @@ class UtilisateurServiceImplTest {
     void getById() {
     }
 
+    @DisplayName("Test sur la récupération de l'UUID de la BD d'un utilisateur avec un nom")
     @Test
     void getUuidByName() {
+
+        assertDoesNotThrow(()->usrServImpl.getUuidByName("nico"));
     }
 
     @DisplayName("Test sur l'update en base de donnée")
