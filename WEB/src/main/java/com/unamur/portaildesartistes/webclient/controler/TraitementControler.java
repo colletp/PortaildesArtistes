@@ -115,7 +115,9 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 					return "Traitement/listForm.html";
 				case "envoiReponse":
 					//redirection vers création réponse
-					model.addAttribute("trtId",trtId);
+                    model.addAttribute("trtId",trtId);
+                    model.addAttribute("carte",true);
+                    model.addAttribute("cisa",false);
 					return "Reponse/put.html";
 				case "sauvCommentaire"://rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
 				default:
