@@ -116,8 +116,9 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 				case "envoiReponse":
 					//redirection vers création réponse
                     model.addAttribute("trtId",trtId);
-                    model.addAttribute("carte",true);
-                    model.addAttribute("cisa",false);
+                    FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
+                    model.addAttribute("carte", formDTO.getCarte()?"1":"0" );
+                    model.addAttribute("visa", formDTO.getVisa()?"1":"0" );
 					return "Reponse/put.html";
 				case "sauvCommentaire"://rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
 				default:
