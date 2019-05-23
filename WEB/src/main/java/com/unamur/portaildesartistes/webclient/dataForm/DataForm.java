@@ -45,12 +45,12 @@ public abstract class DataForm<T extends DTO> implements Serializable {
     // ******************
     protected Boolean isNotEmpty(String s)throws IllegalArgumentException{
         if(s==null || s.isEmpty())
-            throw new IllegalArgumentException("Valeur vide");
+            throw new IllegalArgumentException("valeurvide");
         return true;
     }
     protected Boolean isNotEmpty(Object obj)throws IllegalArgumentException{
         if( obj==null )
-            throw new IllegalArgumentException("Valeur vide");
+            throw new IllegalArgumentException("valeurvide");
         return true;
     }
 
@@ -58,7 +58,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         for(int i=0;i<toValidate.length();i++){
             int a=Character.getNumericValue(toValidate.charAt(i));
             if(a<=9&&a>=0)
-                throw new IllegalArgumentException("Contient autre chose que des lettres");
+                throw new IllegalArgumentException("autrechosequelettre");
         }
         return true;
     }
@@ -67,7 +67,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
         for (int i = 0; i <toValidate.length(); i++) {
             int a = Character.getNumericValue(toValidate.charAt(i));
             if (a > 9 || a < 0) {
-                throw new IllegalArgumentException("Numéro de rue format incorrect");
+                throw new IllegalArgumentException("rueincorrecte");
             }
         }
         return true;
@@ -79,7 +79,7 @@ public abstract class DataForm<T extends DTO> implements Serializable {
             Pattern patternMail = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$");
             Matcher testMail = patternMail.matcher(toValidate);
             if (!testMail.matches())
-                throw new IllegalArgumentException("Adresse mail format incorrect");
+                throw new IllegalArgumentException("mailko");
         }
         return true;
     }
@@ -89,14 +89,16 @@ public abstract class DataForm<T extends DTO> implements Serializable {
                 Pattern patternUrl = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$");
                 Matcher testUrl = patternUrl.matcher(s);
                 if (!testUrl.matches())
-                    throw new IllegalArgumentException("URL non valide");
+                    throw new IllegalArgumentException("urlko");
         }
         return true;
     }
 
     protected Boolean hasLengthMin(String s , int size)throws IllegalArgumentException{
-        if( s==null || s.isEmpty() || s.length()<size)
-            throw new IllegalArgumentException("Taille minimum de "+size+" pas respectée" );
+        if( s==null || s.isEmpty() || s.length()<size) {
+            logger.error("Taille minimum de " + size + " pas respectée");
+            throw new IllegalArgumentException("tailleko");
+        }
         return true;
     }
 
@@ -113,7 +115,8 @@ public abstract class DataForm<T extends DTO> implements Serializable {
                     try {
                         date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toValidate);
                     }catch(ParseException e2) {
-                        throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy) : " + e2.getMessage());
+                        logger.error("Format de date incorrect (dd/MM/yyyy) : " + e2.getMessage());
+                        throw new IllegalArgumentException("formatdateko");
                     }
                 }
                 return date;
@@ -177,7 +180,8 @@ public abstract class DataForm<T extends DTO> implements Serializable {
             try {
                 date = dateFormat2.parse(toValidate);
             } catch (ParseException e2) {
-                throw new IllegalArgumentException("Format de date incorrect (dd/MM/yyyy [HH:mm:ss]) : " + e2.getMessage());
+                logger.error("Format de date incorrect (dd/MM/yyyy [HH:mm:ss]) : " + e2.getMessage());
+                throw new IllegalArgumentException("formatdateko");
             }
 
         }

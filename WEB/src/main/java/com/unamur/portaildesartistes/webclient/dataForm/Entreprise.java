@@ -52,7 +52,7 @@ public class Entreprise extends DataForm<EntrepriseDTO> {
     // ******************
     Boolean isValidBce(String toValidate){
         if( hasLengthMin(toValidate,10) )
-            throw new IllegalArgumentException("Num BCE incorrect");
+            throw new IllegalArgumentException("bceko");
         return true;
     }
     public EntrepriseDTO getDTO(){
