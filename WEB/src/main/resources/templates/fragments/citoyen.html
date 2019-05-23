@@ -8,7 +8,7 @@
     <legend th:text="#{detailprofile}"></legend>
     <span th:text="#{nom}"></span> : [[*{citoyen.nom}]]<br/>
     <span th:text="#{prenom}"></span> : [[*{citoyen.prenom}]]<br/>
-    <span th:text="#{dn}"></span> : [[*{citoyen.dateNaissance}]]<br/>
+    <span th:text="#{dn}"></span> : <span th:text="${#dates.format(citoyen.dateNaissance, 'dd-MM-yyyy')}" ></span><br/>
     <span th:text="#{tel}"></span> : [[*{citoyen.tel}]]<br/>
     <span th:text="#{gsm}"></span> : [[*{citoyen.gsm}]]<br/>
     <span th:text="#{email}"></span> : [[*{citoyen.mail}]]<br/>

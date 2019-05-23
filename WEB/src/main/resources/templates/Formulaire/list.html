@@ -14,7 +14,7 @@
 <table>
     <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th><th></th></tr>
     <tr th:each="frm : ${form}">
-        <td>[[${frm.dateDemande}]]</td>
+        <td><span th:text="${#dates.format(frm.dateDemande, 'dd-MM-yyyy')}" ></span></td>
         <td>[[${frm.langue}]]</td>
         <td>[[${frm.carte}]]</td>
         <td>[[${frm.visa}]]</td>

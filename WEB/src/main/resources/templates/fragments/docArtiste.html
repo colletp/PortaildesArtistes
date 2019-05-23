@@ -9,7 +9,7 @@
 
    <span th:text="#{num}"></span>:[[${docArtiste.NoDoc}]]<br/>
    <span th:text="#{nom}"></span>:[[${docArtiste.NomArtiste}]]<br/>
-   <span th:text="#{dtperemption}"></span>:[[${docArtiste.DatePeremption}]]<br/>
+   <span th:text="#{dtperemption}"></span>:<span th:text="${#dates.format(docArtiste.DatePeremption, 'dd-MM-yyyy')}" ></span><br/>
    <span th:text="#{typedoc}"></span>:[[${docArtiste.typeDocArtiste}]]<br/>
 
     <div th:if= "${detailVisible} == true">
