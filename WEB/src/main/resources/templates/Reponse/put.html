@@ -11,12 +11,13 @@
     <input type="hidden" name="trtId" th:value="${trtId}" />
     <fieldset>
         <legend>Réponse</legend>
-        <input type="radio" name="typeReponse" value="0" onclick="$('repPos').style.visibility='hidden';" />Négative<br/>
-        <input type="radio" name="typeReponse" value="1" onclick="$('repPos').style.visibility='visible';" />Positive<br/>
+        <input type="radio" name="typeReponse" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
+        <input type="radio" name="typeReponse" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
         Message personnalisé au citoyen :
         <textarea name="body" cols="100" rows="10"></textarea>
 
-        <div id="repPos" style="visibility:hidden">
+        <div id="repPos" style="display:none">
+            test
             <fieldset th:if="${carte}=='1'">
                 <legend>Carte d'artiste</legend>
                 <button type="submit" th:name="'addRowCarte'">Générer une carte d'artiste</button>
