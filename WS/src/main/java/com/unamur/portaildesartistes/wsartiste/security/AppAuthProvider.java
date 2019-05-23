@@ -35,7 +35,7 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
             throw new BadCredentialsException("Invalid username/password");
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-for( GrantedAuthority g : authorities )logger.info( g.getAuthority() );
+        for( GrantedAuthority g : authorities )logger.info( g.getAuthority() );
         return new UsernamePasswordAuthenticationToken( user, user.getPassword(), authorities);
     }
 

@@ -83,7 +83,7 @@ class InscriptionControlerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals("/login.html",inscriptionControler.inscript(usrInscr,method,bindingResult,model));
+        assertEquals("inscript.html",inscriptionControler.inscript(usrInscr,method,bindingResult,model));
     }
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")
@@ -110,7 +110,7 @@ class InscriptionControlerTest {
     @DisplayName("TC 2.7, Test d’inscription avec un mots de passe trop long")
     @Test
     void testInscriptNonValide27() {
-        usrInscr.getUtilisateur().setPassword("1235476800ss0");
+        usrInscr.getUtilisateur().setPassword("1235476800ss0abcdefghijklm");
         assertThrows(IllegalArgumentException.class,()->usrInscr.getDTO() );
     }
 

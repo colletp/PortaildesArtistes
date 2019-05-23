@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.ReponseDTO;
+import com.unamur.portaildesartistes.webclient.dataForm.DocArtiste;
 import com.unamur.portaildesartistes.webclient.dataForm.Reponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,13 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
     @GetMapping(value = "/Reponse/creer/{id}")
     public String docArtCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("id") UUID itemId
-            ,@ModelAttribute("form") final Reponse formRep
+            ,@ModelAttribute("rep") final Reponse rep
             ,Model model){
 
         try{
             usrCtrl.setRoles(cookieValue, model);
-            model.addAttribute("form",formRep);
+
+            model.addAttribute("rep",rep);
             return "Reponse/put.html";
         }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());
@@ -48,14 +50,52 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
         }
     }
 
-    @PostMapping(value = "/Reponse")
-    public String docArtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+
+    @PostMapping(value = "/Reponse", params={"saveDraft"})
+    public String docArtDraftPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
-            ,@ModelAttribute("form") final Reponse formRep
+            ,@ModelAttribute("rep") final Reponse rep
+            ,Model model){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            return "Reponse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
+    }
+
+    @PostMapping(value = "/Reponse", params={"addCarte"})
+    public String docArtAddCard( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("rep") final Reponse rep
+            ,Model model){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("docCarte",new DocArtiste() );
+            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            return "Reponse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
+    }
+    @PostMapping(value = "/Reponse", params={"addVisa"})
+    public String docArtAddVisa( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("rep") final Reponse rep
             ,Model model){
             try{
                 usrCtrl.setRoles(cookieValue, model);
-                model.addAttribute("form",super.postForm(cookieValue, formRep.getDTO() ,method,model));
+                model.addAttribute("docVisa",new DocArtiste() );
+                model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
                 return "Reponse/get.html";
             }catch(IllegalArgumentException e){
                 model.addAttribute("Err",e.getMessage());
@@ -65,8 +105,60 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
                 return "/login.html";
             }
     }
+    @PostMapping(value = "/Reponse", params={"removeCarte"})
+    public String docArtDelCard( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("rep") final Reponse rep
+            ,Model model){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            return "Reponse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
+    }
+    @PostMapping(value = "/Reponse", params={"removeVisa"})
+    public String docArtDelVisa( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("rep") final Reponse rep
+            ,Model model){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            return "Reponse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
+    }
 
-    @GetMapping(value = "/Reponse")//initialisation du login
+    @PostMapping(value = "/Reponse", params={"submit"})
+    public String docArtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            ,@ModelAttribute("_method") final String method
+            ,@ModelAttribute("rep") final Reponse rep
+            ,Model model){
+        try{
+            usrCtrl.setRoles(cookieValue, model);
+            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            return "Reponse/get.html";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("Err",e.getMessage());
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
+        }catch( Exception e ){
+            model.addAttribute("Err",e.getMessage());
+            return "/login.html";
+        }
+    }
+
+    @GetMapping(value = "/Reponse")
     public String docArtList( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,Model model){
         try{
@@ -79,7 +171,7 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
         }
     }
 
-    @GetMapping(value = "/Reponse/{id}")//initialisation du login
+    @GetMapping(value = "/Reponse/{id}")
     public String getReponse( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue ,
                         @PathVariable("id") UUID itemId ,
                         Model model){

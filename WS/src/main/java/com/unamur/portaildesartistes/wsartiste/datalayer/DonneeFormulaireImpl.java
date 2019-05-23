@@ -89,10 +89,10 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
         @SqlQuery("select * from formulaires where form_id = :form_id")
         FormulaireDTO getById(@Bind("form_id") UUID p_id);
 
-        @SqlQuery("insert into formulaires (citoyen_id,langue,carte,visa) values(:citoyenId,:langue,:carte,:visa) RETURNING form_id ")
+        @SqlQuery("insert into formulaires (citoyen_id,langue,carte,visa,nom_artiste) values(:citoyenId,:langue,:carte,:visa,:nomArtiste) RETURNING form_id ")
         String insert(@BindBean FormulaireDTO form);
 
-        @SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa,a_traiter=true WHERE form_id=:id ")
+        @SqlUpdate("UPDATE formulaires SET langue=:langue,carte=:carte,visa=:visa,a_traiter=true,nom_artiste=:nomArtiste WHERE form_id=:id ")
         void update(@BindBean FormulaireDTO form );
 
         @SqlUpdate("UPDATE formulaires SET a_traiter=false WHERE form_id=:formId ")
@@ -156,6 +156,7 @@ public class DonneeFormulaireImpl extends Donnee<FormulaireDTO>{
             formulaireDTO.setCarte( r.getBoolean("carte"));
             formulaireDTO.setVisa( r.getBoolean("visa"));
             formulaireDTO.setATraiter( r.getBoolean("a_traiter"));
+            formulaireDTO.setNomArtiste(r.getString("nom_artiste"));
 
             return formulaireDTO;
         }

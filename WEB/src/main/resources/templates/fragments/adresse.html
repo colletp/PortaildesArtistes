@@ -6,10 +6,10 @@
 
 <fieldset th:fragment="AdresseGet(fonction,adresse)">
     <legend th:text="${fonction}"></legend>
-    <span th:text="#{maison.rue}"></span> : <span th:text="*{adresse.rue}"></span><br/>
-    <span th:text="#{num}"></span> : <span th:text="*{adresse.numero}"></span><br/>
-    <span th:text="#{maison.boite}"></span> : <span th:text="*{adresse.boite}"></span><br/>
-    <span th:text="#{maison.ville}"></span> : <span th:text="*{adresse.ville}"></span><br/>
+    <span th:text="#{maison.rue}"></span> : <span th:text="${adresse.rue}"></span><br/>
+    <span th:text="#{num}"></span> : <span th:text="${adresse.numero}"></span><br/>
+    <span th:text="#{maison.boite}"></span> : <span th:text="${adresse.boite}"></span><br/>
+    <span th:text="#{maison.ville}"></span> : <span th:text="${adresse.ville}"></span><br/>
 </fieldset>
 
 <fieldset th:fragment="AdressePost(fonction,adresse)">

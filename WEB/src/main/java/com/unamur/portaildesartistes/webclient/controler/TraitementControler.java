@@ -115,7 +115,10 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 					return "Traitement/listForm.html";
 				case "envoiReponse":
 					//redirection vers création réponse
-					model.addAttribute("trtId",trtId);
+                    model.addAttribute("trtId",trtId);
+                    FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
+                    model.addAttribute("carte", formDTO.getCarte()?"1":"0" );
+                    model.addAttribute("visa", formDTO.getVisa()?"1":"0" );
 					return "Reponse/put.html";
 				case "sauvCommentaire"://rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
 				default:
@@ -133,7 +136,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             return "Traitement/"+(method.isEmpty()?"post":method)+".html";
         }catch( Exception e ){
             logger.error(e.getMessage());
-            e.printStackTrace();
             return "login.html";
         }
     }

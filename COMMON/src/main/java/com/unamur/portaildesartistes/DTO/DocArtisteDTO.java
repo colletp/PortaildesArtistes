@@ -12,7 +12,6 @@ public class DocArtisteDTO extends DTO {
     private UUID citoyenId;
     private UUID reponseId;
     private String noDoc;
-    private String nomArtiste;
     private Date datePeremption;
     private String typeDocArtiste;
 
@@ -45,8 +44,6 @@ public class DocArtisteDTO extends DTO {
     public void setReponseId( UUID p_id) { this.reponseId = p_id; }
     public String getNoDoc() { return noDoc; }
     public void setNoDoc(String p_noDoc) { this.noDoc = p_noDoc; }
-    public String getNomArtiste() { return nomArtiste; }
-    public void setNomArtiste(String p_nom) { this.nomArtiste = p_nom; }
     public Date getDatePeremption() { return datePeremption; }
     public void setDatePeremption(Date p_date) { this.datePeremption = p_date; }
     public String getTypeDocArtiste() { return typeDocArtiste; }

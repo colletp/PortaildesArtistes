@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,6 +30,9 @@ class PrestationTest {
         prestation.setDocArtisteId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d86"));
         prestation.setActiviteId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d87"));
         prestation.setSeDerouleId(prestation.convertUUID("98a95e7d-8231-4115-8ed9-612de5590d88"));
+        ArrayList<String> list=new ArrayList<>();
+        list.add("98a95e7d-8231-4115-8ed9-612de5590d86");
+        prestation.setActivitesId(list);
     }
 
     @AfterEach

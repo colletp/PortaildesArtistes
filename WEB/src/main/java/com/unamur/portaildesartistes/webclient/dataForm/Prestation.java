@@ -117,14 +117,14 @@ public class Prestation extends DataForm<PrestationDTO> {
     // ******************
     protected Boolean isNotOverMontantMax(double montant, int duree) throws IllegalArgumentException {
         if (montant > 128.93 * duree ){
-            throw new IllegalArgumentException("Montant maximal d'une prestation dépassé");
+            throw new IllegalArgumentException("maxprix");
         }
         return true;
     }
 
     protected Boolean isNotOverDureeMax(int duree) throws IllegalArgumentException {
         if (duree > 7){
-            throw new IllegalArgumentException("Durée maximale d'une prestation dépassée");
+            throw new IllegalArgumentException("dureemax");
         }
         return true;
     }

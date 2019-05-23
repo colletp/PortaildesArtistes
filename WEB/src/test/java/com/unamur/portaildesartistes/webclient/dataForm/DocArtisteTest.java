@@ -25,7 +25,6 @@ class DocArtisteTest {
         doc.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         doc.setReponseId("c91dce79-20a4-431f-957f-b6d09b9b876b");
         doc.setDatePeremption("12/04/2019");
-        doc.setNomArtiste("Nico");
         doc.setNoDoc("123456");
         doc.setTypeDocArtiste("Carte artiste");
     }
@@ -46,7 +45,6 @@ class DocArtisteTest {
         }
         assertAll(
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
-                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
                 ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
@@ -65,26 +63,6 @@ class DocArtisteTest {
         }
         assertAll(
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
-                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
-                ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
-                ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
-                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
-                ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
-        );
-    }
-
-    @DisplayName("TC , Test de création Doc Artiste avec un nom d'artiste absent")
-    @Test
-    void testCreationDocArtisteValide() {
-        doc.setNomArtiste("");
-        try {
-            docArt = doc.getDTO();
-        }catch (IllegalArgumentException  e) {
-            e.printStackTrace();
-        }
-        assertAll(
-                ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
-                ()->assertEquals(docArt.getNomArtiste(),doc.getNomArtiste()),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
                 ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),

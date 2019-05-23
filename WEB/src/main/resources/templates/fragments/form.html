@@ -7,6 +7,7 @@
 <fieldset th:fragment="getForm(form,secteurs,citoyen)">
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(#{citoyen},${citoyen},${citoyen.resideAdr}) }"></fieldset>
+    <span th:text="#{nom}"></span>:[[${form.nomArtiste}]]<br/>
     Date : [[${form.dateDemande}]]<br/>
     <div th:replace="~{/fragments/form :: getArray(#{cursaca},${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray(#{expro},${form.expPro})}"></div>
@@ -21,17 +22,25 @@
     <legend>Demande de document d'artiste</legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{citoyen.nom}" >Mon nom</span>
+    <span th:text="#{nom}"></span>:[[*{nomArtiste}]]<br/>
     Date Demande:[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>
-    <div th:replace="~{/fragments/form :: formArray(#{autreress},'ressources',*{ressources})}"></div>
     <input type="hidden" th:field="*{citoyenId}" />
     <span th:text="#{langue}"></span> : <select th:field="*{langue}">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
     </select><br/>
     <span th:text="#{carte}"></span> : <input type="checkbox" th:field="*{carte}" value="1" /><br/>
-    Visa<input type="checkbox" th:field="*{visa}" value="1" /><br/>
+    Visa<input type="checkbox" th:field="*{visa}" value="1" onclick="$('#partVisa').attr('style', 'display: '+($('#visa1').is(':checked')?'block':'none'))" /><br/>
+    <div id="partVisa" style="display:none">
+        <div th:replace="~{/fragments/form :: formArray(#{cursaca},'cursusAc',*{cursusAc})}"></div>
+        <div th:replace="~{/fragments/form :: formArray(#{expro},'expPro',*{expPro})}"></div>
+        <div th:replace="~{/fragments/form :: formArray(#{autreress},'ressources',*{ressources})}"></div>
+    </div>
+    <script type="text/javascript" defer><!--
+        function load(){
+            if([[*{visa}]]==1)$('#partVisa').attr('style', 'display: block');
+        }
+    //--></script>
 
     <fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${secteurs}) }"></fieldset>
 
