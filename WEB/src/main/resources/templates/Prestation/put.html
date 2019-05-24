@@ -6,8 +6,8 @@
 <div th:replace="~{/fragments/header :: nav(select=${2})}"></div>
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
-
-<form class="formbox800" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="put">
+<div class="formbox90pc">
+<form  th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="put">
 
     <table>
         <caption ><H1 th:text="#{nouvprest}"></H1></caption>
@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td>Etat : </td>
-                    <td><input type="text" th:field="*{etat}"></td>
+                    <td><input type="hidden" th:field="*{etat}"></td>
                 </tr>
             </table>
             </td>
@@ -51,7 +51,7 @@
     <input th:type="submit" name="submit" />
 
 </form>
-
+</div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
