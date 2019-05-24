@@ -10,7 +10,7 @@
 
     <fieldset class="formbox90pc" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
 
-    <span th:text="#{traite.par}" ></span>:<a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
+    <span th:text="#{traite.par}" ></span> : <a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
     <span th:text="#{datedem}"></span> : [[${form.dateDemande}]]<br/>
     <span th:text="#{datetrait}"></span> : [[${trt.dateTrt}]]<br/>
     <span th:text="#{appre}"></span> : [[${trt.appreciation}]]<br/>

@@ -11,11 +11,11 @@
     <input type="hidden" th:field="*{id}" />
 
     <span th:text="#{citoyen.nom}" >Mon nom</span>:[[${form.gest.citoyen.nom}]]
-    Date Demande:[[${form.form.dateDemande}]]<br/>
-    Date Traitement:[[${form.dateTrt}]]<br/>
+    <span th:text="#{datedem}"></span> : [[${form.form.dateDemande}]]<br/>
+    <span th:text="#{datetrait}"></span> : [[${form.dateTrt}]]<br/>
     <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form.form},${form.form.secteurActivites},${citoyen}) }"></fieldset>
 
-    Appréciation:<textarea rows="10" cols="100" th:field="${form.appreciation}"></textarea><br/>
+    <span th:text="#{appre}"></span> : <textarea rows="10" cols="100" th:field="${form.appreciation}"></textarea><br/>
 
     <input th:type="submit" value="Decmande complément d'information" />
     <input th:type="submit" value="Enregistrer commentaire" />

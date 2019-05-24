@@ -13,11 +13,11 @@
 
     <div th:each="curTrt : ${lTrt}" th:object="${curTrt}">
         <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+*{gest.id}" >[[*{gest.citoyen.nom}]]</a> le [[*{dateTrt}]]<br/>
-        Appréciation:[[*{appreciation}]]<hr/>
+        <span th:text="#{appre}"></span> : [[*{appreciation}]]<hr/>
 
     </div>
     <!-- Message au citoyen (envoi d'un message)<textarea field="${trt.msgCitoyen}" rows="10" cols="100"></textarea><br/> -->
-    Appréciation (en interne)<textarea th:field="${trt.appreciation}" rows="10" cols="100"></textarea><br/>
+    <span th:text="#{appreinterne}"></span> : <textarea th:field="${trt.appreciation}" rows="10" cols="100"></textarea><br/>
     <button th:type="submit" name="submit" value="renvoyerForm" th:text="#{renvoyerForm}">Demande complément d'information</button>
     <button th:type="submit" name="submit" value="sauvCommentaire" th:text="#{sauvCommentaire}">Enregistrer commentaire</button>
     <button th:type="submit" name="submit" value="envoiReponse" th:text="#{envoiReponse}">Décision finale (Réponse au citoyen)</button>
