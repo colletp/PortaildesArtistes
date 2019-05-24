@@ -19,7 +19,7 @@
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
     </div>
     <div class="boutonsList">
-        <a th:href="@{/DocArtiste/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+        <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
     </div>
 </fieldset>
 
@@ -42,29 +42,28 @@
         <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
     </div>
     <div class="boutonsList">
-        <a th:href="@{/DocArtiste/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+        <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
     </div>
 </fieldset>
 
-<fieldset th:fragment="docArtistePut(fonction,docArtiste,detailVisible)">
+<fieldset th:fragment="docArtistePut(fonction,docArtiste,detailVisible,form)" th:object="${docArtiste}">
     <legend th:text="${fonction}">Document Artiste</legend>
 
-    <div th:if= "${docArtiste} != null">
-        <span th:text="#{docArtiste.noDoc}" >Numéro</span>:[[${docArtiste.noDoc}]]<br/>
-        <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>:[[${docArtiste.datePeremption}]]<br/>
-        <span th:text="#{docArtiste.typeDocArtiste}" >Type document artiste</span>:[[${docArtiste.typeDocArtiste}]]<br/>
+        <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>:<input th:field="${form.nomArtiste}">Nico</input><br/>
+        <span th:text="#{docArtiste.noDoc}" >Numéro de document</span>:<input th:field="*{noDoc}">123456</input><br/>
+        <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>:<input th:field="*{datePeremption}">01/01/2000</span><br/>
+        <span th:text="#{docArtiste.typeDocArtiste}" >Type document artiste</span>:<span th:text="*{typeDocArtiste}">Didi</span><br/>
 
-    <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
-    </div>
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenSummaryGet(${'Citoyen'},${citoyen}) }"></fieldset>
 
-    <div th:if= "${detailVisible} == true">
+        <fieldset th:replace="~{/fragments/activites :: activiteCheckboxBySecteur(${activitesId},${form.secteurActivites}) }"></fieldset>
+        <!--<div th:if= "${detailVisible} == true">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
+        </div>-->
+
+    <!--<div th:if= "${detailVisible} == true">
         <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
-    </div>
-    </div>
-    <div th:if= "${docArtiste} == null ">
-        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
-    </div>
+    </div>-->
 </fieldset>
 
 </body>

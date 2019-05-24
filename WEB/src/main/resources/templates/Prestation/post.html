@@ -11,19 +11,19 @@
     <input type="hidden" th:field="${form.id}" />
     <table>
         <tr>
-            <td>Date prestation : </td>
+            <td><span th:text="#{dateprest}"></span> </td>
             <td><input type="date" th:field="${form.datePrest}" /></td>
         </tr>
         <tr>
-            <td>Durée(heure) : </td>
+            <td><span th:text="#{dureeh}"></span> : </td>
             <td><input type="text" th:field="${form.duree}" /></td>
         </tr>
         <tr>
-            <td>Montant(€) : </td>
+            <td><span th:text="#{montanteuro}"></span> : </td>
             <td><input type="text" th:field="${form.montant}" /></td>
         </tr>
         <tr>
-            <td>Etat : </td>
+            <td><span th:text="#{etat}"></span> : </td>
             <td><select name="etat" id="etat">
                 <option value="VIDE">VIDE</option>
                 <option value="REMPLIE">REMPLIE</option>

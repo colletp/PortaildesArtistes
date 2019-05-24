@@ -6,10 +6,10 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<div class="formbox800">
+<div class="formbox90pc">
 <table>
-    <caption><H1>Formulaires</H1></caption>
-    <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
+    <caption><H1 th:text="#{formulaire}"></H1></caption>
+    <tr><th th:text="#{datedem}"></th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th></tr>
     <tr th:each="frm : ${form}">
         <td>[[${frm.dateDemande}]]</td>
         <td>[[${frm.langue}]]</td>
@@ -23,6 +23,7 @@
     </tr>
 </table>
 </div>
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

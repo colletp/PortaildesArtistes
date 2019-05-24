@@ -15,7 +15,7 @@
     <legend th:text="#{entreprise}"></legend>
     <span th:text="#{numentre}"></span> : <span th:text="*{entreprise.bce}"></span><br/>
     <span th:text="#{denomi}"></span> : <span th:text="*{entreprise.denomination}"></span><br/>
-    Statut legal:<span th:text="*{entreprise.statutLegal}"></span><br/>
+    <span th:text="#{statutlegal}"></span> : <span th:text="*{entreprise.statutLegal}"></span><br/>
 
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet('',${}) }"></fieldset>
 

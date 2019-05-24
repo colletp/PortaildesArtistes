@@ -12,13 +12,14 @@
 <div class="formbox90pc">
 <h1 th:text="#{listeform}"></h1>
 <table>
-    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th><th></th></tr>
+    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th th:text="#{atraiter}"></th><th></th></tr>
     <tr th:each="frm : ${form}">
         <td><span th:text="${#dates.format(frm.dateDemande, 'dd-MM-yyyy')}" ></span></td>
         <td>[[${frm.langue}]]</td>
         <td><img th:if="${frm.carte}" th:src="@{/img/vrai.png}" th:alt="#{vrai}" th:title="#{vrai}"/><img th:unless="${frm.carte}" th:src="@{/img/faux.png}" th:alt="#{faux}" th:title="#{faux}"/></td>
         <td><img th:if="${frm.visa}" th:src="@{/img/vrai.png}" th:alt="#{vrai}" th:title="#{vrai}"/><img th:unless="${frm.visa}" th:src="@{/img/faux.png}" th:alt="#{faux}" th:title="#{faux}"/></td>
-        <td>[[${! frm.aTraiter}]]</td>
+        <td><img th:if="${frm.aTraiter}" th:src="@{/img/vrai.png}" th:alt="#{vrai}" th:title="#{vrai}"/><img th:unless="${frm.aTraiter}" th:src="@{/img/faux.png}" th:alt="#{faux}" th:title="#{faux}"/></td>
+   <!--     <td>[[${! frm.aTraiter}]]</td> -->
         <td id="boutonsList">
             <a th:href="@{/Formulaire/{id}(id=${frm.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{detail}" th:title="#{detail}"  /></a>
             <a th:href="@{/Formulaire/modif/{id}(id=${frm.id})}"><img th:src="@{/img/bt_modif.png}" th:alt="#{modifier}" th:title="#{modifier}"  /></a>

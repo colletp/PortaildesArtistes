@@ -25,6 +25,6 @@ public class RoleDTO extends DTO implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return getNomRole()+" "+getLang();
+        return getNomRole()+(getLang()==null?"":" "+getLang());
     }
 }
