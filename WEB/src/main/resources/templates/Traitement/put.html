@@ -9,7 +9,7 @@
     <input type="hidden" name="typeTrt" th:value="${typeTrt}" />
     <input type="hidden" name="formId" th:value="${formId}" />
 
-    <fieldset class="formbox90pc" th:replace="~{/fragments/form :: getForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
+    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
 
     <div th:each="curTrt : ${lTrt}" th:object="${curTrt}">
         <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+*{gest.id}" >[[*{gest.citoyen.nom}]]</a> le [[*{dateTrt}]]<br/>

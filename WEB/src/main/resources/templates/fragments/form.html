@@ -5,10 +5,10 @@
 <body>
 
 <fieldset th:fragment="getForm(form,secteurs,citoyen)">
-    <legend>Demande de document d'artiste</legend>
+    <legend th:text="#{demdocart}"></legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(#{citoyen},${citoyen},${citoyen.resideAdr}) }"></fieldset>
     <span th:text="#{nom}"></span>:[[${form.nomArtiste}]]<br/>
-    Date : [[${form.dateDemande}]]<br/>
+    <span th:text="#{datedem}"></span> : [[${form.dateDemande}]]<br/>
     <div th:replace="~{/fragments/form :: getArray(#{cursaca},${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray(#{expro},${form.expPro})}"></div>
     <div th:replace="~{/fragments/form :: getArray(#{autreress},${form.ressources})}"></div>
@@ -19,10 +19,10 @@
 </fieldset>
 
 <fieldset th:fragment="postForm(form,secteurs,citoyen)" th:object="${form}">
-    <legend>Demande de document d'artiste</legend>
+    <legend th:text="#{demdocart}"></legend>
     <fieldset th:replace="~{/fragments/citoyen :: CitoyenAdrGet(${'Citoyen'},${citoyen},${citoyen.resideAdr}) }"></fieldset>
-    <span th:text="#{nomArtiste}"></span>:<input th:field="*{nomArtiste}" /><br/>
-    Date Demande:[[${form.dateDemande}]]<br/>
+    <span th:text="#{nomArtiste}"></span> : <input th:field="*{nomArtiste}" /><br/>
+    <span th:text="#{datedem}"></span> : [[${form.dateDemande}]]<br/>
     <input type="hidden" th:field="*{citoyenId}" />
     <span th:text="#{langue}"></span> : <select th:field="*{langue}">
         <option value="FR">FR</option>

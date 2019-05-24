@@ -11,17 +11,17 @@
 <fieldset>
 <legend>Prestation</legend>
     <span th:text="#{citoyen.nom}" >
-    Date prestation:</span>:[[${form.prestation.datePrest}]]<br/>
-    Duree:</span>:[[${form.prestation.duree}]]<br/>
-    Montant:</span>:[[${form.prestation.montant}]]<br/>
-    Statut:</span>:[[${form.prestation.etat}]]<br/>
+    <span th:text="#{dateprest}"></span> : </span> : [[${form.prestation.datePrest}]]<br/>
+    <span th:text="#{duree}"></span> : </span> : [[${form.prestation.duree}]]<br/>
+    <span th:text="#{montant}"></span> : </span> : [[${form.prestation.montant}]]<br/>
+    <span th:text="#{statut}"></span> : </span> : [[${form.prestation.etat}]]<br/>
 
-    Commanditaire:</span>:[[${form.prestation.commanditaire}]]<br/>
-    Doc artiste:</span>:[[${form.prestation.docArtiste}]]<br/>
+    <span th:text="#{commanditaire}"></span> : </span>:[[${form.prestation.commanditaire}]]<br/>
+    <span th:text="#{docartiste}"></span> : </span> : </span>:[[${form.prestation.docArtiste}]]<br/>
 
     <!-- Experience Professionnelle : expPro -->
     <div th:if="${form.formulaire.expPro.list != null}">
-        <h1>Experience professionnelle</h1>
+        <h1 th:text="#{experiencepro}">Experience professionnelle</h1>
         <ul>
             <th:block th:object="${form.formulaire.expPro}">
                 <li th:each="item : *{list}" th:text="${item}"></li>
@@ -39,12 +39,13 @@
         </ul>
     </div>
 
-    Langue :[[${form.formulaire.lanque}]]<br/>
-    Carte :[[${form.formulaire.carte}]]<br/>
+    <span th:text="#{langue}"></span> : [[${form.formulaire.lanque}]]<br/>
+    <span th:text="#{carte}"></span> : [[${form.formulaire.carte}]]<br/>
     Visa :[[${form.formulaire.visa}]]<br/>
 
 </fieldset>
 
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

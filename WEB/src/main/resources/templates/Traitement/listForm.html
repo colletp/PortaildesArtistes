@@ -9,7 +9,7 @@
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
 <div class="formbox90pc">
-<h1>Formulaires à traiter</h1>
+<h1 th:text="#{formatrait}"></h1>
 <table>
     <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th></tr>
     <tr th:each="frm : ${formATrt}">
@@ -24,7 +24,7 @@
     </tr>
 </table>
 
-<h1>Formulaire en cours de traitement</h1>
+<h1 th:text="#{formentrait}"></h1>
 <table>
     <tr><th th:text="#{datedem}"></th>
         <th th:text="#{langue}"></th>
@@ -60,7 +60,7 @@
     </tr>
 </table>
 
-<h1>Formulaires traités</h1>
+<h1 th:text="#{formtraite}"></h1>
 <table>
     <tr><th th:text="#{datedem}"></th>
         <th th:text="#{langue}"></th>
@@ -122,6 +122,7 @@
 </table>
 
 </div>
+    <div th:replace="~{/fragments/header :: multiscript}"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
