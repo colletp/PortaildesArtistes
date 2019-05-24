@@ -116,11 +116,16 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 				case "envoiReponse":
 					//redirection vers création réponse
                     model.addAttribute("trtId",trtId);
+
                     FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
-                    model.addAttribute("carte", formDTO.getCarte()?"1":"0" );
-                    model.addAttribute("visa", formDTO.getVisa()?"1":"0" );
-					return "Reponse/put.html";
-				case "sauvCommentaire"://rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
+                    model.addAttribute("form", formDTO );
+                    model.addAttribute("citoyen",citCtrl.getObj(cookieValue,formDTO.getCitoyenId(),new CitoyenDTO(),CitoyenDTO.class,model) );
+                    model.addAttribute("docCarte",new DocArtisteDTO());
+                    model.addAttribute("docVisa",new DocArtisteDTO());
+
+                    return "Reponse/put.html";
+				case "sauvCommentaire":
+                //rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
 				default:
 					model.addAttribute("_method",method);
 					model.addAttribute("typeTrt",typeTrt);

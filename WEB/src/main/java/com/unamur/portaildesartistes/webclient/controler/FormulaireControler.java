@@ -171,11 +171,12 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         try{
             usrCtrl.setRoles(cookieValue, model);
             f = new Formulaire( super.getObj( cookieValue,itemId,new FormulaireDTO(),FormulaireDTO.class,model ) );
+            model.addAttribute("form",f );
+            return loadForm(cookieValue, f ,"post",model);
         }catch(Exception e){
             model.addAttribute("Err",e.getMessage());
             return "login.html";
         }
-        return loadForm(cookieValue, f ,"post",model);
     }
     @PostMapping(value="/Formulaire", params={"addAct"})
     public String addRowSectAct(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue

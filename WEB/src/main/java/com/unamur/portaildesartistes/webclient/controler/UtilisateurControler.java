@@ -29,7 +29,6 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
 
     private Boolean testRole(String cookieValue, String role, Model model)throws Exception {
         for (RoleDTO r : getMoi(cookieValue, model).getAuthorities()){
-            logger.error(r.getAuthority());
             if( r.getAuthority().equals(role) )
                 return true;
         }
