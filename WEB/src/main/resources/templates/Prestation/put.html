@@ -7,7 +7,7 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox800" th:action="@{/prestation}" th:name="form" th:object="${form}" th:method="put">
+<form class="formbox800" th:action="@{/Prestation}" th:name="form" th:object="${form}" th:method="put">
 
     <table>
         <caption ><H1 th:text="#{nouvprest}"></H1></caption>
@@ -15,35 +15,35 @@
         </thead>
         <tr>
             <td><span th:text="#{dateprest}"></span> : </td>
-            <td><input type="date" th:value="${form.datePrest}"/></td>
+            <td><input type="text" th:field="*{{datePrest}}"/></td>
         </tr>
         <tr>
             <td><span th:text="#{dureeh}"></span> : </td>
-            <td><input type="text" th:value="${form.duree}" /></td>
+            <td><input type="text" th:field="*{duree}" /></td>
         </tr>
         <tr>
             <td><span th:text="#{montanteuro}"></span> : </td>
-            <td><input type="text" th:value="${#numbers.formatDecimal(form.montant, 4, 0)}" /></td>
+            <td><input type="text" th:name="*{montant}"  th:value="*{#numbers.formatDecimal(montant, 4, 0)}" /></td>
         </tr>
         <tr>
             <td>Etat : </td>
-            <td><input type="text" name="etat" id="etat" th:value="${form.etat}"></td>
+            <td><input type="text" th:field="*{etat}"></td>
         </tr>
 
         <tr>
-        <td><fieldset th:replace="~{/fragments/adresse :: AdressePut('Adresse de la prestation', ${form.seDeroule}) }"></fieldset></td>
+        <td><fieldset th:replace="~{/fragments/adresse :: AdressePut('Adresse de la prestation', ${form.SeDeroule}) }"></fieldset></td>
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur(${form},${form.secteurActivites})}"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/activites :: activiteFormBySecteur2(${form},${form.secteurActivites})}"></fieldset></td>
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/commanditaire :: commanditairePut( 'Coordonnée du commanditaire', ${form.commanditaire} ) }"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/commanditaire :: commanditairePut( 'Coordonnée du commanditaire', ${form.Commanditaire} ) }"></fieldset></td>
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.docArtiste}, true , 'formulaireDTO') }"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.DocArtiste}, false) }"></fieldset></td>
         </tr>
 
 

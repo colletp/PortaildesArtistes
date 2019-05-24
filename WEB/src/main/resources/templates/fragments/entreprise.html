@@ -23,15 +23,27 @@
 
 </fieldset>
 
-<fieldset th:fragment="EntreprisPost(fonction,entreprise,adresse,citoyen)">
+<fieldset th:fragment="EntreprisePost(fonction,entreprise,adresse,citoyen)">
     <legend th:text="#{entreprise}"></legend>
-    <span th:text="#{numentre}"></span> : <span th:text="*{entreprise.bce}"></span><br/>
-    <span th:text="#{denomi}"></span> : <span th:text="*{entreprise.denomination}"></span><br/>
-    <span th:text="#{statut}"></span> : <span th:text="*{entreprise.statutLegal}"></span><br/>
+    <span th:text="#{numentre}"></span> : <input th:type="text"  th:field="*{entreprise.bce}"></input><br/>
+    <span th:text="#{denomi}"></span> : <input th:type="text"  th:field="*{entreprise.denomination}"></input><br/>
+    <span th:text="#{statut}"></span> : <input th:type="text"  th:field="*{entreprise.statutLegal}"></input><br/>
 
     <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${adresse}) }"></fieldset>
 
 </fieldset>
+
+
+<fieldset th:fragment="EntreprisePut(fonction,entreprise)">
+    <legend th:text="#{entreprise}"></legend>
+    <span th:text="#{numentre}"></span> : <input th:type="text" th:name="${entreprise.bce}" th:value="${entreprise.bce != null}? *{entreprise.bce} : ' '" ></input><br/>
+    <span th:text="#{denomi}"></span> : <input   th:type="text" th:name="${entreprise.denomination}" th:value="${entreprise.denomination != null} ? *{entreprise.denomination} : ' '"></input><br/>
+    <span th:text="#{statut}"></span> : <input   th:type="text" th:name="${entreprise.statutLegal}"  th:value="${entreprise.statutLegal != null} ?  *{entreprise.statutLegal} : ' '"></input><br/>
+
+    <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${entreprise.siegeId}) }"></fieldset>
+
+</fieldset>
+
 
 </body>
 

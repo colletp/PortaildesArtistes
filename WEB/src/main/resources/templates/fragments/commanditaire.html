@@ -28,22 +28,32 @@
         </div>
     </div>
     <div th:if= "${commanditaire} == null ">
-        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+        <button type="submit" th:name="'addRow'">Ajout</button>
     </div>
 </fieldset>
 
 <fieldset th:fragment="commanditairePut(fonction,commanditaire)">
     <legend th:text="${fonction}">Commanditaire</legend>
     <div th:if= "${commanditaire} != null">
-        <div th:if= "${commanditaire.EntrepriseId} != null">
-            <fieldset th:replace="~{/fragments/entreprise :: EntreprisePut(${'Entreprise'},${commanditaire.Enterprise) }"></fieldset>
+
+        <div>
+            <TABLE>
+                <TR>
+                    <TD>
+                        <input th:type="radio" th:name="commanditaireType" th:value="Entreprise" checked> Entreprise<br>
+                    </TD>
+                    <TD>
+                        <input th:type="radio" th:name="commanditaireType" th:value="Citoyen"> Citoyen<br>
+                    </TD>
+                </TR>
+            </TABLE>
         </div>
-        <div th:if= "${commanditaire.CitoyenId} != null">
-            <fieldset th:replace="~{/fragments/citoyen :: CitoyenPut(${'Citoyen'},${commanditaire.Citoyen}) }"></fieldset>
+        <div th:if= "${commanditaire.Entreprise.Id} != null">
+            <fieldset th:replace="~{/fragments/entreprise :: EntreprisePut(${'Entreprise'},${commanditaire.Entreprise})}"></fieldset>
         </div>
-    </div>
-    <div th:if= "${commanditaire} == null  ">
-        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
+        <div th:if= "${commanditaire.Citoyen.Id} != null">
+            <fieldset th:replace="~{/fragments/citoyen :: CitoyenPut(${'Commanditaire'},${commanditaire.Citoyen}) }"></fieldset>
+        </div>
     </div>
 </fieldset>
 
