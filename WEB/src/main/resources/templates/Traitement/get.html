@@ -8,7 +8,7 @@
 <fieldset class="formbox800">
     <legend>Traitement</legend>
 
-    <fieldset class="formbox800" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
+    <fieldset class="formbox90pc" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
 
     <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
     Date Demande:[[${form.dateDemande}]]<br/>
