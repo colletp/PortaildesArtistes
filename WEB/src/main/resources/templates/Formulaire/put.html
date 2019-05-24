@@ -7,7 +7,7 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox600" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
+<form class="formbox800" th:action="@{/Formulaire}" th:name="form" th:object="${form}" th:method="put">
     <fieldset th:replace="~{/fragments/form :: postForm(${form},${form.secteurActivites},${citoyen}) }"></fieldset>
     </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
