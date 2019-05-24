@@ -8,18 +8,18 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<div class="formbox800">
+<div class="formbox90pc">
 
-<h1>Prestations par document d'artiste</h1>
+<h1 th:text="#{prestparart}"></h1>
 <table>
-    <tr><th>Date dernier traitement</th>
-        <th>Date d'octroi du document</th>
-        <th>Langue</th>
-        <th>Type de document</th>
-        <th>N° Document</th>
-        <th>Date de la dernière prestation traitée</th>
-        <th>Nombre de prestations en attente</th>
-        <th>Actions</th>
+    <tr><th th:text="#{derntrait}"></th>
+        <th th:text="#{octroidoc}"></th>
+        <th th:text="#{langue}"></th>
+        <th th:text="#{typedoc}"></th>
+        <th th:text="#{numdoc}"></th>
+        <th th:text="#{dernpresttraitee}"></th>
+        <th th:text="#{nbprestattente}"></th>
+        <th></th>
     </tr>
 
 </table>

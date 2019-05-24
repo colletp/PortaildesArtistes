@@ -6,15 +6,15 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<fieldset class="formbox800">
-<legend>Demande de document d'artiste</legend>
-    <span th:text="#{citoyen.nom}" >Mon nom</span>
-    Date Demande:[[${form.dateDemande}]]<br/>
+<fieldset class="formbox90pc">
+<legend th:text="#{demdocart}"></legend>
+    <span th:text="#{citoyen.nom}"></span>
+    <span th:text="#{datedem}"></span> :[[${form.dateDemande}]]<br/>
     <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
     <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-    Langue :[[${form.langue}]]<br/>
-    Carte :[[${form.carte}]]<br/>
+    <span th:text="#{langue}"></span> :[[${form.langue}]]<br/>
+    <span th:text="#{carte}"></span> :[[${form.carte}]]<br/>
     Visa :[[${form.visa}]]<br/>
     <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
 </fieldset>

@@ -7,10 +7,10 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox800" th:action="@{/Reponse}" th:name="rep" th:method="put">
+<form class="formbox90pc" th:action="@{/Reponse}" th:name="rep" th:method="put">
     <input type="hidden" name="trtId" th:value="${trtId}" />
     <fieldset>
-        <legend>Réponse</legend>
+        <legend th:text="#{reponse}"></legend>
         <input type="radio" name="typeReponse" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
         <input type="radio" name="typeReponse" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
         Message personnalisé au citoyen :
@@ -18,7 +18,7 @@
 
         <div id="repPos" style="display:none">
             <fieldset th:if="${form.carte}">
-                <legend>Carte d'artiste</legend>
+                <legend th:text="#{carteart}"></legend>
                 <button th:if="${docCarte}==null" type="submit" name="addCarte">Générer une carte d'artiste</button>
 
                 <fieldset th:if="${docCarte}!=null" th:replace="~{/fragments/docArtiste :: docArtistePut(${'Carte d artiste'},${docCarte},true,${form}) }"></fieldset>
@@ -27,7 +27,7 @@
                 </div>
             </fieldset>
             <fieldset th:if="${form.visa}">
-                <legend>Visa d'artiste</legend>
+                <legend th:text="#{visaart}"></legend>
                 <button th:if="${docVisa}==null" type="submit" th:name="'addRowVisa'">Générer un visa d'artiste</button>
 
                 <fieldset th:if="${docVisa}!=null" th:replace="~{/fragments/docArtiste :: docArtistePut('Visa d artiste',${docVisa},true,${form}) }"></fieldset>

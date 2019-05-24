@@ -12,7 +12,7 @@
 <div class="formbox90pc">
 <h1 th:text="#{listeform}"></h1>
 <table>
-    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th><th></th></tr>
+    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th th:text="#{atraiter}"></th><th></th></tr>
     <tr th:each="frm : ${form}">
         <td><span th:text="${#dates.format(frm.dateDemande, 'dd-MM-yyyy')}" ></span></td>
         <td>[[${frm.langue}]]</td>
