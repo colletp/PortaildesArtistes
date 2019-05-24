@@ -86,28 +86,25 @@
     <input th:type="hidden" th:field="*{reside}" />
 </fieldset>
 
-<fieldset th:fragment="CitoyenPut(fonction,citoyen)" th:object="${citoyen}">
-    <legend th:text="${fonction}"></legend>
-    <div th:if= "${citoyen} != null">
-        <input th:type="hidden" th:name="${citoyen.id}" th:value="${citoyen.id != null} ? *{citoyen.id} : ' '" />
-        <label th:text="#{nom}"></label>
-        <input th:type="text" th:name="${citoyen.nom}" th:value="${citoyen.nom != null} ? *{citoyen.nom} : ' '" />
-        <label th:text="#{prenom}"></label>
-        <input th:type="text" th:name="${citoyen.prenom}" th:value="${citoyen.prenom != null} ? *{citoyen.prenom} : ' '" />
-        <label th:text="#{dn}"></label>
-        <input th:type="text" th:name="${citoyen.dateNaissance}" th:value="${citoyen.dateNaissance != null} ? *{citoyen.dateNaissance} : ' '" />
-        <label th:text="#{tel}"></label>
-        <input th:type="text" th:name="${citoyen.tel}" th:value="${citoyen.tel != null} ? *{citoyen.tel} : ' '" />
-        <label th:text="#{gsm}"></label>
-        <input th:type="text" th:name="${citoyen.gsm}" th:value="${citoyen.gsm != null} ? *{citoyen.gsm} : ' '" />
-        <label th:text="#{email}"></label>
-        <input th:type="text" th:name="${citoyen.mail}" th:value="${citoyen.mail != null} ? *{citoyen.mail} : ' '" />
-        <label th:text="#{regnat}"></label>
-        <input th:type="text" th:name="${citoyen.nrn}" th:value="${citoyen.nrn != null} ? *{citoyen.nrn} : ' '" />
-        <label th:text="#{nat}"></label>
-        <input th:type="text" th:name="${citoyen.nation}" th:value="${citoyen.nation != null} ? *{citoyen.nation} : ' '" />
-       <input th:type="hidden" th:name="${citoyen.reside}" th:value="${citoyen.reside != null} ? *{citoyen.reside} : ' '" />
-    </div>
+<fieldset th:fragment="CitoyenAdrPut ( fonction , citoyen , adresse ) "  th:object="${citoyen}">
+    <legend th:text="#{voscoordo}"></legend>
+    <label th:text="#{nom}"></label>
+    <input th:field="${form.citoyen.nom}" />
+    <label th:text="#{prenom}"></label>
+    <input th:field="*{citoyen.prenom}" />
+    <label th:text="#{dn}"></label>
+    <input th:field="*{citoyen.dateNaissance}" />
+    <label th:text="#{tel}"></label>
+    <input th:field="*{citoyen.tel}" />
+    <label th:text="#{gsm}"></label>
+    <input th:field="*{citoyen.gsm}" />
+    <label th:text="#{email}"></label>
+    <input th:field="*{citoyen.mail}" />
+    <label th:text="#{regnat}"></label>
+    <input th:field="*{citoyen.nrn}" />
+    <label th:text="#{nat}"></label>
+    <input th:field="*{citoyen.nation}" />
+    <fieldset th:replace="~{/fragments/adresse :: AdressePut(${'Résidence'},${adresse}) }"></fieldset>
 </fieldset>
 
 <fieldset th:fragment="CitoyenAdrPost(fonction,citoyen,adresse)">
