@@ -15,6 +15,7 @@ public class ReponseDTO extends DTO {
     //private UUID citoyenId;
     private Date dateReponse;
 	private String reponse;
+	private Boolean reponsePositive;
 
     private TraitementDTO trt;
     private CitoyenDTO citoyen;
@@ -42,6 +43,8 @@ public class ReponseDTO extends DTO {
     public void setDateReponse(Date p_date){ dateReponse = p_date; }
     public String getReponse(){ return reponse; }
     public void setReponse(String p_rep){ reponse = p_rep; }
+    public Boolean getReponsePositive(){ return reponsePositive; }
+    public void setReponsePositive(Boolean p_rep){ reponsePositive = p_rep; }
 
     public TraitementDTO getTrt(){ return trt; }
     public void setTrt( TraitementDTO p_trt){ trt = p_trt; }

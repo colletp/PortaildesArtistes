@@ -7,9 +7,44 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox800" th:action="@{/Reponse}" th:name="rep" th:method="put" th:object="${rep}">
+<form class="formbox800" th:action="@{/Reponse}" th:name="rep" th:method="put">
 
-    <fieldset th:replace="~{/fragments/reponse :: reponsePut(title='Reponse',form=${form},reponse=${rep},docCarte=${docCarte},docVisa=${docVisa},trtId=${trtId} ) }"></fieldset>
+    <fieldset>
+        <input type="hidden" th:name="trtId" th:value="${trtId}" />
+        <legend th:text="#{reponse}"></legend>
+        <input type="radio" name="repPositive" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
+        <input type="radio" name="repPositive" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
+        Message personnalisé au citoyen :
+        <textarea name="body" cols="100" rows="10"></textarea>
+        <div id="repPos" style="display:none">
+
+            <div th:if="${form.carte}">
+            <input type="checkbox" name="docCarteCB" id="docCarteCB" value="1" checked="checked" onclick="$('#carte').attr('style', 'display: '+($('#docCarteCB').is(':checked')?'block':'none'))" />Générer une carte d'artiste
+            <fieldset th:object="${docCarte}" id="carte" >
+                <legend th:text="#{carteart}"></legend>
+                <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
+                <span th:text="#{docArtiste.noDoc}" >Numéro</span><input type="text" th:field="*{noDoc}" />
+                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span><input type="text" th:field="*{datePeremption}" />
+                <input type="hidden" th:field="*{typeDocArtiste}" />
+            </fieldset>
+            </div>
+            <div th:if="${form.visa}">
+            <input type="checkbox" name="docVisaCB" id="docVisaCB" value="1" checked="checked" onclick="$('#visa').attr('style', 'display: '+($('#docVisaCB').is(':checked')?'block':'none'))" />Générer un visa d'artiste
+            <fieldset th:object="${docVisa}" id="visa">
+                <legend th:text="#{visaart}"></legend>
+                <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
+                <span th:text="#{docArtiste.noDoc}" >Numéro</span><input type="text" th:field="*{noDoc}" />
+                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span><input type="text" th:field="*{datePeremption}" />
+                <input type="hidden" th:field="*{typeDocArtiste}" />
+            </fieldset>
+            </div>
+            <fieldset th:replace="~{/fragments/activites :: activiteCheckboxBySecteur(${activitesId},${form.secteurActivites}) }"></fieldset>
+
+        </div>
+
+        <input th:type="submit" name="saveDraft" value="Enregistrer" />
+        <input th:type="submit" name="submit" value="Répondre au citoyen" />
+    </fieldset>
 
 </form>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

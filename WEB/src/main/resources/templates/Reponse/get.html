@@ -6,18 +6,39 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 
-<fieldset class="formbox800">
-<legend th:text="#{demdocart}"></legend>
-    <span th:text="#{citoyen.nom}"></span>
-    <span th:text="#{datedem}"></span> :[[${form.dateDemande}]]<br/>
-    <div th:replace="~{/fragments/form :: getArray('Cursus Académique',${form.cursusAc})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Expérience professionnelle',${form.expPro})}"></div>
-    <div th:replace="~{/fragments/form :: getArray('Autres ressources',${form.ressources})}"></div>
-    <span th:text="#{langue}"></span> :[[${form.langue}]]<br/>
-    <span th:text="#{carte}"></span> :[[${form.carte}]]<br/>
-    Visa :[[${form.visa}]]<br/>
-    <fieldset th:replace="~{/fragments/activites :: activiteShowBySecteur(${form.secteurActivites}) }"></fieldset>
-</fieldset>
+    <fieldset class="formbox800">
+        <legend th:text="#{reponse}"></legend>
+        <input type="radio" name="typeReponse" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
+        <input type="radio" name="typeReponse" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
+        Message personnalisé au citoyen :
+        <textarea name="body" cols="100" rows="10"></textarea>
+
+        <div id="repPos" style="display:none">
+            <fieldset th:if="${form.carte}"><legend th:text="#{carteart}"></legend>
+
+                <!--    <fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( docArt =${docCarte},title='Carte artiste', detailVisible=true, form=${form}) }"></fieldset>-->
+                <fieldset th:object="${docCarte}" >
+                    <legend>Document Artiste</legend>
+                    <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
+
+                    <span th:text="#{docArtiste.noDoc}" >Numéro</span><input type="text" th:field="*{noDoc}" />
+
+                    <span th:text="#{docArtiste.datePeremption}" >Date peremption</span><input type="text" th:field="*{datePeremption}" />
+
+                    <input type="hidden" th:field="*{typeDocArtiste}" />
+
+                </fieldset>
+
+            </fieldset>
+            <fieldset th:if="${form.visa}" ><legend th:text="#{visaart}" ></legend>
+                <!--<fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( docArt =${docVisa} ,title='Visa artiste' , detailVisible=true, form=${form}) }"></fieldset>-->
+                visa
+            </fieldset>
+        </div>
+
+        <input th:type="submit" name="saveDraft" value="Enregistrer" />
+        <input th:type="submit" name="submit" value="Répondre au citoyen" />
+    </fieldset>
 
     <div th:replace="~{/fragments/header :: multiscript}"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

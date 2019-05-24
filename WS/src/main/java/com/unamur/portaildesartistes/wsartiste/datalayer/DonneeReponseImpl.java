@@ -56,15 +56,13 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
         @SqlQuery("select * from reponse ")
         List<ReponseDTO> list();
 
-        @SqlQuery("INSERT INTO Reponse (trt_id,date_reponse,reponse) VALUES (:trtId,:citoyenId,:dateReponse,:reponse) RETURNING reponse_id ")
+        @SqlQuery("INSERT INTO Reponse (trt_id,reponse,rep_positive) VALUES (:trtId,:reponse,:reponsePositive) RETURNING reponse_id ")
         String insert(@BindBean ReponseDTO test);
 
         @SqlQuery("select * from reponse WHERE reponse_id = :p_id ")
         ReponseDTO getById(@Bind("p_id")UUID p_id);
 
-
         void update(ReponseDTO rep);
-
         void delete(UUID id);
     }
 
@@ -76,6 +74,7 @@ public class DonneeReponseImpl extends Donnee<ReponseDTO>{
             repDTO.setTrtId((UUID) r.getObject("trt_id"));
             repDTO.setDateReponse( r.getDate("date_reponse"));
             repDTO.setReponse( r.getString("reponse"));
+            repDTO.setReponsePositive( r.getBoolean("rep_positive"));
 
             return repDTO;
         }

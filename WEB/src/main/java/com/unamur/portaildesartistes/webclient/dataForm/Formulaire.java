@@ -34,6 +34,8 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     // Constructeur
     // ******************
     public Formulaire(){
+        lSecteurs = new ArrayList<>();
+        lActToAddBySect = new ArrayList<>();
     }
 
     public Formulaire(FormulaireDTO formDTO){
@@ -58,7 +60,7 @@ public class Formulaire extends DataForm<FormulaireDTO> {
     }
     public List<String> getRessources(){ return ressources;}
     public void setRessources(List<String> ls){
-        if(ressources==null)ressources = new ArrayList<>();for(String s : ls)ressources.add(s);
+        //if(ressources==null)ressources = new ArrayList<>();for(String s : ls)ressources.add(s);
         ressources=ls;
     }
 

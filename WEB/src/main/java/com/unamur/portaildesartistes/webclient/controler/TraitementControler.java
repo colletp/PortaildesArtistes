@@ -1,9 +1,8 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.*;
-import com.unamur.portaildesartistes.webclient.RestTemplateHelper;
+import com.unamur.portaildesartistes.webclient.dataForm.DocArtiste;
 import com.unamur.portaildesartistes.webclient.dataForm.Formulaire;
-import com.unamur.portaildesartistes.webclient.dataForm.Gestionnaire;
 import com.unamur.portaildesartistes.webclient.dataForm.Traitement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,18 +34,21 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
     @GetMapping(value = "/Traitement/form/{formId}")
     public String trtCreateByForm( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@PathVariable("formId") final String formId
-            ,@ModelAttribute("form") final Formulaire formForm
-            ,@ModelAttribute("trt") final Traitement trt
             ,Model model){
+        Formulaire formForm = new Formulaire();
+        Traitement trt = new Traitement();
         try{
             usrCtrl.setRoles( cookieValue, model );
 
             FormulaireDTO f = formCtrl.getObj( cookieValue, UUID.fromString(formId) ,new FormulaireDTO(),FormulaireDTO.class , model);
             formForm.setFromDTO( f );
             formCtrl.loadForm( cookieValue, formForm ,"GET",model);
+
+            model.addAttribute("form",formForm);
+
             //FormulaireDTO formDTO = formCtrl.formGetById(cookieValue,UUID.fromString(formId) , model);
             //formCtrl.loadForm( cookieValue, new Formulaire(formDTO) ,"GET",model);
-            model.addAttribute("formId",formId.toString());
+            model.addAttribute("formId",formId);
             model.addAttribute("typeTrt","Form");
             model.addAttribute("trt",trt);
 
@@ -83,7 +86,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
         }
     }
 
-    @PostMapping(value = "/Traitement", params={"submit"})
+    @PostMapping(value = "/Traitement")
     public String trtPost( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
             ,@ModelAttribute("_method") final String method
             ,@ModelAttribute("typeTrt") final String typeTrt
@@ -103,7 +106,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
             model.addAttribute("form", formDTO );
             model.addAttribute("citoyen",citCtrl.getObj(cookieValue,formDTO.getCitoyenId(),new CitoyenDTO(),CitoyenDTO.class,model) );
-            DocArtisteDTO carte = new DocArtisteDTO();
 
             //enregistrement du traitement avec l'ID du gestionnaire
             UUID trtId = super.postForm(cookieValue, formTrt.getDTO(), method, model);
@@ -123,11 +125,17 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 					//redirection vers création réponse
                     model.addAttribute("trtId",trtId);
 
-                    carte.setTypeDocArtiste("Carte artiste");
-                    model.addAttribute("docCarte", carte);
-                    DocArtisteDTO visa = new DocArtisteDTO();
-                    carte.setTypeDocArtiste("Visa artiste");
-                    model.addAttribute("docVisa",visa);
+                    DocArtiste c = new DocArtiste();
+                    c.setTypeDocArtiste("Carte artiste");
+                    model.addAttribute("docCarte", c);
+
+                    DocArtiste v = new DocArtiste();
+                    v.setTypeDocArtiste("Visa artiste");
+                    model.addAttribute("docVisa",v);
+
+                    //model.addAttribute("listSect",listSect);
+                    List<UUID> activitesId = new ArrayList<>();
+                    model.addAttribute("activitesId", activitesId );
 
                     model.addAttribute("rep",new ReponseDTO() );
                     return "Reponse/put.html";

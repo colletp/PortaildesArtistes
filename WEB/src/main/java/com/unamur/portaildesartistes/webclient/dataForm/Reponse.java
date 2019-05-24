@@ -16,6 +16,7 @@ public class Reponse extends DataForm<ReponseDTO> {
     //private String citoyenId;
     private String dateReponse;
     private String reponse;
+    private String reponsePositive;
 
     // ******************
     // Constructeur
@@ -34,6 +35,9 @@ public class Reponse extends DataForm<ReponseDTO> {
 
     public String getReponse() { return reponse; }
     public void setReponse(String p_rep) { reponse = p_rep; }
+
+    public String getReponsePositive() { return reponsePositive; }
+    public void setReponsePositive(String p_rep) { reponsePositive = p_rep; }
 
 
     public void setFromDTO(final ReponseDTO objDTO){
@@ -55,6 +59,9 @@ public class Reponse extends DataForm<ReponseDTO> {
         //isNotEmpty(getDateReponse());
         dto.setDateReponse( convertDate(getDateReponse()) );
         dto.setReponse( getReponse() );
+
+        dto.setReponsePositive( getReponsePositive().equals("1") );
+
         //isNotEmpty(getCitoyenId());
         //dto.setCitoyenId(convertUUID(getCitoyenId()));
         isNotEmpty(getTrtId());

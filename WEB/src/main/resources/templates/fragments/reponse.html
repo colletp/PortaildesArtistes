@@ -31,8 +31,8 @@
     <textarea name="body" cols="100" rows="10"></textarea>
 
     <div id="repPos" style="display:none">
-        <fieldset th:if="${form.carte}"><legend th:text="#{carteart}"></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( title='Carte artiste', docArt =${docCarte}, detailVisible=true, form=${form}) }"></fieldset></fieldset>
-        <fieldset th:if="${form.visa}" ><legend th:text="#{visaart}" ></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( title='Visa artiste' , docArt =${docVisa} , detailVisible=true, form=${form}) }"></fieldset></fieldset>
+        <fieldset th:if="${form.carte}"><legend th:text="#{carteart}"></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( docArt =${docCarte},title='Carte artiste', detailVisible=true, form=${form}) }"></fieldset></fieldset>
+        <fieldset th:if="${form.visa}" ><legend th:text="#{visaart}" ></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( docArt =${docVisa} ,title='Visa artiste' , detailVisible=true, form=${form}) }"></fieldset></fieldset>
     </div>
 
     <input th:type="submit" name="saveDraft" value="Enregistrer" />

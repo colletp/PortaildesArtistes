@@ -2,10 +2,6 @@ package com.unamur.portaildesartistes.webclient.dataForm;
 
 import com.unamur.portaildesartistes.DTO.TraitementDTO;
 
-import java.text.ParseException;
-import java.util.Date;
-import java.util.UUID;
-
 public class Traitement extends DataForm<TraitementDTO> {
 
     // ******************

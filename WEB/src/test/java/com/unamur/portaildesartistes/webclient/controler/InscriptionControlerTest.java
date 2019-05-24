@@ -9,7 +9,6 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
 import java.text.ParseException;
 
@@ -22,8 +21,6 @@ class InscriptionControlerTest {
     @InjectMocks
     InscriptionControler inscriptionControler=new InscriptionControler();
 
-    //@Mock
-    //private BindingResult bindingResult=mock(BindingResult.class);
     @Mock
     private Model model=mock(Model.class);
     //@Mock

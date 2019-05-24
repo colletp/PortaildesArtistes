@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -155,17 +154,12 @@ public class LoginControler {
     @PostMapping(value = "/login")
     public ResponseEntity<String> authenticate(
             @ModelAttribute("form") Utilisateur usr ,
-            final BindingResult br ,
             final Model m)
     {
         /*logger.error( "password front:"+usrDTO.getPassword()+" -> "+encoder.encode( usrDTO.getPassword() ));
         usrDTO.setPassword( encoder.encode( usrDTO.getPassword() ) );*/
         logger.error( "username:"+usr.getUsername() );
         logger.error( "new password front:"+usr.getPassword() );
-        if(br.hasErrors())
-        {
-            System.out.printf("Found %d fields!%n" , br.getErrorCount());
-        }
 
         ResponseEntity<String> reponseRest;
         MultiValueMap<String,String> paramClient = new LinkedMultiValueMap<>();

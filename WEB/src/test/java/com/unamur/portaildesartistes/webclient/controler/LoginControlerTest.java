@@ -12,12 +12,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,8 +23,6 @@ class LoginControlerTest {
 
     @InjectMocks
     private LoginControler connect;
-    @Mock
-    private BindingResult bindingResult=mock(BindingResult.class);
     @Mock
     private Model model=mock(Model.class);
     @Mock
@@ -59,7 +54,7 @@ class LoginControlerTest {
     @Test
     void testConnectNonValide12() {
         user.setUsername("test");
-        when(bindingResult.hasErrors()).thenReturn(false);
+        //when(bindingResult.hasErrors()).thenReturn(false);
         MultiValueMap<String,String> mock=mock(MultiValueMap.class);
         HttpHeaders mock1=mock(HttpHeaders.class);
         responseEntity=mock(ResponseEntity.class);
@@ -72,7 +67,7 @@ class LoginControlerTest {
 
         //when(configurationService.getUrl()).thenReturn("http://localhost:8081/wsArtiste");
         //when(restTemplateHelper.postForAuth(anyString(),anyString(), (HttpHeaders) anyList(),(HttpHeaders)anyObject()).thenReturn();
-        assertEquals("<401 SEE_OTHER See Other,Autre erreur non gérée (voir logs),[]>",connect.authenticate(user,bindingResult,model).toString());
+        assertEquals("<401 SEE_OTHER See Other,Autre erreur non gérée (voir logs),[]>",connect.authenticate(user,model).toString());
     }
 
     @DisplayName("TC 1.3, Test de connexion avec un identifiant non valide")

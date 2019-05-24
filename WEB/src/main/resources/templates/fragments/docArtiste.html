@@ -36,19 +36,20 @@
     </div>
 </fieldset>
 
-<fieldset th:fragment="docArtistePut ( title , docArt , detailVisible , form ) ">
+<fieldset th:fragment="docArtistePut ( docArt , title , detailVisible , form ) " th:object="${docArt}" >
     <legend th:text="${title}">Document Artiste</legend>
 
         <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
         <span th:text="${form.nomArtiste}"></span>
 
         <span th:text="#{docArtiste.noDoc}" >Numéro</span>
-        <input type="text" th:field="${docArt.noDoc}" />
+        a[[${docArt.noDoc}]]a
+        <input type="text" th:field="*{noDoc}" />
 
         <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
-        <input type="text" th:field="${docArt.datePeremption}" />
+        <input type="text" th:field="*{datePeremption}" />
 
-        <input type="hidden" th:field="${docArt.typeDocArtiste}" />
+        <input type="hidden" th:field="*{typeDocArtiste}" />
 
 </fieldset>
 
