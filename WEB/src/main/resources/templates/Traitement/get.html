@@ -5,14 +5,14 @@
 <div th:replace="~{/fragments/header :: head}"></div>
 <div th:replace="~{/fragments/header :: nav(select=${10})}"></div>
 <div th:replace="~{/fragments/header :: erreurs}"></div>
-<fieldset class="formbox800">
+<fieldset class="formbox90pc">
     <legend>Traitement</legend>
 
     <fieldset class="formbox90pc" th:replace="~{/fragments/form :: getForm(${form},${secteurs},${citoyen}) }"></fieldset>
 
-    <span th:text="#{traite.par}" >Traité par</span>:<a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
-    Date Demande:[[${form.dateDemande}]]<br/>
-    Date Traitement:[[${trt.dateTrt}]]<br/>
+    <span th:text="#{traite.par}" ></span>:<a th:href="@{/Gestionnaire/}+${gestId}" >[[${gestNom}]]</a>
+    <span th:text="#{datedem}"></span> : [[${form.dateDemande}]]<br/>
+    <span th:text="#{datetrait}"></span> : [[${trt.dateTrt}]]<br/>
     Appréciation:[[${trt.appreciation}]]<br/>
 
 

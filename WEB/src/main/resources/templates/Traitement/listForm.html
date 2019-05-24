@@ -11,7 +11,7 @@
 <div class="formbox90pc">
 <h1>Formulaires à traiter</h1>
 <table>
-    <tr><th>Date Demande</th><th>Langue</th><th>Carte</th><th>Visa</th><th>Actions</th></tr>
+    <tr><th>Date</th><th th:text="#{langue}"></th><th th:text="#{carte}"></th><th>Visa</th><th></th></tr>
     <tr th:each="frm : ${formATrt}">
         <td>[[${frm.dateDemande}]]</td>
         <td><img th:src="@{'/img/flag-'+${frm.langue}+'.png'}" /></td>
@@ -26,12 +26,12 @@
 
 <h1>Formulaire en cours de traitement</h1>
 <table>
-    <tr><th>Date Demande</th>
-        <th>Langue</th>
-        <th>Carte</th>
+    <tr><th th:text="#{datedem}"></th>
+        <th th:text="#{langue}"></th>
+        <th th:text="#{carte}"></th>
         <th>Visa</th>
-        <th>Traitements</th>
-        <th>Action</th>
+        <th th:text="#{traitement}"></th>
+        <th></th>
     </tr>
     <tr th:each="frm : ${formEnCours}">
         <td>[[${frm.dateDemande}]]</td>
@@ -39,10 +39,10 @@
         <td><img th:src="@{/img/vrai.png}" th:if="${frm.carte}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.carte}" /></td>
         <td><img th:src="@{/img/vrai.png}" th:if="${frm.visa}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.visa}" /></td>
         <td><table>
-            <tr><th>Date Traitement</th>
-                <th>Nom du gestionnaire</th>
-                <th>Appréciation</th>
-                <th>Action</th>
+            <tr><th th:text="#{datetrait}"></th>
+                <th th:text="#{nomgest}"></th>
+                <th th:text="#{appre}"></th>
+                <th></th>
             </tr>
             <tr th:each="trtItem : ${frm.trt}">
                 <td>[[${trtItem.dateTrt}]]</td>
@@ -62,12 +62,12 @@
 
 <h1>Formulaires traités</h1>
 <table>
-    <tr><th>Date Demande</th>
-        <th>Langue</th>
-        <th>Carte</th>
+    <tr><th th:text="#{datedem}"></th>
+        <th th:text="#{langue}"></th>
+        <th th:text="#{carte}"></th>
         <th>Visa</th>
-        <th>Traitement</th>
-        <th>Actions</th>
+        <th th:text="#{traitement}"></th>
+        <th></th>
     </tr>
     <tr th:each="frm : ${formFini}">
         <td>[[${frm.dateDemande}]]</td>
@@ -75,26 +75,26 @@
         <td><img th:src="@{/img/vrai.png}" th:if="${frm.carte}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.carte}" /></td>
         <td><img th:src="@{/img/vrai.png}" th:if="${frm.visa}" /><img th:src="@{/img/faux.png}" th:if="not ${frm.visa}" /></td>
         <td><table>
-            <tr><th>Date Traitement</th>
-                <th>Nom du gestionnaire</th>
-                <th>Appréciation</th>
-                <th>Réponse</th>
-                <th>Action</th>
+            <tr><th th:text="#{datetrait}"></th>
+                <th th:text="#{nomgest}"></th>
+                <th th:text="#{appre}"></th>
+                <th th:text="#{reponse}"></th>
+                <th></th>
             </tr>
             <tr th:each="trtItem : ${frm.trt}">
                 <td>[[${trtItem.dateTrt}]]</td>
                 <td>[[${trtItem.gest.citoyen.nom}]]</td>
                 <td>[[${trtItem.appreciation}]]</td>
                 <td><table>
-                    <tr><th>Date Réponse</th>
+                    <tr><th th:text="#{daterep}"></th>
                         <th>Document</th>
                     </tr>
                     <tr th:each="repItem : ${trtItem.reponses}">
                         <td>[[${repItem.dateReponse}]]</td>
                         <td><table>
-                            <tr><th>Type de document</th>
-                                <th>N° de document</th>
-                                <th>Action</th>
+                            <tr><th th:text="#{typedoc}"></th>
+                                <th th:text="#{numdoc}"></th>
+                                <th></th>
                             </tr>
                             <tr th:each="docArtItem : ${repItem.docArt}">
                                 <td>[[${docArtItem.typeDocArtiste}]]</td>
