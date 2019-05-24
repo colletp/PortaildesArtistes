@@ -28,7 +28,7 @@
 <fieldset th:fragment="AdressePut(fonction,adresse)">
     <legend th:text="${fonction}"></legend>
     <div th:if= "${adresse} != null">
-        <input type="hidden"  th:field="*{adresse?.id?}" />
+        <input type="hidden"  th:field="*{adresse.id}" />
         <label th:text="#{maison.rue}"></label>
         <input th:type="text" th:field="${adresse.rue}" />
         <label th:text="#{num}"></label>
