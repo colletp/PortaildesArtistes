@@ -33,37 +33,38 @@
 
 <fieldset th:fragment="activiteFormBySecteur2(form,listSect)">
 
-    <table>
-        <caption ><H1>Activités par secteur</H1></caption>
-        <tr>
-            <td>
-                <select>
-                    <option th:each="secteur : ${listSect}"
-                            th:value="${secteur.Id}"
-                            th:utext="${secteur.NomSecteur}">
-                    </option>
-                </select>
-            </td>
+    <th:block th:each="sect : ${listSect}">
+        <div >
+            <table >
+                <TR>
+                    <td>
+                <a data-toggle="collapse"
+                   data-parent="#panel-790692"
+                   th:href="|#panel-element-${#strings.replace(sect,' ','-')}|"
+                   th:text="${sect.NomSecteur}">Secteur</a>
+                    </td>
+                    <td>
+                        <button type="submit" th:name="'NewAct'" th:value="${sect.id}">Novelle activité</button>
+                    </td>
+                </TR>
+            </table>
+            <th:block th:each="act : ${sect.activites}">
+                <table>
+                    <tr>
+                        <td>
+                            <div th:id="|panel-element-${#strings.replace(sect,' ','-')}|">
+                                <div class="panel-body" th:text="${act.nomActivite + ' - ' + act.description}"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="checkbox" th:name="test" th:value="0">
+                        </td>
+                    </tr>
+                </table>
+            </th:block>
 
-            <!--<td>-->
-                <!--<select>-->
-                    <!--<option th:each="act : *{activites}"-->
-                            <!--th:value="${id}"-->
-                            <!--th:utext="${nomActivite}">-->
-                    <!--</option>-->
-                <!--</select>-->
-            <!--</td>-->
-        </tr>
-    </table>
-
-    <!--<ul th:each="act : *{activites}"  th:object="${act}">-->
-    <!--<li>-->
-    <!--<span th:text="*{nomActivite}" th:alt="*{description}" ></span><button type="submit" th:name="'removeAct'" th:value="*{id}">Supprimer</button>-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--<li>-->
-    <!--<button type="submit" th:name="'NewAct'" th:value="*{id}">Nouvelle activité</button>-->
-    <!--</li>-->
+        </div>
+    </th:block>
 
 </fieldset>
 

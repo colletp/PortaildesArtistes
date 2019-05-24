@@ -50,7 +50,10 @@
     <legend th:text="${fonction}">Document Artiste</legend>
 
     <div th:if= "${docArtiste} != null">
-        <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>:<input th:field="${form.nomArtiste}">Nico</input><br/>
+        <div th:if= "${form} != null">
+            <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
+            <input type="text"  th:name="${form.nomArtiste}" th:value="${form.nomArtiste != null} ? *{form.nomArtiste} : ' '" />
+        </div>
 
         <span th:text="#{docArtiste.noDoc}" >Numéro</span>
         <input type="text"  th:name="${docArtiste.noDoc}" th:value="${docArtiste.noDoc != null} ? *{docArtiste.noDoc} : ' '" />

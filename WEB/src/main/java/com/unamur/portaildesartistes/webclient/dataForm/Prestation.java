@@ -131,7 +131,7 @@ public class Prestation extends DataForm<PrestationDTO> {
 
     public PrestationDTO getDTO(){
         PrestationDTO dto = new PrestationDTO();
-        if( getId()!=null && !getId().isEmpty())
+            if( getId()!=null && !getId().isEmpty())
         dto.setId( convertUUID(getId()) );
 
         isNotEmpty(getSeDerouleId());
