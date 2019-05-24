@@ -24,11 +24,12 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
         model.addAttribute("GestFormFR", testRole(cookieValue, "Gestionnaire de formulaire FR", model));
         model.addAttribute("GestFormEN", testRole(cookieValue, "Gestionnaire de formulaire EN", model));
         model.addAttribute("GestPers",   testRole(cookieValue, "Gestionnaire du personnel", model));
-        model.addAttribute("GestPrest",  testRole(cookieValue, "Gestionnaire de pretation", model));
+        model.addAttribute("GestPrest",  testRole(cookieValue, "Gestionnaire de prestation", model));
     }
 
     private Boolean testRole(String cookieValue, String role, Model model)throws Exception {
         for (RoleDTO r : getMoi(cookieValue, model).getAuthorities()){
+            logger.error(r.getAuthority());
             if( r.getAuthority().equals(role) )
                 return true;
         }
