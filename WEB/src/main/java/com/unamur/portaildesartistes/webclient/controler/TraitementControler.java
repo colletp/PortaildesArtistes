@@ -89,7 +89,6 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             ,@ModelAttribute("typeTrt") final String typeTrt
             ,@ModelAttribute("trt") final Traitement formTrt
             ,@ModelAttribute("submit") final String submit
-            //,@ModelAttribute("formId") final String formId
             ,Model model){
         try{
             usrCtrl.setRoles( cookieValue, model );
@@ -97,8 +96,15 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
             UtilisateurDTO moi = usrCtrl.getMoi(cookieValue,model);
             //GestionnaireDTO gestDTO = gestCtrl.getObj( cookieValue, moi.getCitoyen().getGest().getId() ,new GestionnaireDTO(),GestionnaireDTO.class,model );
             //si je suis un gestionnaire
-            if(moi.getCitoyen().getGest()==null)throw new IllegalArgumentException("Opération illégale, il faut être gestionnaire");
+            if(moi.getCitoyen().getGest()==null)throw new IllegalArgumentException("illegalGest");
             formTrt.setGestId(moi.getCitoyen().getGest().getId().toString());
+
+
+            FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
+            model.addAttribute("form", formDTO );
+            model.addAttribute("citoyen",citCtrl.getObj(cookieValue,formDTO.getCitoyenId(),new CitoyenDTO(),CitoyenDTO.class,model) );
+            DocArtisteDTO carte = new DocArtisteDTO();
+
             //enregistrement du traitement avec l'ID du gestionnaire
             UUID trtId = super.postForm(cookieValue, formTrt.getDTO(), method, model);
             //retrouver les éléments insérés en DB (date du traitement, ...)
@@ -117,12 +123,13 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 					//redirection vers création réponse
                     model.addAttribute("trtId",trtId);
 
-                    FormulaireDTO formDTO = formCtrl.getObj( cookieValue, UUID.fromString(formTrt.getFormId()) ,new FormulaireDTO(),FormulaireDTO.class ,model );
-                    model.addAttribute("form", formDTO );
-                    model.addAttribute("citoyen",citCtrl.getObj(cookieValue,formDTO.getCitoyenId(),new CitoyenDTO(),CitoyenDTO.class,model) );
-                    model.addAttribute("docCarte",new DocArtisteDTO());
-                    model.addAttribute("docVisa",new DocArtisteDTO());
+                    carte.setTypeDocArtiste("Carte artiste");
+                    model.addAttribute("docCarte", carte);
+                    DocArtisteDTO visa = new DocArtisteDTO();
+                    carte.setTypeDocArtiste("Visa artiste");
+                    model.addAttribute("docVisa",visa);
 
+                    model.addAttribute("rep",new ReponseDTO() );
                     return "Reponse/put.html";
 				case "sauvCommentaire":
                 //rien de plus, tout a déjà été fait plus haut (sauvegarde du traitement)
@@ -133,6 +140,7 @@ public class TraitementControler extends Controler<TraitementDTO, Class< Traitem
 			}
             return "Traitement/get.html";
         }catch(IllegalArgumentException e){
+
             model.addAttribute("_method",method);
             model.addAttribute("typeTrt",typeTrt);
             model.addAttribute("trt",formTrt);

@@ -4,7 +4,7 @@
 
 <body>
 
-<fieldset th:fragment="docArtisteGet(fonction,docArtiste,detailVisible)">
+<fieldset th:fragment="docArtisteGet(fonction,docArtiste,detailVisible,form)">
     <legend th:text="${fonction}"></legend>
 
    <span th:text="#{num}"></span>:[[${docArtiste.noDoc}]]<br/>
@@ -12,11 +12,7 @@
    <span th:text="#{typedoc}"></span>:[[${docArtiste.typeDocArtiste}]]<br/>
 
     <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
-    </div>
-
-    <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
+        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${form.citoyen}) }"></fieldset>
     </div>
     <div class="boutonsList">
         <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
@@ -34,44 +30,25 @@
         <div th:if= "${detailVisible} == true">
             <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
         </div>
-    <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
-    </div>
-    </div>
-    <div th:if= "${docArtiste} == null ">
-        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
     </div>
     <div class="boutonsList">
         <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
     </div>
 </fieldset>
 
-<fieldset th:fragment="docArtistePut(fonction,docArtiste,detailVisible,form)" th:object="${docArtiste}">
-    <legend th:text="${fonction}">Document Artiste</legend>
+<fieldset th:fragment="docArtistePut ( title , docArt , detailVisible , form ) ">
+    <legend th:text="${title}">Document Artiste</legend>
 
-    <div th:if= "${docArtiste} != null">
-        <div th:if= "${form} != null">
-            <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
-            <input type="text"  th:name="${form.nomArtiste}" th:value="${form.nomArtiste != null} ? *{form.nomArtiste} : ' '" />
-        </div>
+        <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
+        <span th:text="${form.nomArtiste}"></span>
 
         <span th:text="#{docArtiste.noDoc}" >Numéro</span>
-        <input type="text"  th:name="${docArtiste.noDoc}" th:value="${docArtiste.noDoc != null} ? *{docArtiste.noDoc} : ' '" />
+        <input type="text" th:field="${docArt.noDoc}" />
 
         <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
-        <input type="text"  th:name="${docArtiste.datePeremption}" th:value="${docArtiste.datePeremption != null} ? *{docArtiste.datePeremption} : ' '" />
+        <input type="text" th:field="${docArt.datePeremption}" />
 
-        <span th:text="#{docArtiste.typeDocArtiste}" >Type document artiste</span>
-        <input type="text"  th:name="${docArtiste.typeDocArtiste}" th:value="${docArtiste.typeDocArtiste != null} ? *{docArtiste.typeDocArtiste} : ' '" />
-
-    <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/citoyen :: CitoyenGet(${'Citoyen'},${docArtiste.citoyenId}) }"></fieldset>
-    </div>
-
-    <div th:if= "${detailVisible} == true">
-        <fieldset th:replace="~{/fragments/reponse :: ReponseGet(${'Reponse'},${docArtiste.reponseId}) }"></fieldset>
-    </div>
-    </div>
+        <input type="hidden" th:field="${docArt.typeDocArtiste}" />
 
 </fieldset>
 

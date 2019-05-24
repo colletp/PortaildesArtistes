@@ -22,8 +22,8 @@ class InscriptionControlerTest {
     @InjectMocks
     InscriptionControler inscriptionControler=new InscriptionControler();
 
-    @Mock
-    private BindingResult bindingResult=mock(BindingResult.class);
+    //@Mock
+    //private BindingResult bindingResult=mock(BindingResult.class);
     @Mock
     private Model model=mock(Model.class);
     //@Mock
@@ -83,7 +83,7 @@ class InscriptionControlerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals("inscript.html",inscriptionControler.inscript(usrInscr,method,bindingResult,model));
+        assertEquals("inscript.html",inscriptionControler.inscript(usrInscr,method,model));
     }
 
     @DisplayName("TC 2.4, Test d’inscription sans identifiant")

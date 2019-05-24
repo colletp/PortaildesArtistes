@@ -26,15 +26,10 @@ public class InscriptionControler extends Controler< UtilisateurDTO , java.lang.
 
     @PostMapping(value = "/inscript")
     public String inscript(
-            @Valid @ModelAttribute("form") final UtilisateurInscript usrInscrForm ,
+            @ModelAttribute("form") final UtilisateurInscript usrInscrForm ,
             @ModelAttribute("_method") final String method,
-            final BindingResult br ,
             final Model model)
     {
-        if(br.hasErrors())
-        {
-            System.out.printf("Found %d fields!%n" , br.getErrorCount());
-        }
         try{
             postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);
             //UUID uuid = postForm("", usrInscrForm.getDTO(), "PUT","inscript",model);

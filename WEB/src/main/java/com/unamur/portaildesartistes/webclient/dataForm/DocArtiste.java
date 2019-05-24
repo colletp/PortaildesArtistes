@@ -42,7 +42,7 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
     public void setCitoyenId( String p_id) { this.citoyenId = p_id; }
     public String getReponseId() { return reponseId; }
     public void setReponseId( String p_id) { this.reponseId = p_id; }
-    public String getNoDoc() { isNotEmpty(noDoc);return noDoc; }
+    public String getNoDoc() { return noDoc; }
     public void setNoDoc(String p_noDoc) { this.noDoc = p_noDoc; }
     public String getDatePeremption() { return datePeremption; }
     public void setDatePeremption(String p_date) { this.datePeremption = p_date; }
@@ -71,6 +71,7 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setCitoyenId(objDTO.getCitoyenId().toString());
         setReponseId(objDTO.getReponseId().toString());
+        isNotEmpty(noDoc);
         setNoDoc(objDTO.getNoDoc());
         setDatePeremption(convertDate(objDTO.getDatePeremption()));
         setTypeDocArtiste(objDTO.getTypeDocArtiste());

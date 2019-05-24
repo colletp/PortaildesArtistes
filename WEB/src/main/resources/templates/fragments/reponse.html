@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<fieldset th:fragment="reponsePost ( title , form , reponse , docCarte , docVisa , trtId )">
+    <input type="hidden" th:field="${reponse.id}" />
+    <input type="hidden" th:field="${trtId}" />
+    <legend th:text="#{reponse}"></legend>
+    <input type="radio" name="typeReponse" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
+    <input type="radio" name="typeReponse" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
+    Message personnalisé au citoyen :
+    <textarea name="body" cols="100" rows="10"></textarea>
+
+    <div id="repPos" style="display:none">
+        <fieldset th:if="${form.carte}"><legend th:text="#{carteart}"></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut(title='Carte artiste',docArt=${docCarte},detailVisible=true,form=${form}) }"></fieldset></fieldset>
+        <fieldset th:if="${form.visa}" ><legend th:text="#{visaart}" ></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut(title='Visa artiste' ,docArt=${docVisa} ,detailVisible=true,form=${form}) }"></fieldset></fieldset>
+    </div>
+
+    <input th:type="submit" name="saveDraft" value="Enregistrer" />
+    <input th:type="submit" name="submit" value="Répondre au citoyen" />
+</fieldset>
+
+<fieldset th:fragment="reponsePut ( title , form , reponse , docCarte , docVisa , trtId )">
+    <input type="hidden" th:field="${trtId}" />
+    <legend th:text="#{reponse}"></legend>
+    <input type="radio" name="typeReponse" value="0" onclick="$('#repPos').attr('style', 'display: none')" />Négative<br/>
+    <input type="radio" name="typeReponse" value="1" onclick="$('#repPos').attr('style', 'display: block')" />Positive<br/>
+    Message personnalisé au citoyen :
+    <textarea name="body" cols="100" rows="10"></textarea>
+
+    <div id="repPos" style="display:none">
+        <fieldset th:if="${form.carte}"><legend th:text="#{carteart}"></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( title='Carte artiste', docArt =${docCarte}, detailVisible=true, form=${form}) }"></fieldset></fieldset>
+        <fieldset th:if="${form.visa}" ><legend th:text="#{visaart}" ></legend><fieldset th:replace="~{/fragments/docArtiste :: docArtistePut( title='Visa artiste' , docArt =${docVisa} , detailVisible=true, form=${form}) }"></fieldset></fieldset>
+    </div>
+
+    <input th:type="submit" name="saveDraft" value="Enregistrer" />
+    <input th:type="submit" name="submit" value="Répondre au citoyen" />
+</fieldset>
+
+
+</body>
+
+</html>
