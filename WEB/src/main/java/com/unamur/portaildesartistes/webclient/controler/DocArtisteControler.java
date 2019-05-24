@@ -118,7 +118,7 @@ public class DocArtisteControler extends Controler<DocArtisteDTO, Class< DocArti
             usrCtrl.setRoles(cookieValue, model);
 
 			HttpHeaders headers = initHeadersRest(cookieValue);
-            model.addAttribute("form",restTemplateHelper.getForList(DocArtisteDTO.class,configurationService.getUrl()+"/gestionDocArtiste/myDocs",headers ) );
+            model.addAttribute("doc",restTemplateHelper.getForList(DocArtisteDTO.class,configurationService.getUrl()+"/gestionDocArtiste/myDocs",headers ) );
 			return "DocArtiste/list.html";
         }catch( Exception e ){
             model.addAttribute("Err",e.getMessage());

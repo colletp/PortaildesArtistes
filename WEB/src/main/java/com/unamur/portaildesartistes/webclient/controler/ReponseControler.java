@@ -1,6 +1,6 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
-import com.unamur.portaildesartistes.DTO.ReponseDTO;
+import com.unamur.portaildesartistes.DTO.*;
 import com.unamur.portaildesartistes.webclient.dataForm.DocArtiste;
 import com.unamur.portaildesartistes.webclient.dataForm.Reponse;
 import org.slf4j.Logger;
@@ -18,6 +18,15 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
 
     @Autowired
     UtilisateurControler usrCtrl;
+    @Autowired
+    CitoyenControler citCtrl;
+    @Autowired
+    SecteurControler sectCtrl;
+    @Autowired
+    TraitementControler trtCtrl;
+    @Autowired
+    FormulaireControler formCtrl;
+
 
     @GetMapping(value = "/Reponse/creer/{id}")
     public String docArtCreateDef( @CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
@@ -76,9 +85,17 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             ,Model model){
         try{
             usrCtrl.setRoles(cookieValue, model);
-            model.addAttribute("docCarte",new DocArtiste() );
-            model.addAttribute("form",super.postForm(cookieValue, rep.getDTO() ,method,model));
-            return "Reponse/get.html";
+//sauve la réponse sans l'envoyer
+            model.addAttribute("repId",super.postForm(cookieValue, rep.getDTO() ,method,model));
+            TraitementDTO trtDTO = trtCtrl.getObj(cookieValue,UUID.fromString(rep.getTrtId()),new TraitementDTO(),TraitementDTO.class,model);
+            FormulaireDTO formDTO= formCtrl.getObj(cookieValue,trtDTO.getFormId(),new FormulaireDTO(),FormulaireDTO.class,model);
+            model.addAttribute("citoyen",citCtrl.getObj(cookieValue,formDTO.getCitoyenId(),new CitoyenDTO(),CitoyenDTO.class,model) );
+            model.addAttribute("form", formDTO );
+            model.addAttribute("docCarte",new DocArtisteDTO());
+            model.addAttribute("docVisa",new DocArtisteDTO());
+            //model.addAttribute("secteurs", formDTO );
+            //super.postForm(cookieValue, rep.getDTO() ,method,model);
+            return "Reponse/"+(method.isEmpty()?"post":method)+".html";
         }catch(IllegalArgumentException e){
             model.addAttribute("Err",e.getMessage());
             return "Reponse/"+(method.isEmpty()?"post":method)+".html";

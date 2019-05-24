@@ -31,7 +31,7 @@
         </tr>
 
         <tr>
-        <td><fieldset th:replace="~{/fragments/adresse :: AdressePut('Adresse de la prestation', ${form.SeDeroule}) }"></fieldset></td>
+        <td><fieldset th:replace="~{/fragments/adresse :: AdressePut('Adresse de la prestation', ${form.seDeroule}) }"></fieldset></td>
         </tr>
 
         <tr>
@@ -39,11 +39,11 @@
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/commanditaire :: commanditairePut( 'Coordonnée du commanditaire', ${form.Commanditaire} ) }"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/commanditaire :: commanditairePut( 'Coordonnée du commanditaire', ${form.commanditaire} ) }"></fieldset></td>
         </tr>
 
         <tr>
-            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.DocArtiste}, true) }"></fieldset></td>
+            <td><fieldset th:replace="~{/fragments/docartiste :: docArtistePut( 'Document artiste', ${form.docArtiste}, true , 'formulaireDTO') }"></fieldset></td>
         </tr>
 
 
