@@ -39,6 +39,13 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
         this.oCitoyen = oCitoyen;
     }
 
+    public EntrepriseDTO getEntreprise() {
+        return oEntreprise;
+    }
+    public void setEntreprise(EntrepriseDTO oEntreprise) {
+        this.oEntreprise = oEntreprise;
+    }
+
     public void setFromDTO(final CommanditaireDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
         setEntrepriseId(objDTO.getEntrepriseId().toString());
@@ -68,13 +75,6 @@ public class Commanditaire extends DataForm<CommanditaireDTO> {
         return dto;
     }
 
-    public EntrepriseDTO getEntreprise() {
-        return oEntreprise;
-    }
-
-    public void setEntreprise(EntrepriseDTO oEntreprise) {
-        this.oEntreprise = oEntreprise;
-    }
 
 
 }

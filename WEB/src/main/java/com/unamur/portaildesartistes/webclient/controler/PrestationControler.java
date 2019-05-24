@@ -1,6 +1,7 @@
 package com.unamur.portaildesartistes.webclient.controler;
 
 import com.unamur.portaildesartistes.DTO.*;
+import com.unamur.portaildesartistes.webclient.dataForm.Entreprise;
 import com.unamur.portaildesartistes.webclient.dataForm.Prestation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +66,15 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
 
             prestForm.setSeDeroule(new AdresseDTO());
 
-            prestForm.setCommanditaire(new CommanditaireDTO());
+            CommanditaireDTO oCom = new CommanditaireDTO();
+            EntrepriseDTO oEnt = new EntrepriseDTO();
+            oEnt.setId(new UUID(1,1));
+            oCom.setEntreprise(oEnt);
+            CitoyenDTO oCit = new CitoyenDTO();
+            oCom.setCitoyen(oCit);
+            prestForm.setCommanditaire(oCom  );
 
             model.addAttribute("form",prestForm);
-
 
             return "Prestation/" +(method.isEmpty()?"post":method)+".html";
         }catch(IllegalArgumentException e){
@@ -83,6 +89,36 @@ public class PrestationControler extends Controler<PrestationDTO, Class< Prestat
             model.addAttribute("Err",e.getMessage());
             return "/login.html";
         }
+    }
+
+    @PostMapping(value="/Prestation", params={"addRowCommanditaireType"})
+    public String addCommanditaireType(@CookieValue( value = "JSESSIONID",defaultValue = "" )String cookieValue
+            , @ModelAttribute("_method")final String method
+            , @ModelAttribute("form") final Prestation prestForm
+            , @ModelAttribute("addRowCommanditaireType") final String addRowCommanditaireType
+            , @ModelAttribute("commanditaireType") final String commanditaireType
+            , Model model){
+
+        if (commanditaireType.equals("Entreprise"))
+        {
+            if (prestForm.getCommanditaire() == null)
+            {
+                CommanditaireDTO comDTO = new CommanditaireDTO();
+                comDTO.setEntreprise(new EntrepriseDTO());
+                prestForm.setCommanditaire(comDTO);
+            }
+        }
+
+        if (commanditaireType.equals("Citoyen"))
+        {
+            if (prestForm.getCommanditaire() == null)
+            {
+                CommanditaireDTO comDTO = new CommanditaireDTO();
+                comDTO.setCitoyen(new CitoyenDTO());
+                prestForm.getCommanditaire().setCitoyen(new CitoyenDTO());
+            }
+        }
+        return loadForm(cookieValue,prestForm,method,model);
     }
 
     @PostMapping(value="/Prestation", params={"addRow"})
