@@ -112,24 +112,24 @@
 
 <fieldset th:fragment="CitoyenAdrPost(fonction,citoyen,adresse)">
     <legend th:text="#{voscoordo}"></legend>
-    <input th:type="hidden" th:field="${citoyen.id != null} ? ${citoyen.id} : ' '" />
+    <input th:type="hidden" th:field="*{citoyen.id}" />
     <label th:text="#{nom}"></label>
-    <input th:type="text" th:field="${citoyen.nom != null} ? ${citoyen.nom} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.nom}" />
     <label th:text="#{prenom}"></label>
-    <input th:type="text" th:field="${citoyen.prenom != null} ? ${citoyen.prenom} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.prenom}" />
     <label th:text="#{dn}"></label>
-    <input th:type="text" th:field="${citoyen.dateNaissance != null} ? ${citoyen.dateNaissance} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.dateNaissance}" />
     <label th:text="#{tel}"></label>
-    <input th:type="text" th:field="${citoyen.tel != null} ? ${citoyen.tel} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.tel}" />
     <label th:text="#{gsm}"></label>
-    <input th:type="text" th:field="${citoyen.gsm != null} ? ${citoyen.gsm} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.gsm}" />
     <label th:text="#{email}"></label>
-    <input th:type="text" th:field="${citoyen.mail != null} ? ${citoyen.mail} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.mail}" />
     <label th:text="#{regnat}"></label>
-    <input th:type="text" th:field="${citoyen.nrn != null} ? ${citoyen.nrn} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.nrn}" />
     <label th:text="#{nat}"></label>
-    <input th:type="text" th:field="${citoyen.nation != null} ? ${citoyen.nation} : ' ' "/>
-    <input th:type="hidden" th:field="${citoyen.reside != null} ? ${citoyen.reside} : ' ' "/>
+    <input th:type="text" th:field="*{citoyen.nation}" />
+    <input th:type="hidden" th:field="*{citoyen.reside}" />
     <fieldset th:replace="~{/fragments/adresse :: AdressePost('Résidence',${adresse}) }"></fieldset>
 </fieldset>
 
