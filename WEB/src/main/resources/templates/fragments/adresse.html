@@ -14,31 +14,32 @@
 
 <fieldset th:fragment="AdressePost(fonction,adresse)">
     <legend th:text="${fonction}"></legend>
-    <div th:if= "${adresse} != null">
-        <input type="hidden"  th:name="${adresse.id}" th:value="${adresse.id != null} ? *{adresse.id} : ' '" />
-        <label th:text="#{maison.rue}"></label>
-        <input th:type="text" th:name="${adresse.rue}" th:value="${adresse.rue != null} ? *{adresse.rue} : ' '" />
-        <label th:text="#{num}"></label>
-        <input th:type="text" th:name="${adresse.numero}" th:value="${adresse.numero != null} ? *{adresse.numero} : ' '" />
-        <label th:text="#{maison.boite}"></label>
-        <input th:type="text" th:name="${adresse.boite}" th:value="${adresse.boite != null} ? *{adresse.boite} : ' '" />
-        <label th:text="#{maison.ville}"></label>
-        <input th:type="text" th:name="${adresse.ville}" th:value="${adresse.ville != null} ? *{adresse.ville} : ' '" />
-    </div>
+    <input type="hidden" th:field="*{adresse.id}" />
+    <label th:text="#{maison.rue}"></label>
+    <input th:type="text" th:field="*{adresse.rue}" />
+    <label th:text="#{num}"></label>
+    <input th:type="text" th:field="*{adresse.numero}" />
+    <label th:text="#{maison.boite}"></label>
+    <input th:type="text" th:field="*{adresse.boite}" />
+    <label th:text="#{maison.ville}"></label>
+    <input th:type="text" th:field="*{adresse.ville}" />
 </fieldset>
 
 <fieldset th:fragment="AdressePut(fonction,adresse)">
     <legend th:text="${fonction}"></legend>
     <div th:if= "${adresse} != null">
-        <input type="hidden"  th:name="${adresse.id}" th:value="${adresse.id != null} ? *{adresse.id} : ' '" />
+        <input type="hidden"  th:field="*{adresse?.id?}" />
         <label th:text="#{maison.rue}"></label>
-        <input th:type="text" th:name="${adresse.rue}" th:value="${adresse.rue != null} ? *{adresse.rue} : ' '" />
+        <input th:type="text" th:field="${adresse.rue}" />
         <label th:text="#{num}"></label>
-        <input th:type="text" th:name="${adresse.numero}" th:value="${adresse.numero != null} ? *{adresse.numero} : ' '" />
+        <input th:type="text" th:field="${adresse.numero}" />
         <label th:text="#{maison.boite}"></label>
-        <input th:type="text" th:name="${adresse.boite}" th:value="${adresse.boite != null} ? *{adresse.boite} : ' '" />
+        <input th:type="text" th:field="${adresse.boite}" />
         <label th:text="#{maison.ville}"></label>
-        <input th:type="text" th:name="${adresse.ville}" th:value="${adresse.ville != null} ? *{adresse.ville} : ' '" />
+        <input th:type="text" th:field="${adresse.ville}" />
+    </div>
+    <div th:if= "${adresse} == null">
+        <button type="submit" th:name="'addRow'" th:value="${1}">Ajout</button>
     </div>
 </fieldset>
 
