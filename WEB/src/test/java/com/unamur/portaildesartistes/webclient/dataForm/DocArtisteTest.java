@@ -22,7 +22,7 @@ class DocArtisteTest {
     void setUp() {
         doc=new DocArtiste();
         docArt=new DocArtisteDTO();
-        doc.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
+        //doc.setCitoyenId("98a95e7d-8231-4115-8ed9-612de5590d88");
         doc.setReponseId("c91dce79-20a4-431f-957f-b6d09b9b876b");
         doc.setDatePeremption("12/04/2019");
         doc.setNoDoc("123456");
@@ -47,7 +47,7 @@ class DocArtisteTest {
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
-                ()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
+                //()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
                 ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
@@ -65,7 +65,7 @@ class DocArtisteTest {
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
-                ()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
+                //()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
                 ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
@@ -112,11 +112,13 @@ class DocArtisteTest {
         assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
 
+    /*
     @DisplayName("TC , Test de création Doc Artiste avec Citoyen ID absent")
     @Test
     void testCreationDocArtisteNonValide6() {
         doc.setCitoyenId("");
         assertThrows(IllegalArgumentException.class,()->doc.getDTO());
     }
+    */
 
 }

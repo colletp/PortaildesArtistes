@@ -11,7 +11,16 @@
 
 <div class="formbox90pc">
 
-<fieldset th:replace="~{/fragments/docArtiste :: docArtisteGet('Documents d\'artiste',${form},true)"></fieldset>
+    <table>
+        <tr><th>Date</th><th>No Document</th><th>Type Document</th><th>Action</th></tr>
+        <tr  th:each="docArtiste : ${doc}">
+            <td><span th:text="${#dates.format(docArtiste.datePeremption, 'dd-MM-yyyy')}" ></span></td>
+            <td>[[${docArtiste.noDoc}]]</td>
+            <td>[[${docArtiste.typeDocArtiste}]]</td>
+            <td id="boutonsList">
+                <a th:href="@{/DocArtiste/{id}(id=${docArtiste.id})}"><img th:src="@{/img/bt_detail.png}" th:alt="#{pdf}" th:title="#{pdf}"  /></a>
+            </td>
+    </table>
 
 </div>
     <div th:replace="~{/fragments/header :: multiscript}"></div>
