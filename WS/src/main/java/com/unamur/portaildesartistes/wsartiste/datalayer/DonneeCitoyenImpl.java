@@ -43,7 +43,7 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
     }
 
     @Override
-    public void update(CitoyenDTO item) { throw new RuntimeException("Not implemented. Use UtilisateurDTO param instead"); }
+    public void update(CitoyenDTO item){ super.Exec(CitoyenSQLs.class).update( item ); }
 
     @Override
     public void delete(UUID id) {
@@ -106,6 +106,9 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
 
         @SqlQuery("select * from citoyen WHERE citoyen_id = :p_id ")
         CitoyenDTO getById(@Bind("p_id")UUID p_id) throws SQLException;
+
+        @SqlUpdate("UPDATE citoyen SET nom=:nom, prenom=:prenom,date_naissance=:dateNaissance, tel=:tel, gsm=:gsm, mail=:mail, nrn=:nrn, nation=:nation WHERE citoyen_id=:id")
+        void update(@BindBean CitoyenDTO cit);
 
     }
     @RegisterMapper(UtilisateurMapper.class)

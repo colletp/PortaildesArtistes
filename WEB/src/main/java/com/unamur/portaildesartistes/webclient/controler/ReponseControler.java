@@ -94,6 +94,9 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             usrCtrl.setRoles(cookieValue, model);
             rep.setReponse(reponse);
             rep.setReponsePositive(repPositive);
+
+            //formCtrl.getObj(cookieValue,);
+
             UUID repId = super.postForm(cookieValue, rep.getDTO() ,method,model);
             model.addAttribute("repId",repId);
             if( repPositive.equals("1") ){

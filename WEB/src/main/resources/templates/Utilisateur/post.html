@@ -7,7 +7,7 @@
 
 <div th:replace="~{/fragments/header :: erreurs}"></div>
 
-<form class="formbox600" th:action="@{/Utilisateur/{id}(id=${form.utilisateur.id})}" th:name="form" th:object="${form}" th:method="post">
+<form class="formbox600" th:action="@{/Utilisateur/}" th:name="form" th:object="${form}" th:method="post">
 
     <div>
         <input type="hidden" th:field="*{utilisateur.id}" />

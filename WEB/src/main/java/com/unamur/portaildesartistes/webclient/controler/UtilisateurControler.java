@@ -126,7 +126,7 @@ public class UtilisateurControler extends Controler< UtilisateurDTO , java.lang.
             //usrForm.setPassword(WebSecurityConfig.encoder().encode( usrForm.getPassword() ) );
             UtilisateurDTO usrDTO = usrForm.getDTO();
             super.postForm(cookieValue,usrDTO,method,model);
-            model.addAttribute("Msg","Le profil a été mis à jour" );
+            model.addAttribute("Msg","profilMaj" );
             model.addAttribute("form", new UtilisateurInscript(usrDTO) );
             return "Utilisateur/get.html";
         }catch(IllegalArgumentException e){

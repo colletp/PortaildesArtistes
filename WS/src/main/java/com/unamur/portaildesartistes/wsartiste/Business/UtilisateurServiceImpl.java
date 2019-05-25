@@ -57,7 +57,7 @@ public class UtilisateurServiceImpl implements IService<UtilisateurDTO> {
             usrImpl.update(usr);
         }
         if(usr.getCitoyen()!=null){
-            citServImpl.update( usr.getCitoyen() );
+           citServImpl.update( usr.getCitoyen() );
         }
     }
 
