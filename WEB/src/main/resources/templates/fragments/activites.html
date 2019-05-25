@@ -102,9 +102,9 @@
     <legend th:text="#{secteur}"></legend>
     <fieldset th:each="sec : ${listSect}" th:object="${sec}" th:if="${not #lists.isEmpty(sec.activites)}" >
         <legend th:text="*{nomSecteur}">Secteur</legend>
-        <ul th:each="act : *{activites}"  th:object="${act}">
+        <ul th:each=" act : *{activites}"  th:object="${act}">
             <li>
-                <input type="checkbox" th:field="${activitesId}" th:value="*{id}" />
+                <input type="checkbox" name="activitesId" th:id="'activitesId'+${#ids.seq('')}" th:value="*{id}" />
                 <span th:text="*{nomActivite}" th:alt="*{description}" ></span>
             </li>
         </ul>

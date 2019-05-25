@@ -1,5 +1,9 @@
 package com.unamur.portaildesartistes.wsartiste.Business;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.clipper.Path;
+import com.itextpdf.text.pdf.parser.clipper.Paths;
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeDocArtisteImpl;
 import org.slf4j.Logger;
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,4 +46,27 @@ public class DocArtisteServiceImpl implements IService<DocArtisteDTO> {
     @Transactional
     public void delete( UUID uuid )throws Exception{ docArtImpl.delete(uuid); }
 
+    /*
+    public void createPdfTxt()throws Exception{
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+
+        document.open();
+        Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+        Chunk chunk = new Chunk("Hello World", font);
+
+        document.add(chunk);
+        document.close();
+    }
+    public void createPdfImg()throws Exception {
+        Path path = Paths.get(ClassLoader.getSystemResource("Java_logo.png").toURI());
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("iTextImageExample.pdf"));
+        document.open();
+        Image img = Image.getInstance(path.toAbsolutePath().toString());
+        document.add(img);
+
+        document.close();
+    }*/
 }

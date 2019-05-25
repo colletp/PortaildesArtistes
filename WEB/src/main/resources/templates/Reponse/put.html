@@ -24,10 +24,10 @@
                 <legend th:text="#{carteart}"></legend>
                 <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
                 <span th:text="#{docArtiste.noDoc}" >Numéro</span>
-                <input type="text" name="docCarte.noDoc" th:value="*{noDoc}" />
+                <input type="text" th:name="docCarte.noDoc" th:value="*{noDoc}" />
                 <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
-                <input type="text" th:field="*{datePeremption}" />
-                <input type="hidden" th:field="*{typeDocArtiste}" />
+                <input type="text" th:name="docCarte.datePeremption" th:value="*{datePeremption}" />
+                <input type="hidden" th:name="docCarte.typeDocArtiste" th:value="*{typeDocArtiste}" />
             </fieldset>
             </div>
             <div th:if="${form.visa}">
@@ -37,10 +37,10 @@
                 <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
                 <span th:text="${form.nomArtiste}"></span>
                 <span th:text="#{docArtiste.noDoc}" >Numéro</span>
-                <input type="text" th:field="*{noDoc}" />
+                <input type="text" th:name="docVisa.noDoc" th:value="*{noDoc}" />
                 <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
-                <input type="text" th:field="*{datePeremption}" />
-                <input type="hidden" th:field="*{typeDocArtiste}" />
+                <input type="text" th:name="docVisa.datePeremption" th:value="*{datePeremption}" />
+                <input type="hidden" th:name="docVisa.typeDocArtiste" th:value="*{typeDocArtiste}" />
             </fieldset>
             </div>
             <fieldset th:replace="~{/fragments/activites :: activiteCheckboxBySecteur(${activitesId},${form.secteurActivites}) }"></fieldset>

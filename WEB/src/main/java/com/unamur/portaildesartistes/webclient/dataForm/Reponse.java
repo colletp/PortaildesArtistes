@@ -1,5 +1,6 @@
 package com.unamur.portaildesartistes.webclient.dataForm;
 
+import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.DTO.ReponseDTO;
 
 import java.util.Date;
@@ -17,6 +18,9 @@ public class Reponse extends DataForm<ReponseDTO> {
     private String dateReponse;
     private String reponse;
     private String reponsePositive;
+
+    private DocArtiste carte;
+    private DocArtiste visa;
 
     // ******************
     // Constructeur
@@ -39,6 +43,11 @@ public class Reponse extends DataForm<ReponseDTO> {
     public String getReponsePositive() { return reponsePositive; }
     public void setReponsePositive(String p_rep) { reponsePositive = p_rep; }
 
+    public DocArtiste getCarte(){ return carte; }
+    public void setCarte(DocArtiste d){ carte = d;}
+    public DocArtiste getVisa(){ return visa; }
+    public void setVisa(DocArtiste d){ visa = d;}
+
 
     public void setFromDTO(final ReponseDTO objDTO){
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
@@ -48,6 +57,7 @@ public class Reponse extends DataForm<ReponseDTO> {
         //            :objDTO.getTrt().getForm().getCitoyenId();
         //setCitoyenId( citId.toString() );
         setDateReponse(convertDateTime(objDTO.getDateReponse()));
+
     }
     // ******************
     // Fonctions

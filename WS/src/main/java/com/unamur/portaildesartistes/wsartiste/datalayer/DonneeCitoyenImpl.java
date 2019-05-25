@@ -79,8 +79,11 @@ public class DonneeCitoyenImpl extends Donnee<CitoyenDTO> {
             logger.error( e.getClass().toString() );
             //logger.error( e.getClass().getName() );
             //logger.error( e.getClass().getCanonicalName() );
-            e.getCause().getMessage().contains("citoyen_login_key");
-            throw new Exception("citoyen_login_key");
+            if( e.getCause().getMessage().contains("citoyen_login_key") )
+                throw new Exception("citoyen_login_key");
+            if( e.getCause().getMessage().contains("citoyen_nrn_key") )
+                throw new Exception("citoyen_nrn_key");
+            throw new Exception("otherDBerr");
         }
         return null;
     }
