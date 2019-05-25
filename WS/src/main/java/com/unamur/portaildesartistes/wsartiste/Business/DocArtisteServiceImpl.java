@@ -1,9 +1,5 @@
 package com.unamur.portaildesartistes.wsartiste.Business;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.parser.clipper.Path;
-import com.itextpdf.text.pdf.parser.clipper.Paths;
 import com.unamur.portaildesartistes.DTO.DocArtisteDTO;
 import com.unamur.portaildesartistes.wsartiste.datalayer.DonneeDocArtisteImpl;
 import org.slf4j.Logger;
@@ -12,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
 

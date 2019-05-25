@@ -117,6 +117,7 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
                     UUID docId = docArtCtrl.postForm(cookieValue, docCarte ,method,model);
                     //insérer odcActivités
 
+
                 }
                 if (docVisaCB.equals("1")) {
                     DocArtiste docVisa = new DocArtiste();

@@ -113,15 +113,15 @@ public class FormulaireControler extends Controler< FormulaireDTO , Class< Formu
         switch(field){
             case "cursusAc":
                 if(formForm.getCursusAc()==null)formForm.setCursusAc(new ArrayList<>());
-                formForm.getCursusAc().add( String.valueOf(formForm.getCursusAc().size()) );
+                formForm.getCursusAc().add( "Nouveau cursus" );
                 break;
             case "expPro":
                 if(formForm.getExpPro()==null)formForm.setExpPro(new ArrayList<>());
-                formForm.getExpPro().add( String.valueOf(formForm.getExpPro().size()) );
+                formForm.getExpPro().add( "Nouvelle expérience professionnelle" );
                 break;
             case "ressources":
                 if(formForm.getRessources()==null)formForm.setRessources(new ArrayList<>());
-                formForm.getRessources().add( String.valueOf(formForm.getRessources().size()) );
+                formForm.getRessources().add( "Nouvelle ressource" );
                 break;
             default:
         }
