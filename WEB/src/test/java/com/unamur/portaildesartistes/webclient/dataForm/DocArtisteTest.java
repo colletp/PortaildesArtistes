@@ -47,7 +47,7 @@ class DocArtisteTest {
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
-                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
+                ()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
                 ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }
@@ -65,7 +65,7 @@ class DocArtisteTest {
                 ()->assertEquals(docArt.getDatePeremption(),doc.convertDate(doc.getDatePeremption())),
                 ()->assertEquals(docArt.getNoDoc(),doc.getNoDoc()),
                 ()->assertEquals(docArt.getTypeDocArtiste(),doc.getTypeDocArtiste()),
-                ()->assertEquals(docArt.getCitoyenId(),doc.convertUUID(doc.getCitoyenId())),
+                ()->assertEquals(docArt.getCitoyen().getId(),doc.convertUUID(doc.getCitoyenId())),
                 ()->assertEquals(docArt.getReponseId(),doc.convertUUID(doc.getReponseId()))
         );
     }

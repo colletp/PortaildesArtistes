@@ -47,8 +47,8 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
                         DocArtisteDTO objDocArtiste = docImpl.getById(objPrest.getDocArtisteId());
                         if (objDocArtiste.getReponseId() != null)
                             objDocArtiste.setReponse(repImpl.getById(objDocArtiste.getReponseId()));
-                        if (objDocArtiste.getCitoyenId() != null)
-                            objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyenId()));
+                        if (objDocArtiste.getCitoyen().getId() != null)
+                            objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyen().getId()));
                         objPrest.setDocArtiste(objDocArtiste);
                         CommanditaireDTO objCommanditaire = comImpl.getById(objPrest.getCommanditaireId());
                         if (objCommanditaire.getCitoyenId() != null)
@@ -75,8 +75,8 @@ public class PrestationServiceImpl implements IService<PrestationDTO>{
                 DocArtisteDTO objDocArtiste = docImpl.getById(objPrest.getDocArtisteId());
                 if (objDocArtiste.getReponseId() != null)
                     objDocArtiste.setReponse(repImpl.getById(objDocArtiste.getReponseId()));
-                if (objDocArtiste.getCitoyenId() != null)
-                    objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyenId()));
+                if (objDocArtiste.getCitoyen().getId() != null)
+                    objDocArtiste.setCitoyen(cytImpl.getById(objDocArtiste.getCitoyen().getId()));
                 objPrest.setDocArtiste(objDocArtiste);
                 objPrest.setCommanditaire(comImpl.getById(objPrest.getCommanditaireId()));}
             );

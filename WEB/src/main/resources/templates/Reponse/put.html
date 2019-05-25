@@ -23,8 +23,10 @@
             <fieldset th:object="${docCarte}" id="carte" >
                 <legend th:text="#{carteart}"></legend>
                 <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
-                <span th:text="#{docArtiste.noDoc}" >Numéro</span><input type="text" th:field="*{noDoc}" />
-                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span><input type="text" th:field="*{datePeremption}" />
+                <span th:text="#{docArtiste.noDoc}" >Numéro</span>
+                <input type="text" name="docCarte.noDoc" th:value="*{noDoc}" />
+                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
+                <input type="text" th:field="*{datePeremption}" />
                 <input type="hidden" th:field="*{typeDocArtiste}" />
             </fieldset>
             </div>
@@ -32,9 +34,12 @@
             <input type="checkbox" name="docVisaCB" id="docVisaCB" value="1" checked="checked" onclick="$('#visa').attr('style', 'display: '+($('#docVisaCB').is(':checked')?'block':'none'))" />Générer un visa d'artiste
             <fieldset th:object="${docVisa}" id="visa">
                 <legend th:text="#{visaart}"></legend>
-                <span th:text="#{docArtiste.nom}" >Nom d'artiste</span><span th:text="${form.nomArtiste}"></span>
-                <span th:text="#{docArtiste.noDoc}" >Numéro</span><input type="text" th:field="*{noDoc}" />
-                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span><input type="text" th:field="*{datePeremption}" />
+                <span th:text="#{docArtiste.nom}" >Nom d'artiste</span>
+                <span th:text="${form.nomArtiste}"></span>
+                <span th:text="#{docArtiste.noDoc}" >Numéro</span>
+                <input type="text" th:field="*{noDoc}" />
+                <span th:text="#{docArtiste.datePeremption}" >Date peremption</span>
+                <input type="text" th:field="*{datePeremption}" />
                 <input type="hidden" th:field="*{typeDocArtiste}" />
             </fieldset>
             </div>
@@ -42,7 +47,7 @@
 
         </div>
 
-        <input th:type="submit" name="saveDraft" value="Enregistrer" />
+        <!--<input th:type="submit" name="saveDraft" value="Enregistrer" />-->
         <input th:type="submit" name="submit" value="Répondre au citoyen" />
     </fieldset>
 

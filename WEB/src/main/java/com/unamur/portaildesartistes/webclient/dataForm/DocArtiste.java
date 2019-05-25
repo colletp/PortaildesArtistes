@@ -69,7 +69,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
 
     public void setFromDTO(final DocArtisteDTO objDTO) {
         setId( (objDTO.getId()==null?"":objDTO.getId().toString()) );
-        setCitoyenId(objDTO.getCitoyenId().toString());
         setReponseId(objDTO.getReponseId().toString());
         isNotEmpty(noDoc);
         setNoDoc(objDTO.getNoDoc());
@@ -91,7 +90,6 @@ public class DocArtiste extends DataForm<DocArtisteDTO> {
         dto.setDatePeremption(convertDate(getDatePeremption()));
 
         isNotEmpty(getCitoyenId());
-        dto.setCitoyenId( convertUUID(getCitoyenId()));
 
         isNotEmpty(getTypeDocArtiste());
         if(   !getTypeDocArtiste().equals("Carte artiste")

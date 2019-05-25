@@ -88,9 +88,12 @@ public class ReponseControler extends Controler<ReponseDTO, Class< ReponseDTO >,
             ,@ModelAttribute("repPositive") final String repPositive
             ,@ModelAttribute("docCarteCB") final String docCarteCB
             ,@ModelAttribute("docVisaCB") final String docVisaCB
+            ,@ModelAttribute("body") final String reponse
             ,Model model){
         try{
             usrCtrl.setRoles(cookieValue, model);
+            rep.setReponse(reponse);
+            rep.setReponsePositive(repPositive);
             UUID repId = super.postForm(cookieValue, rep.getDTO() ,method,model);
             model.addAttribute("repId",repId);
             if( repPositive.equals("1") ){

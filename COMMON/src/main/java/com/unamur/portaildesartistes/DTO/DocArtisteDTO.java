@@ -8,7 +8,6 @@ public class DocArtisteDTO extends DTO {
     // Champs/propriétés
     // ******************
 
-    private UUID citoyenId;
     private UUID reponseId;
     private String noDoc;
     private Date datePeremption;
@@ -36,8 +35,6 @@ public class DocArtisteDTO extends DTO {
     // Setter/Getter
     // ******************
 
-    public UUID getCitoyenId() { return citoyenId; }
-    public void setCitoyenId( UUID p_id) { citoyenId = p_id; }
     public UUID getReponseId() { return reponseId; }
     public void setReponseId( UUID p_id) { reponseId = p_id; }
     public String getNoDoc() { return noDoc; }

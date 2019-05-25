@@ -74,7 +74,7 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
                 "JOIN formulaires f ON f.form_id=t.form_id AND f.citoyen_id=:citoyenId ")
         List<DocArtisteDTO> getByCitoyenId(@Bind("citoyenId") UUID citoyenId);
 
-        @SqlQuery("INSERT INTO doc_artiste (citoyen_id,reponse_id,no_doc,date_peremption,type_doc_artiste) VALUES (:citoyenId,:reponseId,:noDoc,:datePeremption,:typeDocArtiste) RETURNING doc_artiste_id ")
+        @SqlQuery("INSERT INTO doc_artiste (reponse_id,no_doc,date_peremption,type_doc_artiste) VALUES (:reponseId,:noDoc,:datePeremption,:typeDocArtiste) RETURNING doc_artiste_id ")
         String insert(@BindBean DocArtisteDTO test);
 
         @SqlQuery("select * from doc_artiste WHERE doc_artiste_id=:p_id ")
@@ -90,7 +90,6 @@ public class DonneeDocArtisteImpl extends Donnee<DocArtisteDTO>{
         public DocArtisteDTO map(final int i, final ResultSet r, final StatementContext statementContext) throws SQLException {
             docArtisteDTO = new DocArtisteDTO();
             docArtisteDTO.setId((UUID) r.getObject("doc_artiste_id"));
-            docArtisteDTO.setCitoyenId((UUID) r.getObject("citoyen_id"));
             docArtisteDTO.setReponseId((UUID) r.getObject("reponse_id"));
             docArtisteDTO.setNoDoc(r.getString("no_doc"));
             docArtisteDTO.setDatePeremption(r.getDate("date_peremption"));

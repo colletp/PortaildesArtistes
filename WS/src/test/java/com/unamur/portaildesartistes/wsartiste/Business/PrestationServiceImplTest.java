@@ -149,7 +149,7 @@ class PrestationServiceImplTest {
         docArtiste=new DocArtisteDTO();
         adresse=new AdresseDTO();
         secteur=new SecteurDTO();
-        docArtiste.setCitoyenId(userId);
+        docArtiste.setCitoyen( citServ.getById(userId) );
         docArtiste.setReponseId(repId);
 
         prestation.setActivite(activite);
